@@ -1,0 +1,543 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.1/cycle-registry.schema.json",
+  "title": "Concord Loom cycle registry",
+  "description": "A finite containment DAG of loops. Repetition is expressed only by bounded feedback transitions inside each loop.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "source_graph_digest",
+    "source_decisions_digest",
+    "source_loop_design_digest",
+    "policy_digest",
+    "evidence_contracts",
+    "loops",
+    "containment_graph"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.cycle-registry"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "source_graph_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "source_decisions_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "source_loop_design_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "policy_digest": {
+      "description": "The exact policy against which every role, principal, capability, scope, budget, and separation reference in this registry MUST resolve.",
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "evidence_contracts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceContract"
+      }
+    },
+    "loops": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/loop"
+      }
+    },
+    "containment_graph": {
+      "$ref": "#/$defs/containmentGraph"
+    }
+  },
+  "$defs": {
+    "contractField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "type",
+        "description",
+        "required"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "type": {
+          "enum": [
+            "string",
+            "number",
+            "integer",
+            "boolean",
+            "object",
+            "array",
+            "digest",
+            "artifact_ref"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "schema_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "evidenceContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "description",
+        "required_claims",
+        "accepted_results",
+        "producer_capability",
+        "candidate_binding_required",
+        "policy_binding_required"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required_claims": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "accepted_results": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "pass",
+              "fail",
+              "indeterminate"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "producer_capability": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "reviewer_capability": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "independent_from_capability": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "candidate_binding_required": {
+          "type": "boolean"
+        },
+        "policy_binding_required": {
+          "type": "boolean"
+        },
+        "max_age_seconds": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "execute_capability",
+        "accept_capability",
+        "escalate_capability"
+      ],
+      "properties": {
+        "execute_capability": {
+          "description": "Capability ID resolved in the policy bound by policy_digest.",
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "accept_capability": {
+          "description": "Capability ID resolved in the policy bound by policy_digest.",
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "escalate_capability": {
+          "description": "Capability ID resolved in the policy bound by policy_digest.",
+          "$ref": "common.schema.json#/$defs/identifier"
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "label"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "enum": [
+            "start",
+            "work",
+            "child",
+            "gate",
+            "wait",
+            "terminal"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "invocation_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "outcome": {
+          "enum": [
+            "succeeded",
+            "failed",
+            "blocked",
+            "escalated",
+            "cancelled"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "child"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "invocation_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "terminal"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "outcome"
+            ]
+          }
+        }
+      ]
+    },
+    "transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "from",
+        "to",
+        "kind",
+        "guard",
+        "evidence_contract_ids"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "from": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "to": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "enum": [
+            "progress",
+            "feedback",
+            "success",
+            "failure",
+            "escalation"
+          ]
+        },
+        "guard": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_contract_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "feedback_budget": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "max_traversals",
+            "on_exhaustion_state",
+            "on_exhaustion_outcome"
+          ],
+          "properties": {
+            "max_traversals": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "on_exhaustion_state": {
+              "$ref": "common.schema.json#/$defs/identifier"
+            },
+            "on_exhaustion_outcome": {
+              "enum": [
+                "failed",
+                "blocked",
+                "escalated"
+              ]
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "feedback"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "feedback_budget"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "feedback_budget"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "loop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "purpose",
+        "inputs",
+        "outputs",
+        "budgets",
+        "authority",
+        "local_control_flow"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/contractField"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/contractField"
+          }
+        },
+        "budgets": {
+          "$ref": "common.schema.json#/$defs/budget"
+        },
+        "authority": {
+          "$ref": "#/$defs/authority"
+        },
+        "local_control_flow": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "entry_state",
+            "terminal_state_ids",
+            "states",
+            "transitions"
+          ],
+          "properties": {
+            "entry_state": {
+              "$ref": "common.schema.json#/$defs/identifier"
+            },
+            "terminal_state_ids": {
+              "description": "Every listed state MUST be terminal and reachable from entry_state. Every non-terminal state MUST have a path to one of these states.",
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "common.schema.json#/$defs/identifier"
+              },
+              "uniqueItems": true
+            },
+            "states": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "$ref": "#/$defs/state"
+              }
+            },
+            "transitions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/transition"
+              }
+            }
+          }
+        }
+      }
+    },
+    "childGrant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "capabilities",
+        "budgets"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "common.schema.json#/$defs/scope"
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "budgets": {
+          "$ref": "common.schema.json#/$defs/budget"
+        }
+      }
+    },
+    "containmentEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "parent_loop_id",
+        "child_loop_id",
+        "at_state",
+        "success_state",
+        "failure_state",
+        "grant",
+        "input_mapping",
+        "output_mapping"
+        ,
+        "timeout_seconds",
+        "deadline_outcome"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "parent_loop_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "child_loop_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "at_state": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "success_state": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "failure_state": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "grant": {
+          "$ref": "#/$defs/childGrant"
+        },
+        "input_mapping": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "output_mapping": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "deadline_outcome": {
+          "enum": [
+            "failed",
+            "blocked",
+            "escalated"
+          ]
+        }
+      }
+    },
+    "containmentGraph": {
+      "type": "object",
+      "description": "This graph MUST be acyclic. A child may not contain any ancestor. A semantic compiler validates references and acyclicity.",
+      "additionalProperties": false,
+      "required": [
+        "roots",
+        "edges"
+      ],
+      "properties": {
+        "roots": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/containmentEdge"
+          }
+        }
+      }
+    }
+  }
+}

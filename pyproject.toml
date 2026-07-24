@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "concordloom"
+version = "0.1.0"
+description = "Evidence-governed systems of nested development loops"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Apache-2.0"}
+authors = [{name = "Concord Loom contributors"}]
+keywords = ["software-development", "workflow", "provenance", "codex", "sdlc"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/PullDakar/concordloom"
+Repository = "https://github.com/PullDakar/concordloom"
+Issues = "https://github.com/PullDakar/concordloom/issues"
+
+[project.scripts]
+concordloom = "concordloom.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.data-files]
+"share/concordloom/schemas" = ["schemas/*.json"]
+"share/concordloom/framework/generic-sdlc" = ["framework/generic-sdlc/*.json"]

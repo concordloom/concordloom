@@ -1,0 +1,1296 @@
+{
+  "containment_graph": {
+    "edges": [
+      {
+        "at_state": "invoke-delivery-requirements",
+        "child_loop_id": "requirements",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": [
+              "src",
+              "tests",
+              "docs"
+            ]
+          }
+        },
+        "id": "delivery-requirements",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "delivery",
+        "success_state": "invoke-delivery-implementation",
+        "timeout_seconds": 3600
+      },
+      {
+        "at_state": "invoke-delivery-implementation",
+        "child_loop_id": "implementation",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": [
+              "src",
+              "tests",
+              "docs"
+            ]
+          }
+        },
+        "id": "delivery-implementation",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "delivery",
+        "success_state": "invoke-delivery-testing",
+        "timeout_seconds": 3600
+      },
+      {
+        "at_state": "invoke-delivery-testing",
+        "child_loop_id": "testing",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence",
+            "review-candidate"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": [
+              "src",
+              "tests",
+              "docs"
+            ]
+          }
+        },
+        "id": "delivery-testing",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "delivery",
+        "success_state": "invoke-delivery-release",
+        "timeout_seconds": 3600
+      },
+      {
+        "at_state": "invoke-testing-runtime-scenario",
+        "child_loop_id": "runtime-scenario",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": [
+              "src",
+              "tests",
+              "docs"
+            ]
+          }
+        },
+        "id": "testing-runtime-scenario",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "testing",
+        "success_state": "work",
+        "timeout_seconds": 3600
+      },
+      {
+        "at_state": "invoke-delivery-release",
+        "child_loop_id": "release",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence",
+            "review-candidate"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": [
+              "src",
+              "tests",
+              "docs"
+            ]
+          }
+        },
+        "id": "delivery-release",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "delivery",
+        "success_state": "invoke-delivery-operation",
+        "timeout_seconds": 3600
+      },
+      {
+        "at_state": "invoke-delivery-operation",
+        "child_loop_id": "operation",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": [
+              "src",
+              "tests",
+              "docs"
+            ]
+          }
+        },
+        "id": "delivery-operation",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "delivery",
+        "success_state": "work",
+        "timeout_seconds": 3600
+      }
+    ],
+    "roots": [
+      "delivery"
+    ]
+  },
+  "evidence_contracts": [
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that delivery reached its accepted outcome.",
+      "id": "delivery-acceptance",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "delivery-outcome"
+      ]
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that implementation reached its accepted outcome.",
+      "id": "implementation-acceptance",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "implementation-outcome"
+      ]
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that operation reached its accepted outcome.",
+      "id": "operation-acceptance",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "operation-outcome"
+      ]
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that release reached its accepted outcome.",
+      "id": "release-acceptance",
+      "independent_from_capability": "execute-work",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "release-outcome"
+      ],
+      "reviewer_capability": "review-candidate"
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that requirements reached its accepted outcome.",
+      "id": "requirements-acceptance",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "requirements-outcome"
+      ]
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that runtime-scenario reached its accepted outcome.",
+      "id": "runtime-scenario-acceptance",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "runtime-scenario-outcome"
+      ]
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that testing reached its accepted outcome.",
+      "id": "testing-acceptance",
+      "independent_from_capability": "execute-work",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "testing-outcome"
+      ],
+      "reviewer_capability": "review-candidate"
+    }
+  ],
+  "id": "generic-service-cycle-registry",
+  "kind": "concordloom.cycle-registry",
+  "loops": [
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "delivery",
+      "inputs": [
+        {
+          "description": "An operator-accepted change outcome.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Delivery",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "invoke-delivery-requirements",
+            "invocation_id": "delivery-requirements",
+            "kind": "child",
+            "label": "Invoke requirements"
+          },
+          {
+            "id": "invoke-delivery-implementation",
+            "invocation_id": "delivery-implementation",
+            "kind": "child",
+            "label": "Invoke implementation"
+          },
+          {
+            "id": "invoke-delivery-testing",
+            "invocation_id": "delivery-testing",
+            "kind": "child",
+            "label": "Invoke testing"
+          },
+          {
+            "id": "invoke-delivery-release",
+            "invocation_id": "delivery-release",
+            "kind": "child",
+            "label": "Invoke release"
+          },
+          {
+            "id": "invoke-delivery-operation",
+            "invocation_id": "delivery-operation",
+            "kind": "child",
+            "label": "Invoke operation"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "enter-delivery-requirements",
+            "kind": "progress",
+            "to": "invoke-delivery-requirements"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-delivery-requirements",
+            "guard": "child receipt accepted by parent contract",
+            "id": "delivery-requirements-success",
+            "kind": "success",
+            "to": "invoke-delivery-implementation"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-delivery-requirements",
+            "guard": "child failed, timed out, or escalated",
+            "id": "delivery-requirements-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-delivery-implementation",
+            "guard": "child receipt accepted by parent contract",
+            "id": "delivery-implementation-success",
+            "kind": "success",
+            "to": "invoke-delivery-testing"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-delivery-implementation",
+            "guard": "child failed, timed out, or escalated",
+            "id": "delivery-implementation-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-delivery-testing",
+            "guard": "child receipt accepted by parent contract",
+            "id": "delivery-testing-success",
+            "kind": "success",
+            "to": "invoke-delivery-release"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-delivery-testing",
+            "guard": "child failed, timed out, or escalated",
+            "id": "delivery-testing-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-delivery-release",
+            "guard": "child receipt accepted by parent contract",
+            "id": "delivery-release-success",
+            "kind": "success",
+            "to": "invoke-delivery-operation"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-delivery-release",
+            "guard": "child failed, timed out, or escalated",
+            "id": "delivery-release-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-delivery-operation",
+            "guard": "child receipt accepted by parent contract",
+            "id": "delivery-operation-success",
+            "kind": "success",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-delivery-operation",
+            "guard": "child failed, timed out, or escalated",
+            "id": "delivery-operation-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "delivery-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "A verified release with an operation observation.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Deliver and operate one accepted service change."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "implementation",
+      "inputs": [
+        {
+          "description": "Testable requirements.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Implementation",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "begin",
+            "kind": "progress",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "implementation-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "Candidate manifest.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Produce a scoped candidate."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "operation",
+      "inputs": [
+        {
+          "description": "Published release identity.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Operation",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "begin",
+            "kind": "progress",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "operation-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "Operation observation or escalation.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Observe the published release."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "release",
+      "inputs": [
+        {
+          "description": "Independent verification receipt.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Release",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "begin",
+            "kind": "progress",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "release-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "Published release identity.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Authorize and publish a verified candidate."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "requirements",
+      "inputs": [
+        {
+          "description": "Accepted change outcome.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Requirements",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "begin",
+            "kind": "progress",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "requirements-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "Testable requirements.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Turn the accepted outcome into testable acceptance."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "runtime-scenario",
+      "inputs": [
+        {
+          "description": "Pinned scenario and candidate.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Runtime Scenario",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "begin",
+            "kind": "progress",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "runtime-scenario-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "Scenario evidence.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Exercise one runtime behavior."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "testing",
+      "inputs": [
+        {
+          "description": "Candidate manifest.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Testing",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "invoke-testing-runtime-scenario",
+            "invocation_id": "testing-runtime-scenario",
+            "kind": "child",
+            "label": "Invoke runtime-scenario"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "enter-testing-runtime-scenario",
+            "kind": "progress",
+            "to": "invoke-testing-runtime-scenario"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-testing-runtime-scenario",
+            "guard": "child receipt accepted by parent contract",
+            "id": "testing-runtime-scenario-success",
+            "kind": "success",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-testing-runtime-scenario",
+            "guard": "child failed, timed out, or escalated",
+            "id": "testing-runtime-scenario-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "testing-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "Independent verification receipt.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Evaluate the pinned candidate."
+    }
+  ],
+  "policy_digest": "sha256:904fca6e660b7d2a030769235b92981e57d92f13f1a5da309a9e8721bed2774b",
+  "schema_version": "0.1",
+  "source_decisions_digest": "sha256:e6999029166ffa4ba723bec417b8e393e82943ce9f718f58417c9a55fd706269",
+  "source_graph_digest": "sha256:a2108280272c35cd2c0f4fc988947f6e0e7e2ffb5632202aee3735db184a0be6",
+  "source_loop_design_digest": "sha256:d909ba3d4f19f507f166b7718141af995344af9be3ca86bc7d39c71e75c4b5c4"
+}

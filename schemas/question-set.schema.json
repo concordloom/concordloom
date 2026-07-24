@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.1/question-set.schema.json",
+  "title": "Concord Loom operator question set",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "source_graph_digest",
+    "questions"
+  ],
+  "properties": {
+    "kind": {"const": "concordloom.question-set"},
+    "schema_version": {"const": "0.1"},
+    "id": {"$ref": "common.schema.json#/$defs/identifier"},
+    "source_graph_digest": {"$ref": "common.schema.json#/$defs/digest"},
+    "questions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/question"}
+    }
+  },
+  "$defs": {
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "hypothesis_id",
+        "prompt",
+        "why_it_matters",
+        "blocking",
+        "impact_score",
+        "confidence",
+        "evidence",
+        "options"
+      ],
+      "properties": {
+        "id": {"$ref": "common.schema.json#/$defs/identifier"},
+        "hypothesis_id": {"$ref": "common.schema.json#/$defs/identifier"},
+        "prompt": {"type": "string", "minLength": 1},
+        "why_it_matters": {"type": "string", "minLength": 1},
+        "blocking": {"type": "boolean"},
+        "impact_score": {"type": "number", "minimum": 0},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "common.schema.json#/$defs/provenance"}
+        },
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "items": {"$ref": "#/$defs/option"}
+        }
+      }
+    },
+    "option": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "verdict", "graph_delta"],
+      "properties": {
+        "id": {"$ref": "common.schema.json#/$defs/identifier"},
+        "label": {"type": "string", "minLength": 1},
+        "verdict": {"enum": ["confirmed", "rejected", "corrected"]},
+        "graph_delta": {
+          "type": "array",
+          "items": {"$ref": "common.schema.json#/$defs/graphOperation"}
+        }
+      }
+    }
+  }
+}
+

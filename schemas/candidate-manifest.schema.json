@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.1/candidate-manifest.schema.json",
+  "title": "Concord Loom candidate manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "generated_at",
+    "revision",
+    "tree_digest",
+    "dirty",
+    "files"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.candidate-manifest"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "generated_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "revision": {
+      "$ref": "common.schema.json#/$defs/gitOid"
+    },
+    "tree_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "dirty": {
+      "type": "boolean"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "digest",
+          "mode",
+          "origin"
+        ],
+        "properties": {
+          "path": {
+            "$ref": "common.schema.json#/$defs/relativePath"
+          },
+          "digest": {
+            "$ref": "common.schema.json#/$defs/digest"
+          },
+          "mode": {
+            "type": "string",
+            "pattern": "^[0-7]{6}$"
+          },
+          "origin": {
+            "enum": [
+              "tracked",
+              "explicit_untracked"
+            ]
+          },
+          "git_object_id": {
+            "$ref": "common.schema.json#/$defs/gitOid"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "origin": {
+                  "const": "tracked"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "git_object_id"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "git_object_id"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

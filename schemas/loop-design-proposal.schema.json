@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.1/loop-design-proposal.schema.json",
+  "title": "Concord Loom loop design proposal",
+  "description": "A non-authoritative loop design proposal awaiting an explicit, digest-bound operator decision.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "status",
+    "compiler_profile",
+    "source_graph_digest",
+    "decision_log_digest",
+    "authority_policy_digest",
+    "loops",
+    "containment",
+    "graph_delta",
+    "acceptance_required"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.loop-design-proposal"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "status": {
+      "const": "proposed"
+    },
+    "compiler_profile": {
+      "const": "bounded-sdlc-v0.1"
+    },
+    "source_graph_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "decision_log_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "authority_policy_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "loops": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "loop-design-manifest.schema.json#/$defs/loopDesign"
+      }
+    },
+    "containment": {
+      "type": "array",
+      "items": {
+        "$ref": "loop-design-manifest.schema.json#/$defs/containmentDesign"
+      }
+    },
+    "graph_delta": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "common.schema.json#/$defs/graphOperation"
+      }
+    },
+    "acceptance_required": {
+      "const": true
+    }
+  }
+}

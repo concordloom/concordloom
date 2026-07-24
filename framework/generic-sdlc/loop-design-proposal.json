@@ -1,0 +1,364 @@
+{
+  "acceptance_required": true,
+  "authority_policy_digest": "sha256:904fca6e660b7d2a030769235b92981e57d92f13f1a5da309a9e8721bed2774b",
+  "compiler_profile": "bounded-sdlc-v0.1",
+  "containment": [
+    {
+      "child_loop_id": "requirements",
+      "decision_id": "accept-nested-sdlc",
+      "id": "delivery-requirements",
+      "parent_loop_id": "delivery"
+    },
+    {
+      "child_loop_id": "implementation",
+      "decision_id": "accept-nested-sdlc",
+      "id": "delivery-implementation",
+      "parent_loop_id": "delivery"
+    },
+    {
+      "child_loop_id": "testing",
+      "decision_id": "accept-nested-sdlc",
+      "id": "delivery-testing",
+      "parent_loop_id": "delivery"
+    },
+    {
+      "child_loop_id": "runtime-scenario",
+      "decision_id": "accept-nested-sdlc",
+      "id": "testing-runtime-scenario",
+      "parent_loop_id": "testing"
+    },
+    {
+      "child_loop_id": "release",
+      "decision_id": "accept-nested-sdlc",
+      "id": "delivery-release",
+      "parent_loop_id": "delivery"
+    },
+    {
+      "child_loop_id": "operation",
+      "decision_id": "accept-nested-sdlc",
+      "id": "delivery-operation",
+      "parent_loop_id": "delivery"
+    }
+  ],
+  "decision_log_digest": "sha256:e6999029166ffa4ba723bec417b8e393e82943ce9f718f58417c9a55fd706269",
+  "graph_delta": [
+    {
+      "op": "add",
+      "target_id": "delivery",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accept-nested-sdlc"
+          }
+        ],
+        "decision_ids": [
+          "accept-nested-sdlc"
+        ],
+        "id": "delivery",
+        "input_outcome": "An operator-accepted change outcome.",
+        "output_outcome": "A verified release with an operation observation.",
+        "purpose": "Deliver and operate one accepted service change."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "requirements",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accept-nested-sdlc"
+          }
+        ],
+        "decision_ids": [
+          "accept-nested-sdlc"
+        ],
+        "id": "requirements",
+        "input_outcome": "Accepted change outcome.",
+        "output_outcome": "Testable requirements.",
+        "purpose": "Turn the accepted outcome into testable acceptance."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "implementation",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accept-nested-sdlc"
+          }
+        ],
+        "decision_ids": [
+          "accept-nested-sdlc"
+        ],
+        "id": "implementation",
+        "input_outcome": "Testable requirements.",
+        "output_outcome": "Candidate manifest.",
+        "purpose": "Produce a scoped candidate."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "testing",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accept-nested-sdlc"
+          }
+        ],
+        "decision_ids": [
+          "accept-nested-sdlc"
+        ],
+        "id": "testing",
+        "input_outcome": "Candidate manifest.",
+        "output_outcome": "Independent verification receipt.",
+        "purpose": "Evaluate the pinned candidate."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "runtime-scenario",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accept-nested-sdlc"
+          }
+        ],
+        "decision_ids": [
+          "accept-nested-sdlc"
+        ],
+        "id": "runtime-scenario",
+        "input_outcome": "Pinned scenario and candidate.",
+        "output_outcome": "Scenario evidence.",
+        "purpose": "Exercise one runtime behavior."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "release",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accept-nested-sdlc"
+          }
+        ],
+        "decision_ids": [
+          "accept-nested-sdlc"
+        ],
+        "id": "release",
+        "input_outcome": "Independent verification receipt.",
+        "output_outcome": "Published release identity.",
+        "purpose": "Authorize and publish a verified candidate."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "operation",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accept-nested-sdlc"
+          }
+        ],
+        "decision_ids": [
+          "accept-nested-sdlc"
+        ],
+        "id": "operation",
+        "input_outcome": "Published release identity.",
+        "output_outcome": "Operation observation or escalation.",
+        "purpose": "Observe the published release."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "delivery-requirements",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "requirements",
+        "decision_id": "accept-nested-sdlc",
+        "id": "delivery-requirements",
+        "parent_loop_id": "delivery"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "delivery-implementation",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "implementation",
+        "decision_id": "accept-nested-sdlc",
+        "id": "delivery-implementation",
+        "parent_loop_id": "delivery"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "delivery-testing",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "testing",
+        "decision_id": "accept-nested-sdlc",
+        "id": "delivery-testing",
+        "parent_loop_id": "delivery"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "testing-runtime-scenario",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "runtime-scenario",
+        "decision_id": "accept-nested-sdlc",
+        "id": "testing-runtime-scenario",
+        "parent_loop_id": "testing"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "delivery-release",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "release",
+        "decision_id": "accept-nested-sdlc",
+        "id": "delivery-release",
+        "parent_loop_id": "delivery"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "delivery-operation",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "operation",
+        "decision_id": "accept-nested-sdlc",
+        "id": "delivery-operation",
+        "parent_loop_id": "delivery"
+      }
+    }
+  ],
+  "id": "generic-service-loop-design-proposal",
+  "kind": "concordloom.loop-design-proposal",
+  "loops": [
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accept-nested-sdlc"
+        }
+      ],
+      "decision_ids": [
+        "accept-nested-sdlc"
+      ],
+      "id": "delivery",
+      "input_outcome": "An operator-accepted change outcome.",
+      "output_outcome": "A verified release with an operation observation.",
+      "purpose": "Deliver and operate one accepted service change."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accept-nested-sdlc"
+        }
+      ],
+      "decision_ids": [
+        "accept-nested-sdlc"
+      ],
+      "id": "requirements",
+      "input_outcome": "Accepted change outcome.",
+      "output_outcome": "Testable requirements.",
+      "purpose": "Turn the accepted outcome into testable acceptance."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accept-nested-sdlc"
+        }
+      ],
+      "decision_ids": [
+        "accept-nested-sdlc"
+      ],
+      "id": "implementation",
+      "input_outcome": "Testable requirements.",
+      "output_outcome": "Candidate manifest.",
+      "purpose": "Produce a scoped candidate."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accept-nested-sdlc"
+        }
+      ],
+      "decision_ids": [
+        "accept-nested-sdlc"
+      ],
+      "id": "testing",
+      "input_outcome": "Candidate manifest.",
+      "output_outcome": "Independent verification receipt.",
+      "purpose": "Evaluate the pinned candidate."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accept-nested-sdlc"
+        }
+      ],
+      "decision_ids": [
+        "accept-nested-sdlc"
+      ],
+      "id": "runtime-scenario",
+      "input_outcome": "Pinned scenario and candidate.",
+      "output_outcome": "Scenario evidence.",
+      "purpose": "Exercise one runtime behavior."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accept-nested-sdlc"
+        }
+      ],
+      "decision_ids": [
+        "accept-nested-sdlc"
+      ],
+      "id": "release",
+      "input_outcome": "Independent verification receipt.",
+      "output_outcome": "Published release identity.",
+      "purpose": "Authorize and publish a verified candidate."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accept-nested-sdlc"
+        }
+      ],
+      "decision_ids": [
+        "accept-nested-sdlc"
+      ],
+      "id": "operation",
+      "input_outcome": "Published release identity.",
+      "output_outcome": "Operation observation or escalation.",
+      "purpose": "Observe the published release."
+    }
+  ],
+  "schema_version": "0.1",
+  "source_graph_digest": "sha256:a2108280272c35cd2c0f4fc988947f6e0e7e2ffb5632202aee3735db184a0be6",
+  "status": "proposed"
+}

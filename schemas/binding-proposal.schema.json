@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.1/binding-proposal.schema.json",
+  "title": "Concord Loom binding activation proposal",
+  "description": "The exact, content-addressed artifact set proposed for activation. It grants no execution authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "status",
+    "framework_version",
+    "created_at",
+    "proposal_digest",
+    "digest_contract",
+    "active_root_loop_ids",
+    "artifacts",
+    "activation_required"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.binding-proposal"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "status": {
+      "const": "proposed"
+    },
+    "framework_version": {
+      "const": "0.1.0"
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "proposal_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "digest_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "canonicalization",
+        "excluded_fields"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha256"
+        },
+        "canonicalization": {
+          "const": "rfc8785"
+        },
+        "excluded_fields": {
+          "const": [
+            "/proposal_digest"
+          ]
+        }
+      }
+    },
+    "active_root_loop_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "common.schema.json#/$defs/identifier"
+      },
+      "uniqueItems": true
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "$ref": "binding.schema.json#/$defs/artifact"
+      }
+    },
+    "activation_required": {
+      "const": true
+    },
+    "predecessor_binding_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    }
+  }
+}

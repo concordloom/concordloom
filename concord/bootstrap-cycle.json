@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "cycle_id": "concordloom-release-v0.1",
+  "title": "Concord Loom full release cycle",
+  "nodes": [
+    {"id": "O", "title": "Observe repository and landscape", "depends_on": [], "mode": "write"},
+    {"id": "P", "title": "Negotiate product and acceptance", "depends_on": ["O"], "mode": "write"},
+    {"id": "D", "title": "Design loop system and contracts", "depends_on": ["P"], "mode": "write"},
+    {"id": "I", "title": "Implement framework and plugin", "depends_on": ["D"], "mode": "write"},
+    {"id": "T", "title": "Verify deterministic behavior", "depends_on": ["I"], "mode": "write"},
+    {"id": "N", "title": "Write documentation and article", "depends_on": ["T"], "mode": "write"},
+    {"id": "A", "title": "Generate and inspect Atlas", "depends_on": ["N"], "mode": "write"},
+    {"id": "R", "title": "Independent reference review", "depends_on": ["A"], "mode": "read_only", "independent": true},
+    {"id": "L", "title": "Independent visual review", "depends_on": ["A"], "mode": "read_only", "independent": true},
+    {"id": "Q", "title": "Independent quality review", "depends_on": ["R", "L"], "mode": "read_only", "independent": true},
+    {"id": "M", "title": "Independent release authorization", "depends_on": ["Q"], "mode": "read_only", "independent": true},
+    {"id": "X", "title": "Publish and smoke-test release", "depends_on": ["M"], "mode": "write"},
+    {"id": "E", "title": "Record evolution signals", "depends_on": ["X"], "mode": "write"}
+  ]
+}
+

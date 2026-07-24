@@ -1,0 +1,16 @@
+{
+  "candidate": "pre-implementation observation",
+  "claims": [
+    "Adjacent tools cover semantic code graphs, repository maps, change coupling, and nested workflow execution.",
+    "The v0.1 differentiator is the governed chain from observed evidence through operator acceptance to bounded executable loop contracts.",
+    "The extraction must be a clean generic implementation rather than a copied product-specific catalog."
+  ],
+  "evidence_paths": [
+    "docs/research/OBSERVED_LANDSCAPE.md",
+    "concord/bootstrap-cycle.json",
+    "AGENTS.md"
+  ],
+  "node": "O",
+  "result": "PASSED",
+  "schema_version": 1
+}

@@ -1,0 +1,38 @@
+{
+  "name": "concordloom",
+  "version": "0.1.0",
+  "description": "Discover and govern evidence-bound systems of nested development loops.",
+  "author": {
+    "name": "PullDakar",
+    "url": "https://github.com/PullDakar"
+  },
+  "homepage": "https://github.com/PullDakar/concordloom",
+  "repository": "https://github.com/PullDakar/concordloom",
+  "license": "Apache-2.0",
+  "keywords": [
+    "codex",
+    "software-development",
+    "workflow",
+    "provenance",
+    "sdlc"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Concord Loom",
+    "shortDescription": "Govern project-specific systems of loops.",
+    "longDescription": "Inspect repository evidence, negotiate intent with an operator, compile bounded nested loops, and maintain execution evidence and an offline Atlas.",
+    "developerName": "PullDakar",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/PullDakar/concordloom",
+    "defaultPrompt": [
+      "Discover this repository's loop system.",
+      "Show the highest-impact unresolved loop decision.",
+      "Compare the planned and actual route for this run."
+    ]
+  }
+}

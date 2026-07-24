@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/bootstrap/v0.1/run-card.schema.json",
+  "title": "Concord Loom one-time bootstrap run card",
+  "description": "Trust-seed protocol only. This is intentionally distinct from the public binding-governed run-card contract.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "run_id",
+    "objective",
+    "cycle_path",
+    "cycle_digest",
+    "policy_path",
+    "policy_digest",
+    "created_from",
+    "candidate",
+    "nodes"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.bootstrap-run-card"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cycle_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cycle_digest": {
+      "$ref": "#/$defs/digest"
+    },
+    "policy_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_digest": {
+      "$ref": "#/$defs/digest"
+    },
+    "created_from": {
+      "type": "string",
+      "minLength": 1
+    },
+    "candidate": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/candidate"
+        }
+      ]
+    },
+    "nodes": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/nodeState"
+      }
+    },
+    "route_amendments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/routeAmendment"
+      }
+    },
+    "status": {
+      "const": "COMPLETE"
+    }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "value",
+        "tree_oid",
+        "tree_digest"
+      ],
+      "properties": {
+        "kind": {
+          "const": "git"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$"
+        },
+        "tree_oid": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$"
+        },
+        "tree_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read",
+        "write"
+      ],
+      "properties": {
+        "read": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "write": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent",
+        "model",
+        "reasoning",
+        "skill",
+        "subagents",
+        "policy_digest"
+      ],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reasoning": {
+          "type": "string",
+          "minLength": 1
+        },
+        "skill": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subagents": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "policy_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "nodeState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "scope",
+        "authorized_by",
+        "executor",
+        "attempt",
+        "evidence"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "PENDING",
+            "AUTHORIZED",
+            "PASSED",
+            "REVISE",
+            "BLOCKED",
+            "CANCELLED"
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "authorized_by": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "executor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attempt": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/attempt"
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "routeAmendment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node",
+        "actor",
+        "write_path",
+        "reason"
+      ],
+      "properties": {
+        "node": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "write_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.1/loop-design-manifest.schema.json",
+  "title": "Concord Loom operator-accepted loop design manifest",
+  "description": "The compiler may emit only loops and containment relationships explicitly accepted in this manifest.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "status",
+    "source_graph_digest",
+    "decision_log_digest",
+    "authority_policy_digest",
+    "proposal_digest",
+    "loops",
+    "containment",
+    "accepted_by"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.loop-design-manifest"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "status": {
+      "const": "accepted"
+    },
+    "source_graph_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "decision_log_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "authority_policy_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "proposal_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "loops": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/loopDesign"
+      }
+    },
+    "containment": {
+      "description": "This accepted containment graph MUST be acyclic.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/containmentDesign"
+      }
+    },
+    "accepted_by": {
+      "$ref": "#/$defs/acceptance"
+    }
+  },
+  "$defs": {
+    "loopDesign": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "purpose",
+        "input_outcome",
+        "output_outcome",
+        "basis",
+        "decision_ids"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "input_outcome": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_outcome": {
+          "type": "string",
+          "minLength": 1
+        },
+        "basis": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/provenance"
+          }
+        },
+        "decision_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "containmentDesign": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "parent_loop_id",
+        "child_loop_id",
+        "decision_id"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "parent_loop_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "child_loop_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "decision_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        }
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision_id",
+        "actor",
+        "accepted_at",
+        "authority_ref",
+        "rationale"
+      ],
+      "properties": {
+        "decision_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "actor": {
+          "$ref": "common.schema.json#/$defs/actor"
+        },
+        "accepted_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "authority_ref": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

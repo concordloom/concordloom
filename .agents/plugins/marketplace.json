@@ -1,0 +1,20 @@
+{
+  "name": "concordloom",
+  "interface": {
+    "displayName": "Concord Loom"
+  },
+  "plugins": [
+    {
+      "name": "concordloom",
+      "source": {
+        "source": "local",
+        "path": "./plugins/concordloom"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "decision_log_digest": "sha256:e6999029166ffa4ba723bec417b8e393e82943ce9f718f58417c9a55fd706269",
+  "edges": [
+    {
+      "confidence": 1,
+      "id": "tests-service",
+      "kind": "tests",
+      "operator_decision_id": "accept-nested-sdlc",
+      "source": "service-tests",
+      "source_refs": [
+        {
+          "kind": "git_commit",
+          "ref": "1111111111111111111111111111111111111111"
+        }
+      ],
+      "status": "confirmed",
+      "target": "service-source",
+      "weight": 1
+    }
+  ],
+  "generated_at": "2026-07-24T00:06:00Z",
+  "hypotheses": [
+    {
+      "blocking": true,
+      "claim": "The service is governed as one delivery boundary.",
+      "evidence": [
+        {
+          "kind": "file",
+          "ref": "src/service.py"
+        }
+      ],
+      "graph_delta": [
+        {
+          "op": "confirm",
+          "target_id": "service-source",
+          "target_kind": "node"
+        },
+        {
+          "op": "confirm",
+          "target_id": "service-tests",
+          "target_kind": "node"
+        },
+        {
+          "op": "confirm",
+          "target_id": "tests-service",
+          "target_kind": "edge"
+        },
+        {
+          "op": "confirm",
+          "target_id": "service-delivery-boundary",
+          "target_kind": "hypothesis"
+        }
+      ],
+      "id": "service-delivery-boundary",
+      "impact_score": 1,
+      "status": "confirmed"
+    }
+  ],
+  "id": "generic-service-accepted",
+  "kind": "concordloom.project-graph",
+  "nodes": [
+    {
+      "category": "source",
+      "confidence": 1,
+      "id": "service-source",
+      "kind": "component",
+      "label": "Service source",
+      "operator_decision_id": "accept-nested-sdlc",
+      "provenance": [
+        {
+          "kind": "file",
+          "ref": "src/service.py"
+        }
+      ],
+      "status": "confirmed"
+    },
+    {
+      "category": "test",
+      "confidence": 1,
+      "id": "service-tests",
+      "kind": "component",
+      "label": "Service tests",
+      "operator_decision_id": "accept-nested-sdlc",
+      "provenance": [
+        {
+          "kind": "file",
+          "ref": "tests/test_service.py"
+        }
+      ],
+      "status": "confirmed"
+    }
+  ],
+  "phase": "accepted",
+  "repository": {
+    "dirty": false,
+    "history_head": "1111111111111111111111111111111111111111",
+    "id": "generic-service",
+    "revision": "1111111111111111111111111111111111111111",
+    "tree_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "schema_version": "0.1"
+}

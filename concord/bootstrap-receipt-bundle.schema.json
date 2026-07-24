@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/bootstrap/v0.1/receipt-bundle.schema.json",
+  "title": "Concord Loom durable bootstrap receipt bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "run_id",
+    "candidate_tree_digest",
+    "run_card_digest",
+    "cycle_digest",
+    "policy_digest",
+    "run_card",
+    "cycle",
+    "policy",
+    "bundle_digest"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.bootstrap-receipt-bundle"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "candidate_tree_digest": {
+      "$ref": "#/$defs/digest"
+    },
+    "run_card_digest": {
+      "$ref": "#/$defs/digest"
+    },
+    "cycle_digest": {
+      "$ref": "#/$defs/digest"
+    },
+    "policy_digest": {
+      "$ref": "#/$defs/digest"
+    },
+    "run_card": {
+      "$ref": "bootstrap-run-card.schema.json"
+    },
+    "cycle": {
+      "$ref": "bootstrap-cycle.schema.json"
+    },
+    "policy": {
+      "$ref": "bootstrap-compute-policy.schema.json"
+    },
+    "bundle_digest": {
+      "$ref": "#/$defs/digest"
+    }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}

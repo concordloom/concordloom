@@ -1,0 +1,55 @@
+{
+  "acceptance": {
+    "actor": {
+      "display_name": "Example operator",
+      "id": "example-operator",
+      "kind": "operator"
+    },
+    "authority_ref": "operator",
+    "decided_at": "2026-07-24T00:06:00Z",
+    "state": "complete"
+  },
+  "authority_policy_digest": "sha256:904fca6e660b7d2a030769235b92981e57d92f13f1a5da309a9e8721bed2774b",
+  "decisions": [
+    {
+      "actor": {
+        "display_name": "Example operator",
+        "id": "example-operator",
+        "kind": "operator"
+      },
+      "authority_ref": "operator",
+      "decided_at": "2026-07-24T00:05:00Z",
+      "graph_delta": [
+        {
+          "op": "confirm",
+          "target_id": "service-source",
+          "target_kind": "node"
+        },
+        {
+          "op": "confirm",
+          "target_id": "service-tests",
+          "target_kind": "node"
+        },
+        {
+          "op": "confirm",
+          "target_id": "tests-service",
+          "target_kind": "edge"
+        },
+        {
+          "op": "confirm",
+          "target_id": "service-delivery-boundary",
+          "target_kind": "hypothesis"
+        }
+      ],
+      "id": "accept-nested-sdlc",
+      "rationale": "The service uses one delivery system whose SDLC stages are bounded child loops.",
+      "subject_id": "service-delivery-boundary",
+      "verdict": "confirmed"
+    }
+  ],
+  "id": "generic-service-decisions",
+  "kind": "concordloom.decision-log",
+  "schema_version": "0.1",
+  "source_graph_digest": "sha256:b54d421a0e2a407ebcf872e3dedc0d95dd028f4fd8ca665c1bf7765c599af85a",
+  "unresolved_blocking_question_ids": []
+}

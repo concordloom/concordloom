@@ -1,0 +1,62 @@
+{
+  "accepted_by": {
+    "accepted_at": "2026-07-24T00:09:00Z",
+    "actor": {
+      "display_name": "Example operator",
+      "id": "example-operator",
+      "kind": "operator"
+    },
+    "authority_ref": "operator",
+    "decision_id": "activate-generic-binding",
+    "proposal_digest": "sha256:104fcff584a71d52951400abe9cf931d3d93c2357dfa54f549814ab4e19d6dde",
+    "rationale": "Activate this exact digest chain for the example run."
+  },
+  "active_root_loop_ids": [
+    "delivery"
+  ],
+  "artifacts": [
+    {
+      "digest": "sha256:d909ba3d4f19f507f166b7718141af995344af9be3ca86bc7d39c71e75c4b5c4",
+      "path": "framework/generic-sdlc/loop-design.json",
+      "role": "accepted_loop_design"
+    },
+    {
+      "digest": "sha256:a2108280272c35cd2c0f4fc988947f6e0e7e2ffb5632202aee3735db184a0be6",
+      "path": "framework/generic-sdlc/accepted-project-graph.json",
+      "role": "accepted_project_graph"
+    },
+    {
+      "digest": "sha256:9068e7b90c4b73815608a6b3bf1fec32e2cbae75cbd2785eb05961260a3c1b96",
+      "path": "framework/generic-sdlc/cycle-registry.json",
+      "role": "cycle_registry"
+    },
+    {
+      "digest": "sha256:e6999029166ffa4ba723bec417b8e393e82943ce9f718f58417c9a55fd706269",
+      "path": "framework/generic-sdlc/decision-log.json",
+      "role": "decision_log"
+    },
+    {
+      "digest": "sha256:0d15c7298901207978611a299f15cb8747d70b56d5aa5b2e4d98919232fae8a0",
+      "path": "framework/generic-sdlc/loop-design-proposal.json",
+      "role": "loop_design_proposal"
+    },
+    {
+      "digest": "sha256:904fca6e660b7d2a030769235b92981e57d92f13f1a5da309a9e8721bed2774b",
+      "path": "framework/generic-sdlc/policy.json",
+      "role": "policy"
+    }
+  ],
+  "binding_digest": "sha256:345aa744baf91089d5e12396b161101344aa0bbb5bb0686c8954758797a29f0b",
+  "created_at": "2026-07-24T00:09:00Z",
+  "digest_contract": {
+    "algorithm": "sha256",
+    "canonicalization": "rfc8785",
+    "excluded_fields": [
+      "/binding_digest"
+    ]
+  },
+  "framework_version": "0.1.0",
+  "id": "generic-service-binding",
+  "kind": "concordloom.binding",
+  "schema_version": "0.1"
+}

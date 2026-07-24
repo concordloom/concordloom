@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "policy_id": "concordloom-bootstrap-compute-v0.1",
+  "intent": {
+    "quality": "high",
+    "cost": "bounded",
+    "privacy": "repository-local unless public research is required"
+  },
+  "requirements": [
+    "Record effective model, reasoning, agent, skill, subagents, and policy digest.",
+    "Treat planned routing as intent and recorded attempts as fact.",
+    "Use an executor independent from the implementation author for R, L, Q, and M."
+  ]
+}

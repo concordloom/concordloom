@@ -1,0 +1,14 @@
+{
+  "active_binding_digest": "sha256:345aa744baf91089d5e12396b161101344aa0bbb5bb0686c8954758797a29f0b",
+  "entries": [
+    {
+      "activated_by_decision_digest": "sha256:1031fe2d9439d8acf1dd56e0258c24f548a43e381b346f6d4ad99b73372fa132",
+      "binding_digest": "sha256:345aa744baf91089d5e12396b161101344aa0bbb5bb0686c8954758797a29f0b",
+      "binding_id": "generic-service-binding",
+      "path": "framework/generic-sdlc/binding.json"
+    }
+  ],
+  "id": "generic-service-catalog",
+  "kind": "concordloom.catalog",
+  "schema_version": "0.1"
+}

@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.1/decision-log.schema.json",
+  "title": "Concord Loom operator decision log",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "source_graph_digest",
+    "authority_policy_digest",
+    "decisions",
+    "unresolved_blocking_question_ids",
+    "acceptance"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.decision-log"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "source_graph_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "authority_policy_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/decision"
+      }
+    },
+    "unresolved_blocking_question_ids": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/identifier"
+      },
+      "uniqueItems": true
+    },
+    "acceptance": {
+      "$ref": "#/$defs/acceptance"
+    }
+  },
+  "$defs": {
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "subject_id",
+        "verdict",
+        "actor",
+        "decided_at",
+        "authority_ref",
+        "rationale",
+        "graph_delta"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "subject_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "verdict": {
+          "enum": [
+            "confirmed",
+            "rejected",
+            "corrected"
+          ]
+        },
+        "actor": {
+          "$ref": "common.schema.json#/$defs/actor"
+        },
+        "decided_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "authority_ref": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "graph_delta": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/graphOperation"
+          }
+        },
+        "correction": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "verdict": {
+                "const": "corrected"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "correction"
+            ]
+          }
+        }
+      ]
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "pending",
+            "complete",
+            "rejected"
+          ]
+        },
+        "actor": {
+          "$ref": "common.schema.json#/$defs/actor"
+        },
+        "decided_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "authority_ref": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "actor",
+              "decided_at",
+              "authority_ref"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "acceptance": {
+            "properties": {
+              "state": {
+                "const": "complete"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "unresolved_blocking_question_ids": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
+}

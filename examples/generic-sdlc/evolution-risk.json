@@ -1,0 +1,7 @@
+{
+  "failure_modes": [
+    "The additional gate may delay low-risk changes."
+  ],
+  "level": "medium",
+  "rollback": "Reject the proposal and retain the active binding."
+}

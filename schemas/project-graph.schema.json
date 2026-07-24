@@ -1,0 +1,340 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.1/project-graph.schema.json",
+  "title": "Concord Loom project graph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "phase",
+    "generated_at",
+    "repository",
+    "nodes",
+    "edges",
+    "hypotheses"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.project-graph"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "phase": {
+      "enum": [
+        "observed",
+        "accepted"
+      ]
+    },
+    "generated_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "revision",
+        "tree_digest",
+        "history_head",
+        "dirty"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "revision": {
+          "$ref": "common.schema.json#/$defs/gitOid"
+        },
+        "tree_digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        },
+        "history_head": {
+          "$ref": "common.schema.json#/$defs/gitOid"
+        },
+        "dirty": {
+          "type": "boolean"
+        },
+        "remote": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tracked_files_seen",
+        "untracked_files_seen",
+        "history_commits_seen",
+        "truncated",
+        "limits"
+      ],
+      "properties": {
+        "tracked_files_seen": {"type": "integer", "minimum": 0},
+        "untracked_files_seen": {"type": "integer", "minimum": 0},
+        "history_commits_seen": {"type": "integer", "minimum": 0},
+        "truncated": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "files",
+              "file-bytes",
+              "history",
+              "paths-per-commit",
+              "cochange-pairs",
+              "subprocess-output"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "limits": {
+          "type": "object",
+          "additionalProperties": {"type": "integer", "minimum": 1}
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edge"
+      }
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/hypothesis"
+      }
+    },
+    "decision_log_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    }
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "label",
+        "status",
+        "provenance"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "enum": [
+            "repository",
+            "directory",
+            "file",
+            "component",
+            "surface",
+            "actor"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "$ref": "common.schema.json#/$defs/relativePath"
+        },
+        "category": {
+          "enum": [
+            "source",
+            "test",
+            "build",
+            "ci",
+            "decision",
+            "documentation",
+            "governance",
+            "operations",
+            "other"
+          ]
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "status": {
+          "enum": [
+            "observed",
+            "inferred",
+            "confirmed",
+            "rejected",
+            "corrected"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/provenance"
+          }
+        },
+        "operator_decision_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "size_bytes": {"type": "integer", "minimum": 0},
+            "churn_commits": {"type": "integer", "minimum": 0},
+            "author_count": {"type": "integer", "minimum": 0},
+            "index_object_id": {"type": "string", "pattern": "^[0-9a-f]{40,64}$"}
+          }
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source",
+        "target",
+        "kind",
+        "status",
+        "confidence",
+        "weight",
+        "source_refs"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "source": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "target": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "enum": [
+            "contains",
+            "imports",
+            "depends_on",
+            "co_changes",
+            "renames_to",
+            "builds",
+            "tests",
+            "deploys",
+            "governs",
+            "documents",
+            "owns"
+          ]
+        },
+        "status": {
+          "enum": [
+            "observed",
+            "inferred",
+            "confirmed",
+            "rejected",
+            "corrected"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0
+        },
+        "first_seen": {
+          "$ref": "common.schema.json#/$defs/gitOid"
+        },
+        "last_seen": {
+          "$ref": "common.schema.json#/$defs/gitOid"
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/provenance"
+          }
+        },
+        "operator_decision_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        }
+      }
+    },
+    "hypothesis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "claim",
+        "status",
+        "blocking",
+        "impact_score",
+        "evidence",
+        "graph_delta"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "unresolved",
+            "confirmed",
+            "rejected",
+            "corrected"
+          ]
+        },
+        "blocking": {
+          "type": "boolean"
+        },
+        "impact_score": {
+          "type": "number",
+          "minimum": 0
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/provenance"
+          }
+        },
+        "graph_delta": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/graphOperation"
+          }
+        }
+      }
+    }
+  }
+}

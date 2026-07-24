@@ -1,0 +1,415 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.1/policy.schema.json",
+  "title": "Concord Loom routing, authority, evidence, and evolution policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "authority",
+    "routing",
+    "execution",
+    "evidence",
+    "evolution"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.policy"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "authority": {
+      "$ref": "#/$defs/authorityPolicy"
+    },
+    "routing": {
+      "$ref": "#/$defs/routingPolicy"
+    },
+    "execution": {
+      "$ref": "#/$defs/executionPolicy"
+    },
+    "evidence": {
+      "$ref": "#/$defs/evidencePolicy"
+    },
+    "evolution": {
+      "$ref": "#/$defs/evolutionPolicy"
+    }
+  },
+  "$defs": {
+    "role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "description",
+        "capabilities"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "principal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "roles"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "enum": [
+            "human",
+            "agent",
+            "automation"
+          ]
+        },
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "separationRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "subject_capability",
+        "review_capability",
+        "disallow_same_principal"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "subject_capability": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "review_capability": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "disallow_same_principal": {
+          "const": true
+        },
+        "applies_to_loop_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "authorityPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "roles",
+        "principals",
+        "separation_rules"
+      ],
+      "properties": {
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/role"
+          }
+        },
+        "principals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/principal"
+          }
+        },
+        "separation_rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/separationRule"
+          }
+        }
+      }
+    },
+    "routingPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operator_selects_outcomes",
+        "orchestrator_selects_machinery",
+        "record_planned_route",
+        "record_effective_route"
+      ],
+      "properties": {
+        "operator_selects_outcomes": {
+          "const": true
+        },
+        "orchestrator_selects_machinery": {
+          "const": true
+        },
+        "record_planned_route": {
+          "const": true
+        },
+        "record_effective_route": {
+          "const": true
+        }
+      }
+    },
+    "executionPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "local_first",
+        "default_scope",
+        "default_budgets",
+        "allowed_tools",
+        "control_plane",
+        "model_policy"
+      ],
+      "properties": {
+        "local_first": {
+          "type": "boolean"
+        },
+        "default_scope": {
+          "$ref": "common.schema.json#/$defs/scope"
+        },
+        "default_budgets": {
+          "$ref": "common.schema.json#/$defs/budget"
+        },
+        "allowed_tools": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "control_plane": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "runner_principal_id",
+            "state_path",
+            "actions",
+            "candidate_write"
+          ],
+          "properties": {
+            "runner_principal_id": {
+              "$ref": "common.schema.json#/$defs/identifier"
+            },
+            "state_path": {
+              "$ref": "common.schema.json#/$defs/relativePath"
+            },
+            "actions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "enum": [
+                  "new",
+                  "authorize",
+                  "record-attempt",
+                  "record-evidence",
+                  "complete"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "candidate_write": {
+              "const": false
+            }
+          }
+        },
+        "model_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "allowed_providers",
+            "privacy",
+            "allowed_path_prefixes",
+            "allowed_content_classes",
+            "public_content_classes",
+            "allowed_models",
+            "max_cost_units",
+            "record_effective_model"
+          ],
+          "properties": {
+            "allowed_providers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "privacy": {
+              "enum": [
+                "local_only",
+                "approved_remote",
+                "public_data_only"
+              ]
+            },
+            "allowed_path_prefixes": {
+              "type": "array",
+              "items": {
+                "$ref": "common.schema.json#/$defs/relativePath"
+              },
+              "uniqueItems": true
+            },
+            "allowed_content_classes": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "metadata",
+                  "history",
+                  "source",
+                  "tests",
+                  "documentation",
+                  "configuration",
+                  "evidence"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "public_content_classes": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "metadata",
+                  "history",
+                  "source",
+                  "tests",
+                  "documentation",
+                  "configuration",
+                  "evidence"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "allowed_models": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "provider",
+                  "model"
+                ],
+                "properties": {
+                  "provider": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "max_cost_units": {
+              "type": "number",
+              "minimum": 0
+            },
+            "record_effective_model": {
+              "const": true
+            }
+          }
+        }
+      }
+    },
+    "evidencePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content_addressed",
+        "require_candidate_digest",
+        "require_policy_digest",
+        "child_receipts_auto_accept_parent",
+        "accepted_results"
+      ],
+      "properties": {
+        "content_addressed": {
+          "const": true
+        },
+        "require_candidate_digest": {
+          "const": true
+        },
+        "require_policy_digest": {
+          "const": true
+        },
+        "child_receipts_auto_accept_parent": {
+          "const": false
+        },
+        "accepted_results": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "pass",
+              "fail",
+              "indeterminate"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "evolutionPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "proposal_capability",
+        "decision_capability",
+        "activation_capability",
+        "governance_source",
+        "allow_self_activation"
+      ],
+      "properties": {
+        "proposal_capability": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "decision_capability": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "activation_capability": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "governance_source": {
+          "const": "proposal.base_binding_digest"
+        },
+        "allow_self_activation": {
+          "const": false
+        },
+        "minimum_repeated_signals": {
+          "type": "integer",
+          "minimum": 2
+        }
+      }
+    }
+  }
+}

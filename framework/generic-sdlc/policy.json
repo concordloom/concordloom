@@ -1,0 +1,184 @@
+{
+  "kind": "concordloom.policy",
+  "schema_version": "0.1",
+  "id": "generic-service-policy",
+  "authority": {
+    "roles": [
+      {
+        "id": "operator",
+        "description": "Accepts product intent and governance changes.",
+        "capabilities": [
+          "accept-intent",
+          "accept-loop-design",
+          "authorize-run",
+          "decide-evolution",
+          "activate-binding",
+          "escalate"
+        ]
+      },
+      {
+        "id": "orchestrator",
+        "description": "Selects execution machinery within accepted outcomes.",
+        "capabilities": [
+          "route-run",
+          "accept-parent",
+          "escalate"
+        ]
+      },
+      {
+        "id": "executor",
+        "description": "Produces a scoped candidate and factual evidence.",
+        "capabilities": [
+          "execute-work",
+          "produce-evidence",
+          "escalate"
+        ]
+      },
+      {
+        "id": "reviewer",
+        "description": "Independently evaluates pinned candidates.",
+        "capabilities": [
+          "review-candidate",
+          "accept-gate",
+          "produce-evidence",
+          "escalate"
+        ]
+      },
+      {
+        "id": "publisher",
+        "description": "Publishes an independently accepted candidate.",
+        "capabilities": [
+          "publish-release",
+          "produce-evidence",
+          "escalate"
+        ]
+      }
+    ],
+    "principals": [
+      {
+        "id": "example-operator",
+        "kind": "human",
+        "roles": [
+          "operator"
+        ]
+      },
+      {
+        "id": "example-orchestrator",
+        "kind": "agent",
+        "roles": [
+          "orchestrator"
+        ]
+      },
+      {
+        "id": "example-executor",
+        "kind": "agent",
+        "roles": [
+          "executor"
+        ]
+      },
+      {
+        "id": "example-reviewer",
+        "kind": "agent",
+        "roles": [
+          "reviewer"
+        ]
+      },
+      {
+        "id": "example-publisher",
+        "kind": "automation",
+        "roles": [
+          "publisher"
+        ]
+      }
+    ],
+    "separation_rules": [
+      {
+        "id": "author-review-separation",
+        "subject_capability": "execute-work",
+        "review_capability": "review-candidate",
+        "disallow_same_principal": true,
+        "applies_to_loop_ids": [
+          "testing",
+          "release"
+        ]
+      }
+    ]
+  },
+  "routing": {
+    "operator_selects_outcomes": true,
+    "orchestrator_selects_machinery": true,
+    "record_planned_route": true,
+    "record_effective_route": true
+  },
+  "execution": {
+    "local_first": true,
+    "default_scope": {
+      "read_paths": [
+        "."
+      ],
+      "write_paths": [
+        "src",
+        "tests",
+        "docs"
+      ],
+      "network": "none",
+      "external_mutations": []
+    },
+    "default_budgets": {
+      "max_attempts": 3,
+      "max_elapsed_seconds": 3600,
+      "max_cost_units": 10,
+      "on_exhaustion": "failed"
+    },
+    "allowed_tools": [
+      "git",
+      "python"
+    ],
+    "control_plane": {
+      "runner_principal_id": "example-orchestrator",
+      "state_path": ".concord",
+      "actions": [
+        "new",
+        "authorize",
+        "record-attempt",
+        "record-evidence",
+        "complete"
+      ],
+      "candidate_write": false
+    },
+    "model_policy": {
+      "allowed_providers": [],
+      "privacy": "local_only",
+      "allowed_path_prefixes": [],
+      "allowed_content_classes": [],
+      "public_content_classes": [],
+      "allowed_models": [
+        {
+          "provider": "",
+          "model": "none"
+        }
+      ],
+      "max_cost_units": 10,
+      "record_effective_model": true
+    }
+  },
+  "evidence": {
+    "content_addressed": true,
+    "require_candidate_digest": true,
+    "require_policy_digest": true,
+    "child_receipts_auto_accept_parent": false,
+    "accepted_results": [
+      "pass",
+      "fail",
+      "indeterminate"
+    ]
+  },
+  "evolution": {
+    "proposal_capability": "route-run",
+    "decision_capability": "decide-evolution",
+    "activation_capability": "activate-binding",
+    "governance_source": "proposal.base_binding_digest",
+    "allow_self_activation": false,
+    "minimum_repeated_signals": 2
+  }
+}

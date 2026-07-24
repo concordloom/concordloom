@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.1/common.schema.json",
+  "title": "Concord Loom common definitions",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "gitOid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}(?:[0-9a-f]{24})?$"
+    },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "kind": {
+          "enum": [
+            "operator",
+            "orchestrator",
+            "executor",
+            "reviewer",
+            "automation"
+          ]
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "git_commit",
+            "git_diff",
+            "file",
+            "command",
+            "tool",
+            "decision",
+            "evidence",
+            "external"
+          ]
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "line_start": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "line_end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "observed_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "producer": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read_paths",
+        "write_paths",
+        "network",
+        "external_mutations"
+      ],
+      "properties": {
+        "read_paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relativePath"
+          },
+          "uniqueItems": true
+        },
+        "write_paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relativePath"
+          },
+          "uniqueItems": true
+        },
+        "network": {
+          "enum": [
+            "none",
+            "read",
+            "write"
+          ]
+        },
+        "external_mutations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_attempts",
+        "max_elapsed_seconds",
+        "max_cost_units",
+        "on_exhaustion"
+      ],
+      "properties": {
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_elapsed_seconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_cost_units": {
+          "type": "number",
+          "minimum": 0
+        },
+        "on_exhaustion": {
+          "enum": [
+            "failed",
+            "escalated",
+            "blocked"
+          ]
+        }
+      }
+    },
+    "graphOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "target_kind",
+        "target_id"
+      ],
+      "properties": {
+        "op": {
+          "enum": [
+            "add",
+            "remove",
+            "replace",
+            "confirm",
+            "reject"
+          ]
+        },
+        "target_kind": {
+          "enum": [
+            "node",
+            "edge",
+            "hypothesis",
+            "loop",
+            "containment",
+            "policy"
+          ]
+        },
+        "target_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "value": true,
+        "precondition_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    }
+  }
+}

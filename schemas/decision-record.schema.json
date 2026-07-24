@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.1/decision-record.schema.json",
+  "title": "Concord Loom operator decision record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "question_set_digest",
+    "question_id",
+    "decision"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.decision-record"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "question_set_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "question_id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "decision": {
+      "$ref": "decision-log.schema.json#/$defs/decision"
+    }
+  }
+}

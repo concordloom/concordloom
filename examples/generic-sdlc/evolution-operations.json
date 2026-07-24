@@ -1,0 +1,10 @@
+[
+  {
+    "op": "add",
+    "target_id": "threat-model-review",
+    "target_kind": "loop",
+    "value": {
+      "purpose": "Propose a bounded threat-model review child loop."
+    }
+  }
+]

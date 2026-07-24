@@ -1,0 +1,76 @@
+{
+  "id": "generic-service-questions",
+  "kind": "concordloom.question-set",
+  "questions": [
+    {
+      "blocking": true,
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "file",
+          "ref": "src/service.py"
+        }
+      ],
+      "hypothesis_id": "service-delivery-boundary",
+      "id": "question.service-delivery-boundary",
+      "impact_score": 4.0,
+      "options": [
+        {
+          "graph_delta": [
+            {
+              "op": "confirm",
+              "target_id": "service-source",
+              "target_kind": "node"
+            },
+            {
+              "op": "confirm",
+              "target_id": "service-tests",
+              "target_kind": "node"
+            },
+            {
+              "op": "confirm",
+              "target_id": "tests-service",
+              "target_kind": "edge"
+            },
+            {
+              "op": "confirm",
+              "target_id": "service-delivery-boundary",
+              "target_kind": "hypothesis"
+            }
+          ],
+          "id": "confirm",
+          "label": "Confirm the proposed intent",
+          "verdict": "confirmed"
+        },
+        {
+          "graph_delta": [
+            {
+              "op": "reject",
+              "target_id": "service-delivery-boundary",
+              "target_kind": "hypothesis"
+            }
+          ],
+          "id": "reject",
+          "label": "Reject the proposed intent",
+          "verdict": "rejected"
+        },
+        {
+          "graph_delta": [
+            {
+              "op": "reject",
+              "target_id": "service-delivery-boundary",
+              "target_kind": "hypothesis"
+            }
+          ],
+          "id": "correct",
+          "label": "Reject this wording and provide a correction",
+          "verdict": "corrected"
+        }
+      ],
+      "prompt": "Should Concord Loom accept this intent: The service is governed as one delivery boundary.",
+      "why_it_matters": "The answer changes 4 proposed graph operation(s) across edge, hypothesis, node. Compilation is blocked until an authorized operator decides it."
+    }
+  ],
+  "schema_version": "0.1",
+  "source_graph_digest": "sha256:b54d421a0e2a407ebcf872e3dedc0d95dd028f4fd8ca665c1bf7765c599af85a"
+}

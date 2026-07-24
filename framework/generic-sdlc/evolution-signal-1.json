@@ -1,0 +1,17 @@
+{
+  "base_binding_digest": "sha256:345aa744baf91089d5e12396b161101344aa0bbb5bb0686c8954758797a29f0b",
+  "category": "friction",
+  "id": "repeated-review-friction-1",
+  "kind": "concordloom.evolution-signal",
+  "occurrences": 1,
+  "provenance": [
+    {
+      "kind": "evidence",
+      "ref": "review-observation-1"
+    }
+  ],
+  "schema_version": "0.1",
+  "severity": "warning",
+  "source_digest": "sha256:6e5d3823d41ebaa30c8e20dbb524730a56a2e7441406415b048cbdaf834e59e6",
+  "summary": "Independent review repeatedly needs an explicit threat-model input."
+}

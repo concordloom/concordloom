@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.1/evolution-signal.schema.json",
+  "title": "Concord Loom evolution signal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "base_binding_digest",
+    "source_digest",
+    "category",
+    "severity",
+    "occurrences",
+    "summary",
+    "provenance"
+  ],
+  "properties": {
+    "kind": {"const": "concordloom.evolution-signal"},
+    "schema_version": {"const": "0.1"},
+    "id": {"$ref": "common.schema.json#/$defs/identifier"},
+    "base_binding_digest": {"$ref": "common.schema.json#/$defs/digest"},
+    "source_digest": {"$ref": "common.schema.json#/$defs/digest"},
+    "category": {
+      "enum": ["friction", "drift", "recurring-failure", "cadence", "coverage"]
+    },
+    "severity": {"enum": ["info", "warning", "critical"]},
+    "occurrences": {"type": "integer", "minimum": 1},
+    "summary": {"type": "string", "minLength": 1},
+    "provenance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "common.schema.json#/$defs/provenance"}
+    }
+  }
+}
+
