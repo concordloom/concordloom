@@ -29,11 +29,11 @@ The header keeps 2 version axes separate:
 
 ```text
 Product release: 0.1.0
-Development rules: revision 6
+Development rules: revision 8
 ```
 
-Revision 6 is the sixth accepted version of Concord Loom's own development
-rules. It is not product version 0.6.
+Revision 8 is the eighth accepted version of Concord Loom's own development
+rules. It is not a product release.
 
 ## Complete development system
 

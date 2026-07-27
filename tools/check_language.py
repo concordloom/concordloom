@@ -15,6 +15,7 @@ ENTRY_DOCUMENTS = [
     ROOT / "docs" / "ru" / "QUICKSTART.md",
     ROOT / "docs" / "ru" / "ATLAS.md",
 ]
+PUBLIC_RUSSIAN_DOCUMENTS = sorted((ROOT / "docs" / "ru").rglob("*.md"))
 RAW_PROSE_TERMS = [
     "binding",
     "candidate",
@@ -65,6 +66,22 @@ def main() -> int:
         "authority",
         "successor",
         "activation",
+        "runner",
+        "run_card",
+        "digest",
+        "registry",
+        "policy",
+        "scope",
+        "runtime",
+        "workflow",
+        "skill",
+        "observe_phase",
+        "negotiate_phase",
+        "bind_phase",
+        "execute_phase",
+        "verify_phase",
+        "publish_phase",
+        "evolve_phase",
     }
     missing = required - concepts
     if missing:
@@ -79,6 +96,19 @@ def main() -> int:
                         f"{path.relative_to(ROOT)}:{number}: "
                         f"unexplained English term {term!r}"
                     )
+
+    for path in PUBLIC_RUSSIAN_DOCUMENTS:
+        for number, line in prose_lines(path.read_text(encoding="utf-8")):
+            if re.search(r"(?<![\w-])Atlas(?![\w-])", line):
+                errors.append(
+                    f"{path.relative_to(ROOT)}:{number}: "
+                    "English product-view name 'Atlas' in Russian prose"
+                )
+            if re.search(r"(?<![\w-])concord-change(?![\w-])", line):
+                errors.append(
+                    f"{path.relative_to(ROOT)}:{number}: "
+                    "obsolete seven-loop self-binding described as current"
+                )
 
     atlas_data = json.loads(
         (ROOT / "site" / "data" / "atlas.json").read_text(encoding="utf-8")
@@ -109,6 +139,9 @@ def main() -> int:
 
     site_source = (ROOT / "site" / "index.html").read_text(encoding="utf-8")
     site_script = (ROOT / "site" / "app.js").read_text(encoding="utf-8")
+    content_data = json.loads(
+        (ROOT / "site" / "data" / "content.json").read_text(encoding="utf-8")
+    )
     if "data-ru=" not in site_source:
         errors.append("site has no Russian copy")
     if "активация остаётся" in site_source.casefold():
@@ -121,6 +154,52 @@ def main() -> int:
     ):
         if rejected in site_source or rejected in site_script:
             errors.append(f"site still exposes mixed-language copy {rejected!r}")
+    for required in (
+        'data-atlas-binding data-en="Loading" data-ru="Загрузка"',
+        'data-atlas-root data-en="Loading" data-ru="Загрузка"',
+        'identifier: "Идентификатор"',
+        'childCount: "Вложенных циклов"',
+    ):
+        if required not in site_source and required not in site_script:
+            errors.append(f"site misses Russian dynamic copy {required!r}")
+    for section in ("article", "quickstart"):
+        russian_html = content_data[section]["ru"]["html"]
+        visible_russian = re.sub(r"<[^>]+>", " ", russian_html)
+        if re.search(r"(?<![\w-])Atlas(?![\w-])", visible_russian):
+            errors.append(
+                f"generated Russian {section} still exposes English 'Atlas'"
+            )
+        if re.search(r"(?<![\w-])concord-change(?![\w-])", visible_russian):
+            errors.append(
+                f"generated Russian {section} describes the obsolete root as current"
+            )
+
+    offline_russian_path = ROOT / "docs" / "ru" / "ATLAS.html"
+    if not offline_russian_path.exists():
+        errors.append("generated Russian offline Atlas is missing")
+    else:
+        offline_russian = offline_russian_path.read_text(encoding="utf-8")
+        for required in (
+            '<html lang="ru">',
+            "Перейти к Атласу",
+            'aria-label="Путь по циклам"',
+            "Выбран цикл: {label}",
+        ):
+            if required not in offline_russian:
+                errors.append(
+                    f"generated Russian offline Atlas misses {required!r}"
+                )
+        for rejected in (
+            "No run attached",
+            "Selected loop:",
+            'aria-label="Map key"',
+            ">Containment<",
+            ">Local flow<",
+        ):
+            if rejected in offline_russian:
+                errors.append(
+                    f"generated Russian offline Atlas exposes {rejected!r}"
+                )
 
     if errors:
         for error in errors:
@@ -128,7 +207,9 @@ def main() -> int:
         return 1
     print(
         "LANGUAGE_CHECK_OK "
-        f"entry_docs={len(ENTRY_DOCUMENTS)} terms={len(terminology['terms'])}"
+        f"entry_docs={len(ENTRY_DOCUMENTS)} "
+        f"public_ru_docs={len(PUBLIC_RUSSIAN_DOCUMENTS)} "
+        f"terms={len(terminology['terms'])}"
     )
     return 0
 

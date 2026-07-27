@@ -303,6 +303,12 @@ def atlas_projection(binding: dict, registry: dict, model: dict) -> dict:
                 "copy": node["copy"],
                 "role": node["responsible_role"],
                 "profile": node["execution_profile"],
+                "route_materialization": node.get(
+                    "route_materialization",
+                    model["profiles"][node["execution_profile"]][
+                        "route_materialization"
+                    ],
+                ),
                 "contract": node["contract"],
                 "artifacts": node["artifacts"],
                 "acceptedResults": contract["accepted_results"],

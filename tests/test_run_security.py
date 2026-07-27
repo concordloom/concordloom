@@ -191,8 +191,9 @@ def evidence_for(
     paths: list[str] | None = None,
     content_classes: list[str] | None = None,
     attempt_id: str = "attempt",
+    route_metadata: dict | None = None,
 ) -> dict:
-    return {
+    evidence = {
         "kind": "concordloom.evidence",
         "schema_version": "0.1",
         "id": "testing-evidence",
@@ -240,6 +241,8 @@ def evidence_for(
             "digest": OID_DIGEST,
         },
     }
+    evidence["effective_route"].update(deepcopy(route_metadata or {}))
+    return evidence
 
 
 def payload_at(parent: Path, evidence: dict) -> Path:
@@ -278,6 +281,93 @@ def running_card(
         repository=repository,
     )
     return card, binding, registry, policy, manifest
+
+
+def structured_route_metadata(resource_digest: str = OID_DIGEST) -> dict:
+    return {
+        "model_provider": "",
+        "model": "none",
+        "reasoning": "deterministic",
+        "skills": [
+            {
+                "id": "independent-review",
+                "version": "1.0.0",
+                "digest": OID_DIGEST,
+            }
+        ],
+        "mcp_servers": [
+            {
+                "id": "repository-evidence",
+                "version": "2.1.0",
+                "digest": OID_DIGEST,
+            }
+        ],
+        "resources": [
+            {
+                "id": "candidate-source",
+                "kind": "repository_path",
+                "ref": "service.py",
+                "digest": resource_digest,
+                "access_mode": "read",
+            }
+        ],
+        "tool_capabilities": ["inspect-source"],
+        "subagent_identities": [
+            {
+                "id": "source-inspector",
+                "principal_id": "example-executor",
+                "agent": "codex",
+                "model_provider": "",
+                "model": "none",
+            }
+        ],
+    }
+
+
+def running_card_with_metadata(
+    repository: Path,
+) -> tuple[dict, dict, dict, dict, dict, dict]:
+    binding, registry, policy = runtime_documents()
+    manifest = build_candidate_manifest(repository, generated_at=NOW)
+    draft = create_run_card(
+        binding,
+        registry,
+        policy,
+        manifest,
+        run_id="security-run",
+        root_loop_id="testing",
+        candidate_author_principal_ids=["example-executor"],
+    )
+    resource_digest = next(
+        item["digest"]
+        for item in manifest["files"]
+        if item["path"] == "service.py"
+    )
+    metadata = structured_route_metadata(resource_digest)
+    planned = deepcopy(draft["planned_route"])
+    planned[0].update(deepcopy(metadata))
+    card = create_run_card(
+        binding,
+        registry,
+        policy,
+        manifest,
+        run_id="security-run",
+        root_loop_id="testing",
+        candidate_author_principal_ids=["example-executor"],
+        planned_route=planned,
+    )
+    card = authorize_run(
+        card,
+        binding,
+        registry,
+        policy,
+        manifest,
+        actor={"id": "example-operator", "kind": "operator"},
+        authority_ref="operator",
+        authorized_at=NOW,
+        repository=repository,
+    )
+    return card, binding, registry, policy, manifest, metadata
 
 
 class CandidateManifestSecurityTests(unittest.TestCase):
@@ -338,6 +428,160 @@ class CandidateManifestSecurityTests(unittest.TestCase):
 
 
 class RunPolicySecurityTests(unittest.TestCase):
+    def test_task_targeted_routes_use_only_exact_ancestor_closures(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repository = repository_at(Path(temporary))
+            source = ROOT / "framework" / "concordloom" / "v6"
+            binding = load(source / "binding.json")
+            registry = load(source / "cycle-registry.json")
+            policy = load(source / "policy.json")
+            manifest = build_candidate_manifest(repository, generated_at=NOW)
+            common = {
+                "binding": binding,
+                "registry": registry,
+                "policy": policy,
+                "candidate_manifest": manifest,
+                "root_loop_id": "steward-concordloom",
+                "candidate_author_principal_ids": ["example-executor"],
+            }
+
+            default = create_run_card(
+                **common,
+                run_id="root-coordinator-only",
+            )
+            self.assertEqual(
+                ["steward-concordloom"],
+                [
+                    item["loop_id"]
+                    for item in default["planned_route"]
+                ],
+            )
+
+            targeted = create_run_card(
+                **common,
+                run_id="target-maintain-cli",
+                target_loop_ids=["maintain-cli"],
+            )
+            self.assertEqual(
+                [
+                    "steward-concordloom",
+                    "runtime-tooling",
+                    "maintain-cli",
+                ],
+                [
+                    item["loop_id"]
+                    for item in targeted["planned_route"]
+                ],
+            )
+            self.assertTrue(
+                {
+                    "release-distribution",
+                    "system-evolution",
+                    "maintain-article",
+                }.isdisjoint(
+                    item["loop_id"]
+                    for item in targeted["planned_route"]
+                )
+            )
+
+            combined = create_run_card(
+                **common,
+                run_id="two-targets",
+                target_loop_ids=["maintain-cli", "maintain-article"],
+            )
+            self.assertEqual(
+                [
+                    "steward-concordloom",
+                    "research-theory",
+                    "maintain-article",
+                    "runtime-tooling",
+                    "maintain-cli",
+                ],
+                [
+                    item["loop_id"]
+                    for item in combined["planned_route"]
+                ],
+            )
+
+            portfolio = create_run_card(
+                **common,
+                run_id="explicit-portfolio",
+                portfolio=True,
+            )
+            portfolio_ids = [
+                item["loop_id"] for item in portfolio["planned_route"]
+            ]
+            self.assertEqual(58, len(portfolio_ids))
+            self.assertEqual("steward-concordloom", portfolio_ids[0])
+            positions = {
+                loop_id: index
+                for index, loop_id in enumerate(portfolio_ids)
+            }
+            for edge in registry["containment_graph"]["edges"]:
+                self.assertLess(
+                    positions[edge["parent_loop_id"]],
+                    positions[edge["child_loop_id"]],
+                    edge["id"],
+                )
+
+            grants = {
+                edge["child_loop_id"]: edge["grant"]["scope"]
+                for edge in registry["containment_graph"]["edges"]
+            }
+            leaf_scope = next(
+                item["scope"]
+                for item in targeted["planned_route"]
+                if item["loop_id"] == "maintain-cli"
+            )
+            self.assertEqual(grants["maintain-cli"], leaf_scope)
+            for item in targeted["planned_route"][:-1]:
+                self.assertEqual("none", item["scope"]["network"])
+                self.assertEqual([], item["scope"]["external_mutations"])
+
+    def test_target_selection_fails_closed_and_excludes_custom_routes(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repository = repository_at(Path(temporary))
+            binding, registry, policy = runtime_documents()
+            manifest = build_candidate_manifest(repository, generated_at=NOW)
+            common = {
+                "binding": binding,
+                "registry": registry,
+                "policy": policy,
+                "candidate_manifest": manifest,
+                "root_loop_id": "testing",
+                "candidate_author_principal_ids": ["example-executor"],
+            }
+            with self.assertRaisesRegex(RunStateError, "unknown target loops"):
+                create_run_card(
+                    **common,
+                    run_id="unknown-target",
+                    target_loop_ids=["missing-loop"],
+                )
+            with self.assertRaisesRegex(RunStateError, "must be unique"):
+                create_run_card(
+                    **common,
+                    run_id="duplicate-target",
+                    target_loop_ids=["testing", "testing"],
+                )
+            with self.assertRaisesRegex(RunStateError, "mutually exclusive"):
+                create_run_card(
+                    **common,
+                    run_id="target-and-portfolio",
+                    target_loop_ids=["testing"],
+                    portfolio=True,
+                )
+            route = create_run_card(
+                **common,
+                run_id="route-source",
+            )["planned_route"]
+            with self.assertRaisesRegex(RunStateError, "mutually exclusive"):
+                create_run_card(
+                    **common,
+                    run_id="custom-and-target",
+                    planned_route=route,
+                    target_loop_ids=["testing"],
+                )
+
     def test_multiroot_route_stays_inside_the_selected_root(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             repository = repository_at(Path(temporary))
@@ -399,6 +643,19 @@ class RunPolicySecurityTests(unittest.TestCase):
                 root_loop_id="secondary-testing",
                 candidate_author_principal_ids=["example-executor"],
             )
+            with self.assertRaisesRegex(
+                RunStateError, "selected run root subtree"
+            ):
+                create_run_card(
+                    binding,
+                    registry,
+                    policy,
+                    manifest,
+                    run_id="foreign-target-run",
+                    root_loop_id="testing",
+                    candidate_author_principal_ids=["example-executor"],
+                    target_loop_ids=["secondary-testing"],
+                )
             with self.assertRaisesRegex(
                 RunStateError, "selected run root subtree"
             ):
@@ -511,6 +768,207 @@ class RunPolicySecurityTests(unittest.TestCase):
                     repository=repository,
                 )
 
+    def test_structured_route_metadata_round_trips_to_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            parent = Path(temporary)
+            repository = repository_at(parent)
+            (
+                card,
+                binding,
+                registry,
+                policy,
+                manifest,
+                metadata,
+            ) = running_card_with_metadata(repository)
+            card = record_attempt(
+                card,
+                policy,
+                manifest,
+                node_id="testing",
+                attempt_id="attempt-structured",
+                started_at=NOW,
+                finished_at=NOW,
+                effective_principal_id="example-reviewer",
+                effective_agent="review-agent",
+                effective_model="none",
+                effective_model_provider=metadata["model_provider"],
+                effective_reasoning="deterministic",
+                effective_skill="review",
+                effective_skills=metadata["skills"],
+                effective_mcp_servers=metadata["mcp_servers"],
+                effective_resources=metadata["resources"],
+                effective_tool_capabilities=metadata["tool_capabilities"],
+                effective_subagent_identities=metadata["subagent_identities"],
+                effective_tools=["python"],
+                result="pass",
+                repository=repository,
+            )
+            evidence = evidence_for(
+                binding,
+                policy,
+                manifest,
+                attempt_id="attempt-structured",
+                route_metadata=metadata,
+            )
+            payload_root = payload_at(parent, evidence)
+            card = record_evidence(
+                card,
+                evidence,
+                registry,
+                policy,
+                manifest,
+                payload_root=payload_root,
+                repository=repository,
+            )
+            attempt = card["nodes"][0]["attempts"][0]
+            self.assertEqual(
+                attempt["effective_resources"],
+                metadata["resources"],
+            )
+            self.assertEqual(
+                attempt["effective_mcp_servers"],
+                metadata["mcp_servers"],
+            )
+
+    def test_declared_resources_are_required_and_must_match(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            parent = Path(temporary)
+            repository = repository_at(parent)
+            (
+                card,
+                binding,
+                registry,
+                policy,
+                manifest,
+                metadata,
+            ) = running_card_with_metadata(repository)
+            with self.assertRaisesRegex(RunStateError, "omits declared resources"):
+                record_attempt(
+                    card,
+                    policy,
+                    manifest,
+                    node_id="testing",
+                    attempt_id="attempt-omits-resource",
+                    started_at=NOW,
+                    finished_at=NOW,
+                    effective_principal_id="example-reviewer",
+                    effective_agent="review-agent",
+                    effective_model="none",
+                    effective_model_provider=metadata["model_provider"],
+                    effective_reasoning="deterministic",
+                    effective_skill="review",
+                    effective_skills=metadata["skills"],
+                    effective_mcp_servers=metadata["mcp_servers"],
+                    effective_tool_capabilities=metadata["tool_capabilities"],
+                    effective_subagent_identities=metadata[
+                        "subagent_identities"
+                    ],
+                    effective_tools=["python"],
+                    result="pass",
+                    repository=repository,
+                )
+
+            card = record_attempt(
+                card,
+                policy,
+                manifest,
+                node_id="testing",
+                attempt_id="attempt-resource",
+                started_at=NOW,
+                finished_at=NOW,
+                effective_principal_id="example-reviewer",
+                effective_agent="review-agent",
+                effective_model="none",
+                effective_model_provider=metadata["model_provider"],
+                effective_reasoning="deterministic",
+                effective_skill="review",
+                effective_skills=metadata["skills"],
+                effective_mcp_servers=metadata["mcp_servers"],
+                effective_resources=metadata["resources"],
+                effective_tool_capabilities=metadata["tool_capabilities"],
+                effective_subagent_identities=metadata["subagent_identities"],
+                effective_tools=["python"],
+                result="pass",
+                repository=repository,
+            )
+            mismatch = deepcopy(metadata)
+            mismatch["resources"][0]["digest"] = "sha256:" + ("b" * 64)
+            evidence = evidence_for(
+                binding,
+                policy,
+                manifest,
+                attempt_id="attempt-resource",
+                route_metadata=mismatch,
+            )
+            payload_root = payload_at(parent, evidence)
+            with self.assertRaisesRegex(
+                RunStateError, "resources does not match the cited attempt"
+            ):
+                record_evidence(
+                    card,
+                    evidence,
+                    registry,
+                    policy,
+                    manifest,
+                    payload_root=payload_root,
+                    repository=repository,
+                )
+
+    def test_actual_resources_cannot_appear_without_a_plan(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repository = repository_at(Path(temporary))
+            card, _, _, policy, manifest = running_card(repository)
+            metadata = structured_route_metadata()
+            with self.assertRaisesRegex(RunStateError, "undeclared resources"):
+                record_attempt(
+                    card,
+                    policy,
+                    manifest,
+                    node_id="testing",
+                    attempt_id="attempt-undeclared-resource",
+                    started_at=NOW,
+                    finished_at=NOW,
+                    effective_principal_id="example-reviewer",
+                    effective_agent="review-agent",
+                    effective_model="none",
+                    effective_reasoning="deterministic",
+                    effective_skill="review",
+                    effective_resources=metadata["resources"],
+                    effective_tools=["python"],
+                    result="pass",
+                    repository=repository,
+                )
+
+    def test_planned_repository_resource_digest_is_candidate_bound(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repository = repository_at(Path(temporary))
+            binding, registry, policy = runtime_documents()
+            manifest = build_candidate_manifest(repository, generated_at=NOW)
+            draft = create_run_card(
+                binding,
+                registry,
+                policy,
+                manifest,
+                run_id="resource-digest-run",
+                root_loop_id="testing",
+                candidate_author_principal_ids=["example-executor"],
+            )
+            planned = deepcopy(draft["planned_route"])
+            planned[0].update(structured_route_metadata())
+            with self.assertRaisesRegex(
+                RunStateError, "repository resource digest mismatch"
+            ):
+                create_run_card(
+                    binding,
+                    registry,
+                    policy,
+                    manifest,
+                    run_id="resource-digest-run",
+                    root_loop_id="testing",
+                    candidate_author_principal_ids=["example-executor"],
+                    planned_route=planned,
+                )
+
     def test_attempt_cost_time_and_model_allowlist_are_enforced(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             repository = repository_at(Path(temporary))
@@ -567,9 +1025,158 @@ class RunPolicySecurityTests(unittest.TestCase):
                     effective_reasoning="deterministic",
                     effective_skill="review",
                     effective_tools=["python"],
+                    token_accounting="unavailable",
                     result="pass",
                     repository=repository,
                 )
+
+    def test_attempt_records_provider_neutral_token_metrics(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repository = repository_at(Path(temporary))
+            card, _, _, policy, manifest = running_card(repository)
+            card = record_attempt(
+                card,
+                policy,
+                manifest,
+                node_id="testing",
+                attempt_id="token-metrics",
+                started_at=NOW,
+                finished_at=NOW,
+                effective_principal_id="example-reviewer",
+                effective_agent="review-agent",
+                effective_model="none",
+                effective_reasoning="deterministic",
+                effective_skill="review",
+                effective_tools=["python"],
+                result="pass",
+                repository=repository,
+            )
+            attempt = card["nodes"][0]["attempts"][0]
+            self.assertEqual(
+                (0, 0, 0, 0),
+                (
+                    attempt["input_tokens"],
+                    attempt["output_tokens"],
+                    attempt["reasoning_tokens"],
+                    attempt["cached_tokens"],
+                ),
+            )
+            self.assertEqual("none", attempt["effective_model"])
+            self.assertNotIn("effective_model_provider", attempt)
+            self.assertEqual("not-applicable", attempt["token_accounting"])
+
+            for field, value in (
+                ("input_tokens", -1),
+                ("output_tokens", 1.5),
+                ("reasoning_tokens", True),
+                ("cached_tokens", -1),
+            ):
+                kwargs = {
+                    "input_tokens": 0,
+                    "output_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "cached_tokens": 0,
+                }
+                kwargs[field] = value
+                with self.assertRaisesRegex(
+                    RunStateError, f"{field} must be a non-negative integer"
+                ):
+                    record_attempt(
+                        running_card(repository)[0],
+                        policy,
+                        manifest,
+                        node_id="testing",
+                        attempt_id=f"invalid-{field}",
+                        started_at=NOW,
+                        finished_at=NOW,
+                        effective_principal_id="example-reviewer",
+                        effective_agent="review-agent",
+                        effective_model="none",
+                        effective_reasoning="deterministic",
+                        effective_skill="review",
+                        effective_tools=["python"],
+                        result="pass",
+                        repository=repository,
+                        **kwargs,
+                    )
+
+            with self.assertRaisesRegex(
+                RunStateError, "model none requires not-applicable"
+            ):
+                record_attempt(
+                    running_card(repository)[0],
+                    policy,
+                    manifest,
+                    node_id="testing",
+                    attempt_id="false-measurement",
+                    started_at=NOW,
+                    finished_at=NOW,
+                    effective_principal_id="example-reviewer",
+                    effective_agent="review-agent",
+                    effective_model="none",
+                    effective_reasoning="deterministic",
+                    effective_skill="review",
+                    effective_tools=["python"],
+                    token_accounting="measured",
+                    input_tokens=1,
+                    result="pass",
+                    repository=repository,
+                )
+
+            remote_card, _, _, remote_policy, remote_manifest = running_card(
+                repository, remote_model=True
+            )
+            with self.assertRaisesRegex(
+                RunStateError, "must declare measured or unavailable"
+            ):
+                record_attempt(
+                    remote_card,
+                    remote_policy,
+                    remote_manifest,
+                    node_id="testing",
+                    attempt_id="unaccounted-model",
+                    started_at=NOW,
+                    finished_at=NOW,
+                    effective_principal_id="example-reviewer",
+                    effective_agent="review-agent",
+                    effective_model="remote-model",
+                    effective_reasoning="deterministic",
+                    effective_skill="review",
+                    effective_tools=["python"],
+                    result="pass",
+                    repository=repository,
+                )
+            measured = record_attempt(
+                remote_card,
+                remote_policy,
+                remote_manifest,
+                node_id="testing",
+                attempt_id="measured-model",
+                started_at=NOW,
+                finished_at=NOW,
+                effective_principal_id="example-reviewer",
+                effective_agent="review-agent",
+                effective_model="remote-model",
+                effective_reasoning="deterministic",
+                effective_skill="review",
+                effective_tools=["python"],
+                token_accounting="measured",
+                input_tokens=12,
+                output_tokens=3,
+                reasoning_tokens=4,
+                cached_tokens=5,
+                data_egress={
+                    "provider": "approved-provider",
+                    "path_prefixes": ["docs"],
+                    "content_classes": ["source"],
+                },
+                result="pass",
+                repository=repository,
+            )
+            self.assertEqual(
+                "measured",
+                measured["nodes"][0]["attempts"][0]["token_accounting"],
+            )
 
     def test_payload_digest_is_checked_against_real_bytes(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -629,6 +1236,7 @@ class RunPolicySecurityTests(unittest.TestCase):
                 effective_reasoning="deterministic",
                 effective_skill="review",
                 effective_tools=["python"],
+                token_accounting="unavailable",
                 data_egress={
                     "provider": "approved-provider",
                     "path_prefixes": ["docs"],

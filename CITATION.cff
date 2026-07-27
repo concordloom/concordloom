@@ -6,8 +6,8 @@ version: 0.1.0
 date-released: 2026-07-24
 authors:
   - name: "Concord Loom contributors"
-repository-code: "https://github.com/PullDakar/concordloom"
-url: "https://github.com/PullDakar/concordloom"
+repository-code: "https://github.com/concordloom/concordloom"
+url: "https://concordloom.github.io/concordloom/"
 license: Apache-2.0
 abstract: >-
   An evidence-governed framework for discovering, negotiating, executing,

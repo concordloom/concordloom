@@ -155,6 +155,7 @@ class CompleteDevelopmentSystemTests(unittest.TestCase):
             run_id="route-contract",
             root_loop_id="steward-concordloom",
             candidate_author_principal_ids=["example-executor"],
+            portfolio=True,
         )
         routes = {item["loop_id"]: item for item in card["planned_route"]}
         external = {

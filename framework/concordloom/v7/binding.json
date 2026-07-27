@@ -1,0 +1,73 @@
+{
+  "accepted_by": {
+    "accepted_at": "2026-07-27T19:01:00Z",
+    "actor": {
+      "display_name": "Operator",
+      "id": "example-operator",
+      "kind": "operator"
+    },
+    "authority_ref": "operator",
+    "decision_id": "activate-v7-binding-final",
+    "proposal_digest": "sha256:15006ec8aad6090977419dd66554298c3c952d7a29db689f4e0c219e648ed546",
+    "rationale": "Activate the exact metadata-maintenance successor accepted by the operator after independent recommendation sha256:68a2433a36e9428249743ae4c5cf66f6a35bb6e66c605ec875914221f1944d70, separate evolution decision decide-v7-evolution-final (sha256:b55f36f75ef14a23b38ee963ff05ae69a265459061f56b41286bc3ec134d8571), and activation evidence sha256:431038ac23993692a02acdf474d5f060e0be7897e538ab911cff3851bf40764b. The evolution proposal did not activate itself."
+  },
+  "active_root_loop_ids": [
+    "steward-concordloom"
+  ],
+  "artifacts": [
+    {
+      "digest": "sha256:acfab067d275979b001e4568595e2fafd12774935b549a3029df918c957a8783",
+      "path": "framework/concordloom/v7/loop-design.json",
+      "role": "accepted_loop_design"
+    },
+    {
+      "digest": "sha256:227869a6a026e1f131fb377c9c2438ee1416f72cfd8daee05bd1950a1fb85b1e",
+      "path": "framework/concordloom/v3/accepted-project-graph.json",
+      "role": "accepted_project_graph"
+    },
+    {
+      "digest": "sha256:ce76be1f7a7914b22f44635b723139978058f98823cbfd8b6fae347621cb8e99",
+      "path": "framework/concordloom/v7/development-model.json",
+      "role": "atlas_input"
+    },
+    {
+      "digest": "sha256:45f0cc68403a9648e74248a60da2095cd1bd0ad32229273e5536db9aceb185be",
+      "path": "framework/concordloom/v7/cycle-registry.json",
+      "role": "cycle_registry"
+    },
+    {
+      "digest": "sha256:4e67a46d2a578a5b442e8fb94e20cdc22733bd74c7c25834df430011716c3f43",
+      "path": "framework/concordloom/v3/decision-log.json",
+      "role": "decision_log"
+    },
+    {
+      "digest": "sha256:5606fd49be883b8f6a55439a0db4a4749980129c651ce1b00697d46fb3856ce0",
+      "path": "framework/concordloom/v7/evolution-proposal.json",
+      "role": "evolution_history"
+    },
+    {
+      "digest": "sha256:976cd4ff55364b2d6323748a99a6c2aa000c6afdbf3304533afc583e21f1d0ef",
+      "path": "framework/concordloom/v7/loop-design-proposal.json",
+      "role": "loop_design_proposal"
+    },
+    {
+      "digest": "sha256:d60e3137bbb6d52f857a5d728ad04aa90131d4ffbe376d89cd2859e0824259bf",
+      "path": "framework/concordloom/v7/policy.json",
+      "role": "policy"
+    }
+  ],
+  "binding_digest": "sha256:4ee3712856d197a76b205b32f36b6cfec84d2dcf04ebe209a23b2d392bde8d28",
+  "created_at": "2026-07-27T19:01:00Z",
+  "digest_contract": {
+    "algorithm": "sha256",
+    "canonicalization": "rfc8785",
+    "excluded_fields": [
+      "/binding_digest"
+    ]
+  },
+  "framework_version": "0.1.0",
+  "id": "concordloom-self-binding-v7",
+  "kind": "concordloom.binding",
+  "predecessor_binding_digest": "sha256:06390cc41d147d5cccd3c18f10be0256619a79c57388c70951858315ada55b5d",
+  "schema_version": "0.1"
+}

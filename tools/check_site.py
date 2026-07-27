@@ -83,10 +83,45 @@ def main() -> int:
         errors.append("site lacks reduced-motion handling")
     if "focus-visible" not in styles:
         errors.append("site lacks visible keyboard focus")
+    compact_styles = "".join(styles.split())
+    if (
+        "grid-template-columns:minmax(190px,1fr)minmax(0,760px)"
+        "minmax(190px,1fr)" not in compact_styles
+    ):
+        errors.append(
+            "wide reading layout must balance equal margins around the prose"
+        )
+    if 'html[lang="en"].heroh1em{margin-top:0.1em;}' not in compact_styles:
+        errors.append("English hero lines must clear descenders")
+    if (
+        ".stage-readout{display:grid;grid-template-rows:3.5remminmax(0,1fr);"
+        "gap:1.25rem;height:200px;" not in compact_styles
+        or ".stage-readoutp{max-width:26ch;margin:0;" not in compact_styles
+    ):
+        errors.append("phase readout must keep its code and copy on stable rows")
     if "localStorage" not in script or "document.documentElement.lang" not in script:
         errors.append("language preference or document language is not maintained")
+    if '|| "en";' not in script or "navigator.languages" in script:
+        errors.append("first visit must default to English without locale inference")
     if 'url.searchParams.set("lang", language)' not in script:
         errors.append("language switch does not persist the locale in the URL")
+    for marker in (
+        'data-atlas-binding data-en="Loading" data-ru="Загрузка"',
+        'data-atlas-root data-en="Loading" data-ru="Загрузка"',
+    ):
+        if marker not in index.read_text(encoding="utf-8"):
+            errors.append(
+                "Russian Atlas first paint lacks a localized loading placeholder"
+            )
+    for marker in (
+        'text("identifier")',
+        'text("childCount")',
+        'text("noChildCount")',
+        'aria-hidden="true"',
+        'text("loadError")',
+    ):
+        if marker not in script:
+            errors.append(f"dynamic Atlas localization contract is missing {marker}")
     for forbidden in (
         'data-ru="Atlas"',
         "planned / active binding",
@@ -164,14 +199,113 @@ def main() -> int:
     for loop in atlas["loops"]:
         if not loop.get("copy", {}).get("en") or not loop.get("copy", {}).get("ru"):
             errors.append(f"Atlas loop {loop['id']} lacks bilingual copy")
+        route = loop.get("route_materialization")
+        if not isinstance(route, dict) or not {
+            "model_provider",
+            "model",
+            "reasoning",
+            "skills",
+            "mcp_servers",
+            "resources",
+            "tool_capabilities",
+            "subagent_identities",
+        } <= route.keys():
+            errors.append(f"Atlas loop {loop['id']} lacks its exact planned route")
         profile = atlas.get("profiles", {}).get(loop.get("profile"))
         if not profile:
             errors.append(f"Atlas loop {loop['id']} lacks an execution profile")
         elif profile.get("mcp", {}).get("status") != "not-declared":
             errors.append(f"Atlas profile {loop['profile']} invents an MCP assignment")
+        else:
+            route = profile.get("route_materialization")
+            required_route_fields = {
+                "model_provider",
+                "model",
+                "reasoning",
+                "skills",
+                "mcp_servers",
+                "resources",
+                "tool_capabilities",
+                "subagent_identities",
+            }
+            if not isinstance(route, dict):
+                errors.append(
+                    f"Atlas profile {loop['profile']} lacks an exact planned route"
+                )
+            elif not required_route_fields <= route.keys():
+                errors.append(
+                    f"Atlas profile {loop['profile']} has an incomplete planned route"
+                )
+    routes = {
+        loop["id"]: loop.get("route_materialization", {})
+        for loop in atlas["loops"]
+    }
+    if (
+        routes.get("collect-evolution-signals", {}).get("model")
+        != "gpt-5.6-luna"
+        or routes.get("collect-evolution-signals", {}).get("reasoning")
+        != "medium"
+    ):
+        errors.append("Atlas drops the Luna/medium evolution-signal override")
+    if (
+        routes.get("decide-product", {}).get("model") != "none"
+        or routes.get("decide-product", {}).get("reasoning")
+        != "human-decision"
+    ):
+        errors.append("Atlas drops the operator-only product decision override")
+    evolution_skills = routes.get("collect-evolution-signals", {}).get(
+        "skills", []
+    )
+    if {
+        "id": "design-project-loops",
+        "version": "0.1.0",
+    } not in evolution_skills:
+        errors.append("Atlas drops the versioned evolution-analysis skill")
     for edge in atlas["containment"]["edges"]:
         if edge["parent_loop_id"] not in loop_ids or edge["child_loop_id"] not in loop_ids:
             errors.append(f"Atlas edge {edge['id']} references an unknown loop")
+
+    offline_atlases = {
+        "en": ROOT / "docs" / "ATLAS.html",
+        "ru": ROOT / "docs" / "ru" / "ATLAS.html",
+    }
+    for locale, path in offline_atlases.items():
+        if not path.exists():
+            errors.append(f"missing checked-in {locale} offline Atlas")
+            continue
+        source = path.read_text(encoding="utf-8")
+        if f'<html lang="{locale}">' not in source:
+            errors.append(f"{locale} offline Atlas declares the wrong locale")
+        for marker in (
+            'aria-live="polite"',
+            "Content-Security-Policy",
+            "const ATLAS_COPY=",
+        ):
+            if marker not in source:
+                errors.append(f"{locale} offline Atlas misses {marker}")
+    russian_offline = offline_atlases["ru"]
+    if russian_offline.exists():
+        source = russian_offline.read_text(encoding="utf-8")
+        for marker in (
+            "Перейти к Атласу",
+            'aria-label="Путь по циклам"',
+            'aria-label="Состояния сведений"',
+            'aria-label="Условные обозначения"',
+            "Выбран цикл: {label}",
+        ):
+            if marker not in source:
+                errors.append(f"Russian offline Atlas misses localized UI {marker}")
+        for unresolved in (
+            "No run attached",
+            "Selected loop:",
+            'aria-label="Map key"',
+            ">Containment<",
+            ">Local flow<",
+        ):
+            if unresolved in source:
+                errors.append(
+                    f"Russian offline Atlas contains unresolved English UI {unresolved}"
+                )
 
     content = json.loads((SITE / "data" / "content.json").read_text(encoding="utf-8"))
     if len(content.get("documents", [])) != 12:

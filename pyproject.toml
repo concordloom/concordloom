@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "concordloom"
 version = "0.1.0"
-description = "Evidence-governed systems of nested development loops"
+description = "A universal grammar for evidence-governed systems of development loops"
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "Apache-2.0"}
 authors = [{name = "Concord Loom contributors"}]
-keywords = ["software-development", "workflow", "provenance", "codex", "sdlc"]
+keywords = ["development-loops", "governance", "evidence", "provenance", "automation"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "License :: OSI Approved :: Apache Software License",
@@ -21,9 +21,9 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/PullDakar/concordloom"
-Repository = "https://github.com/PullDakar/concordloom"
-Issues = "https://github.com/PullDakar/concordloom/issues"
+Homepage = "https://concordloom.github.io/concordloom/"
+Repository = "https://github.com/concordloom/concordloom"
+Issues = "https://github.com/concordloom/concordloom/issues"
 
 [project.scripts]
 concordloom = "concordloom.cli:main"

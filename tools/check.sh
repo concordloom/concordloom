@@ -77,11 +77,43 @@ PYTHONPATH=src python3 -m concordloom validate \
 PYTHONPATH=src python3 -m concordloom validate \
   --input framework/concordloom/catalog.json \
   --artifact-root .
+
+mapfile -t ACTIVE_ATLAS_PATHS < <(
+  PYTHONPATH=src python3 - <<'PY'
+from concordloom.canonical import load
+
+catalog = load("framework/concordloom/catalog.json")
+entry = next(
+    item
+    for item in catalog["entries"]
+    if item["binding_digest"] == catalog["active_binding_digest"]
+)
+binding = load(entry["path"])
+artifacts = {item["role"]: item["path"] for item in binding["artifacts"]}
+print(entry["path"])
+print(artifacts["cycle_registry"])
+print(artifacts["policy"])
+PY
+)
+
+if [[ "${#ACTIVE_ATLAS_PATHS[@]}" -ne 3 ]]; then
+  printf '%s\n' 'active Atlas inputs did not resolve exactly' >&2
+  exit 1
+fi
+
 PYTHONPATH=src python3 -m concordloom atlas \
-  --binding framework/generic-sdlc/binding.json \
-  --registry framework/generic-sdlc/cycle-registry.json \
-  --policy framework/generic-sdlc/policy.json \
+  --binding "${ACTIVE_ATLAS_PATHS[0]}" \
+  --registry "${ACTIVE_ATLAS_PATHS[1]}" \
+  --policy "${ACTIVE_ATLAS_PATHS[2]}" \
   --output docs/ATLAS.html \
+  --locale en \
+  --check
+PYTHONPATH=src python3 -m concordloom atlas \
+  --binding "${ACTIVE_ATLAS_PATHS[0]}" \
+  --registry "${ACTIVE_ATLAS_PATHS[1]}" \
+  --policy "${ACTIVE_ATLAS_PATHS[2]}" \
+  --output docs/ru/ATLAS.html \
+  --locale ru \
   --check
 
 PLUGIN_VALIDATOR="${CODEX_PLUGIN_VALIDATOR:-}"

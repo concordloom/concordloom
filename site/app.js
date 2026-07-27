@@ -10,8 +10,11 @@ const copy = {
     responsibility: "Responsible role",
     contract: "Outcome contract",
     resources: "Planned resources",
-    model: "Model intent",
-    skills: "Skills",
+    provider: "Provider",
+    model: "Planned model",
+    reasoning: "Reasoning",
+    skills: "Bound skills",
+    guidance: "Profile guidance",
     mcp: "MCP",
     tools: "Tools",
     evidence: "Evidence",
@@ -26,13 +29,16 @@ const copy = {
     notDeclared: "Not declared",
     noSkills: "No required skill",
     bindingPlan: "Accepted binding plan",
-    actualNote: "Exact model, skills and tools become facts only when a run records them.",
+    actualNote: "This is the accepted plan. Actual use and token counts appear only after a recorded run.",
     open: "Open cycle",
     back: "Up one level",
     phaseBoundary: "Evolve stops here. Activation is a separate operator act.",
     docs: "Open document",
     revision: "Revision",
     acceptedSource: "Accepted development rules",
+    identifier: "ID",
+    childCount: "Contained cycles",
+    noChildCount: "No contained cycles",
   },
   ru: {
     switchLanguage: "Переключить на английский",
@@ -45,8 +51,11 @@ const copy = {
     responsibility: "Ответственный",
     contract: "Результат цикла",
     resources: "Как планируется выполнять цикл",
-    model: "Требования к модели",
-    skills: "Инструкции агента",
+    provider: "Провайдер",
+    model: "Запланированная модель",
+    reasoning: "Глубина рассуждения",
+    skills: "Подключённые инструкции",
+    guidance: "Рекомендуемые инструкции",
     mcp: "Подключения MCP",
     tools: "Инструменты",
     evidence: "Проверка",
@@ -61,13 +70,16 @@ const copy = {
     notDeclared: "Не используется",
     noSkills: "Специальная инструкция не требуется",
     bindingPlan: "Утверждённый план",
-    actualNote: "Здесь показан план. Фактическая модель и инструменты появятся после записанного запуска.",
+    actualNote: "Это утверждённый план. Фактическое использование и расход токенов появятся только после записанного запуска.",
     open: "Открыть цикл",
     back: "На уровень выше",
     phaseBoundary: "Предложение готово. Включение новой версии требует отдельного решения оператора.",
     docs: "Открыть документ",
     revision: "Редакция",
     acceptedSource: "Утверждённые правила разработки",
+    identifier: "Идентификатор",
+    childCount: "Вложенных циклов",
+    noChildCount: "Нет вложенных циклов",
   },
 };
 
@@ -83,11 +95,10 @@ const phaseCopy = {
 
 const storedLanguage = localStorage.getItem("concordloom-language");
 const requestedLanguage = new URLSearchParams(location.search).get("lang");
-let language = (["en", "ru"].includes(requestedLanguage) ? requestedLanguage : null) || storedLanguage || (
-  (navigator.languages || [navigator.language]).some((item) => item?.startsWith("ru"))
-    ? "ru"
-    : "en"
-);
+let language =
+  (["en", "ru"].includes(requestedLanguage) ? requestedLanguage : null)
+  || (["en", "ru"].includes(storedLanguage) ? storedLanguage : null)
+  || "en";
 let atlasData = null;
 let contentData = null;
 let selectedLoopId = null;
@@ -228,11 +239,18 @@ function atlasLoop(id) {
 
 function atlasLink(loop, className = "") {
   const link = document.createElement("a");
+  const childCount = loop.children.length;
   link.className = className;
   link.href = `#atlas/${encodeURIComponent(loop.id)}`;
   link.dataset.loopId = loop.id;
+  link.setAttribute(
+    "aria-label",
+    `${loopCopy(loop).label}. ${
+      childCount ? `${text("childCount")}: ${childCount}` : text("noChildCount")
+    }`,
+  );
   link.innerHTML = `
-    <span>${loop.children.length ? String(loop.children.length).padStart(2, "0") : "•"}</span>
+    <span aria-hidden="true">${childCount ? String(childCount).padStart(2, "0") : "•"}</span>
     <strong>${loopCopy(loop).label}</strong>
     <small>${loopCopy(loop).purpose}</small>
   `;
@@ -265,16 +283,28 @@ function renderBreadcrumbs(loop) {
 
 function renderInspector(loop) {
   const profile = atlasData.profiles[loop.profile];
+  const route = loop.route_materialization;
   const inspector = document.querySelector("[data-atlas-inspector]");
+  const boundSkills = route.skills.length
+    ? route.skills
+        .map((skill) => `<li><code>${skill.id}@${skill.version}</code></li>`)
+        .join("")
+    : `<li>${text("notDeclared")}</li>`;
   const skills = profile.skills.length
     ? profile.skills.map((skill) => `<li><code>${skill}</code></li>`).join("")
     : `<li>${text("noSkills")}</li>`;
-  const tools = profile.tools.map((tool) => `<li><code>${tool}</code></li>`).join("");
+  const tools = route.tool_capabilities.length
+    ? route.tool_capabilities.map((tool) => `<li><code>${tool}</code></li>`).join("")
+    : `<li>${text("notDeclared")}</li>`;
+  const mcp = route.mcp_servers.length
+    ? route.mcp_servers.map((server) => `<code>${server}</code>`).join(" ")
+    : text("notDeclared");
+  const provider = route.model === "none" ? text("notDeclared") : route.model_provider;
   const technical = `
     <details class="technical-details">
       <summary>${text("technicalDetails")}</summary>
       <dl class="contract-grid">
-        <div><dt>ID</dt><dd><code>${loop.id}</code></dd></div>
+        <div><dt>${text("identifier")}</dt><dd><code>${loop.id}</code></dd></div>
         <div><dt>${text("profile")}</dt><dd><code>${loop.profile}</code></dd></div>
         <div><dt>${text("artifacts")}</dt><dd>${loop.artifacts.map((item) => `<code>${item}</code>`).join(" ")}</dd></div>
         <div><dt>${text("claims")}</dt><dd>${loop.requiredClaims.map((item) => `<code>${item}</code>`).join(" ")}</dd></div>
@@ -296,9 +326,12 @@ function renderInspector(loop) {
         <p class="section-label">${text("executionPlan")}</p>
       </div>
       <dl>
-        <div><dt>${text("model")}</dt><dd>${profile.model_intent[language]}</dd></div>
-        <div><dt>${text("skills")}</dt><dd><ul>${skills}</ul></dd></div>
-        <div><dt>${text("mcp")}</dt><dd>${profile.mcp.status === "not-declared" ? text("notDeclared") : profile.mcp.status}</dd></div>
+        <div><dt>${text("provider")}</dt><dd><code>${provider}</code></dd></div>
+        <div><dt>${text("model")}</dt><dd><code>${route.model}</code></dd></div>
+        <div><dt>${text("reasoning")}</dt><dd><code>${route.reasoning}</code></dd></div>
+        <div><dt>${text("skills")}</dt><dd><ul>${boundSkills}</ul></dd></div>
+        <div><dt>${text("guidance")}</dt><dd><ul>${skills}</ul></dd></div>
+        <div><dt>${text("mcp")}</dt><dd>${mcp}</dd></div>
         <div><dt>${text("tools")}</dt><dd><ul>${tools}</ul></dd></div>
       </dl>
       <p>${text("actualNote")}</p>

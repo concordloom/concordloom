@@ -14,7 +14,7 @@ from pathlib import Path
 import sys
 from typing import Any
 
-from .canonical import load, save
+from .canonical import digest, load, save
 
 
 class _ArgumentParser(argparse.ArgumentParser):
@@ -48,6 +48,46 @@ def _array(path: str | Path, label: str = "artifact") -> list[Any]:
     if not isinstance(value, list):
         raise ValueError(f"{label} must be a JSON array: {path}")
     return value
+
+
+def _bound_development_model(
+    binding: Mapping[str, Any],
+    binding_path: str | Path,
+    explicit_path: str | Path | None,
+) -> dict[str, Any]:
+    artifacts = [
+        artifact
+        for artifact in binding.get("artifacts", [])
+        if artifact.get("role") == "atlas_input"
+    ]
+    if len(artifacts) != 1:
+        raise ValueError("binding must declare exactly one atlas_input artifact")
+    artifact = artifacts[0]
+    if explicit_path is not None:
+        model = _object(explicit_path, "development model")
+    else:
+        relative = Path(str(artifact["path"]))
+        candidates = [Path.cwd() / relative]
+        resolved_binding = Path(binding_path).resolve()
+        candidates.extend(parent / relative for parent in resolved_binding.parents)
+        existing = []
+        seen: set[Path] = set()
+        for candidate in candidates:
+            resolved = candidate.resolve()
+            if resolved not in seen and resolved.is_file():
+                existing.append(resolved)
+                seen.add(resolved)
+        if len(existing) != 1:
+            raise ValueError(
+                "cannot resolve the binding's exact atlas_input artifact; "
+                "pass --development-model explicitly"
+            )
+        model = _object(existing[0], "development model")
+    if digest(model) != artifact["digest"]:
+        raise ValueError(
+            "development model digest does not match the binding atlas_input"
+        )
+    return model
 
 
 def _save_outputs(outputs: Mapping[str, tuple[str | Path, Any]]) -> None:
@@ -624,8 +664,9 @@ def _cmd_catalog(args: argparse.Namespace) -> None:
 def _cmd_run_new(args: argparse.Namespace) -> None:
     from .run import create_run_card
 
+    binding = _object(args.binding, "binding")
     result = create_run_card(
-        _object(args.binding, "binding"),
+        binding,
         _object(args.registry, "cycle registry"),
         _object(args.policy, "policy"),
         _object(args.candidate, "candidate manifest"),
@@ -639,6 +680,13 @@ def _cmd_run_new(args: argparse.Namespace) -> None:
         ),
         scope=_object(args.scope, "run scope") if args.scope else None,
         budgets=_object(args.budgets, "run budgets") if args.budgets else None,
+        target_loop_ids=args.target_loop,
+        portfolio=args.portfolio,
+        development_model=_bound_development_model(
+            binding,
+            args.binding,
+            args.development_model,
+        ),
     )
     _save_outputs({"run_card": (args.output, result)})
 
@@ -682,6 +730,11 @@ def _cmd_run_attempt(args: argparse.Namespace) -> None:
         data_egress=dict(attempt["data_egress"]),
         network=str(attempt["network"]),
         external_mutations=list(attempt["external_mutations"]),
+        input_tokens=int(attempt["input_tokens"]),
+        output_tokens=int(attempt["output_tokens"]),
+        reasoning_tokens=int(attempt["reasoning_tokens"]),
+        cached_tokens=int(attempt["cached_tokens"]),
+        token_accounting=str(attempt["token_accounting"]),
         cost_units=float(attempt["cost_units"]),
         result=str(attempt["result"]),
         repository=args.repository,
@@ -782,6 +835,7 @@ def _cmd_atlas(args: argparse.Namespace) -> None:
         "policy": _object(args.policy, "policy"),
         "output": args.output,
         "check": args.check,
+        "locale": args.locale,
     }
     if args.run_card:
         kwargs["run_card"] = _object(args.run_card, "run card")
@@ -1008,7 +1062,11 @@ def build_parser() -> argparse.ArgumentParser:
     run_new.add_argument("--run-id", required=True)
     run_new.add_argument("--root-loop", required=True)
     run_new.add_argument("--candidate-author", action="append", required=True)
-    run_new.add_argument("--planned-route")
+    route_selection = run_new.add_mutually_exclusive_group()
+    route_selection.add_argument("--planned-route")
+    route_selection.add_argument("--target-loop", action="append", default=[])
+    route_selection.add_argument("--portfolio", action="store_true")
+    run_new.add_argument("--development-model")
     run_new.add_argument("--scope")
     run_new.add_argument("--budgets")
     run_new.add_argument("--output", required=True)
@@ -1094,6 +1152,7 @@ def build_parser() -> argparse.ArgumentParser:
     atlas.add_argument("--policy", required=True)
     atlas.add_argument("--run-card")
     atlas.add_argument("--output", required=True)
+    atlas.add_argument("--locale", choices=("en", "ru"), default="en")
     atlas.add_argument("--check", action="store_true")
     _set_handler(atlas, _cmd_atlas)
 

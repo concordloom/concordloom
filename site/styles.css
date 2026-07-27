@@ -212,6 +212,10 @@ button {
   font-style: normal;
 }
 
+html[lang="en"] .hero h1 em {
+  margin-top: 0.1em;
+}
+
 .hero-bottom {
   grid-column: 2;
   display: grid;
@@ -465,7 +469,10 @@ button {
 }
 
 .stage-readout {
-  min-height: 180px;
+  display: grid;
+  grid-template-rows: 3.5rem minmax(0, 1fr);
+  gap: 1.25rem;
+  height: 200px;
   padding: 1.4rem;
   border-left: 1px solid var(--acid);
   background: #10100e;
@@ -479,7 +486,7 @@ button {
 
 .stage-readout p {
   max-width: 26ch;
-  margin: 2rem 0 0;
+  margin: 0;
   color: #c4c4bd;
 }
 
@@ -814,7 +821,10 @@ button {
 
 .reading-shell {
   display: grid;
-  grid-template-columns: minmax(190px, 0.25fr) minmax(0, 760px) 1fr;
+  grid-template-columns:
+    minmax(190px, 1fr)
+    minmax(0, 760px)
+    minmax(190px, 1fr);
   gap: clamp(2rem, 5vw, 5rem);
   max-width: 1500px;
   margin: 0 auto;
@@ -1410,6 +1420,11 @@ button {
 
   .atlas-system {
     min-height: auto;
+  }
+
+  .reading-shell {
+    grid-template-columns: minmax(190px, 240px) minmax(0, 760px);
+    justify-content: center;
   }
 }
 

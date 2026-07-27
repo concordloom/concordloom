@@ -85,7 +85,7 @@ development rules:
 
 ```text
 Concord Loom 0.1.0
-Development rules: revision 6
+Development rules: revision 8
 ```
 
 ## 4. Decide what the observation means
@@ -161,11 +161,16 @@ concordloom run new \
   --candidate "$WORK_DIR/candidate.json" \
   --run-id first-governed-run \
   --root-loop project-root \
+  --target-loop chosen-leaf-loop \
   --candidate-author project-executor \
   --output "$WORK_DIR/run-card.json"
 ```
 
 Your accepted configuration supplies the real root loop and principal IDs.
+`--target-loop` routes only that responsibility and its ancestors; unrelated
+release and evolution branches stay out of the run. Omitting it creates a
+coordination-only root run. Use `--portfolio` only for an intentional audit of
+the complete reachable system.
 Advance the card with:
 
 ```bash

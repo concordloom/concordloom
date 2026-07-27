@@ -1,0 +1,76 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:06390cc41d147d5cccd3c18f10be0256619a79c57388c70951858315ada55b5d",
+  "decision_authority_ref": "operator",
+  "decision_required": true,
+  "expected_effect": "Keep the 58-cycle graph unchanged, authorize release metadata authoring separately from exact tag and GitHub release asset publication, and fail generated Russian copy on known leaks.",
+  "generated_at": "2026-07-27T19:00:00Z",
+  "id": "authorize-project-metadata-maintenance",
+  "kind": "concordloom.evolution-proposal",
+  "operations": [
+    {
+      "op": "add",
+      "target_id": "concordloom-self-policy-v7",
+      "target_kind": "policy",
+      "value": {
+        "exact_write_paths": [
+          "CITATION.cff",
+          "pyproject.toml"
+        ],
+        "language_gate": "reject-English-Atlas-in-Russian-prose",
+        "metadata_owner_loop_id": "plan-release",
+        "unchanged_cycle_count": 58
+      }
+    }
+  ],
+  "proposed_by": {
+    "id": "example-orchestrator",
+    "kind": "orchestrator"
+  },
+  "risk": {
+    "failure_modes": [
+      "Metadata authority could leak outside package distribution.",
+      "The language gate could treat a machine identifier as prose."
+    ],
+    "level": "low",
+    "rollback": "Reactivate the v6 predecessor if exact metadata scope or the language gate fails independent review."
+  },
+  "schema_version": "0.1",
+  "signals": [
+    {
+      "base_binding_digest": "sha256:06390cc41d147d5cccd3c18f10be0256619a79c57388c70951858315ada55b5d",
+      "category": "coverage",
+      "id": "organization-migration-left-stale-package-metadata",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 3,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "self-use-run-audit"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:4eadf75d6737c2998bbbab823331a58790fd81ccdc30c2063004027b7ce6b370",
+      "summary": "The organization migration left pyproject.toml and CITATION.cff stale because no accepted cycle could write them."
+    },
+    {
+      "base_binding_digest": "sha256:06390cc41d147d5cccd3c18f10be0256619a79c57388c70951858315ada55b5d",
+      "category": "friction",
+      "id": "russian-article-exposed-english-atlas-copy",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 2,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "reader-screenshot"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:a5e9cfa2812e8cfdbd389e925fa9cce700b1e06ebee75d28f749484c7c54b58d",
+      "summary": "A reader found English Atlas wording and obsolete self-binding copy in the Russian theory page."
+    }
+  ],
+  "status": "proposed"
+}

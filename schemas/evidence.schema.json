@@ -146,6 +146,9 @@
           "type": "string",
           "minLength": 1
         },
+        "model_provider": {
+          "type": "string"
+        },
         "reasoning": {
           "type": "string",
           "minLength": 1
@@ -170,8 +173,130 @@
           },
           "uniqueItems": true
         },
+        "skills": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/versionedComponent"
+          },
+          "uniqueItems": true
+        },
+        "mcp_servers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/versionedComponent"
+          },
+          "uniqueItems": true
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/resourceRef"
+          },
+          "uniqueItems": true
+        },
+        "tool_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "subagent_identities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/subagentIdentity"
+          },
+          "uniqueItems": true
+        },
         "data_egress": {
           "$ref": "#/$defs/dataEgress"
+        }
+      }
+    },
+    "versionedComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        }
+      }
+    },
+    "resourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "ref",
+        "digest",
+        "access_mode"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "kind": {
+          "enum": [
+            "repository_path",
+            "artifact",
+            "mcp_resource"
+          ]
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        },
+        "access_mode": {
+          "enum": [
+            "read",
+            "write",
+            "read_write"
+          ]
+        }
+      }
+    },
+    "subagentIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "principal_id",
+        "agent",
+        "model_provider",
+        "model"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "principal_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_provider": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
         }
       }
     },

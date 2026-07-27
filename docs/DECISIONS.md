@@ -123,20 +123,19 @@ particular engine, host, model provider, or repository layout.
 certificate. Domain adapters may observe or execute specialized systems, while
 the portable core continues to govern the artifact and authority chain.
 
-## D-009 — Concord Loom governs itself through a successor binding
+## D-009 — Concord Loom governs itself through an accepted development system
 
 **Status:** accepted
 **Date:** 2026-07-27
 
 The repository is one governed instance of the framework. The operator
-corrected the earlier delivery-shaped intent and separately activated the
-content-addressed `concordloom-self-binding` as successor to the v0.1 generic
-service binding.
+corrected the earlier delivery-shaped intent and later accepted the complete
+development system rooted at `steward-concordloom`. Its ten responsibility
+areas contain 58 cycles.
 
-Its root `concord-change` loop contains observe, negotiate, bind, execute,
-verify, publish, and evolve. The accepted binding does not rewrite the v0.1
-generic SDLC evidence; that chain remains an example and the predecessor in the
-append-only catalog.
+Observe, negotiate, bind, execute, verify, publish, and evolve define the shared
+run grammar. They no longer stand in for the repository's complete development
+graph. The append-only catalog preserves earlier configurations and decisions.
 
 ## D-010 — Bilingual public documentation and visual identity
 

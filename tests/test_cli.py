@@ -188,6 +188,140 @@ class CliTests(unittest.TestCase):
         for command in ("new", "authorize", "attempt", "evidence", "guard", "complete"):
             self.assertIn(command, run.stdout)
 
+        run_new = self.run_cli("run", "new", "--help")
+        self.assertEqual(run_new.returncode, 0, run_new.stderr)
+        for option in (
+            "--target-loop",
+            "--portfolio",
+            "--planned-route",
+            "--development-model",
+        ):
+            self.assertIn(option, run_new.stdout)
+
+    def test_run_new_parses_targeted_and_portfolio_routes(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            source = ROOT / "framework" / "concordloom" / "v6"
+            candidate = self.write_json(
+                directory / "candidate.json",
+                {
+                    "kind": "concordloom.candidate-manifest",
+                    "schema_version": "0.1",
+                    "id": "cli-route-candidate",
+                    "generated_at": "2026-07-27T20:00:00Z",
+                    "revision": "a" * 40,
+                    "tree_digest": "sha256:" + ("b" * 64),
+                    "dirty": False,
+                    "files": [],
+                },
+            )
+            common = (
+                "run",
+                "new",
+                "--binding",
+                str(source / "binding.json"),
+                "--registry",
+                str(source / "cycle-registry.json"),
+                "--policy",
+                str(source / "policy.json"),
+                "--candidate",
+                str(candidate),
+                "--root-loop",
+                "steward-concordloom",
+                "--candidate-author",
+                "example-executor",
+            )
+            targeted_path = directory / "targeted.json"
+            targeted = self.run_cli(
+                *common,
+                "--run-id",
+                "cli-targeted-route",
+                "--target-loop",
+                "maintain-cli",
+                "--target-loop",
+                "maintain-article",
+                "--output",
+                str(targeted_path),
+            )
+            self.assertEqual(0, targeted.returncode, targeted.stderr)
+            self.assertEqual(
+                [
+                    "steward-concordloom",
+                    "research-theory",
+                    "maintain-article",
+                    "runtime-tooling",
+                    "maintain-cli",
+                ],
+                [
+                    item["loop_id"]
+                    for item in json.loads(
+                        targeted_path.read_text(encoding="utf-8")
+                    )["planned_route"]
+                ],
+            )
+
+            portfolio_path = directory / "portfolio.json"
+            portfolio = self.run_cli(
+                *common,
+                "--run-id",
+                "cli-portfolio-route",
+                "--portfolio",
+                "--output",
+                str(portfolio_path),
+            )
+            self.assertEqual(0, portfolio.returncode, portfolio.stderr)
+            self.assertEqual(
+                58,
+                len(
+                    json.loads(
+                        portfolio_path.read_text(encoding="utf-8")
+                    )["planned_route"]
+                ),
+            )
+
+            unknown = self.run_cli(
+                *common,
+                "--run-id",
+                "cli-unknown-route",
+                "--target-loop",
+                "not-a-loop",
+                "--output",
+                str(directory / "unknown.json"),
+            )
+            self.assertEqual(2, unknown.returncode)
+            self.assertIn("unknown target loops", unknown.stderr)
+
+    def test_run_new_route_selection_flags_are_mutually_exclusive(self) -> None:
+        common = (
+            "run",
+            "new",
+            "--binding",
+            "binding.json",
+            "--registry",
+            "registry.json",
+            "--policy",
+            "policy.json",
+            "--candidate",
+            "candidate.json",
+            "--run-id",
+            "conflicting-route",
+            "--root-loop",
+            "root",
+            "--candidate-author",
+            "author",
+            "--output",
+            "run-card.json",
+        )
+        for conflicting in (
+            ("--target-loop", "leaf", "--portfolio"),
+            ("--target-loop", "leaf", "--planned-route", "route.json"),
+        ):
+            result = self.run_cli(*common, *conflicting)
+            self.assertEqual(2, result.returncode)
+            payload = json.loads(result.stderr)
+            self.assertEqual("usage_error", payload["error"]["code"])
+            self.assertIn("not allowed with argument", payload["error"]["message"])
+
     def test_usage_errors_are_one_concise_json_object(self) -> None:
         result = self.run_cli("questions")
         self.assertEqual(result.returncode, 2)
