@@ -1,0 +1,2860 @@
+{
+  "acceptance_required": true,
+  "authority_policy_digest": "sha256:fee3269a4292c67e3a35656455ec47f7732549af36748c1bfef1d932719769d3",
+  "compiler_profile": "bounded-sdlc-v0.1",
+  "containment": [
+    {
+      "child_loop_id": "product-direction",
+      "decision_id": "accept-universal-loop-system",
+      "id": "steward-concordloom.product-direction",
+      "parent_loop_id": "steward-concordloom"
+    },
+    {
+      "child_loop_id": "research-theory",
+      "decision_id": "accept-universal-loop-system",
+      "id": "steward-concordloom.research-theory",
+      "parent_loop_id": "steward-concordloom"
+    },
+    {
+      "child_loop_id": "protocol-design",
+      "decision_id": "accept-universal-loop-system",
+      "id": "steward-concordloom.protocol-design",
+      "parent_loop_id": "steward-concordloom"
+    },
+    {
+      "child_loop_id": "runtime-tooling",
+      "decision_id": "accept-universal-loop-system",
+      "id": "steward-concordloom.runtime-tooling",
+      "parent_loop_id": "steward-concordloom"
+    },
+    {
+      "child_loop_id": "trust-assurance",
+      "decision_id": "accept-universal-loop-system",
+      "id": "steward-concordloom.trust-assurance",
+      "parent_loop_id": "steward-concordloom"
+    },
+    {
+      "child_loop_id": "bindings-adapters",
+      "decision_id": "accept-universal-loop-system",
+      "id": "steward-concordloom.bindings-adapters",
+      "parent_loop_id": "steward-concordloom"
+    },
+    {
+      "child_loop_id": "knowledge-experience",
+      "decision_id": "accept-universal-loop-system",
+      "id": "steward-concordloom.knowledge-experience",
+      "parent_loop_id": "steward-concordloom"
+    },
+    {
+      "child_loop_id": "release-distribution",
+      "decision_id": "accept-universal-loop-system",
+      "id": "steward-concordloom.release-distribution",
+      "parent_loop_id": "steward-concordloom"
+    },
+    {
+      "child_loop_id": "adoption-feedback",
+      "decision_id": "accept-universal-loop-system",
+      "id": "steward-concordloom.adoption-feedback",
+      "parent_loop_id": "steward-concordloom"
+    },
+    {
+      "child_loop_id": "system-evolution",
+      "decision_id": "accept-universal-loop-system",
+      "id": "steward-concordloom.system-evolution",
+      "parent_loop_id": "steward-concordloom"
+    },
+    {
+      "child_loop_id": "discover-product-needs",
+      "decision_id": "accept-universal-loop-system",
+      "id": "product-direction.discover-product-needs",
+      "parent_loop_id": "product-direction"
+    },
+    {
+      "child_loop_id": "maintain-product-boundary",
+      "decision_id": "accept-universal-loop-system",
+      "id": "product-direction.maintain-product-boundary",
+      "parent_loop_id": "product-direction"
+    },
+    {
+      "child_loop_id": "decide-product",
+      "decision_id": "accept-universal-loop-system",
+      "id": "product-direction.decide-product",
+      "parent_loop_id": "product-direction"
+    },
+    {
+      "child_loop_id": "prioritize-roadmap",
+      "decision_id": "accept-universal-loop-system",
+      "id": "product-direction.prioritize-roadmap",
+      "parent_loop_id": "product-direction"
+    },
+    {
+      "child_loop_id": "observe-landscape",
+      "decision_id": "accept-universal-loop-system",
+      "id": "research-theory.observe-landscape",
+      "parent_loop_id": "research-theory"
+    },
+    {
+      "child_loop_id": "formalize-theory",
+      "decision_id": "accept-universal-loop-system",
+      "id": "research-theory.formalize-theory",
+      "parent_loop_id": "research-theory"
+    },
+    {
+      "child_loop_id": "test-applicability",
+      "decision_id": "accept-universal-loop-system",
+      "id": "research-theory.test-applicability",
+      "parent_loop_id": "research-theory"
+    },
+    {
+      "child_loop_id": "maintain-article",
+      "decision_id": "accept-universal-loop-system",
+      "id": "research-theory.maintain-article",
+      "parent_loop_id": "research-theory"
+    },
+    {
+      "child_loop_id": "define-artifact-semantics",
+      "decision_id": "accept-universal-loop-system",
+      "id": "protocol-design.define-artifact-semantics",
+      "parent_loop_id": "protocol-design"
+    },
+    {
+      "child_loop_id": "design-graphs-policies",
+      "decision_id": "accept-universal-loop-system",
+      "id": "protocol-design.design-graphs-policies",
+      "parent_loop_id": "protocol-design"
+    },
+    {
+      "child_loop_id": "evolve-schemas",
+      "decision_id": "accept-universal-loop-system",
+      "id": "protocol-design.evolve-schemas",
+      "parent_loop_id": "protocol-design"
+    },
+    {
+      "child_loop_id": "assure-compatibility",
+      "decision_id": "accept-universal-loop-system",
+      "id": "protocol-design.assure-compatibility",
+      "parent_loop_id": "protocol-design"
+    },
+    {
+      "child_loop_id": "maintain-compiler-core",
+      "decision_id": "accept-universal-loop-system",
+      "id": "runtime-tooling.maintain-compiler-core",
+      "parent_loop_id": "runtime-tooling"
+    },
+    {
+      "child_loop_id": "operate-run-lifecycle",
+      "decision_id": "accept-universal-loop-system",
+      "id": "runtime-tooling.operate-run-lifecycle",
+      "parent_loop_id": "runtime-tooling"
+    },
+    {
+      "child_loop_id": "maintain-cli",
+      "decision_id": "accept-universal-loop-system",
+      "id": "runtime-tooling.maintain-cli",
+      "parent_loop_id": "runtime-tooling"
+    },
+    {
+      "child_loop_id": "maintain-automation",
+      "decision_id": "accept-universal-loop-system",
+      "id": "runtime-tooling.maintain-automation",
+      "parent_loop_id": "runtime-tooling"
+    },
+    {
+      "child_loop_id": "model-threats",
+      "decision_id": "accept-universal-loop-system",
+      "id": "trust-assurance.model-threats",
+      "parent_loop_id": "trust-assurance"
+    },
+    {
+      "child_loop_id": "validate-invariants",
+      "decision_id": "accept-universal-loop-system",
+      "id": "trust-assurance.validate-invariants",
+      "parent_loop_id": "trust-assurance"
+    },
+    {
+      "child_loop_id": "review-candidate",
+      "decision_id": "accept-universal-loop-system",
+      "id": "trust-assurance.review-candidate",
+      "parent_loop_id": "trust-assurance"
+    },
+    {
+      "child_loop_id": "assure-release",
+      "decision_id": "accept-universal-loop-system",
+      "id": "trust-assurance.assure-release",
+      "parent_loop_id": "trust-assurance"
+    },
+    {
+      "child_loop_id": "maintain-self-binding",
+      "decision_id": "accept-universal-loop-system",
+      "id": "bindings-adapters.maintain-self-binding",
+      "parent_loop_id": "bindings-adapters"
+    },
+    {
+      "child_loop_id": "maintain-evidence-adapters",
+      "decision_id": "accept-universal-loop-system",
+      "id": "bindings-adapters.maintain-evidence-adapters",
+      "parent_loop_id": "bindings-adapters"
+    },
+    {
+      "child_loop_id": "maintain-execution-adapters",
+      "decision_id": "accept-universal-loop-system",
+      "id": "bindings-adapters.maintain-execution-adapters",
+      "parent_loop_id": "bindings-adapters"
+    },
+    {
+      "child_loop_id": "maintain-reference-bindings",
+      "decision_id": "accept-universal-loop-system",
+      "id": "bindings-adapters.maintain-reference-bindings",
+      "parent_loop_id": "bindings-adapters"
+    },
+    {
+      "child_loop_id": "design-information-architecture",
+      "decision_id": "accept-universal-loop-system",
+      "id": "knowledge-experience.design-information-architecture",
+      "parent_loop_id": "knowledge-experience"
+    },
+    {
+      "child_loop_id": "author-documentation",
+      "decision_id": "accept-universal-loop-system",
+      "id": "knowledge-experience.author-documentation",
+      "parent_loop_id": "knowledge-experience"
+    },
+    {
+      "child_loop_id": "localize-content",
+      "decision_id": "accept-universal-loop-system",
+      "id": "knowledge-experience.localize-content",
+      "parent_loop_id": "knowledge-experience"
+    },
+    {
+      "child_loop_id": "review-comprehension",
+      "decision_id": "accept-universal-loop-system",
+      "id": "knowledge-experience.review-comprehension",
+      "parent_loop_id": "knowledge-experience"
+    },
+    {
+      "child_loop_id": "design-site-experience",
+      "decision_id": "accept-universal-loop-system",
+      "id": "knowledge-experience.design-site-experience",
+      "parent_loop_id": "knowledge-experience"
+    },
+    {
+      "child_loop_id": "project-atlas",
+      "decision_id": "accept-universal-loop-system",
+      "id": "knowledge-experience.project-atlas",
+      "parent_loop_id": "knowledge-experience"
+    },
+    {
+      "child_loop_id": "plan-release",
+      "decision_id": "accept-universal-loop-system",
+      "id": "release-distribution.plan-release",
+      "parent_loop_id": "release-distribution"
+    },
+    {
+      "child_loop_id": "distribute-package",
+      "decision_id": "accept-universal-loop-system",
+      "id": "release-distribution.distribute-package",
+      "parent_loop_id": "release-distribution"
+    },
+    {
+      "child_loop_id": "publish-site",
+      "decision_id": "accept-universal-loop-system",
+      "id": "release-distribution.publish-site",
+      "parent_loop_id": "release-distribution"
+    },
+    {
+      "child_loop_id": "maintain-repository-presence",
+      "decision_id": "accept-universal-loop-system",
+      "id": "release-distribution.maintain-repository-presence",
+      "parent_loop_id": "release-distribution"
+    },
+    {
+      "child_loop_id": "verify-live-release",
+      "decision_id": "accept-universal-loop-system",
+      "id": "release-distribution.verify-live-release",
+      "parent_loop_id": "release-distribution"
+    },
+    {
+      "child_loop_id": "observe-onboarding",
+      "decision_id": "accept-universal-loop-system",
+      "id": "adoption-feedback.observe-onboarding",
+      "parent_loop_id": "adoption-feedback"
+    },
+    {
+      "child_loop_id": "validate-use-cases",
+      "decision_id": "accept-universal-loop-system",
+      "id": "adoption-feedback.validate-use-cases",
+      "parent_loop_id": "adoption-feedback"
+    },
+    {
+      "child_loop_id": "collect-friction",
+      "decision_id": "accept-universal-loop-system",
+      "id": "adoption-feedback.collect-friction",
+      "parent_loop_id": "adoption-feedback"
+    },
+    {
+      "child_loop_id": "synthesize-feedback",
+      "decision_id": "accept-universal-loop-system",
+      "id": "adoption-feedback.synthesize-feedback",
+      "parent_loop_id": "adoption-feedback"
+    },
+    {
+      "child_loop_id": "collect-evolution-signals",
+      "decision_id": "accept-universal-loop-system",
+      "id": "system-evolution.collect-evolution-signals",
+      "parent_loop_id": "system-evolution"
+    },
+    {
+      "child_loop_id": "propose-successor",
+      "decision_id": "accept-universal-loop-system",
+      "id": "system-evolution.propose-successor",
+      "parent_loop_id": "system-evolution"
+    },
+    {
+      "child_loop_id": "review-successor",
+      "decision_id": "accept-universal-loop-system",
+      "id": "system-evolution.review-successor",
+      "parent_loop_id": "system-evolution"
+    },
+    {
+      "child_loop_id": "activate-successor",
+      "decision_id": "accept-universal-loop-system",
+      "id": "system-evolution.activate-successor",
+      "parent_loop_id": "system-evolution"
+    },
+    {
+      "child_loop_id": "observe-migration",
+      "decision_id": "accept-universal-loop-system",
+      "id": "system-evolution.observe-migration",
+      "parent_loop_id": "system-evolution"
+    }
+  ],
+  "decision_log_digest": "sha256:4e67a46d2a578a5b442e8fb94e20cdc22733bd74c7c25834df430011716c3f43",
+  "graph_delta": [
+    {
+      "op": "add",
+      "target_id": "steward-concordloom",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "steward-concordloom",
+        "input_outcome": "Mission, evidence and operator decisions.",
+        "output_outcome": "An accepted product, release or successor decision.",
+        "purpose": "Keep the whole product useful, trustworthy and coherent."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "product-direction",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "product-direction",
+        "input_outcome": "Needs, research and adoption signals.",
+        "output_outcome": "Accepted product intent and priorities.",
+        "purpose": "Decide what Concord Loom is and what it should do next."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "research-theory",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "research-theory",
+        "input_outcome": "Questions, sources and counterexamples.",
+        "output_outcome": "Supported claims, models and article revisions.",
+        "purpose": "Build and challenge the conceptual basis."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "protocol-design",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "protocol-design",
+        "input_outcome": "Accepted theory and protocol requirements.",
+        "output_outcome": "Schemas, invariants and compatibility rules.",
+        "purpose": "Define portable machine semantics and compatibility."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "runtime-tooling",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "runtime-tooling",
+        "input_outcome": "Accepted protocol semantics.",
+        "output_outcome": "Tested compiler, runner, CLI and automation.",
+        "purpose": "Make the protocol executable and practical."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "trust-assurance",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "trust-assurance",
+        "input_outcome": "A pinned claim, candidate or release.",
+        "output_outcome": "An independent verdict with evidence.",
+        "purpose": "Independently challenge claims, authority and candidates."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "bindings-adapters",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "bindings-adapters",
+        "input_outcome": "Kernel contracts and environment needs.",
+        "output_outcome": "Tested bindings and adapter contracts.",
+        "purpose": "Connect the neutral kernel to real domains and environments."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "knowledge-experience",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "knowledge-experience",
+        "input_outcome": "Accepted facts and reader tasks.",
+        "output_outcome": "Clear bilingual documentation and interfaces.",
+        "purpose": "Make the system understandable and navigable."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "release-distribution",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "release-distribution",
+        "input_outcome": "A verified candidate and publication authority.",
+        "output_outcome": "Published bytes, external state and provenance.",
+        "purpose": "Deliver verified bytes and authorized external effects."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "adoption-feedback",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "adoption-feedback",
+        "input_outcome": "A released system and real usage.",
+        "output_outcome": "Classified friction and normalized signals.",
+        "purpose": "Test usefulness in real work and collect friction."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "system-evolution",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "system-evolution",
+        "input_outcome": "Repeated signals pinned to the active binding.",
+        "output_outcome": "A rejected proposal or separately activated successor.",
+        "purpose": "Propose, review and explicitly activate successor bindings."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "discover-product-needs",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "discover-product-needs",
+        "input_outcome": "User observations and unresolved work.",
+        "output_outcome": "Prioritized problem statements.",
+        "purpose": "Find valuable problems without prescribing a solution."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "maintain-product-boundary",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "maintain-product-boundary",
+        "input_outcome": "Features and domain assumptions under consideration.",
+        "output_outcome": "A boundary verdict and cut list.",
+        "purpose": "Keep domain assumptions out of the universal kernel."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "decide-product",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "decide-product",
+        "input_outcome": "Alternatives, evidence and consequences.",
+        "output_outcome": "One recorded product decision.",
+        "purpose": "Resolve consequential product choices."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "prioritize-roadmap",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "prioritize-roadmap",
+        "input_outcome": "Accepted decisions and constraints.",
+        "output_outcome": "An ordered set of bounded outcomes.",
+        "purpose": "Order bounded outcomes under real constraints."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "observe-landscape",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "observe-landscape",
+        "input_outcome": "Research questions and primary sources.",
+        "output_outcome": "An attributable observation corpus.",
+        "purpose": "Collect attributable primary evidence."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "formalize-theory",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "formalize-theory",
+        "input_outcome": "Observations and candidate claims.",
+        "output_outcome": "Definitions, invariants and falsifiable propositions.",
+        "purpose": "Turn claims into definitions and falsifiable propositions."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "test-applicability",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "test-applicability",
+        "input_outcome": "A formal model and cases from different domains.",
+        "output_outcome": "Counterexamples and an applicability report.",
+        "purpose": "Search for counterexamples across domains."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "maintain-article",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "maintain-article",
+        "input_outcome": "Accepted claims, citations and reader findings.",
+        "output_outcome": "Matched English and Russian article candidates.",
+        "purpose": "Keep the long-form theory accurate and readable."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "define-artifact-semantics",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "define-artifact-semantics",
+        "input_outcome": "Accepted concepts and fact-state requirements.",
+        "output_outcome": "Canonical artifact types and vocabulary.",
+        "purpose": "Define fact states and artifact relationships."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "design-graphs-policies",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "design-graphs-policies",
+        "input_outcome": "Containment, flow, scope and authority needs.",
+        "output_outcome": "Graph and policy contracts.",
+        "purpose": "Define containment, flow, scope and authority."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "evolve-schemas",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "evolve-schemas",
+        "input_outcome": "An accepted protocol change.",
+        "output_outcome": "Successor schemas and migration rules.",
+        "purpose": "Introduce compatible protocol changes."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "assure-compatibility",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "assure-compatibility",
+        "input_outcome": "Old and new artifact versions.",
+        "output_outcome": "A compatibility verdict backed by fixtures.",
+        "purpose": "Prove how older artifacts are handled."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "maintain-compiler-core",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "maintain-compiler-core",
+        "input_outcome": "Accepted graph, design and policy.",
+        "output_outcome": "A deterministic content-addressed binding.",
+        "purpose": "Compile accepted inputs deterministically."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "operate-run-lifecycle",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "operate-run-lifecycle",
+        "input_outcome": "An authorized card and exact candidate.",
+        "output_outcome": "Attempts, evidence and a completion receipt.",
+        "purpose": "Guard scope, collect evidence and complete runs."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "maintain-cli",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "maintain-cli",
+        "input_outcome": "Kernel operations and user tasks.",
+        "output_outcome": "Safe commands, help and contract tests.",
+        "purpose": "Expose kernel operations safely."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "maintain-automation",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "maintain-automation",
+        "input_outcome": "Explicit automation contracts.",
+        "output_outcome": "A bounded plugin, skill or harness.",
+        "purpose": "Integrate agents without hidden authority."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "model-threats",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "model-threats",
+        "input_outcome": "System model, assets and trust assumptions.",
+        "output_outcome": "Threats, mitigations and open risks.",
+        "purpose": "Find authority, provenance and isolation failures."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "validate-invariants",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "validate-invariants",
+        "input_outcome": "Implementation and declared invariants.",
+        "output_outcome": "Deterministic and adversarial test evidence.",
+        "purpose": "Exercise graph, scope, digest and authority rules."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "review-candidate",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "review-candidate",
+        "input_outcome": "An exact candidate manifest and evidence contract.",
+        "output_outcome": "A pass, fail or indeterminate review receipt.",
+        "purpose": "Independently judge one pinned candidate."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "assure-release",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "assure-release",
+        "input_outcome": "A verified candidate and publication route.",
+        "output_outcome": "A release-readiness verdict.",
+        "purpose": "Confirm verified bytes match the publication plan."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "maintain-self-binding",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "maintain-self-binding",
+        "input_outcome": "The accepted development process of this repository.",
+        "output_outcome": "A new self-binding proposal and catalog entry.",
+        "purpose": "Describe how Concord Loom governs its own changes."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "maintain-evidence-adapters",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "maintain-evidence-adapters",
+        "input_outcome": "An environment and observation contract.",
+        "output_outcome": "Observed facts with provenance.",
+        "purpose": "Observe environments without making them universal."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "maintain-execution-adapters",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "maintain-execution-adapters",
+        "input_outcome": "A scoped grant and environment contract.",
+        "output_outcome": "An external effect and exact receipt.",
+        "purpose": "Perform explicitly scoped environment effects."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "maintain-reference-bindings",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "maintain-reference-bindings",
+        "input_outcome": "A domain model and kernel grammar.",
+        "output_outcome": "A tested example binding.",
+        "purpose": "Demonstrate the grammar in real domains."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "design-information-architecture",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "design-information-architecture",
+        "input_outcome": "Content inventory and reader tasks.",
+        "output_outcome": "A route, navigation and section map.",
+        "purpose": "Keep content discoverable by task and concept."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "author-documentation",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "author-documentation",
+        "input_outcome": "Accepted behavior and concrete user tasks.",
+        "output_outcome": "Direct source documentation with examples.",
+        "purpose": "Explain accepted behavior in direct human language."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "localize-content",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "localize-content",
+        "input_outcome": "Source text, glossary and semantic section map.",
+        "output_outcome": "Equivalent English and Russian peers.",
+        "purpose": "Preserve meaning across English and Russian."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "review-comprehension",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "review-comprehension",
+        "input_outcome": "A text candidate and representative reader tasks.",
+        "output_outcome": "A comprehension verdict and actionable findings.",
+        "purpose": "Catch jargon, literal translation and empty prose."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "design-site-experience",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "design-site-experience",
+        "input_outcome": "Information architecture, content and accessibility needs.",
+        "output_outcome": "A distinctive checked static interface.",
+        "purpose": "Turn knowledge into a distinctive accessible interface."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "project-atlas",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "project-atlas",
+        "input_outcome": "The active catalog, binding and recorded runs.",
+        "output_outcome": "A deterministic read-only Atlas projection.",
+        "purpose": "Render accepted facts without becoming their source."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "plan-release",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "plan-release",
+        "input_outcome": "A verified change and release constraints.",
+        "output_outcome": "An exact candidate, version, route and authority plan.",
+        "purpose": "Pin the candidate, route and authority."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "distribute-package",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "distribute-package",
+        "input_outcome": "An authorized immutable release.",
+        "output_outcome": "A package, checksum and registry receipt.",
+        "purpose": "Publish immutable installable artifacts."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "publish-site",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "publish-site",
+        "input_outcome": "A checked site artifact and Pages authority.",
+        "output_outcome": "A Pages deployment and provenance receipt.",
+        "purpose": "Deploy exact checked static bytes."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "maintain-repository-presence",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "maintain-repository-presence",
+        "input_outcome": "Approved brand assets and repository metadata.",
+        "output_outcome": "An About URL and social preview settings receipt.",
+        "purpose": "Publish the About URL, mark and social preview."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "verify-live-release",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "verify-live-release",
+        "input_outcome": "A deployment URL and pinned site digest.",
+        "output_outcome": "HTTP, DOM and screenshot evidence.",
+        "purpose": "Prove the public endpoint serves the pinned candidate."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "observe-onboarding",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "observe-onboarding",
+        "input_outcome": "A new user task and session.",
+        "output_outcome": "Friction points and task outcomes.",
+        "purpose": "Find where new users succeed or get stuck."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "validate-use-cases",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "validate-use-cases",
+        "input_outcome": "A real case outside the self-binding.",
+        "output_outcome": "Utility evidence and reusable binding needs.",
+        "purpose": "Test the framework outside its self-binding."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "collect-friction",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "collect-friction",
+        "input_outcome": "Issues, support reports and confusion.",
+        "output_outcome": "Classified observations with provenance.",
+        "purpose": "Record defects and confusion with provenance."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "synthesize-feedback",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "synthesize-feedback",
+        "input_outcome": "Repeated attributable observations.",
+        "output_outcome": "Normalized signals without automatic intent.",
+        "purpose": "Turn repeated observations into evidence, not intent."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "collect-evolution-signals",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "collect-evolution-signals",
+        "input_outcome": "Run, adoption and research evidence.",
+        "output_outcome": "Multiple signals pinned to the active binding.",
+        "purpose": "Pin multiple attributable signals to the active binding."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "propose-successor",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "propose-successor",
+        "input_outcome": "The active binding, pinned signals and CAS preconditions.",
+        "output_outcome": "A non-activating exact evolution proposal.",
+        "purpose": "Describe exact bounded changes without granting authority."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "review-successor",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "review-successor",
+        "input_outcome": "A proposal and reproduced successor artifacts.",
+        "output_outcome": "An independent acceptance or rejection decision.",
+        "purpose": "Independently verify need, exactness and boundaries."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "activate-successor",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "activate-successor",
+        "input_outcome": "An accepted proposal and exact binding proposal.",
+        "output_outcome": "An activation receipt and catalog head update.",
+        "purpose": "Make a reviewed successor active through a separate operator act."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "observe-migration",
+      "target_kind": "loop",
+      "value": {
+        "basis": [
+          {
+            "kind": "decision",
+            "ref": "accepted-project-graph"
+          }
+        ],
+        "decision_ids": [
+          "accept-universal-loop-system"
+        ],
+        "id": "observe-migration",
+        "input_outcome": "The new active binding and subsequent runs.",
+        "output_outcome": "A migration report and regression signals.",
+        "purpose": "Detect regressions after activation without rewriting history."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "steward-concordloom.product-direction",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "product-direction",
+        "decision_id": "accept-universal-loop-system",
+        "id": "steward-concordloom.product-direction",
+        "parent_loop_id": "steward-concordloom"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "steward-concordloom.research-theory",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "research-theory",
+        "decision_id": "accept-universal-loop-system",
+        "id": "steward-concordloom.research-theory",
+        "parent_loop_id": "steward-concordloom"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "steward-concordloom.protocol-design",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "protocol-design",
+        "decision_id": "accept-universal-loop-system",
+        "id": "steward-concordloom.protocol-design",
+        "parent_loop_id": "steward-concordloom"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "steward-concordloom.runtime-tooling",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "runtime-tooling",
+        "decision_id": "accept-universal-loop-system",
+        "id": "steward-concordloom.runtime-tooling",
+        "parent_loop_id": "steward-concordloom"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "steward-concordloom.trust-assurance",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "trust-assurance",
+        "decision_id": "accept-universal-loop-system",
+        "id": "steward-concordloom.trust-assurance",
+        "parent_loop_id": "steward-concordloom"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "steward-concordloom.bindings-adapters",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "bindings-adapters",
+        "decision_id": "accept-universal-loop-system",
+        "id": "steward-concordloom.bindings-adapters",
+        "parent_loop_id": "steward-concordloom"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "steward-concordloom.knowledge-experience",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "knowledge-experience",
+        "decision_id": "accept-universal-loop-system",
+        "id": "steward-concordloom.knowledge-experience",
+        "parent_loop_id": "steward-concordloom"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "steward-concordloom.release-distribution",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "release-distribution",
+        "decision_id": "accept-universal-loop-system",
+        "id": "steward-concordloom.release-distribution",
+        "parent_loop_id": "steward-concordloom"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "steward-concordloom.adoption-feedback",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "adoption-feedback",
+        "decision_id": "accept-universal-loop-system",
+        "id": "steward-concordloom.adoption-feedback",
+        "parent_loop_id": "steward-concordloom"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "steward-concordloom.system-evolution",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "system-evolution",
+        "decision_id": "accept-universal-loop-system",
+        "id": "steward-concordloom.system-evolution",
+        "parent_loop_id": "steward-concordloom"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "product-direction.discover-product-needs",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "discover-product-needs",
+        "decision_id": "accept-universal-loop-system",
+        "id": "product-direction.discover-product-needs",
+        "parent_loop_id": "product-direction"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "product-direction.maintain-product-boundary",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "maintain-product-boundary",
+        "decision_id": "accept-universal-loop-system",
+        "id": "product-direction.maintain-product-boundary",
+        "parent_loop_id": "product-direction"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "product-direction.decide-product",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "decide-product",
+        "decision_id": "accept-universal-loop-system",
+        "id": "product-direction.decide-product",
+        "parent_loop_id": "product-direction"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "product-direction.prioritize-roadmap",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "prioritize-roadmap",
+        "decision_id": "accept-universal-loop-system",
+        "id": "product-direction.prioritize-roadmap",
+        "parent_loop_id": "product-direction"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "research-theory.observe-landscape",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "observe-landscape",
+        "decision_id": "accept-universal-loop-system",
+        "id": "research-theory.observe-landscape",
+        "parent_loop_id": "research-theory"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "research-theory.formalize-theory",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "formalize-theory",
+        "decision_id": "accept-universal-loop-system",
+        "id": "research-theory.formalize-theory",
+        "parent_loop_id": "research-theory"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "research-theory.test-applicability",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "test-applicability",
+        "decision_id": "accept-universal-loop-system",
+        "id": "research-theory.test-applicability",
+        "parent_loop_id": "research-theory"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "research-theory.maintain-article",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "maintain-article",
+        "decision_id": "accept-universal-loop-system",
+        "id": "research-theory.maintain-article",
+        "parent_loop_id": "research-theory"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "protocol-design.define-artifact-semantics",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "define-artifact-semantics",
+        "decision_id": "accept-universal-loop-system",
+        "id": "protocol-design.define-artifact-semantics",
+        "parent_loop_id": "protocol-design"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "protocol-design.design-graphs-policies",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "design-graphs-policies",
+        "decision_id": "accept-universal-loop-system",
+        "id": "protocol-design.design-graphs-policies",
+        "parent_loop_id": "protocol-design"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "protocol-design.evolve-schemas",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "evolve-schemas",
+        "decision_id": "accept-universal-loop-system",
+        "id": "protocol-design.evolve-schemas",
+        "parent_loop_id": "protocol-design"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "protocol-design.assure-compatibility",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "assure-compatibility",
+        "decision_id": "accept-universal-loop-system",
+        "id": "protocol-design.assure-compatibility",
+        "parent_loop_id": "protocol-design"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "runtime-tooling.maintain-compiler-core",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "maintain-compiler-core",
+        "decision_id": "accept-universal-loop-system",
+        "id": "runtime-tooling.maintain-compiler-core",
+        "parent_loop_id": "runtime-tooling"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "runtime-tooling.operate-run-lifecycle",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "operate-run-lifecycle",
+        "decision_id": "accept-universal-loop-system",
+        "id": "runtime-tooling.operate-run-lifecycle",
+        "parent_loop_id": "runtime-tooling"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "runtime-tooling.maintain-cli",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "maintain-cli",
+        "decision_id": "accept-universal-loop-system",
+        "id": "runtime-tooling.maintain-cli",
+        "parent_loop_id": "runtime-tooling"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "runtime-tooling.maintain-automation",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "maintain-automation",
+        "decision_id": "accept-universal-loop-system",
+        "id": "runtime-tooling.maintain-automation",
+        "parent_loop_id": "runtime-tooling"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "trust-assurance.model-threats",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "model-threats",
+        "decision_id": "accept-universal-loop-system",
+        "id": "trust-assurance.model-threats",
+        "parent_loop_id": "trust-assurance"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "trust-assurance.validate-invariants",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "validate-invariants",
+        "decision_id": "accept-universal-loop-system",
+        "id": "trust-assurance.validate-invariants",
+        "parent_loop_id": "trust-assurance"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "trust-assurance.review-candidate",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "review-candidate",
+        "decision_id": "accept-universal-loop-system",
+        "id": "trust-assurance.review-candidate",
+        "parent_loop_id": "trust-assurance"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "trust-assurance.assure-release",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "assure-release",
+        "decision_id": "accept-universal-loop-system",
+        "id": "trust-assurance.assure-release",
+        "parent_loop_id": "trust-assurance"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "bindings-adapters.maintain-self-binding",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "maintain-self-binding",
+        "decision_id": "accept-universal-loop-system",
+        "id": "bindings-adapters.maintain-self-binding",
+        "parent_loop_id": "bindings-adapters"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "bindings-adapters.maintain-evidence-adapters",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "maintain-evidence-adapters",
+        "decision_id": "accept-universal-loop-system",
+        "id": "bindings-adapters.maintain-evidence-adapters",
+        "parent_loop_id": "bindings-adapters"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "bindings-adapters.maintain-execution-adapters",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "maintain-execution-adapters",
+        "decision_id": "accept-universal-loop-system",
+        "id": "bindings-adapters.maintain-execution-adapters",
+        "parent_loop_id": "bindings-adapters"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "bindings-adapters.maintain-reference-bindings",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "maintain-reference-bindings",
+        "decision_id": "accept-universal-loop-system",
+        "id": "bindings-adapters.maintain-reference-bindings",
+        "parent_loop_id": "bindings-adapters"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "knowledge-experience.design-information-architecture",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "design-information-architecture",
+        "decision_id": "accept-universal-loop-system",
+        "id": "knowledge-experience.design-information-architecture",
+        "parent_loop_id": "knowledge-experience"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "knowledge-experience.author-documentation",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "author-documentation",
+        "decision_id": "accept-universal-loop-system",
+        "id": "knowledge-experience.author-documentation",
+        "parent_loop_id": "knowledge-experience"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "knowledge-experience.localize-content",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "localize-content",
+        "decision_id": "accept-universal-loop-system",
+        "id": "knowledge-experience.localize-content",
+        "parent_loop_id": "knowledge-experience"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "knowledge-experience.review-comprehension",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "review-comprehension",
+        "decision_id": "accept-universal-loop-system",
+        "id": "knowledge-experience.review-comprehension",
+        "parent_loop_id": "knowledge-experience"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "knowledge-experience.design-site-experience",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "design-site-experience",
+        "decision_id": "accept-universal-loop-system",
+        "id": "knowledge-experience.design-site-experience",
+        "parent_loop_id": "knowledge-experience"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "knowledge-experience.project-atlas",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "project-atlas",
+        "decision_id": "accept-universal-loop-system",
+        "id": "knowledge-experience.project-atlas",
+        "parent_loop_id": "knowledge-experience"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "release-distribution.plan-release",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "plan-release",
+        "decision_id": "accept-universal-loop-system",
+        "id": "release-distribution.plan-release",
+        "parent_loop_id": "release-distribution"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "release-distribution.distribute-package",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "distribute-package",
+        "decision_id": "accept-universal-loop-system",
+        "id": "release-distribution.distribute-package",
+        "parent_loop_id": "release-distribution"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "release-distribution.publish-site",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "publish-site",
+        "decision_id": "accept-universal-loop-system",
+        "id": "release-distribution.publish-site",
+        "parent_loop_id": "release-distribution"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "release-distribution.maintain-repository-presence",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "maintain-repository-presence",
+        "decision_id": "accept-universal-loop-system",
+        "id": "release-distribution.maintain-repository-presence",
+        "parent_loop_id": "release-distribution"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "release-distribution.verify-live-release",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "verify-live-release",
+        "decision_id": "accept-universal-loop-system",
+        "id": "release-distribution.verify-live-release",
+        "parent_loop_id": "release-distribution"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "adoption-feedback.observe-onboarding",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "observe-onboarding",
+        "decision_id": "accept-universal-loop-system",
+        "id": "adoption-feedback.observe-onboarding",
+        "parent_loop_id": "adoption-feedback"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "adoption-feedback.validate-use-cases",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "validate-use-cases",
+        "decision_id": "accept-universal-loop-system",
+        "id": "adoption-feedback.validate-use-cases",
+        "parent_loop_id": "adoption-feedback"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "adoption-feedback.collect-friction",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "collect-friction",
+        "decision_id": "accept-universal-loop-system",
+        "id": "adoption-feedback.collect-friction",
+        "parent_loop_id": "adoption-feedback"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "adoption-feedback.synthesize-feedback",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "synthesize-feedback",
+        "decision_id": "accept-universal-loop-system",
+        "id": "adoption-feedback.synthesize-feedback",
+        "parent_loop_id": "adoption-feedback"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "system-evolution.collect-evolution-signals",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "collect-evolution-signals",
+        "decision_id": "accept-universal-loop-system",
+        "id": "system-evolution.collect-evolution-signals",
+        "parent_loop_id": "system-evolution"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "system-evolution.propose-successor",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "propose-successor",
+        "decision_id": "accept-universal-loop-system",
+        "id": "system-evolution.propose-successor",
+        "parent_loop_id": "system-evolution"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "system-evolution.review-successor",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "review-successor",
+        "decision_id": "accept-universal-loop-system",
+        "id": "system-evolution.review-successor",
+        "parent_loop_id": "system-evolution"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "system-evolution.activate-successor",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "activate-successor",
+        "decision_id": "accept-universal-loop-system",
+        "id": "system-evolution.activate-successor",
+        "parent_loop_id": "system-evolution"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "system-evolution.observe-migration",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "observe-migration",
+        "decision_id": "accept-universal-loop-system",
+        "id": "system-evolution.observe-migration",
+        "parent_loop_id": "system-evolution"
+      }
+    }
+  ],
+  "id": "concordloom-development-system-v5-proposal",
+  "kind": "concordloom.loop-design-proposal",
+  "loops": [
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "steward-concordloom",
+      "input_outcome": "Mission, evidence and operator decisions.",
+      "output_outcome": "An accepted product, release or successor decision.",
+      "purpose": "Keep the whole product useful, trustworthy and coherent."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "product-direction",
+      "input_outcome": "Needs, research and adoption signals.",
+      "output_outcome": "Accepted product intent and priorities.",
+      "purpose": "Decide what Concord Loom is and what it should do next."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "research-theory",
+      "input_outcome": "Questions, sources and counterexamples.",
+      "output_outcome": "Supported claims, models and article revisions.",
+      "purpose": "Build and challenge the conceptual basis."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "protocol-design",
+      "input_outcome": "Accepted theory and protocol requirements.",
+      "output_outcome": "Schemas, invariants and compatibility rules.",
+      "purpose": "Define portable machine semantics and compatibility."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "runtime-tooling",
+      "input_outcome": "Accepted protocol semantics.",
+      "output_outcome": "Tested compiler, runner, CLI and automation.",
+      "purpose": "Make the protocol executable and practical."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "trust-assurance",
+      "input_outcome": "A pinned claim, candidate or release.",
+      "output_outcome": "An independent verdict with evidence.",
+      "purpose": "Independently challenge claims, authority and candidates."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "bindings-adapters",
+      "input_outcome": "Kernel contracts and environment needs.",
+      "output_outcome": "Tested bindings and adapter contracts.",
+      "purpose": "Connect the neutral kernel to real domains and environments."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "knowledge-experience",
+      "input_outcome": "Accepted facts and reader tasks.",
+      "output_outcome": "Clear bilingual documentation and interfaces.",
+      "purpose": "Make the system understandable and navigable."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "release-distribution",
+      "input_outcome": "A verified candidate and publication authority.",
+      "output_outcome": "Published bytes, external state and provenance.",
+      "purpose": "Deliver verified bytes and authorized external effects."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "adoption-feedback",
+      "input_outcome": "A released system and real usage.",
+      "output_outcome": "Classified friction and normalized signals.",
+      "purpose": "Test usefulness in real work and collect friction."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "system-evolution",
+      "input_outcome": "Repeated signals pinned to the active binding.",
+      "output_outcome": "A rejected proposal or separately activated successor.",
+      "purpose": "Propose, review and explicitly activate successor bindings."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "discover-product-needs",
+      "input_outcome": "User observations and unresolved work.",
+      "output_outcome": "Prioritized problem statements.",
+      "purpose": "Find valuable problems without prescribing a solution."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "maintain-product-boundary",
+      "input_outcome": "Features and domain assumptions under consideration.",
+      "output_outcome": "A boundary verdict and cut list.",
+      "purpose": "Keep domain assumptions out of the universal kernel."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "decide-product",
+      "input_outcome": "Alternatives, evidence and consequences.",
+      "output_outcome": "One recorded product decision.",
+      "purpose": "Resolve consequential product choices."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "prioritize-roadmap",
+      "input_outcome": "Accepted decisions and constraints.",
+      "output_outcome": "An ordered set of bounded outcomes.",
+      "purpose": "Order bounded outcomes under real constraints."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "observe-landscape",
+      "input_outcome": "Research questions and primary sources.",
+      "output_outcome": "An attributable observation corpus.",
+      "purpose": "Collect attributable primary evidence."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "formalize-theory",
+      "input_outcome": "Observations and candidate claims.",
+      "output_outcome": "Definitions, invariants and falsifiable propositions.",
+      "purpose": "Turn claims into definitions and falsifiable propositions."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "test-applicability",
+      "input_outcome": "A formal model and cases from different domains.",
+      "output_outcome": "Counterexamples and an applicability report.",
+      "purpose": "Search for counterexamples across domains."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "maintain-article",
+      "input_outcome": "Accepted claims, citations and reader findings.",
+      "output_outcome": "Matched English and Russian article candidates.",
+      "purpose": "Keep the long-form theory accurate and readable."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "define-artifact-semantics",
+      "input_outcome": "Accepted concepts and fact-state requirements.",
+      "output_outcome": "Canonical artifact types and vocabulary.",
+      "purpose": "Define fact states and artifact relationships."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "design-graphs-policies",
+      "input_outcome": "Containment, flow, scope and authority needs.",
+      "output_outcome": "Graph and policy contracts.",
+      "purpose": "Define containment, flow, scope and authority."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "evolve-schemas",
+      "input_outcome": "An accepted protocol change.",
+      "output_outcome": "Successor schemas and migration rules.",
+      "purpose": "Introduce compatible protocol changes."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "assure-compatibility",
+      "input_outcome": "Old and new artifact versions.",
+      "output_outcome": "A compatibility verdict backed by fixtures.",
+      "purpose": "Prove how older artifacts are handled."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "maintain-compiler-core",
+      "input_outcome": "Accepted graph, design and policy.",
+      "output_outcome": "A deterministic content-addressed binding.",
+      "purpose": "Compile accepted inputs deterministically."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "operate-run-lifecycle",
+      "input_outcome": "An authorized card and exact candidate.",
+      "output_outcome": "Attempts, evidence and a completion receipt.",
+      "purpose": "Guard scope, collect evidence and complete runs."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "maintain-cli",
+      "input_outcome": "Kernel operations and user tasks.",
+      "output_outcome": "Safe commands, help and contract tests.",
+      "purpose": "Expose kernel operations safely."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "maintain-automation",
+      "input_outcome": "Explicit automation contracts.",
+      "output_outcome": "A bounded plugin, skill or harness.",
+      "purpose": "Integrate agents without hidden authority."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "model-threats",
+      "input_outcome": "System model, assets and trust assumptions.",
+      "output_outcome": "Threats, mitigations and open risks.",
+      "purpose": "Find authority, provenance and isolation failures."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "validate-invariants",
+      "input_outcome": "Implementation and declared invariants.",
+      "output_outcome": "Deterministic and adversarial test evidence.",
+      "purpose": "Exercise graph, scope, digest and authority rules."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "review-candidate",
+      "input_outcome": "An exact candidate manifest and evidence contract.",
+      "output_outcome": "A pass, fail or indeterminate review receipt.",
+      "purpose": "Independently judge one pinned candidate."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "assure-release",
+      "input_outcome": "A verified candidate and publication route.",
+      "output_outcome": "A release-readiness verdict.",
+      "purpose": "Confirm verified bytes match the publication plan."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "maintain-self-binding",
+      "input_outcome": "The accepted development process of this repository.",
+      "output_outcome": "A new self-binding proposal and catalog entry.",
+      "purpose": "Describe how Concord Loom governs its own changes."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "maintain-evidence-adapters",
+      "input_outcome": "An environment and observation contract.",
+      "output_outcome": "Observed facts with provenance.",
+      "purpose": "Observe environments without making them universal."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "maintain-execution-adapters",
+      "input_outcome": "A scoped grant and environment contract.",
+      "output_outcome": "An external effect and exact receipt.",
+      "purpose": "Perform explicitly scoped environment effects."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "maintain-reference-bindings",
+      "input_outcome": "A domain model and kernel grammar.",
+      "output_outcome": "A tested example binding.",
+      "purpose": "Demonstrate the grammar in real domains."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "design-information-architecture",
+      "input_outcome": "Content inventory and reader tasks.",
+      "output_outcome": "A route, navigation and section map.",
+      "purpose": "Keep content discoverable by task and concept."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "author-documentation",
+      "input_outcome": "Accepted behavior and concrete user tasks.",
+      "output_outcome": "Direct source documentation with examples.",
+      "purpose": "Explain accepted behavior in direct human language."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "localize-content",
+      "input_outcome": "Source text, glossary and semantic section map.",
+      "output_outcome": "Equivalent English and Russian peers.",
+      "purpose": "Preserve meaning across English and Russian."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "review-comprehension",
+      "input_outcome": "A text candidate and representative reader tasks.",
+      "output_outcome": "A comprehension verdict and actionable findings.",
+      "purpose": "Catch jargon, literal translation and empty prose."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "design-site-experience",
+      "input_outcome": "Information architecture, content and accessibility needs.",
+      "output_outcome": "A distinctive checked static interface.",
+      "purpose": "Turn knowledge into a distinctive accessible interface."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "project-atlas",
+      "input_outcome": "The active catalog, binding and recorded runs.",
+      "output_outcome": "A deterministic read-only Atlas projection.",
+      "purpose": "Render accepted facts without becoming their source."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "plan-release",
+      "input_outcome": "A verified change and release constraints.",
+      "output_outcome": "An exact candidate, version, route and authority plan.",
+      "purpose": "Pin the candidate, route and authority."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "distribute-package",
+      "input_outcome": "An authorized immutable release.",
+      "output_outcome": "A package, checksum and registry receipt.",
+      "purpose": "Publish immutable installable artifacts."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "publish-site",
+      "input_outcome": "A checked site artifact and Pages authority.",
+      "output_outcome": "A Pages deployment and provenance receipt.",
+      "purpose": "Deploy exact checked static bytes."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "maintain-repository-presence",
+      "input_outcome": "Approved brand assets and repository metadata.",
+      "output_outcome": "An About URL and social preview settings receipt.",
+      "purpose": "Publish the About URL, mark and social preview."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "verify-live-release",
+      "input_outcome": "A deployment URL and pinned site digest.",
+      "output_outcome": "HTTP, DOM and screenshot evidence.",
+      "purpose": "Prove the public endpoint serves the pinned candidate."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "observe-onboarding",
+      "input_outcome": "A new user task and session.",
+      "output_outcome": "Friction points and task outcomes.",
+      "purpose": "Find where new users succeed or get stuck."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "validate-use-cases",
+      "input_outcome": "A real case outside the self-binding.",
+      "output_outcome": "Utility evidence and reusable binding needs.",
+      "purpose": "Test the framework outside its self-binding."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "collect-friction",
+      "input_outcome": "Issues, support reports and confusion.",
+      "output_outcome": "Classified observations with provenance.",
+      "purpose": "Record defects and confusion with provenance."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "synthesize-feedback",
+      "input_outcome": "Repeated attributable observations.",
+      "output_outcome": "Normalized signals without automatic intent.",
+      "purpose": "Turn repeated observations into evidence, not intent."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "collect-evolution-signals",
+      "input_outcome": "Run, adoption and research evidence.",
+      "output_outcome": "Multiple signals pinned to the active binding.",
+      "purpose": "Pin multiple attributable signals to the active binding."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "propose-successor",
+      "input_outcome": "The active binding, pinned signals and CAS preconditions.",
+      "output_outcome": "A non-activating exact evolution proposal.",
+      "purpose": "Describe exact bounded changes without granting authority."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "review-successor",
+      "input_outcome": "A proposal and reproduced successor artifacts.",
+      "output_outcome": "An independent acceptance or rejection decision.",
+      "purpose": "Independently verify need, exactness and boundaries."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "activate-successor",
+      "input_outcome": "An accepted proposal and exact binding proposal.",
+      "output_outcome": "An activation receipt and catalog head update.",
+      "purpose": "Make a reviewed successor active through a separate operator act."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "observe-migration",
+      "input_outcome": "The new active binding and subsequent runs.",
+      "output_outcome": "A migration report and regression signals.",
+      "purpose": "Detect regressions after activation without rewriting history."
+    }
+  ],
+  "schema_version": "0.1",
+  "source_graph_digest": "sha256:227869a6a026e1f131fb377c9c2438ee1416f72cfd8daee05bd1950a1fb85b1e",
+  "status": "proposed"
+}

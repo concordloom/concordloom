@@ -4,35 +4,44 @@ An Atlas is a read-only projection of an accepted loop system. It lets an
 operator move through containment, inspect one loop's local flow, and compare
 accepted structure and declared plans with recorded runtime facts.
 
-Concord Loom now exposes that idea in two forms:
+Concord Loom exposes that idea in two forms:
 
-- the general site projects Concord Loom's own universal self-binding; and
+- the general site projects the complete development system of this repository;
+- it shows planned models, skills and tools with their source, while a missing
+  MCP assignment remains visibly undeclared; and
 - the portable `concordloom atlas` command emits one deterministic,
   self-contained HTML file for any compatible binding.
 
 Both explain bound artifacts. Neither authorizes work, executes a transition,
 activates evolution, or replaces source JSON.
 
-## Read the self-binding on the general site
+## Read the complete development system
 
-The site's **Concept** view explains the domain-neutral grammar. Its **Live
-system** view projects the accepted `concordloom-self-binding`, whose active root
-is `concord-change`:
+The site's **Concept** view explains the domain-neutral grammar. **Atlas**
+projects the accepted self-binding for this repository. Its root is
+`steward-concordloom`:
 
 ```text
-concord-change
-├── observe
-├── negotiate
-├── bind
-├── execute
-├── verify
-├── publish
-└── evolve
+steward-concordloom
+├── product-direction
+├── research-theory
+├── protocol-design
+├── runtime-tooling
+├── trust-assurance
+├── bindings-adapters
+├── knowledge-experience
+├── release-distribution
+├── adoption-feedback
+└── system-evolution
 ```
 
-These names describe bounded change rather than a mandatory software-delivery
-process. Research, incident response, creative production, governance, and
-software delivery may each define a different binding.
+Each area expands into concrete capability cycles. Atlas shows only the
+immediate children of the selected cycle, so the full 55-node model stays
+readable. Breadcrumbs and browser history preserve the path.
+
+The evolution circuit is always visible. `propose-successor` can describe a new
+version. `review-successor` checks it. `activate-successor` is a separate
+operator-only act.
 
 The static site data comes from the active accepted catalog. Verify the
 projection before publication:
@@ -41,9 +50,9 @@ projection before publication:
 PYTHONPATH=src python3 tools/build_site.py --check
 ```
 
-The site can show the active binding's identity, root, containment, contracts,
-and acceptance facts. It cannot infer that a run occurred. It cannot activate
-the successor proposed by `evolve`.
+The site shows the active binding, containment, contracts, roles and planned
+execution resources. Exact models and tools become actual facts only when a run
+records them. Atlas cannot infer a run or activate a successor.
 
 ## Generate a portable offline Atlas
 

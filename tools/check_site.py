@@ -76,30 +76,76 @@ def main() -> int:
         errors.append("site lacks visible keyboard focus")
     if "localStorage" not in script or "document.documentElement.lang" not in script:
         errors.append("language preference or document language is not maintained")
+    if "fallbackAtlas" in script or ".catch(() => renderAtlas())" in script:
+        errors.append("site silently falls back when accepted Atlas data is unavailable")
+    for view in ("concept", "theory", "quickstart", "atlas", "docs"):
+        if f'data-view="{view}"' not in index.read_text(encoding="utf-8"):
+            errors.append(f"site misses the {view} destination")
+    if "#atlas/" not in script or "atlas-breadcrumbs" not in styles:
+        errors.append("Atlas lacks reloadable drill-down paths or breadcrumbs")
 
     social = SITE / "assets" / "concordloom-social-preview.png"
     if png_dimensions(social) != (1280, 640):
         errors.append("social preview must be exactly 1280x640")
+    if social.stat().st_size >= 1_000_000:
+        errors.append("social preview must stay below GitHub's 1 MB upload limit")
 
     atlas = json.loads((SITE / "data" / "atlas.json").read_text(encoding="utf-8"))
     loop_ids = {loop["id"] for loop in atlas["loops"]}
     roots = set(atlas["binding"]["rootLoopIds"])
-    if roots != {"concord-change"}:
+    if roots != {"steward-concordloom"}:
         errors.append(f"unexpected active Atlas roots: {sorted(roots)}")
-    expected_children = {
-        "observe",
-        "negotiate",
-        "bind",
-        "execute",
-        "verify",
-        "publish",
-        "evolve",
+    expected_cycles = {
+        "product-direction",
+        "research-theory",
+        "protocol-design",
+        "runtime-tooling",
+        "trust-assurance",
+        "bindings-adapters",
+        "knowledge-experience",
+        "release-distribution",
+        "adoption-feedback",
+        "system-evolution",
+        "review-comprehension",
+        "activate-successor",
     }
-    if not expected_children <= loop_ids:
-        errors.append("Atlas projection omits universal self-binding loops")
+    if len(loop_ids) != 55:
+        errors.append(f"Atlas must expose all 55 development cycles, found {len(loop_ids)}")
+    if not expected_cycles <= loop_ids:
+        errors.append("Atlas projection omits required development cycles")
+    if atlas.get("evolutionCircuit") != [
+        "collect-evolution-signals",
+        "propose-successor",
+        "review-successor",
+        "activate-successor",
+        "observe-migration",
+    ]:
+        errors.append("Atlas does not expose the full evolution circuit")
+    if atlas.get("activationBoundary", {}).get("self_activation_allowed") is not False:
+        errors.append("Atlas does not expose the non-self-activation boundary")
+    for loop in atlas["loops"]:
+        if not loop.get("copy", {}).get("en") or not loop.get("copy", {}).get("ru"):
+            errors.append(f"Atlas loop {loop['id']} lacks bilingual copy")
+        profile = atlas.get("profiles", {}).get(loop.get("profile"))
+        if not profile:
+            errors.append(f"Atlas loop {loop['id']} lacks an execution profile")
+        elif profile.get("mcp", {}).get("status") != "not-declared":
+            errors.append(f"Atlas profile {loop['profile']} invents an MCP assignment")
     for edge in atlas["containment"]["edges"]:
         if edge["parent_loop_id"] not in loop_ids or edge["child_loop_id"] not in loop_ids:
             errors.append(f"Atlas edge {edge['id']} references an unknown loop")
+
+    content = json.loads((SITE / "data" / "content.json").read_text(encoding="utf-8"))
+    if len(content.get("documents", [])) != 12:
+        errors.append("Docs hub must expose all 12 bilingual document pairs")
+    for section in ("article", "quickstart"):
+        for locale in ("en", "ru"):
+            rendered = content.get(section, {}).get(locale, {})
+            if not rendered.get("html") or not rendered.get("toc"):
+                errors.append(f"missing rendered {locale} {section}")
+            ids = [item["id"] for item in rendered.get("toc", [])]
+            if len(ids) != len(set(ids)):
+                errors.append(f"duplicate stable section id in {locale} {section}")
 
     if errors:
         for error in errors:

@@ -1,0 +1,227 @@
+{
+  "authority": {
+    "principals": [
+      {
+        "id": "example-operator",
+        "kind": "human",
+        "roles": [
+          "operator"
+        ]
+      },
+      {
+        "id": "example-orchestrator",
+        "kind": "agent",
+        "roles": [
+          "orchestrator"
+        ]
+      },
+      {
+        "id": "example-executor",
+        "kind": "agent",
+        "roles": [
+          "executor"
+        ]
+      },
+      {
+        "id": "example-reviewer",
+        "kind": "agent",
+        "roles": [
+          "reviewer"
+        ]
+      },
+      {
+        "id": "example-publisher",
+        "kind": "automation",
+        "roles": [
+          "publisher"
+        ]
+      }
+    ],
+    "roles": [
+      {
+        "capabilities": [
+          "accept-intent",
+          "accept-loop-design",
+          "authorize-run",
+          "decide-evolution",
+          "activate-binding",
+          "escalate"
+        ],
+        "description": "Accepts intent, loop design, evolution, and bindings.",
+        "id": "operator"
+      },
+      {
+        "capabilities": [
+          "route-run",
+          "accept-parent",
+          "escalate"
+        ],
+        "description": "Routes accepted outcomes without changing their authority.",
+        "id": "orchestrator"
+      },
+      {
+        "capabilities": [
+          "execute-work",
+          "produce-evidence",
+          "escalate"
+        ],
+        "description": "Produces scoped candidates and factual evidence.",
+        "id": "executor"
+      },
+      {
+        "capabilities": [
+          "review-candidate",
+          "accept-gate",
+          "produce-evidence",
+          "escalate"
+        ],
+        "description": "Independently evaluates a pinned candidate.",
+        "id": "reviewer"
+      },
+      {
+        "capabilities": [
+          "execute-work",
+          "publish-release",
+          "produce-evidence",
+          "escalate"
+        ],
+        "description": "Performs one explicitly authorized external effect.",
+        "id": "publisher"
+      }
+    ],
+    "separation_rules": [
+      {
+        "applies_to_loop_ids": [
+          "review-candidate",
+          "assure-release",
+          "review-comprehension",
+          "review-successor"
+        ],
+        "disallow_same_principal": true,
+        "id": "author-verification-separation",
+        "review_capability": "review-candidate",
+        "subject_capability": "execute-work"
+      }
+    ]
+  },
+  "evidence": {
+    "accepted_results": [
+      "pass",
+      "fail",
+      "indeterminate"
+    ],
+    "child_receipts_auto_accept_parent": false,
+    "content_addressed": true,
+    "require_candidate_digest": true,
+    "require_policy_digest": true
+  },
+  "evolution": {
+    "activation_capability": "activate-binding",
+    "allow_self_activation": false,
+    "decision_capability": "decide-evolution",
+    "governance_source": "proposal.base_binding_digest",
+    "minimum_repeated_signals": 2,
+    "proposal_capability": "route-run"
+  },
+  "execution": {
+    "allowed_tools": [
+      "git",
+      "github",
+      "imagegen",
+      "orca",
+      "python",
+      "web"
+    ],
+    "control_plane": {
+      "actions": [
+        "new",
+        "authorize",
+        "record-attempt",
+        "record-evidence",
+        "complete"
+      ],
+      "candidate_write": false,
+      "runner_principal_id": "example-orchestrator",
+      "state_path": ".concord"
+    },
+    "default_budgets": {
+      "max_attempts": 3,
+      "max_cost_units": 10,
+      "max_elapsed_seconds": 3600,
+      "on_exhaustion": "failed"
+    },
+    "default_scope": {
+      "external_mutations": [
+        "github-pages",
+        "github-repository-homepage",
+        "github-repository-social-preview"
+      ],
+      "network": "write",
+      "read_paths": [
+        "."
+      ],
+      "write_paths": [
+        ".github",
+        "README.md",
+        "README.ru.md",
+        "docs",
+        "framework",
+        "plugins",
+        "schemas",
+        "site",
+        "src",
+        "tests",
+        "tools"
+      ]
+    },
+    "local_first": true,
+    "model_policy": {
+      "allowed_content_classes": [
+        "metadata",
+        "history",
+        "source",
+        "tests",
+        "documentation",
+        "configuration",
+        "evidence"
+      ],
+      "allowed_models": [
+        {
+          "model": "none",
+          "provider": ""
+        },
+        {
+          "model": "gpt-5",
+          "provider": "openai"
+        }
+      ],
+      "allowed_path_prefixes": [
+        "."
+      ],
+      "allowed_providers": [
+        "openai"
+      ],
+      "max_cost_units": 10,
+      "privacy": "public_data_only",
+      "public_content_classes": [
+        "metadata",
+        "history",
+        "source",
+        "tests",
+        "documentation",
+        "configuration",
+        "evidence"
+      ],
+      "record_effective_model": true
+    }
+  },
+  "id": "concordloom-self-policy-v5",
+  "kind": "concordloom.policy",
+  "routing": {
+    "operator_selects_outcomes": true,
+    "orchestrator_selects_machinery": true,
+    "record_effective_route": true,
+    "record_planned_route": true
+  },
+  "schema_version": "0.1"
+}

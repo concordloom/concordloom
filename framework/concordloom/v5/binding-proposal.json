@@ -1,0 +1,63 @@
+{
+  "activation_required": true,
+  "active_root_loop_ids": [
+    "steward-concordloom"
+  ],
+  "artifacts": [
+    {
+      "digest": "sha256:6a4e14dda4f581d191934cdbc73c5f70145733a56d3be2987bd26eeea697da67",
+      "path": "framework/concordloom/v5/loop-design.json",
+      "role": "accepted_loop_design"
+    },
+    {
+      "digest": "sha256:227869a6a026e1f131fb377c9c2438ee1416f72cfd8daee05bd1950a1fb85b1e",
+      "path": "framework/concordloom/v3/accepted-project-graph.json",
+      "role": "accepted_project_graph"
+    },
+    {
+      "digest": "sha256:f94af275ec939d3ec65a9f34f3399675e368b4d3c322373b78282eea2203620d",
+      "path": "framework/concordloom/v5/development-model.json",
+      "role": "atlas_input"
+    },
+    {
+      "digest": "sha256:e8b95bd8d2f4e8fc6c93d42d13816d68ab219572cd0eca66bdfeb971809a943d",
+      "path": "framework/concordloom/v5/cycle-registry.json",
+      "role": "cycle_registry"
+    },
+    {
+      "digest": "sha256:4e67a46d2a578a5b442e8fb94e20cdc22733bd74c7c25834df430011716c3f43",
+      "path": "framework/concordloom/v3/decision-log.json",
+      "role": "decision_log"
+    },
+    {
+      "digest": "sha256:fb4d5fcea0e3cd34d325e03dec53c2bb2a88c173b7a2f8092d2f3bc0e8ffe033",
+      "path": "framework/concordloom/v5/evolution-proposal.json",
+      "role": "evolution_history"
+    },
+    {
+      "digest": "sha256:c6806f55807c3953af7702722b7cbafa1c365432700bbee551e8f27419740f99",
+      "path": "framework/concordloom/v5/loop-design-proposal.json",
+      "role": "loop_design_proposal"
+    },
+    {
+      "digest": "sha256:fee3269a4292c67e3a35656455ec47f7732549af36748c1bfef1d932719769d3",
+      "path": "framework/concordloom/v5/policy.json",
+      "role": "policy"
+    }
+  ],
+  "created_at": "2026-07-27T13:00:00Z",
+  "digest_contract": {
+    "algorithm": "sha256",
+    "canonicalization": "rfc8785",
+    "excluded_fields": [
+      "/proposal_digest"
+    ]
+  },
+  "framework_version": "0.1.0",
+  "id": "concordloom-self-binding-v5-proposal",
+  "kind": "concordloom.binding-proposal",
+  "predecessor_binding_digest": "sha256:401512583fd07fabaa15852a2c320230718f5590c25fab6c397eea4ccde0f6db",
+  "proposal_digest": "sha256:22916293f37614e2006e3f1efb1eeb9b06d2fdd79f538ae97bd2490a5e8a91a6",
+  "schema_version": "0.1",
+  "status": "proposed"
+}

@@ -84,7 +84,7 @@ class SelfHostingEvolutionTests(unittest.TestCase):
 
         self.assertEqual(catalog["active_binding_digest"], binding["binding_digest"])
         self.assertEqual(atlas["binding"]["digest"], binding["binding_digest"])
-        self.assertEqual(atlas["binding"]["rootLoopIds"], ["concord-change"])
+        self.assertEqual(atlas["binding"]["rootLoopIds"], ["steward-concordloom"])
 
     def test_verification_is_independent_and_publication_is_scoped(self) -> None:
         policy = load(FRAMEWORK / "policy.json")
@@ -144,7 +144,7 @@ class SelfHostingEvolutionTests(unittest.TestCase):
 
     def test_repository_homepage_is_a_separate_publisher_effect(self) -> None:
         predecessor = load(FRAMEWORK / "v3" / "binding.json")
-        binding = active_binding()
+        binding = load(FRAMEWORK / "v4" / "binding.json")
         policy = load(FRAMEWORK / "v4" / "policy.json")
         proposal = load(FRAMEWORK / "v4" / "evolution-proposal.json")
         registry = load(FRAMEWORK / "v4" / "cycle-registry.json")

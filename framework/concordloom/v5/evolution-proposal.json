@@ -1,0 +1,73 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:401512583fd07fabaa15852a2c320230718f5590c25fab6c397eea4ccde0f6db",
+  "decision_authority_ref": "operator",
+  "decision_required": true,
+  "expected_effect": "Replace the shallow self-development projection with a complete finite hierarchy and make the evolution authority boundary visible.",
+  "generated_at": "2026-07-27T13:00:00Z",
+  "id": "complete-concordloom-development-system",
+  "kind": "concordloom.evolution-proposal",
+  "operations": [
+    {
+      "op": "add",
+      "target_id": "concordloom-development-system-v5",
+      "target_kind": "loop",
+      "value": {
+        "activation_loop": "activate-successor",
+        "comprehension_cycle": "review-comprehension",
+        "node_count": 55,
+        "root_loop_id": "steward-concordloom"
+      }
+    }
+  ],
+  "proposed_by": {
+    "id": "example-orchestrator",
+    "kind": "orchestrator"
+  },
+  "risk": {
+    "failure_modes": [
+      "A responsibility could be placed under the wrong parent.",
+      "Execution metadata could be mistaken for timeless semantics."
+    ],
+    "level": "medium",
+    "rollback": "Reactivate the v4 predecessor if the v5 hierarchy fails independent review."
+  },
+  "schema_version": "0.1",
+  "signals": [
+    {
+      "base_binding_digest": "sha256:401512583fd07fabaa15852a2c320230718f5590c25fab6c397eea4ccde0f6db",
+      "category": "friction",
+      "id": "atlas-hides-development-and-activation",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 2,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "atlas-coverage-audit"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:31afc33b60f2e0711ab0585ec6639f36081dfef87a81026d58a7635c4cc9f413",
+      "summary": "The active Atlas exposes eight generic phases, but not the repository development responsibilities or activation boundary."
+    },
+    {
+      "base_binding_digest": "sha256:401512583fd07fabaa15852a2c320230718f5590c25fab6c397eea4ccde0f6db",
+      "category": "coverage",
+      "id": "operator-requested-complete-development-system",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 1,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "operator-request"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:94975e9a714005de2b49b76789cfc668ee7e84b77b1a43ea390857d4cbf5d238",
+      "summary": "The operator requested every cycle that develops Concord Loom, not only the website or one generic change."
+    }
+  ],
+  "status": "proposed"
+}

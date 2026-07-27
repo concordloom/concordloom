@@ -116,23 +116,18 @@ not rewrite earlier evidence.
 
 ## Concord Loom governs Concord Loom
 
-The project uses its own domain-neutral self-binding:
+The active self-binding starts at `steward-concordloom` and expands into ten
+responsibility areas: product direction, research, protocol, runtime, trust,
+adapters, knowledge, release, adoption, and system evolution. Each area expands
+again into concrete capability cycles.
 
-`Observe → Negotiate → Bind → Execute → Verify → Publish? → Evolve`
+Documentation now has an independent comprehension-review cycle. Site
+development and site publication are separate. Evolution is visible as five
+different responsibilities: collect signals, propose a successor, review it,
+activate it, and observe the migration.
 
-This repository's first self-evolution exposed a real governance deadlock in
-the original generic-SDLC binding: it could propose change, but its scope could
-not materialize a successor or publish a site. The repair was itself handled
-as evidence:
-
-- two distinct failure signals;
-- a non-activating evolution proposal;
-- explicit operator acceptance of the universal design;
-- a separate exact-byte activation decision;
-- an append-only catalog successor;
-- isolated execution, independent verification, and publication scopes.
-
-Evolution may propose its successor. **It cannot activate itself.**
+`propose-successor` may draft exact new rules. Another participant reviews
+them. Only a separately authorized operator can activate the successor.
 
 ## Commands
 
@@ -167,6 +162,9 @@ Every public guide is maintained in English and Russian.
 | [Release verification](docs/RELEASE.md) | [Проверка релиза](docs/ru/RELEASE.md) |
 | [Cycles of Cycles](docs/ARTICLE.md) | [Циклы циклов](docs/ru/ARTICLE.md) |
 | [Atlas guide](docs/ATLAS.md) | [Руководство Atlas](docs/ru/ATLAS.md) |
+| [Writing standard](docs/WRITING.md) | [Стандарт текста](docs/ru/WRITING.md) |
+| [Product decisions](docs/DECISIONS.md) | [Решения по продукту](docs/ru/DECISIONS.md) |
+| [Observed landscape](docs/research/OBSERVED_LANDSCAPE.md) | [Наблюдаемый ландшафт](docs/ru/research/OBSERVED_LANDSCAPE.md) |
 
 ## Codex plugin
 

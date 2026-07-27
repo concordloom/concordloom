@@ -1,0 +1,67 @@
+{
+  "schema_version": "0.1",
+  "terms": [
+    {
+      "concept": "loop",
+      "english": "loop",
+      "russian": "цикл"
+    },
+    {
+      "concept": "loop_system",
+      "english": "loop system",
+      "russian": "система циклов"
+    },
+    {
+      "concept": "containment_graph",
+      "english": "containment graph",
+      "russian": "граф вложенности"
+    },
+    {
+      "concept": "local_control_flow",
+      "english": "local control-flow graph",
+      "russian": "локальный граф переходов"
+    },
+    {
+      "concept": "binding",
+      "english": "binding",
+      "russian": "конфигурация циклов",
+      "machine_spelling": "binding"
+    },
+    {
+      "concept": "active_binding",
+      "english": "active binding",
+      "russian": "действующая конфигурация"
+    },
+    {
+      "concept": "self_binding",
+      "english": "self-binding",
+      "russian": "правила, по которым Concord Loom меняет сам себя"
+    },
+    {
+      "concept": "candidate",
+      "english": "candidate",
+      "russian": "проверяемая версия результата",
+      "machine_spelling": "candidate"
+    },
+    {
+      "concept": "evidence",
+      "english": "evidence",
+      "russian": "данные проверки"
+    },
+    {
+      "concept": "authority",
+      "english": "authority",
+      "russian": "право принять решение"
+    },
+    {
+      "concept": "successor",
+      "english": "successor binding",
+      "russian": "следующая версия конфигурации"
+    },
+    {
+      "concept": "activation",
+      "english": "activation",
+      "russian": "включение новой версии"
+    }
+  ]
+}

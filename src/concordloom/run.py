@@ -503,7 +503,7 @@ def _default_route(
     root_loop_id: str,
 ) -> list[dict[str, Any]]:
     roles = policy_roles(policy)
-    scope = policy["execution"]["default_scope"]
+    policy_scope = policy["execution"]["default_scope"]
     reachable = _reachable_loop_ids(registry, root_loop_id)
     result: list[dict[str, Any]] = []
     for loop in sorted(
@@ -534,10 +534,44 @@ def _default_route(
             "model_intent": "select within bound model policy",
             "reasoning_intent": "proportionate to evidence contract",
             "subagent_intent": [],
-            "scope": deepcopy(scope),
+            "scope": _loop_route_scope(
+                registry,
+                loop["id"],
+                policy_scope,
+            ),
         }
         )
     return result
+
+
+def _loop_route_scope(
+    registry: Mapping[str, Any],
+    loop_id: str,
+    card_scope: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Return the direct-effect ceiling for one routed loop.
+
+    A containment grant is a delegation ceiling. A composite parent may pass
+    that ceiling to a child, but may not consume the child's external effect
+    itself. Roots have no incoming grant and are coordination-only by default.
+    """
+
+    incoming = [
+        edge
+        for edge in registry["containment_graph"]["edges"]
+        if edge["child_loop_id"] == loop_id
+    ]
+    if len(incoming) > 1:
+        raise RunStateError(f"loop {loop_id!r} has ambiguous containment grants")
+    limit = deepcopy(incoming[0]["grant"]["scope"] if incoming else card_scope)
+    has_children = any(
+        edge["parent_loop_id"] == loop_id
+        for edge in registry["containment_graph"]["edges"]
+    )
+    if not incoming or has_children:
+        limit["network"] = "none"
+        limit["external_mutations"] = []
+    return limit
 
 
 def _route_capability(
@@ -655,6 +689,15 @@ def create_run_card(
             )
         if not scope_subset(item["scope"], card_scope):
             raise RunStateError(f"planned node {item['node_id']!r} broadens run scope")
+        loop_limit = _loop_route_scope(
+            registry,
+            item["loop_id"],
+            card_scope,
+        )
+        if not scope_subset(item["scope"], loop_limit):
+            raise RunStateError(
+                f"planned node {item['node_id']!r} broadens its containment grant"
+            )
     if not any(item["loop_id"] == root_loop_id for item in route):
         raise RunStateError("planned route omits the root loop")
     card = {

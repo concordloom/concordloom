@@ -4,41 +4,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0a0a09">
-    <meta
-      name="description"
-      content="Concord Loom governs bounded systems of loops without letting evolution authorize itself."
-    >
-    <meta property="og:title" content="Concord Loom — cycles with boundaries">
-    <meta
-      property="og:description"
-      content="Systems that can change themselves — without granting themselves permission."
-    >
+    <meta name="description" content="Concord Loom maps, runs and evolves bounded systems of loops.">
+    <meta property="og:title" content="Concord Loom / see the whole system">
+    <meta property="og:description" content="A universal grammar for change with visible boundaries, evidence and authority.">
     <meta property="og:image" content="assets/concordloom-social-preview.png">
     <meta property="og:type" content="website">
-    <title>Concord Loom — cycles with boundaries</title>
+    <title>Concord Loom / see the whole system</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    <link rel="apple-touch-icon" href="assets/concordloom-mark-192.png">
     <link rel="stylesheet" href="styles.css">
     <script src="app.js" defer></script>
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main" data-en="Skip to content" data-ru="Перейти к содержанию">Skip to content</a>
 
     <header class="site-header">
-      <a class="brand" href="#concept" aria-label="Concord Loom home">
-        <span class="brand-mark" aria-hidden="true"></span>
+      <a class="brand" href="#concept" data-view-link="concept" aria-label="Concord Loom home">
+        <img src="assets/concordloom-mark-192.png" width="40" height="40" alt="Concord Loom mark">
         <span>CONCORD LOOM</span>
       </a>
-      <nav class="view-tabs" aria-label="Primary navigation">
-        <a class="view-tab is-active" data-view-link="concept" href="#concept">
-          <span data-en="Concept" data-ru="Концепция">Concept</span>
-        </a>
-        <a class="view-tab" data-view-link="atlas" href="#atlas">
-          <span data-en="Live system" data-ru="Живая система">Live system</span>
-        </a>
+      <button class="menu-switch" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span data-en="Menu" data-ru="Меню">Menu</span>
+      </button>
+      <nav class="view-tabs" id="primary-nav" aria-label="Primary navigation">
+        <a class="view-tab is-active" data-view-link="concept" href="#concept" data-en="Concept" data-ru="Концепция">Concept</a>
+        <a class="view-tab" data-view-link="theory" href="#theory" data-en="Theory" data-ru="Теория">Theory</a>
+        <a class="view-tab" data-view-link="quickstart" href="#quickstart" data-en="Quickstart" data-ru="Быстрый старт">Quickstart</a>
+        <a class="view-tab" data-view-link="atlas" href="#atlas" data-en="Atlas" data-ru="Atlas">Atlas</a>
+        <a class="view-tab" data-view-link="docs" href="#docs" data-en="Docs" data-ru="Документы">Docs</a>
       </nav>
       <div class="header-actions">
-        <a class="docs-link" href="https://github.com/PullDakar/concordloom/tree/main/docs">
-          <span data-en="Docs" data-ru="Документы">Docs</span>
-        </a>
         <button class="language-switch" type="button" aria-label="Switch language">
           <span data-lang-label>RU</span>
         </button>
@@ -49,276 +44,177 @@
       <div class="view is-active" data-view="concept">
         <section class="hero">
           <div class="hero-copy reveal">
-            <p class="kicker" data-en="A FRAMEWORK FOR BOUNDED CHANGE" data-ru="ФРЕЙМВОРК ОГРАНИЧЕННЫХ ИЗМЕНЕНИЙ">
-              A FRAMEWORK FOR BOUNDED CHANGE
-            </p>
+            <p class="kicker" data-en="SEE THE WHOLE SYSTEM" data-ru="УВИДЕТЬ СИСТЕМУ ЦЕЛИКОМ">SEE THE WHOLE SYSTEM</p>
             <h1>
-              <span data-en="Systems that evolve." data-ru="Системы меняют себя.">
-                Systems that evolve.
-              </span>
-              <em data-en="Without self-authority." data-ru="Но не дают себе власть.">
-                Without self-authority.
-              </em>
+              <span data-en="Loops make change." data-ru="Циклы создают изменения.">Loops make change.</span>
+              <em data-en="Boundaries make it governable." data-ru="Границы делают их управляемыми.">Boundaries make it governable.</em>
             </h1>
             <div class="hero-bottom">
               <p
-                data-en="Discover, negotiate, bind, execute, verify, and evolve any finite system of loops."
-                data-ru="Исследуйте, согласовывайте, связывайте, исполняйте, проверяйте и развивайте любую конечную систему циклов."
-              >
-                Discover, negotiate, bind, execute, verify, and evolve any finite system of loops.
-              </p>
+                data-en="Concord Loom maps complex work as nested cycles. Every cycle has an input, an outcome, a limit, a responsible role and a way to prove completion."
+                data-ru="Concord Loom описывает сложную работу как систему вложенных циклов. У каждого цикла есть вход, результат, предел, ответственный и способ подтвердить завершение."
+              >Concord Loom maps complex work as nested cycles. Every cycle has an input, an outcome, a limit, a responsible role and a way to prove completion.</p>
               <a class="primary-cta" href="#atlas">
-                <span data-en="See it govern itself" data-ru="Посмотреть самоуправление">See it govern itself</span>
+                <span data-en="Open the living map" data-ru="Открыть живую карту">Open the living map</span>
                 <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
-
           <figure class="hero-art reveal" aria-labelledby="hero-art-caption">
-            <img
-              src="assets/concordloom-hero.webp"
-              width="1774"
-              height="887"
-              alt="A recursive mechanical loom turns raw threads into a verified weave through nested finite paths."
-            >
+            <img src="assets/concordloom-hero.webp" width="1774" height="887" alt="Nested mechanical paths turn observations into a verified result.">
             <figcaption id="hero-art-caption">
-              <span data-en="RAW OBSERVATION" data-ru="СЫРОЕ НАБЛЮДЕНИЕ">RAW OBSERVATION</span>
-              <span data-en="BOUNDED TRANSFORMATION" data-ru="ОГРАНИЧЕННОЕ ПРЕОБРАЗОВАНИЕ">BOUNDED TRANSFORMATION</span>
-              <span data-en="VERIFIED EFFECT" data-ru="ПРОВЕРЕННЫЙ ЭФФЕКТ">VERIFIED EFFECT</span>
+              <span data-en="OBSERVATION" data-ru="НАБЛЮДЕНИЕ">OBSERVATION</span>
+              <span data-en="BOUNDED WORK" data-ru="ОГРАНИЧЕННАЯ РАБОТА">BOUNDED WORK</span>
+              <span data-en="VERIFIED RESULT" data-ru="ПРОВЕРЕННЫЙ РЕЗУЛЬТАТ">VERIFIED RESULT</span>
             </figcaption>
           </figure>
         </section>
 
-        <section class="truth-rail" aria-label="Concord Loom truth states">
-          <span>OBSERVED</span>
-          <span>PROPOSED</span>
-          <span>ACCEPTED</span>
-          <span>PLANNED</span>
-          <span>ACTUAL</span>
-          <span>VERIFIED</span>
+        <section class="truth-rail" aria-label="Fact states">
+          <span data-en="OBSERVED" data-ru="НАБЛЮДАЛОСЬ">OBSERVED</span>
+          <span data-en="PROPOSED" data-ru="ПРЕДЛОЖЕНО">PROPOSED</span>
+          <span data-en="ACCEPTED" data-ru="ПРИНЯТО">ACCEPTED</span>
+          <span data-en="PLANNED" data-ru="ЗАПЛАНИРОВАНО">PLANNED</span>
+          <span data-en="ACTUAL" data-ru="ВЫПОЛНЕНО">ACTUAL</span>
+          <span data-en="VERIFIED" data-ru="ПРОВЕРЕНО">VERIFIED</span>
         </section>
 
         <section class="manifesto section-grid reveal">
-          <p class="section-number">01 / 04</p>
+          <p class="section-label" data-en="THE CORE IDEA" data-ru="ОСНОВНАЯ ИДЕЯ">THE CORE IDEA</p>
           <div class="section-content">
-            <h2
-              data-en="The loop is not the product. The boundary is."
-              data-ru="Цикл — не продукт. Продукт — его граница."
-            >
-              The loop is not the product. The boundary is.
-            </h2>
+            <h2 data-en="A loop is useful only when you know where it ends." data-ru="Цикл полезен, только если понятно, где он заканчивается.">A loop is useful only when you know where it ends.</h2>
             <div class="manifesto-columns">
               <p
-                data-en="A loop becomes governable when its input, outcome, authority, evidence, budget, and terminal states are explicit."
-                data-ru="Цикл становится управляемым, когда явно заданы его вход, результат, полномочия, доказательства, бюджет и терминальные состояния."
-              >
-                A loop becomes governable when its input, outcome, authority, evidence, budget, and terminal states are explicit.
-              </p>
+                data-en="Concord Loom asks six plain questions: What starts the cycle? What must it produce? Who may decide? What proves the result? How many retries are allowed? What happens when it fails?"
+                data-ru="Concord Loom задаёт шесть простых вопросов: Что запускает цикл? Что он должен дать? Кто принимает решение? Чем подтверждается результат? Сколько попыток разрешено? Что происходит при неудаче?"
+              >Concord Loom asks six plain questions: What starts the cycle? What must it produce? Who may decide? What proves the result? How many retries are allowed? What happens when it fails?</p>
               <p
-                data-en="Concord Loom keeps facts apart: what was observed, what someone proposed, what an operator accepted, what ran, and what independent evidence verified."
-                data-ru="Concord Loom не смешивает факты: что наблюдалось, что было предложено, что принял оператор, что реально исполнилось и что подтвердила независимая проверка."
-              >
-                Concord Loom keeps facts apart: what was observed, what someone proposed, what an operator accepted, what ran, and what independent evidence verified.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section class="universal section-grid reveal">
-          <p class="section-number">02 / 04</p>
-          <div class="section-content">
-            <h2 data-en="One grammar. Many domains." data-ru="Одна грамматика. Много областей.">
-              One grammar. Many domains.
-            </h2>
-            <div class="domain-list">
-              <article>
-                <span>01</span>
-                <h3 data-en="Research" data-ru="Исследование">Research</h3>
-                <p data-en="Hypothesis → experiment → evidence → revision" data-ru="Гипотеза → эксперимент → доказательство → пересмотр">
-                  Hypothesis → experiment → evidence → revision
-                </p>
-              </article>
-              <article>
-                <span>02</span>
-                <h3 data-en="Incident response" data-ru="Реакция на инциденты">Incident response</h3>
-                <p data-en="Signal → containment → recovery → learning" data-ru="Сигнал → локализация → восстановление → обучение">
-                  Signal → containment → recovery → learning
-                </p>
-              </article>
-              <article>
-                <span>03</span>
-                <h3 data-en="Creative production" data-ru="Творческое производство">Creative production</h3>
-                <p data-en="Brief → exploration → critique → delivery" data-ru="Бриф → исследование → критика → результат">
-                  Brief → exploration → critique → delivery
-                </p>
-              </article>
-              <article>
-                <span>04</span>
-                <h3 data-en="Governance" data-ru="Управление">Governance</h3>
-                <p data-en="Observation → proposal → decision → effect" data-ru="Наблюдение → предложение → решение → эффект">
-                  Observation → proposal → decision → effect
-                </p>
-              </article>
-              <article>
-                <span>05</span>
-                <h3 data-en="Software delivery" data-ru="Поставка ПО">Software delivery</h3>
-                <p data-en="One binding among many — never the product boundary" data-ru="Один binding среди многих — не граница продукта">
-                  One binding among many — never the product boundary
-                </p>
-              </article>
+                data-en="It does not prescribe one software process. Research, incident response, creative work, governance and software delivery are peer examples of the same grammar."
+                data-ru="Он не задаёт единый процесс разработки ПО. Исследования, работа с инцидентами, творчество, управление и поставка ПО равноправно используют одну схему."
+              >It does not prescribe one software process. Research, incident response, creative work, governance and software delivery are peer examples of the same grammar.</p>
             </div>
           </div>
         </section>
 
         <section class="grammar section-grid reveal">
-          <p class="section-number">03 / 04</p>
+          <p class="section-label" data-en="SHARED RUN GRAMMAR" data-ru="ОБЩАЯ СХЕМА ЗАПУСКА">SHARED RUN GRAMMAR</p>
           <div class="section-content">
-            <h2 data-en="The universal change grammar" data-ru="Универсальная грамматика изменения">
-              The universal change grammar
-            </h2>
-            <div class="grammar-stage" aria-label="Universal loop sequence">
-              <ol>
-                <li><button type="button" data-stage="observe"><b>O</b><span>Observe</span></button></li>
-                <li><button type="button" data-stage="negotiate"><b>N</b><span>Negotiate</span></button></li>
-                <li><button type="button" data-stage="bind"><b>B</b><span>Bind</span></button></li>
-                <li><button type="button" data-stage="execute"><b>X</b><span>Execute</span></button></li>
-                <li><button type="button" data-stage="verify"><b>V</b><span>Verify</span></button></li>
-                <li><button type="button" data-stage="publish"><b>P</b><span>Publish?</span></button></li>
-                <li><button type="button" data-stage="evolve"><b>E</b><span>Evolve</span></button></li>
-              </ol>
+            <h2 data-en="Seven phases. One hard stop before power changes hands." data-ru="Семь этапов. И жёсткая граница перед сменой полномочий.">Seven phases. One hard stop before power changes hands.</h2>
+            <div class="grammar-stage">
+              <ol data-run-grammar></ol>
               <div class="stage-readout" aria-live="polite">
                 <span data-stage-code>O</span>
-                <p data-stage-copy data-en="Record provenance before inferring intent." data-ru="Зафиксировать происхождение фактов до вывода о намерении.">
-                  Record provenance before inferring intent.
-                </p>
+                <p data-stage-copy>Collect attributable facts.</p>
               </div>
             </div>
           </div>
         </section>
 
         <section class="evolution section-grid reveal">
-          <p class="section-number">04 / 04</p>
+          <p class="section-label" data-en="EVOLUTION" data-ru="ЭВОЛЮЦИЯ">EVOLUTION</p>
           <div class="section-content evolution-content">
             <p class="evolution-word" aria-hidden="true">EVOLVE</p>
-            <h2
-              data-en="Evolution can propose its successor. It cannot crown it."
-              data-ru="Эволюция может предложить преемника. Но не может короновать его."
-            >
-              Evolution can propose its successor. It cannot crown it.
-            </h2>
+            <h2 data-en="The system may draft its successor. Only an operator may activate it." data-ru="Система может подготовить новую версию. Включить её может только оператор.">The system may draft its successor. Only an operator may activate it.</h2>
             <p
-              data-en="Repeated evidence may produce a content-addressed successor proposal. Activation remains a separate operator decision pinned to exact bytes."
-              data-ru="Повторяющиеся сигналы могут породить адресуемое по содержимому предложение преемника. Активация остаётся отдельным решением оператора, привязанным к точным байтам."
-            >
-              Repeated evidence may produce a content-addressed successor proposal. Activation remains a separate operator decision pinned to exact bytes.
-            </p>
-            <a class="inverse-cta" href="#atlas">
-              <span data-en="Inspect this project's cycles" data-ru="Исследовать циклы проекта">Inspect this project's cycles</span>
+              data-en="When the same problem keeps returning, Concord Loom records the exact change, risks and reasons. Review and activation remain separate decisions."
+              data-ru="Если одна и та же проблема повторяется, Concord Loom фиксирует точное изменение, риски и причины. Проверка и включение остаются отдельными решениями."
+            >When the same problem keeps returning, Concord Loom records the exact change, risks and reasons. Review and activation remain separate decisions.</p>
+            <a class="inverse-cta" href="#atlas/system-evolution">
+              <span data-en="Inspect evolution" data-ru="Открыть эволюцию">Inspect evolution</span>
               <span aria-hidden="true">↓</span>
             </a>
           </div>
         </section>
       </div>
 
+      <div class="view reading-view" data-view="theory" hidden>
+        <header class="reading-hero">
+          <p class="kicker" data-en="THEORY" data-ru="ТЕОРИЯ">THEORY</p>
+          <h1 data-en="Cycles of Cycles" data-ru="Циклы циклов">Cycles of Cycles</h1>
+          <p data-en="The complete argument, formal model and research agenda." data-ru="Полное обоснование, формальная модель и программа исследований.">The complete argument, formal model and research agenda.</p>
+        </header>
+        <div class="reading-shell">
+          <aside class="reading-toc" data-content-toc="article"></aside>
+          <article class="prose" data-content-body="article" aria-live="polite"></article>
+        </div>
+      </div>
+
+      <div class="view reading-view" data-view="quickstart" hidden>
+        <header class="reading-hero">
+          <p class="kicker" data-en="FIRST SUCCESS" data-ru="ПЕРВЫЙ РЕЗУЛЬТАТ">FIRST SUCCESS</p>
+          <h1 data-en="Run one bounded change." data-ru="Запустите одно управляемое изменение.">Run one bounded change.</h1>
+          <p
+            data-en="Ten steps from installation check to an inspectable Atlas."
+            data-ru="Десять шагов от проверки установки до готового Atlas."
+          >Ten steps from installation check to an inspectable Atlas.</p>
+        </header>
+        <div class="reading-shell">
+          <aside class="reading-toc" data-content-toc="quickstart"></aside>
+          <article class="prose" data-content-body="quickstart" aria-live="polite"></article>
+        </div>
+      </div>
+
       <div class="view atlas-view" data-view="atlas" hidden>
         <section class="atlas-hero reveal">
           <div>
-            <p class="kicker" data-en="CONCORD LOOM / SELF-BINDING" data-ru="CONCORD LOOM / SELF-BINDING">
-              CONCORD LOOM / SELF-BINDING
-            </p>
-            <h1 data-en="The system, observed live." data-ru="Система, наблюдаемая вживую.">
-              The system, observed live.
-            </h1>
+            <p class="kicker" data-en="CONCORD LOOM / ACTIVE SELF-BINDING" data-ru="CONCORD LOOM / ДЕЙСТВУЮЩИЕ ПРАВИЛА">CONCORD LOOM / ACTIVE SELF-BINDING</p>
+            <h1 data-en="Every cycle. One map." data-ru="Все циклы. Одна карта.">Every cycle. One map.</h1>
           </div>
           <p
-            data-en="This Atlas is a generated projection of accepted bindings and run data. It cannot change either."
-            data-ru="Этот Atlas — генерируемая проекция принятых bindings и данных запусков. Он не может менять ни то, ни другое."
-          >
-            This Atlas is a generated projection of accepted bindings and run data. It cannot change either.
-          </p>
+            data-en="Atlas reads the approved cycle map and recorded runs. It never edits them."
+            data-ru="Atlas читает утверждённую карту циклов и историю запусков. Менять их он не может."
+          >Atlas reads the approved cycle map and recorded runs. It never edits them.</p>
         </section>
 
         <section class="atlas-status" aria-label="Active binding status">
-          <div>
-            <span data-en="ACTIVE BINDING" data-ru="АКТИВНЫЙ BINDING">ACTIVE BINDING</span>
-            <strong data-atlas-binding>Loading…</strong>
-          </div>
-          <div>
-            <span data-en="ROOT LOOP" data-ru="КОРНЕВОЙ ЦИКЛ">ROOT LOOP</span>
-            <strong data-atlas-root>—</strong>
-          </div>
-          <div>
-            <span data-en="AUTHORITY" data-ru="ПОЛНОМОЧИЕ">AUTHORITY</span>
-            <strong data-en="Operator accepted" data-ru="Принято оператором">Operator accepted</strong>
-          </div>
-          <div>
-            <span data-en="PROJECTION" data-ru="ПРОЕКЦИЯ">PROJECTION</span>
-            <strong data-en="Read only" data-ru="Только чтение">Read only</strong>
+          <div><span data-en="ACTIVE VERSION" data-ru="ДЕЙСТВУЮЩАЯ ВЕРСИЯ">ACTIVE VERSION</span><strong data-atlas-binding>Loading</strong></div>
+          <div><span data-en="ROOT CYCLE" data-ru="КОРНЕВОЙ ЦИКЛ">ROOT CYCLE</span><strong data-atlas-root>Loading</strong></div>
+          <div><span data-en="NODES" data-ru="УЗЛЫ">NODES</span><strong data-atlas-count>0</strong></div>
+          <div><span data-en="PROJECTION" data-ru="РЕЖИМ">PROJECTION</span><strong data-en="Read only" data-ru="Только чтение">Read only</strong></div>
+        </section>
+
+        <section class="atlas-workbench">
+          <nav class="atlas-breadcrumbs" data-atlas-breadcrumbs aria-label="Cycle path"></nav>
+          <div class="atlas-level">
+            <div class="atlas-map">
+              <div class="atlas-map-head">
+                <p class="section-label" data-en="CURRENT LEVEL" data-ru="ТЕКУЩИЙ УРОВЕНЬ">CURRENT LEVEL</p>
+                <p data-atlas-provenance></p>
+              </div>
+              <div class="atlas-parent" data-atlas-parent></div>
+              <div class="atlas-children" data-atlas-children></div>
+              <p class="atlas-empty" data-atlas-empty hidden></p>
+            </div>
+            <aside class="atlas-inspector" data-atlas-inspector aria-live="polite"></aside>
           </div>
         </section>
 
-        <section class="atlas-system reveal">
-          <div class="atlas-intro">
-            <p class="section-number">CONTAINMENT</p>
-            <h2 data-en="One finite graph. Seven bounded children." data-ru="Один конечный граф. Семь ограниченных потомков.">
-              One finite graph. Seven bounded children.
-            </h2>
-            <p
-              data-en="Select a node to inspect its outcome contract. Local retries stay bounded; containment stays acyclic."
-              data-ru="Выберите узел, чтобы увидеть контракт результата. Локальные повторы ограничены; containment остаётся ацикличным."
-            >
-              Select a node to inspect its outcome contract. Local retries stay bounded; containment stays acyclic.
-            </p>
+        <section class="evolution-circuit">
+          <div>
+            <p class="section-label" data-en="ALWAYS VISIBLE" data-ru="ВСЕГДА НА ВИДУ">ALWAYS VISIBLE</p>
+            <h2 data-en="Evolution cannot authorize itself." data-ru="Эволюция не может выдать себе полномочия.">Evolution cannot authorize itself.</h2>
           </div>
-          <div class="atlas-machine" data-atlas-machine aria-live="polite">
-            <div class="atlas-orbit" aria-hidden="true"></div>
-            <div class="atlas-nodes" data-atlas-nodes></div>
-            <article class="atlas-contract" data-atlas-contract>
-              <span>SELECT A LOOP</span>
-              <h3>Concord change</h3>
-              <p>Loading the accepted registry…</p>
-            </article>
-          </div>
+          <ol data-evolution-circuit></ol>
         </section>
 
-        <section class="atlas-truth reveal">
-          <div>
-            <p class="section-number">TRUTH LAYERS</p>
-            <h2 data-en="Similar words. Different authority." data-ru="Похожие слова. Разные полномочия.">
-              Similar words. Different authority.
-            </h2>
-          </div>
-          <div class="truth-table" role="table" aria-label="Truth layer distinctions">
-            <div role="row"><b role="cell">Observed</b><span role="cell" data-en="Repository evidence says it exists." data-ru="Данные репозитория говорят, что это существует.">Repository evidence says it exists.</span></div>
-            <div role="row"><b role="cell">Proposed</b><span role="cell" data-en="Someone suggests what it should mean." data-ru="Кто-то предлагает, что это должно означать.">Someone suggests what it should mean.</span></div>
-            <div role="row"><b role="cell">Accepted</b><span role="cell" data-en="An operator grants intent authority." data-ru="Оператор наделяет намерение полномочием.">An operator grants intent authority.</span></div>
-            <div role="row"><b role="cell">Actual</b><span role="cell" data-en="The recorded route really executed." data-ru="Зафиксированный маршрут действительно исполнился.">The recorded route really executed.</span></div>
-            <div role="row"><b role="cell">Verified</b><span role="cell" data-en="Bound evidence met the declared contract." data-ru="Связанные доказательства выполнили заявленный контракт.">Bound evidence met the declared contract.</span></div>
-          </div>
-        </section>
+        <details class="full-outline">
+          <summary data-en="Show the complete 55-cycle outline" data-ru="Показать полную схему из 55 циклов">Show the complete 55-cycle outline</summary>
+          <div data-atlas-outline></div>
+        </details>
+      </div>
 
-        <section class="atlas-footer-cta reveal">
-          <h2 data-en="Build a system that knows its limits." data-ru="Постройте систему, которая знает свои пределы.">
-            Build a system that knows its limits.
-          </h2>
-          <div>
-            <a class="primary-cta" href="https://github.com/PullDakar/concordloom">
-              <span data-en="Open repository" data-ru="Открыть репозиторий">Open repository</span>
-              <span aria-hidden="true">↗</span>
-            </a>
-            <a class="text-link" href="https://github.com/PullDakar/concordloom/blob/main/docs/QUICKSTART.md">
-              <span data-en="Read the quickstart" data-ru="Открыть быстрый старт">Read the quickstart</span>
-            </a>
-          </div>
-        </section>
+      <div class="view docs-view" data-view="docs" hidden>
+        <header class="reading-hero">
+          <p class="kicker" data-en="BILINGUAL LIBRARY" data-ru="ДВУЯЗЫЧНАЯ БИБЛИОТЕКА">BILINGUAL LIBRARY</p>
+          <h1 data-en="Know what is true. Then go deeper." data-ru="Сначала разберитесь в фактах. Потом идите глубже.">Know what is true. Then go deeper.</h1>
+        </header>
+        <section class="docs-grid" data-docs-grid aria-live="polite"></section>
       </div>
     </main>
 
     <footer class="site-footer">
-      <span>CONCORD LOOM / 0.2</span>
-      <span data-en="FINITE LOOPS. EXPLICIT AUTHORITY." data-ru="КОНЕЧНЫЕ ЦИКЛЫ. ЯВНЫЕ ПОЛНОМОЧИЯ.">
-        FINITE LOOPS. EXPLICIT AUTHORITY.
-      </span>
+      <span>CONCORD LOOM</span>
+      <span data-en="FINITE LOOPS. EXPLICIT AUTHORITY." data-ru="КОНЕЧНЫЕ ЦИКЛЫ. ЯВНЫЕ ПОЛНОМОЧИЯ.">FINITE LOOPS. EXPLICIT AUTHORITY.</span>
       <a href="https://github.com/PullDakar/concordloom">GITHUB ↗</a>
     </footer>
   </body>

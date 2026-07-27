@@ -18,6 +18,7 @@ PYTHONPATH=src python3 tools/generate_generic_example.py --check
 PYTHONPATH=src python3 tools/build_site.py --check
 PYTHONPATH=src python3 tools/check_site.py
 PYTHONPATH=src python3 tools/check_docs.py
+PYTHONPATH=src python3 tools/check_language.py
 PYTHONPATH=src python3 -m concordloom validate \
   --input framework/concordloom/cycle-registry.json \
   --graph framework/concordloom/accepted-project-graph.json \
@@ -51,6 +52,17 @@ PYTHONPATH=src python3 -m concordloom validate \
   --input framework/concordloom/v4/evolution-proposal.json \
   --policy framework/concordloom/v3/policy.json \
   --base-binding framework/concordloom/v3/binding.json
+PYTHONPATH=src python3 -m concordloom validate \
+  --input framework/concordloom/v5/cycle-registry.json \
+  --graph framework/concordloom/v3/accepted-project-graph.json \
+  --decisions framework/concordloom/v3/decision-log.json \
+  --proposal framework/concordloom/v5/loop-design-proposal.json \
+  --design framework/concordloom/v5/loop-design.json \
+  --policy framework/concordloom/v5/policy.json
+PYTHONPATH=src python3 -m concordloom validate \
+  --input framework/concordloom/v5/evolution-proposal.json \
+  --policy framework/concordloom/v4/policy.json \
+  --base-binding framework/concordloom/v4/binding.json
 PYTHONPATH=src python3 -m concordloom validate \
   --input framework/concordloom/catalog.json \
   --artifact-root .
