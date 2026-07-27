@@ -11,7 +11,7 @@ self-binding Concord Loom и двуязычный кандидат Pages. Нел
 ## Проверка исходников
 
 ```bash
-git clone https://github.com/PullDakar/concordloom.git
+git clone https://github.com/concordloom/concordloom.git
 cd concordloom
 git fetch --tags
 git checkout --detach v0.1.0

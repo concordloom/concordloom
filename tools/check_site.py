@@ -30,6 +30,15 @@ class SiteParser(HTMLParser):
             self.localized += 1
             if not values.get("data-en") or not values.get("data-ru"):
                 self.errors.append(f"{tag} has incomplete data-en/data-ru copy")
+        for suffix in ("content", "aria-label", "alt"):
+            en_key = f"data-en-{suffix}"
+            ru_key = f"data-ru-{suffix}"
+            if en_key in values or ru_key in values:
+                self.localized += 1
+                if not values.get(en_key) or not values.get(ru_key):
+                    self.errors.append(
+                        f"{tag} has incomplete {en_key}/{ru_key} copy"
+                    )
         if tag == "img":
             if not values.get("alt"):
                 self.errors.append("img is missing non-empty alt text")
@@ -76,6 +85,26 @@ def main() -> int:
         errors.append("site lacks visible keyboard focus")
     if "localStorage" not in script or "document.documentElement.lang" not in script:
         errors.append("language preference or document language is not maintained")
+    if 'url.searchParams.set("lang", language)' not in script:
+        errors.append("language switch does not persist the locale in the URL")
+    for forbidden in (
+        'data-ru="Atlas"',
+        "planned / active binding",
+        "На этом Evolve",
+        'skills: "Скиллы"',
+        "<span>${documentData.id}</span>",
+    ):
+        if forbidden in index.read_text(encoding="utf-8") or forbidden in script:
+            errors.append(f"Russian interface contains unresolved copy: {forbidden}")
+    for required in (
+        "data-ru-aria-label",
+        "data-ru-alt",
+        "data-ru-content",
+        "technical-details",
+        "data-product-release",
+    ):
+        if required not in index.read_text(encoding="utf-8") and required not in script:
+            errors.append(f"site misses localized or progressive UI contract: {required}")
     if "fallbackAtlas" in script or ".catch(() => renderAtlas())" in script:
         errors.append("site silently falls back when accepted Atlas data is unavailable")
     for view in ("concept", "theory", "quickstart", "atlas", "docs"):
@@ -93,6 +122,8 @@ def main() -> int:
     atlas = json.loads((SITE / "data" / "atlas.json").read_text(encoding="utf-8"))
     loop_ids = {loop["id"] for loop in atlas["loops"]}
     roots = set(atlas["binding"]["rootLoopIds"])
+    if atlas.get("product", {}).get("release") != "0.1.0":
+        errors.append("Atlas does not distinguish product release 0.1.0")
     if roots != {"steward-concordloom"}:
         errors.append(f"unexpected active Atlas roots: {sorted(roots)}")
     expected_cycles = {
@@ -109,8 +140,15 @@ def main() -> int:
         "review-comprehension",
         "activate-successor",
     }
-    if len(loop_ids) != 55:
-        errors.append(f"Atlas must expose all 55 development cycles, found {len(loop_ids)}")
+    if len(loop_ids) != 58:
+        errors.append(f"Atlas must expose all 58 development cycles, found {len(loop_ids)}")
+    for required_loop_id in (
+        "publish-source-change",
+        "accept-source-change",
+        "maintain-organization-presence",
+    ):
+        if required_loop_id not in loop_ids:
+            errors.append(f"Atlas is missing active cycle {required_loop_id}")
     if not expected_cycles <= loop_ids:
         errors.append("Atlas projection omits required development cycles")
     if atlas.get("evolutionCircuit") != [

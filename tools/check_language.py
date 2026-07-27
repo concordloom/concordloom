@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ENTRY_DOCUMENTS = [
     ROOT / "README.ru.md",
     ROOT / "docs" / "ru" / "QUICKSTART.md",
+    ROOT / "docs" / "ru" / "ATLAS.md",
 ]
 RAW_PROSE_TERMS = [
     "binding",
@@ -79,11 +80,47 @@ def main() -> int:
                         f"unexplained English term {term!r}"
                     )
 
+    atlas_data = json.loads(
+        (ROOT / "site" / "data" / "atlas.json").read_text(encoding="utf-8")
+    )
+    active_binding_id = atlas_data["binding"]["id"]
+    revision_match = re.search(r"-v([0-9]+)$", active_binding_id)
+    if revision_match is None:
+        errors.append(
+            f"cannot derive rules revision from active binding {active_binding_id!r}"
+        )
+    else:
+        revision = revision_match.group(1)
+        version_markers = {
+            ROOT / "docs" / "QUICKSTART.md": f"Development rules: revision {revision}",
+            ROOT / "docs" / "ATLAS.md": f"Development rules: revision {revision}",
+            ROOT / "docs" / "ru" / "QUICKSTART.md": (
+                f"Правила разработки: редакция {revision}"
+            ),
+            ROOT / "docs" / "ru" / "ATLAS.md": (
+                f"Правила разработки: редакция {revision}"
+            ),
+        }
+        for path, marker in version_markers.items():
+            if marker not in path.read_text(encoding="utf-8"):
+                errors.append(
+                    f"{path.relative_to(ROOT)} misses active rules marker {marker!r}"
+                )
+
     site_source = (ROOT / "site" / "index.html").read_text(encoding="utf-8")
+    site_script = (ROOT / "site" / "app.js").read_text(encoding="utf-8")
     if "data-ru=" not in site_source:
         errors.append("site has no Russian copy")
     if "активация остаётся" in site_source.casefold():
         errors.append("site still uses the rejected literal activation copy")
+    for rejected in (
+        'data-ru="Atlas"',
+        "На этом Evolve",
+        "planned / active binding",
+        'skills: "Скиллы"',
+    ):
+        if rejected in site_source or rejected in site_script:
+            errors.append(f"site still exposes mixed-language copy {rejected!r}")
 
     if errors:
         for error in errors:

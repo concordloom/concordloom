@@ -172,12 +172,12 @@ def main() -> None:
                 "repository homepage field."
             ),
             "source_digest": digest(
-                {"source": "https://pulldakar.github.io/concordloom/"}
+                {"source": "https://concordloom.github.io/concordloom/"}
             ),
             "provenance": [
                 {
                     "kind": "evidence",
-                    "ref": "https://pulldakar.github.io/concordloom/",
+                    "ref": "https://concordloom.github.io/concordloom/",
                 }
             ],
         },

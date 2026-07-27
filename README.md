@@ -14,8 +14,8 @@
 
 ## Systems that can change themselves — without granting themselves permission.
 
-[![CI](https://github.com/PullDakar/concordloom/actions/workflows/ci.yml/badge.svg)](https://github.com/PullDakar/concordloom/actions/workflows/ci.yml)
-[![Pages](https://github.com/PullDakar/concordloom/actions/workflows/pages.yml/badge.svg)](https://github.com/PullDakar/concordloom/actions/workflows/pages.yml)
+[![CI](https://github.com/concordloom/concordloom/actions/workflows/ci.yml/badge.svg)](https://github.com/concordloom/concordloom/actions/workflows/ci.yml)
+[![Pages](https://github.com/concordloom/concordloom/actions/workflows/pages.yml/badge.svg)](https://github.com/concordloom/concordloom/actions/workflows/pages.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-c8ff00.svg)](LICENSE)
 
 **Concord Loom is a domain-neutral framework for discovering, negotiating,
@@ -77,7 +77,7 @@ library.
 
 ```bash
 python3 -m pip install \
-  "concordloom @ git+https://github.com/PullDakar/concordloom@v0.1.0"
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.0"
 
 mkdir -p .concord/discovery
 concordloom inspect . \
@@ -91,7 +91,7 @@ These commands produce observations and questions — **not accepted intent**.
 An operator must make the consequential decisions.
 
 Continue with the [quickstart](docs/QUICKSTART.md), or open the
-[interactive Concord Loom site](https://pulldakar.github.io/concordloom/).
+[interactive Concord Loom site](https://concordloom.github.io/concordloom/).
 
 ## Artifact chain
 
@@ -169,7 +169,7 @@ Every public guide is maintained in English and Russian.
 ## Codex plugin
 
 ```bash
-codex plugin marketplace add PullDakar/concordloom --ref v0.1.0
+codex plugin marketplace add concordloom/concordloom --ref v0.1.0
 codex plugin add concordloom@concordloom
 ```
 

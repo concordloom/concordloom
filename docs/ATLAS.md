@@ -1,92 +1,94 @@
 # Concord Loom Atlas
 
-An Atlas is a read-only projection of an accepted loop system. It lets an
-operator move through containment, inspect one loop's local flow, and compare
-accepted structure and declared plans with recorded runtime facts.
+The Atlas answers 3 questions:
 
-Concord Loom exposes that idea in two forms:
+1. Which cycle is responsible for this work?
+2. What must the cycle receive and return?
+3. Which facts come from an accepted plan, and which come from a recorded run?
 
-- the general site projects the complete development system of this repository;
-- it shows planned models, skills and tools with their source, while a missing
-  MCP assignment remains visibly undeclared; and
-- the portable `concordloom atlas` command emits one deterministic,
-  self-contained HTML file for any compatible binding.
+It is a read-only view. It cannot authorize work, execute a transition, publish
+an external change, or activate evolution.
 
-Both explain bound artifacts. Neither authorizes work, executes a transition,
-activates evolution, or replaces source JSON.
+## Interactive project Atlas
 
-## Read the complete development system
+The [public Atlas](https://concordloom.github.io/concordloom/#atlas/steward-concordloom)
+shows all 58 cycles used to develop Concord Loom. Start at the root and select
+a child to move one level deeper.
 
-The site's **Concept** view explains the domain-neutral grammar. **Atlas**
-projects the accepted self-binding for this repository. Its root is
-`steward-concordloom`:
+The first screen shows plain-language information:
+
+- the cycle's purpose;
+- the responsible role;
+- its input and expected output;
+- the planned model, agent instructions, tools, and MCP connections.
+
+Open **Technical details** only when you need stable IDs, artifact names,
+required claims, or the accepted source digest.
+
+The header keeps 2 version axes separate:
 
 ```text
-steward-concordloom
-├── product-direction
-├── research-theory
-├── protocol-design
-├── runtime-tooling
-├── trust-assurance
-├── bindings-adapters
-├── knowledge-experience
-├── release-distribution
-├── adoption-feedback
-└── system-evolution
+Product release: 0.1.0
+Development rules: revision 6
 ```
 
-Each area expands into concrete capability cycles. Atlas shows only the
-immediate children of the selected cycle, so the full 55-node model stays
-readable. Breadcrumbs and browser history preserve the path.
+Revision 6 is the sixth accepted version of Concord Loom's own development
+rules. It is not product version 0.6.
 
-The evolution circuit is always visible. `propose-successor` can describe a new
-version. `review-successor` checks it. `activate-successor` is a separate
-operator-only act.
+## Complete development system
 
-The static site data comes from the active accepted catalog. Verify the
-projection before publication:
+The root cycle contains 10 responsibility areas:
 
-```bash
-PYTHONPATH=src python3 tools/build_site.py --check
+```text
+Steward Concord Loom
+├── Product direction
+├── Research and theory
+├── Protocol design
+├── Runtime and tooling
+├── Trust and assurance
+├── Bindings and adapters
+├── Knowledge and experience
+├── Release and distribution
+├── Adoption and feedback
+└── System evolution
 ```
 
-The site shows the active binding, containment, contracts, roles and planned
-execution resources. Exact models and tools become actual facts only when a run
-records them. Atlas cannot infer a run or activate a successor.
+Each area opens into concrete capability cycles. The complete outline remains
+available below the interactive view.
 
-## Generate a portable offline Atlas
+## Evolution
 
-The shipped generic SDLC remains a worked case for the portable renderer:
+The evolution circuit is always visible:
 
-```bash
-concordloom atlas \
-  --binding framework/generic-sdlc/binding.json \
-  --registry framework/generic-sdlc/cycle-registry.json \
-  --policy framework/generic-sdlc/policy.json \
-  --output docs/ATLAS.html
+```text
+collect signals
+  → propose a successor
+  → independently review it
+  → activate it by a separate operator decision
+  → observe the migration
 ```
 
-Open `docs/ATLAS.html` directly in a browser. The file needs no server and
-makes no network requests. This example proves one software-delivery binding;
-it does not define the framework's product boundary.
+The proposal cannot activate itself. Activation uses authority from the
+currently active rules, not from the proposed successor.
 
-Use `--check` in CI or before a commit:
+## Plan and fact
 
-```bash
-concordloom atlas \
-  --binding framework/generic-sdlc/binding.json \
-  --registry framework/generic-sdlc/cycle-registry.json \
-  --policy framework/generic-sdlc/policy.json \
-  --output docs/ATLAS.html \
-  --check
-```
+The Atlas distinguishes:
 
-Check mode renders the same inputs and fails if the existing output is stale.
-It does not update the file.
+| Layer | Meaning |
+|---|---|
+| Accepted plan | The active cycle structure, roles, limits, and intended resources |
+| Recorded run | The principal, model, instructions, tools, network use, effects, and result actually recorded |
+| Verified result | Evidence attached to the exact candidate and checked against a contract |
+| Drift | A visible difference between plan and fact |
 
-## Attach a run
+Missing run data stays missing. The Atlas does not invent an execution record
+from a plan.
 
-Pass an optional run card to add runtime facts:
+## Portable offline Atlas
+
+`concordloom atlas` generates one self-contained HTML file for any compatible
+binding:
 
 ```bash
 concordloom atlas \
@@ -97,140 +99,34 @@ concordloom atlas \
   --output path/to/atlas.html
 ```
 
-The run card must refer to the same binding, registry, and policy. Its route,
-attempts, evidence references, statuses, and outcome remain scoped to that
-run.
+The run card is optional. Without it, the file shows only the accepted plan.
 
-The Atlas checks run-card schema, digest identity, active-loop reachability,
-and evidence-reference integrity. It does not load the referenced evidence
-payloads, recompute their byte digests, or repeat the runner's claim
-validation. The **Verified** layer therefore labels recorded references as
-**Not revalidated**.
-
-Without `--run-card`, the Atlas shows the accepted model and its declared
-plans. It labels the runtime layer **No run attached**. Missing runtime input
-never means that work ran, passed, failed, or drifted.
-
-## Read the two graphs
-
-Concord Loom keeps containment and local feedback separate.
-
-**Containment** answers “which loop refines this composite step?” An Atlas shows
-one containment level at a time. Active-root controls switch between bound root
-systems. Choose a child invocation to descend into that child loop. Breadcrumbs
-return to an ancestor, and browser Back and Forward restore visited loops. The
-containment graph is finite and acyclic.
-
-**Local control flow** answers “how can this loop move between its own states?”
-The central flow view shows progress, success, failure, escalation, and
-feedback transitions. A feedback edge belongs to the selected loop and carries
-its own finite traversal budget. It is not a containment edge.
-
-A child result does not close its parent. A successful calibration does not
-accept a study; a successful recovery does not close an incident; an approved
-asset does not publish a production; a consultation does not enact policy; a
-passing test does not release software. The parent evaluates the child's receipt
-against the parent's evidence contract.
-
-## Read the truth layers
-
-The Atlas keeps four runtime meanings distinct:
-
-| Layer | Source | Meaning |
-|---|---|---|
-| **Planned** | Binding, registry, policy, and run route when attached | The accepted structure and intended execution route |
-| **Actual** | Recorded attempts in the attached run card | The principal, agent, model, skill, tools, and result that the runner recorded |
-| **Verified** | Evidence-reference metadata recorded in the run card | Which payloads the runner cited; the Atlas marks them not revalidated |
-| **Drift** | Explicit comparison of planned and actual fields | A mismatch to inspect, not an automatic correction or failure |
-
-Accepted structure is not runtime verification. A planned route becomes actual
-only when the run records an attempt. A run may cite verification payloads, but
-an Atlas does not turn reference presence into a fresh verification claim.
-Inspect and validate payloads at the runner boundary. Drift remains visible so
-an operator can decide what it means.
-
-## Inspect a loop contract
-
-For the selected loop, the Atlas exposes:
-
-- purpose, inputs, and outputs;
-- entry, work, gate, child, and terminal states;
-- local transitions and bounded feedback;
-- child invocations and their timeout or escalation path;
-- attempt, elapsed-time, cost, and exhaustion budgets;
-- execute, accept, and escalate capabilities;
-- evidence contracts and independence requirements; and
-- attached run status, attempts, evidence-reference metadata, and root outcome.
-
-These fields come from the input artifacts. The generated page does not infer
-an unrecorded attempt, evidence result, or authority grant.
-
-## Keyboard, motion, and narrow screens
-
-The Atlas uses native links and buttons:
-
-- `Tab` and `Shift+Tab` move through interactive controls.
-- `Enter` activates links. `Enter` or `Space` activates focused buttons.
-- Browser Back and Forward move through the loop navigation history.
-- A visible focus indicator identifies the active keyboard target.
-
-Text labels and shapes accompany state and truth colors, so color is not the
-only cue. The page honors `prefers-reduced-motion`. At narrow widths, navigation,
-flow, and contract details stack into one reading order; all actions remain
-available without a hover gesture.
-
-## Determinism and offline safety
-
-The portable renderer uses only supplied JSON artifacts and stable ordering.
-The same validated inputs produce the same HTML bytes. Input timestamps may
-appear as recorded facts; generation adds no current time.
-
-The portable output embeds its styles, behavior, and data. It loads no remote
-scripts, fonts, stylesheets, images, APIs, or analytics. Repository-controlled
-text is escaped, and the document includes a restrictive content-security
-policy.
-
-The general site is also static, but it has a different source boundary:
-authored concept files and assets live under `site/`, while generated Atlas data
-lives under `site/data/`. Generated data remains a projection of accepted
-artifacts, never an independent source of truth.
-
-Treat the file as a readable projection, not a security boundary. Concord Loom
-guards declared scope but is not an operating-system sandbox or a
-cryptographic identity service.
-
-## v0.1 execution boundary
-
-Concord Loom v0.1 validates containment, local state contracts, candidate
-identity, authority, and evidence boundaries. Its runner treats each planned
-loop node as one governed execution unit, regardless of domain.
-
-The Atlas does not step every local transition, launch durable child
-workflows, stream live execution, synthesize child receipts, or promote a
-child's status into parent acceptance. External workflow, CI, agent, or local
-adapters perform work and return candidate-bound evidence. The Atlas displays
-only the facts that those governed artifacts record.
-
-## Maintain generated projections
-
-Regenerate the relevant projection after an accepted binding, registry, policy,
-or attached run changes. Review source artifacts when a displayed fact looks
-wrong. Editing `docs/ATLAS.html` or `site/data/atlas.json` cannot change the
-accepted model.
-
-Keep both checks in the development and publication gates:
+Use `--check` in CI to reject stale output:
 
 ```bash
 concordloom atlas \
-  --binding framework/generic-sdlc/binding.json \
-  --registry framework/generic-sdlc/cycle-registry.json \
-  --policy framework/generic-sdlc/policy.json \
-  --output docs/ATLAS.html \
+  --binding path/to/binding.json \
+  --registry path/to/cycle-registry.json \
+  --policy path/to/policy.json \
+  --output path/to/atlas.html \
   --check
-
-PYTHONPATH=src python3 tools/build_site.py --check
 ```
 
-The first keeps the portable worked case byte-for-byte aligned. The second keeps
-the general site's self-binding projection aligned with the active accepted
-catalog.
+The generated file loads no remote scripts, fonts, APIs, or analytics.
+
+## Source of truth
+
+The Atlas is generated from accepted JSON artifacts and recorded run receipts.
+Editing `docs/ATLAS.html` or `site/data/atlas.json` does not change the accepted
+system.
+
+After changing accepted inputs, rebuild and verify both views:
+
+```bash
+PYTHONPATH=src python3 tools/build_site.py
+PYTHONPATH=src python3 tools/build_site.py --check
+./tools/check.sh
+```
+
+Treat the Atlas as an explanation and inspection surface, not as a security
+boundary.

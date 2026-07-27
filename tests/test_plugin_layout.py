@@ -155,7 +155,7 @@ class PluginLayoutTests(unittest.TestCase):
         self.assertIn("scripts/concordloom_cli.py", commands)
         self.assertIn("install_argv", commands)
         self.assertIn(
-            "https://github.com/PullDakar/concordloom/",
+            "https://github.com/concordloom/concordloom/",
             LAUNCHER.read_text(encoding="utf-8"),
         )
 

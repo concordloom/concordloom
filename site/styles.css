@@ -569,7 +569,7 @@ button {
 
 .atlas-status {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   border-bottom: 1px solid var(--line);
 }
 
@@ -1203,6 +1203,24 @@ button {
   font-size: 0.82rem;
 }
 
+.technical-details {
+  margin-top: 1rem;
+  border: 1px solid var(--line);
+}
+
+.technical-details summary {
+  min-height: 44px;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.technical-details .contract-grid {
+  padding: 0 1rem 1rem;
+}
+
 .inner-grammar {
   margin-top: 2rem;
 }
@@ -1546,7 +1564,7 @@ button {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .atlas-status > div:nth-child(2) {
+  .atlas-status > div:nth-child(even) {
     border-right: 0;
   }
 

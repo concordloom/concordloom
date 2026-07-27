@@ -11,7 +11,7 @@ working-tree files to revise claims about the tagged release.
 ## Verify source
 
 ```bash
-git clone https://github.com/PullDakar/concordloom.git
+git clone https://github.com/concordloom/concordloom.git
 cd concordloom
 git fetch --tags
 git checkout --detach v0.1.0

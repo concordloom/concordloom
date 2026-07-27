@@ -1,0 +1,76 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:75fb1e422db5287a64bb4fd4f43854def126207ae4f4c2fa4fda54c3b7098a45",
+  "decision_authority_ref": "operator",
+  "decision_required": true,
+  "expected_effect": "Add exact source publication, operator merge, and organization profile effects without broadening executors or reviewers.",
+  "generated_at": "2026-07-27T18:00:00Z",
+  "id": "authorize-source-publication-and-organization-profile",
+  "kind": "concordloom.evolution-proposal",
+  "operations": [
+    {
+      "op": "add",
+      "target_id": "concordloom-development-system-v6",
+      "target_kind": "loop",
+      "value": {
+        "new_cycles": [
+          "publish-source-change",
+          "accept-source-change",
+          "maintain-organization-presence"
+        ],
+        "node_count": 58,
+        "root_loop_id": "steward-concordloom"
+      }
+    }
+  ],
+  "proposed_by": {
+    "id": "example-orchestrator",
+    "kind": "orchestrator"
+  },
+  "risk": {
+    "failure_modes": [
+      "Source publication could leak into an executor or reviewer.",
+      "Organization identity could be changed without publisher authority."
+    ],
+    "level": "medium",
+    "rollback": "Reactivate the v5 predecessor if the v6 publication model fails independent review."
+  },
+  "schema_version": "0.1",
+  "signals": [
+    {
+      "base_binding_digest": "sha256:75fb1e422db5287a64bb4fd4f43854def126207ae4f4c2fa4fda54c3b7098a45",
+      "category": "coverage",
+      "id": "self-use-found-missing-source-publication-authority",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 2,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "self-use-run-audit"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:0a76668db5e0c219597a44f0070fe123d0ec900ba38a8054242506643595924b",
+      "summary": "A fully governed self-hosted run cannot publish its pinned source candidate or pull request under the v5 effects."
+    },
+    {
+      "base_binding_digest": "sha256:75fb1e422db5287a64bb4fd4f43854def126207ae4f4c2fa4fda54c3b7098a45",
+      "category": "friction",
+      "id": "organization-migration-exposes-unowned-identity-effect",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 1,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "operator-migration"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:4e5e3e616b2e92c4d3507841326f2177db17e2f567f9e3248dcd2ce160dea5f6",
+      "summary": "Moving the repository to the Concord Loom organization made organization avatar and profile publication a distinct effect."
+    }
+  ],
+  "status": "proposed"
+}
