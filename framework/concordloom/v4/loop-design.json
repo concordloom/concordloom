@@ -1,0 +1,187 @@
+{
+  "accepted_by": {
+    "accepted_at": "2026-07-27T09:40:00Z",
+    "actor": {
+      "display_name": "Operator",
+      "id": "example-operator",
+      "kind": "operator"
+    },
+    "authority_ref": "operator",
+    "decision_id": "accept-concordloom-self-loop-design-v4",
+    "rationale": "Preserve the accepted loop structure and grant the requested repository homepage effect only through the publisher route."
+  },
+  "authority_policy_digest": "sha256:d9dfbbf79254d9d941ee56b73e52a11e41f142030fd3ba8a71f63342f05b529c",
+  "containment": [
+    {
+      "child_loop_id": "observe",
+      "decision_id": "accept-universal-loop-system",
+      "id": "concord-change-observe",
+      "parent_loop_id": "concord-change"
+    },
+    {
+      "child_loop_id": "negotiate",
+      "decision_id": "accept-universal-loop-system",
+      "id": "concord-change-negotiate",
+      "parent_loop_id": "concord-change"
+    },
+    {
+      "child_loop_id": "bind",
+      "decision_id": "accept-universal-loop-system",
+      "id": "concord-change-bind",
+      "parent_loop_id": "concord-change"
+    },
+    {
+      "child_loop_id": "execute",
+      "decision_id": "accept-universal-loop-system",
+      "id": "concord-change-execute",
+      "parent_loop_id": "concord-change"
+    },
+    {
+      "child_loop_id": "verify",
+      "decision_id": "accept-universal-loop-system",
+      "id": "concord-change-verify",
+      "parent_loop_id": "concord-change"
+    },
+    {
+      "child_loop_id": "publish",
+      "decision_id": "accept-universal-loop-system",
+      "id": "concord-change-publish",
+      "parent_loop_id": "concord-change"
+    },
+    {
+      "child_loop_id": "evolve",
+      "decision_id": "accept-universal-loop-system",
+      "id": "concord-change-evolve",
+      "parent_loop_id": "concord-change"
+    }
+  ],
+  "decision_log_digest": "sha256:4e67a46d2a578a5b442e8fb94e20cdc22733bd74c7c25834df430011716c3f43",
+  "id": "concordloom-self-loop-design-v4-manifest",
+  "kind": "concordloom.loop-design-manifest",
+  "loops": [
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "concord-change",
+      "input_outcome": "An operator-accepted outcome.",
+      "output_outcome": "A verified effect or explicit escalation.",
+      "purpose": "Govern one bounded change without assuming a domain."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "observe",
+      "input_outcome": "A bounded subject and evidence sources.",
+      "output_outcome": "An observed graph with provenance.",
+      "purpose": "Separate observed facts from inferred intent."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "negotiate",
+      "input_outcome": "Observed facts and ranked questions.",
+      "output_outcome": "Accepted intent and an append-only decision log.",
+      "purpose": "Resolve consequential intent through operator decisions."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "bind",
+      "input_outcome": "Accepted intent and an unaccepted design proposal.",
+      "output_outcome": "One separately activated, content-addressed binding.",
+      "purpose": "Compile accepted intent into finite loops, policy, and scope."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "execute",
+      "input_outcome": "An authorized run card and exact scope.",
+      "output_outcome": "A pinned candidate and factual execution evidence.",
+      "purpose": "Produce one scoped candidate within the active binding."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "verify",
+      "input_outcome": "A candidate manifest and evidence contract.",
+      "output_outcome": "An independent verification receipt.",
+      "purpose": "Independently evaluate the pinned candidate."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "publish",
+      "input_outcome": "A verified candidate and publication authority.",
+      "output_outcome": "A publication receipt, a no-op receipt, or escalation.",
+      "purpose": "Perform an explicitly authorized external effect, or record none."
+    },
+    {
+      "basis": [
+        {
+          "kind": "decision",
+          "ref": "accepted-project-graph"
+        }
+      ],
+      "decision_ids": [
+        "accept-universal-loop-system"
+      ],
+      "id": "evolve",
+      "input_outcome": "Pinned signals from the active binding.",
+      "output_outcome": "A successor proposal requiring a separate operator decision.",
+      "purpose": "Reduce repeated signals into a non-activating successor proposal."
+    }
+  ],
+  "proposal_digest": "sha256:4a6df4ccc4a93dc77cb9870af24c2593dbe67711f715dbaaf5b14fbedb58bc93",
+  "schema_version": "0.1",
+  "source_graph_digest": "sha256:227869a6a026e1f131fb377c9c2438ee1416f72cfd8daee05bd1950a1fb85b1e",
+  "status": "accepted"
+}

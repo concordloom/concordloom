@@ -1,5 +1,5 @@
 {
-  "active_binding_digest": "sha256:8aa52aa5692a4c96fe3e4fdf11fdb2c38757a7708c99148c6520169f09607c18",
+  "active_binding_digest": "sha256:401512583fd07fabaa15852a2c320230718f5590c25fab6c397eea4ccde0f6db",
   "entries": [
     {
       "activated_by_decision_digest": "sha256:1031fe2d9439d8acf1dd56e0258c24f548a43e381b346f6d4ad99b73372fa132",
@@ -27,6 +27,13 @@
       "binding_id": "concordloom-self-binding-v3",
       "path": "framework/concordloom/v3/binding.json",
       "previous_binding_digest": "sha256:5797d2fb3552fda89c35ec0c20b10f0c8e65ee0254fa46aad34ae1e862b01bb5"
+    },
+    {
+      "activated_by_decision_digest": "sha256:ed5744ca18622b7aa76ed8d3c10575ac9971de18858bc83093c47165a677f94a",
+      "binding_digest": "sha256:401512583fd07fabaa15852a2c320230718f5590c25fab6c397eea4ccde0f6db",
+      "binding_id": "concordloom-self-binding-v4",
+      "path": "framework/concordloom/v4/binding.json",
+      "previous_binding_digest": "sha256:8aa52aa5692a4c96fe3e4fdf11fdb2c38757a7708c99148c6520169f09607c18"
     }
   ],
   "id": "concordloom-binding-catalog",

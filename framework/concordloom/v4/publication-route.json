@@ -1,0 +1,40 @@
+[
+  {
+    "loop_id": "concord-change",
+    "model_intent": "none",
+    "node_id": "concord-change",
+    "reasoning_intent": "verify exact publisher handoff",
+    "role": "executor",
+    "scope": {
+      "external_mutations": [],
+      "network": "none",
+      "read_paths": [
+        "."
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "coordinate the pinned publication without external effects",
+    "subagent_intent": []
+  },
+  {
+    "loop_id": "publish",
+    "model_intent": "none",
+    "node_id": "publish",
+    "reasoning_intent": "perform only the authorized external effects",
+    "role": "publisher",
+    "scope": {
+      "external_mutations": [
+        "github-pages",
+        "github-repository-homepage",
+        "github-repository-social-preview"
+      ],
+      "network": "write",
+      "read_paths": [
+        "."
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "publish the pinned candidate and repository metadata",
+    "subagent_intent": []
+  }
+]

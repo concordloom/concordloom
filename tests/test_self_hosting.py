@@ -104,7 +104,7 @@ class SelfHostingEvolutionTests(unittest.TestCase):
 
     def test_repository_preview_is_a_separate_publisher_effect(self) -> None:
         predecessor = load(FRAMEWORK / "binding.json")
-        binding = active_binding()
+        binding = load(FRAMEWORK / "v3" / "binding.json")
         policy = load(FRAMEWORK / "v3" / "policy.json")
         proposal = load(FRAMEWORK / "v3" / "evolution-proposal.json")
         registry = load(FRAMEWORK / "v3" / "cycle-registry.json")
@@ -141,6 +141,39 @@ class SelfHostingEvolutionTests(unittest.TestCase):
             nodes["publish"]["scope"]["external_mutations"],
             ["github-pages", "github-repository-social-preview"],
         )
+
+    def test_repository_homepage_is_a_separate_publisher_effect(self) -> None:
+        predecessor = load(FRAMEWORK / "v3" / "binding.json")
+        binding = active_binding()
+        policy = load(FRAMEWORK / "v4" / "policy.json")
+        proposal = load(FRAMEWORK / "v4" / "evolution-proposal.json")
+        registry = load(FRAMEWORK / "v4" / "cycle-registry.json")
+        route = load(FRAMEWORK / "v4" / "publication-route.json")
+        effects = [
+            "github-pages",
+            "github-repository-homepage",
+            "github-repository-social-preview",
+        ]
+
+        self.assertEqual(binding["predecessor_binding_digest"], predecessor["binding_digest"])
+        self.assertFalse(proposal["activation_allowed"])
+        edges = {
+            edge["child_loop_id"]: edge
+            for edge in registry["containment_graph"]["edges"]
+        }
+        for child_id, edge in edges.items():
+            scope = edge["grant"]["scope"]
+            if child_id == "publish":
+                self.assertEqual(scope["network"], "write")
+                self.assertEqual(scope["external_mutations"], effects)
+            else:
+                self.assertEqual(scope["network"], "none")
+                self.assertEqual(scope["external_mutations"], [])
+
+        nodes = {node["node_id"]: node for node in route}
+        self.assertEqual(nodes["concord-change"]["scope"]["external_mutations"], [])
+        self.assertEqual(nodes["publish"]["role"], "publisher")
+        self.assertEqual(nodes["publish"]["scope"]["external_mutations"], effects)
 
 
 if __name__ == "__main__":

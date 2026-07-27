@@ -1,0 +1,70 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:8aa52aa5692a4c96fe3e4fdf11fdb2c38757a7708c99148c6520169f09607c18",
+  "decision_authority_ref": "operator",
+  "decision_required": true,
+  "expected_effect": "Allow Publish to set the live Pages URL in GitHub About without broadening any non-publisher node.",
+  "generated_at": "2026-07-27T09:40:00Z",
+  "id": "authorize-repository-homepage",
+  "kind": "concordloom.evolution-proposal",
+  "operations": [
+    {
+      "op": "add",
+      "target_id": "github-repository-homepage",
+      "target_kind": "policy",
+      "value": {
+        "external_mutation": "github-repository-homepage",
+        "publisher_only": true
+      }
+    }
+  ],
+  "proposed_by": {
+    "id": "example-orchestrator",
+    "kind": "orchestrator"
+  },
+  "risk": {
+    "failure_modes": [
+      "The homepage could point to a non-live URL."
+    ],
+    "level": "low",
+    "rollback": "Clear the repository homepage and reactivate the predecessor binding if live verification fails."
+  },
+  "schema_version": "0.1",
+  "signals": [
+    {
+      "base_binding_digest": "sha256:8aa52aa5692a4c96fe3e4fdf11fdb2c38757a7708c99148c6520169f09607c18",
+      "category": "coverage",
+      "id": "operator-requested-repository-homepage",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 1,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "repository-homepage-request"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:14df5fa92501841ac4e7c33122c5476166ddcf400c977f0cc25ea6d77ad47c34",
+      "summary": "The operator requested the Pages URL in GitHub About."
+    },
+    {
+      "base_binding_digest": "sha256:8aa52aa5692a4c96fe3e4fdf11fdb2c38757a7708c99148c6520169f09607c18",
+      "category": "friction",
+      "id": "pages-url-exists-without-homepage-authority",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 1,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "https://pulldakar.github.io/concordloom/"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:e8ad3f10a94973bbb9739997f9ac4a6fb95be144834576e4382b8aa90660ff5a",
+      "summary": "The Pages URL exists, but the active scope cannot mutate the repository homepage field."
+    }
+  ],
+  "status": "proposed"
+}
