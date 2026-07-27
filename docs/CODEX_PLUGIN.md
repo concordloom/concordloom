@@ -7,9 +7,9 @@ any finite system of nested loops whose outcomes, evidence, authority, scope,
 budgets, and terminal states can be made explicit.
 
 The generic SDLC is an example binding, not the product boundary. Concord
-Loom's own repository is governed by the separately accepted
-`concordloom-self-binding`, whose domain-neutral `concord-change` loop contains
-observe, negotiate, bind, execute, verify, publish, and evolve loops.
+Loom's repository uses the separately accepted 58-cycle development
+configuration rooted at `steward-concordloom`. Observe, negotiate, bind,
+execute, verify, publish, and evolve are the phases of each governed run.
 
 ## Install from the GitHub marketplace
 

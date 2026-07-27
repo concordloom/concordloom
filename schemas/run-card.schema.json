@@ -171,6 +171,17 @@
           "type": "string",
           "minLength": 1
         },
+        "model_provider": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reasoning": {
+          "type": "string",
+          "minLength": 1
+        },
         "reasoning_intent": {
           "type": "string",
           "minLength": 1
@@ -181,6 +192,41 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/versionedComponent"
+          },
+          "uniqueItems": true
+        },
+        "mcp_servers": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/versionedComponent"
+          },
+          "uniqueItems": true
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/resourceRef"
+          },
+          "uniqueItems": true
+        },
+        "tool_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "subagent_identities": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/subagentIdentity"
+          },
+          "uniqueItems": true
         },
         "scope": {
           "$ref": "common.schema.json#/$defs/scope"
@@ -205,6 +251,11 @@
         "network",
         "external_mutations",
         "elapsed_seconds",
+        "token_accounting",
+        "input_tokens",
+        "output_tokens",
+        "reasoning_tokens",
+        "cached_tokens",
         "cost_units",
         "policy_digest",
         "candidate_tree_digest",
@@ -231,6 +282,9 @@
           "type": "string",
           "minLength": 1
         },
+        "effective_model_provider": {
+          "type": "string"
+        },
         "effective_reasoning": {
           "type": "string",
           "minLength": 1
@@ -255,6 +309,41 @@
           },
           "uniqueItems": true
         },
+        "effective_skills": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/versionedComponent"
+          },
+          "uniqueItems": true
+        },
+        "effective_mcp_servers": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/versionedComponent"
+          },
+          "uniqueItems": true
+        },
+        "effective_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/resourceRef"
+          },
+          "uniqueItems": true
+        },
+        "effective_tool_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "effective_subagent_identities": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/subagentIdentity"
+          },
+          "uniqueItems": true
+        },
         "data_egress": {
           "$ref": "evidence.schema.json#/$defs/dataEgress"
         },
@@ -275,6 +364,29 @@
         },
         "elapsed_seconds": {
           "type": "number",
+          "minimum": 0
+        },
+        "token_accounting": {
+          "enum": [
+            "measured",
+            "unavailable",
+            "not-applicable"
+          ]
+        },
+        "input_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "output_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reasoning_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cached_tokens": {
+          "type": "integer",
           "minimum": 0
         },
         "cost_units": {

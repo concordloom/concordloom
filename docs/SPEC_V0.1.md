@@ -90,6 +90,10 @@ authorize its own output.
 A public card pins an accepted binding, candidate manifest, route, policy, and
 evidence contract.
 
+The default route contains only the root coordinator. `--target-loop` adds the
+selected responsibility and its ancestors. The complete reachable tree is used
+only when a caller explicitly selects `--portfolio`.
+
 Actual attempts record the effective principal, agent, model, reasoning, skill,
 subagents, tools, times, result, policy digest, and candidate digest. Structured
 evidence identifies its predicate, provenance, producer, checks, payload,
@@ -166,20 +170,19 @@ The skill:
 Model-assisted output remains untrusted input to schemas, policy, and
 invariant checks.
 
-## Accepted Concord Loom self-binding
+## Accepted Concord Loom development system
 
-Concord Loom's repository uses an operator-accepted successor binding rooted at
-`concord-change`:
+Concord Loom's repository uses an operator-accepted development configuration
+rooted at `steward-concordloom`. Its ten responsibility areas contain 58
+cycles, including product direction, theory, protocol, runtime, assurance,
+adapters, knowledge, release, adoption, and system evolution.
 
-```text
-Observe → Negotiate → Bind → Execute → Verify → Publish → Evolve
-```
-
-The binding separates observation, intent acceptance, design acceptance,
-activation, candidate production, independent verification, external effect,
-and successor proposal. It succeeded the initial generic-service binding by
-explicit operator decision. It is the accepted topology for Concord Loom
-itself, not a mandatory topology for adopters.
+Every run still separates observation from accepted intent, design acceptance
+from activation, candidate production from independent verification,
+verification from publication, and successor proposal from activation. The
+current configuration succeeded the earlier seven-loop example through
+explicit operator decisions. It governs Concord Loom itself; adopters may
+accept different topologies.
 
 ## Reference bindings
 
@@ -209,7 +212,7 @@ v0.1 is acceptable only when the applicable checks pass:
 Canonical digests cover documented payload envelopes and exclude declared
 wall-clock display metadata.
 
-## Historical and explicit non-claims
+## Historical context and limits of the claim
 
 The first release used a one-time, separate bootstrap protocol under
 `concord/`. Bootstrap receipts are trust-seed artifacts, not public v0.1 run

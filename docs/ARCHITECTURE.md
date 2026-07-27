@@ -194,16 +194,18 @@ closes its parent automatically. Independent gates reject a principal that
 authored candidate content when policy requires separation. A passed gate
 proves its evidence contract; it does not grant publication authority.
 
-## 8. Concord Loom self-binding
+## 8. Concord Loom's development system
 
-Concord Loom's own repository now has an operator-accepted successor binding
-with root loop `concord-change`:
+The active, operator-accepted configuration has root
+`steward-concordloom`, ten responsibility areas, and 58 cycles in total. The
+interactive Atlas projects that complete containment graph.
 
-```text
-Observe → Negotiate → Bind → Execute → Verify → Publish → Evolve
-```
+Ordinary run cards do not execute all 58 cycles. By default they contain only
+the root coordinator. A task selects one or more leaves with `--target-loop`;
+the route adds only their ancestors. `--portfolio` is an explicit full-system
+audit mode.
 
-The stages have explicit meanings:
+Every governed run still uses seven phases:
 
 | Stage | Contract outcome |
 |---|---|
@@ -215,9 +217,9 @@ The stages have explicit meanings:
 | Publish | An authorized effect, no-op receipt, or escalation |
 | Evolve | A non-activating successor proposal |
 
-This self-binding succeeded the original generic-service binding through an
-explicit operator decision. It governs Concord Loom itself; other projects may
-accept different topologies.
+The development configuration succeeded the earlier seven-loop example through
+explicit operator decisions recorded in the append-only catalog. It governs
+Concord Loom itself; other projects may accept different topologies.
 
 ## 9. Evolution
 

@@ -26,6 +26,228 @@ class AtlasStaleError(AtlasError):
     """Check mode found a missing or stale generated Atlas."""
 
 
+_ATLAS_UI = {
+    "en": {
+        "title": "Concord Loom Atlas",
+        "subtitle": "Nested loop system",
+        "skip": "Skip to Atlas",
+        "no_run": "No run attached",
+        "run_label": "run {id}: {status}",
+        "loop_path": "Loop path",
+        "loop_path_value": "Loop path: {path}",
+        "truth_layers": "Truth layers",
+        "planned": "Planned",
+        "actual": "Actual",
+        "verified": "Verified",
+        "drift": "Drift",
+        "containment": "Containment",
+        "local_flow": "Local flow",
+        "map_key": "Map key",
+        "local_transition": "local transition",
+        "bounded_feedback": "bounded feedback",
+        "child_invocation": "child invocation",
+        "loop_contract": "Loop contract",
+        "accepted_not_verified": "Accepted structure is not runtime verification.",
+        "not_declared": "Not declared",
+        "required": "required",
+        "routed_nodes": "{count} routed node(s)",
+        "no_routed_node": "No routed node for this loop",
+        "accepted_contract": "Accepted loop contract",
+        "actual_by": "{result} by {agent}",
+        "no_attempt": "No attempt recorded",
+        "not_revalidated": "Not revalidated: {count} recorded evidence reference(s)",
+        "no_evidence_ref": "No recorded evidence reference",
+        "not_evaluated_run": "Not evaluated without a run",
+        "not_evaluated_attempt": "Not evaluated without an attempt",
+        "mismatches": "{count} planned and actual mismatch(es)",
+        "no_mismatch": "No declared scope or policy mismatch",
+        "active_roots": "Active roots",
+        "current": "current",
+        "branch": "branch",
+        "open": "open",
+        "parent_loop": "Parent loop",
+        "up": "up",
+        "no_children": "This loop contains no child loops. Its feedback stays in the local flow.",
+        "contained_loops": "Contained loops",
+        "children_count": "{count} child loop(s)",
+        "flow_title": "{label} local flow",
+        "flow_count": "{states} states, {transitions} transitions",
+        "no_states": "No local states are declared.",
+        "to": "to",
+        "no_transitions": "No local transitions are declared.",
+        "feedback_budget": "{id}: maximum {count} traversal(s). Exhaustion goes to {state} with outcome {outcome}.",
+        "no_feedback": "No cyclic feedback route is declared in this local flow.",
+        "flow_explainer": "Containment selects the loop. The map below shows only this loop's local control flow.",
+        "transition_ledger": "Transition ledger",
+        "planned_item": "{node} role {role}. Model: {model}. Skill: {skill}. Reasoning: {reasoning}.",
+        "no_routed_declared": "No routed node is declared for this loop.",
+        "only_plan": "The accepted loop contract is the only plan layer.",
+        "run": "Run",
+        "loop_status": "Loop status",
+        "attempts": "Attempts",
+        "evidence_refs": "Evidence refs",
+        "run_outcome": "Run outcome",
+        "planned_only": "planned only",
+        "not_recorded": "Not recorded",
+        "agent": "Agent",
+        "model": "Model",
+        "skill": "Skill",
+        "result": "Result",
+        "attempt": "Attempt",
+        "no_attempt_loop": "No attempt recorded for this loop.",
+        "attach_run_attempts": "Attach a run card to inspect factual attempts.",
+        "drift_item": "{field} planned {planned}; actual {actual}",
+        "drift_without_attempt": "Drift is not evaluated without a factual attempt.",
+        "reference_only": "Recorded reference metadata only. This Atlas does not reload or revalidate payload bytes.",
+        "digest": "Digest",
+        "no_evidence_loop": "No evidence reference is recorded for this loop.",
+        "attach_run_evidence": "Attach a run card to inspect recorded evidence references.",
+        "required_claims": "Required claims",
+        "accepted_results": "Accepted results",
+        "producer": "Producer",
+        "candidate_binding": "Candidate binding",
+        "policy_binding": "Policy binding",
+        "reviewer": "Reviewer",
+        "independence": "Independence from",
+        "none": "none",
+        "not_required": "not required",
+        "no_contract": "No evidence contract is referenced by this loop.",
+        "invocation_item": "{child} at {state}. Timeout {seconds} seconds; failure goes to {failure}.",
+        "no_invocation": "No child invocation is declared.",
+        "contract_title": "{label} contract",
+        "interface": "Interface",
+        "inputs": "Inputs",
+        "outputs": "Outputs",
+        "entry_state": "Entry state",
+        "terminal_states": "Terminal states",
+        "budgets": "Budgets",
+        "elapsed_seconds": "Elapsed seconds",
+        "cost_units": "Cost units",
+        "on_exhaustion": "On exhaustion",
+        "authority": "Authority",
+        "execute": "Execute",
+        "accept": "Accept",
+        "escalate": "Escalate",
+        "run_truth": "Run truth",
+        "recorded_evidence": "Recorded evidence references",
+        "planned_route": "Planned route",
+        "latest_route": "Latest actual route",
+        "evidence_contracts": "Evidence contracts",
+        "child_invocations": "Child invocations",
+        "selected_loop": "Selected loop: {label}",
+    },
+    "ru": {
+        "title": "Атлас Concord Loom",
+        "subtitle": "Система вложенных циклов",
+        "skip": "Перейти к Атласу",
+        "no_run": "Карточка запуска не подключена",
+        "run_label": "запуск {id}: {status}",
+        "loop_path": "Путь по циклам",
+        "loop_path_value": "Путь по циклам: {path}",
+        "truth_layers": "Состояния сведений",
+        "planned": "Запланировано",
+        "actual": "Выполнено",
+        "verified": "Проверено",
+        "drift": "Расхождение",
+        "containment": "Вложенность",
+        "local_flow": "Локальные переходы",
+        "map_key": "Условные обозначения",
+        "local_transition": "локальный переход",
+        "bounded_feedback": "ограниченный повтор",
+        "child_invocation": "вызов дочернего цикла",
+        "loop_contract": "Контракт цикла",
+        "accepted_not_verified": "Принятая структура не подтверждает фактическое исполнение.",
+        "not_declared": "Не указано",
+        "required": "обязательно",
+        "routed_nodes": "Узлов в маршруте: {count}",
+        "no_routed_node": "Для этого цикла нет узла в маршруте",
+        "accepted_contract": "Принятый контракт цикла",
+        "actual_by": "{result}; исполнитель: {agent}",
+        "no_attempt": "Попытка не записана",
+        "not_revalidated": "Без повторной проверки; ссылок на данные: {count}",
+        "no_evidence_ref": "Ссылки на данные проверки не записаны",
+        "not_evaluated_run": "Без запуска не оценивается",
+        "not_evaluated_attempt": "Без попытки не оценивается",
+        "mismatches": "Расхождений плана и факта: {count}",
+        "no_mismatch": "Расхождений области действий и политики не заявлено",
+        "active_roots": "Действующие корневые циклы",
+        "current": "текущий",
+        "branch": "ветвь",
+        "open": "открыть",
+        "parent_loop": "Родительский цикл",
+        "up": "выше",
+        "no_children": "У этого цикла нет дочерних циклов. Повторы остаются в локальных переходах.",
+        "contained_loops": "Вложенные циклы",
+        "children_count": "Дочерних циклов: {count}",
+        "flow_title": "{label}: локальные переходы",
+        "flow_count": "Состояний: {states}; переходов: {transitions}",
+        "no_states": "Локальные состояния не указаны.",
+        "to": "в",
+        "no_transitions": "Локальные переходы не указаны.",
+        "feedback_budget": "{id}: не более {count} проходов. После исчерпания переход в {state} с исходом {outcome}.",
+        "no_feedback": "В этом локальном графе нет циклического маршрута повторов.",
+        "flow_explainer": "Вложенность выбирает цикл. Ниже показаны только его локальные переходы.",
+        "transition_ledger": "Список переходов",
+        "planned_item": "{node}; роль: {role}. Модель: {model}. Инструкция: {skill}. Рассуждение: {reasoning}.",
+        "no_routed_declared": "Для этого цикла не указан узел маршрута.",
+        "only_plan": "Единственный слой плана — принятый контракт цикла.",
+        "run": "Запуск",
+        "loop_status": "Состояние цикла",
+        "attempts": "Попытки",
+        "evidence_refs": "Ссылки на данные",
+        "run_outcome": "Исход запуска",
+        "planned_only": "только план",
+        "not_recorded": "Не записано",
+        "agent": "Агент",
+        "model": "Модель",
+        "skill": "Инструкция",
+        "result": "Результат",
+        "attempt": "Попытка",
+        "no_attempt_loop": "Для этого цикла нет записанной попытки.",
+        "attach_run_attempts": "Подключите карточку запуска, чтобы увидеть фактические попытки.",
+        "drift_item": "{field}: план {planned}; факт {actual}",
+        "drift_without_attempt": "Без фактической попытки расхождение не оценивается.",
+        "reference_only": "Показаны только записанные ссылки. Атлас не загружает и не перепроверяет байты данных.",
+        "digest": "Хеш",
+        "no_evidence_loop": "Для этого цикла нет ссылки на данные проверки.",
+        "attach_run_evidence": "Подключите карточку запуска, чтобы увидеть ссылки на данные проверки.",
+        "required_claims": "Обязательные утверждения",
+        "accepted_results": "Допустимые результаты",
+        "producer": "Производитель",
+        "candidate_binding": "Привязка проверяемой версии",
+        "policy_binding": "Привязка политики",
+        "reviewer": "Проверяющий",
+        "independence": "Независимость от",
+        "none": "нет",
+        "not_required": "не требуется",
+        "no_contract": "Цикл не ссылается на контракт доказательств.",
+        "invocation_item": "{child} в состоянии {state}. Срок: {seconds} с; при неудаче переход в {failure}.",
+        "no_invocation": "Дочерний вызов не указан.",
+        "contract_title": "{label}: контракт",
+        "interface": "Интерфейс",
+        "inputs": "Входы",
+        "outputs": "Выходы",
+        "entry_state": "Начальное состояние",
+        "terminal_states": "Терминальные состояния",
+        "budgets": "Бюджеты",
+        "elapsed_seconds": "Время в секундах",
+        "cost_units": "Единицы стоимости",
+        "on_exhaustion": "При исчерпании",
+        "authority": "Полномочия",
+        "execute": "Исполнять",
+        "accept": "Принимать",
+        "escalate": "Эскалировать",
+        "run_truth": "Сведения о запуске",
+        "recorded_evidence": "Записанные ссылки на данные проверки",
+        "planned_route": "Запланированный маршрут",
+        "latest_route": "Последний фактический маршрут",
+        "evidence_contracts": "Контракты доказательств",
+        "child_invocations": "Дочерние вызовы",
+        "selected_loop": "Выбран цикл: {label}",
+    },
+}
+
+
 _STYLE = r"""
 :root {
   color-scheme: light;
@@ -570,6 +792,11 @@ _SCRIPT = r"""
 (() => {
   "use strict";
   const model = ATLAS_MODEL;
+  const ui = ATLAS_COPY;
+  const message = (key, values = {}) => Object.entries(values).reduce(
+    (result, [name, value]) => result.replaceAll(`{${name}}`, String(value)),
+    ui[key]
+  );
   const byId = new Map(model.loops.map((loop) => [loop.id, loop]));
   const childEdges = new Map();
   const parentEdge = new Map();
@@ -588,7 +815,7 @@ _SCRIPT = r"""
     if (value && typeof value === "object" && !Array.isArray(value)) {
       if ("name" in value) {
         let result = value.type ? `${value.name}: ${value.type}` : String(value.name);
-        if (value.required === true) result += ", required";
+        if (value.required === true) result += `, ${ui.required}`;
         if (value.description) result += `. ${value.description}`;
         return result;
       }
@@ -599,7 +826,7 @@ _SCRIPT = r"""
     }
     return String(value);
   };
-  const text = (value, fallback = "Not declared") => {
+  const text = (value, fallback = ui.not_declared) => {
     if (Array.isArray(value)) {
       return value.length ? value.map(objectText).join("; ") : fallback;
     }
@@ -663,25 +890,27 @@ _SCRIPT = r"""
         <button class="crumb" type="button" data-loop="${esc(id)}"
           ${current ? 'aria-current="page"' : ""}>${esc(item.label)}</button>`;
     }).join("");
-    root.setAttribute("aria-label", `Loop path: ${chain.map((id) => byId.get(id).label).join(", ")}`);
+    root.setAttribute("aria-label", message("loop_path_value", {
+      path: chain.map((id) => byId.get(id).label).join(", ")
+    }));
   };
 
   const truthSummary = (loop, runtime) => {
     const latest = runtime.attempts.at(-1);
     const planned = runtime.planned.length
-      ? `${runtime.planned.length} routed node${runtime.planned.length === 1 ? "" : "s"}`
-      : model.runtime.attached ? "No routed node for this loop" : "Accepted loop contract";
+      ? message("routed_nodes", {count: runtime.planned.length})
+      : model.runtime.attached ? ui.no_routed_node : ui.accepted_contract;
     const actual = latest
-      ? `${latest.result} by ${latest.effective_agent}`
-      : model.runtime.attached ? "No attempt recorded" : "No run attached";
+      ? message("actual_by", {result: latest.result, agent: latest.effective_agent})
+      : model.runtime.attached ? ui.no_attempt : ui.no_run;
     const verified = runtime.evidence.length
-      ? `Not revalidated: ${runtime.evidence.length} recorded evidence reference${runtime.evidence.length === 1 ? "" : "s"}`
-      : model.runtime.attached ? "No recorded evidence reference" : "No run attached";
+      ? message("not_revalidated", {count: runtime.evidence.length})
+      : model.runtime.attached ? ui.no_evidence_ref : ui.no_run;
     const drift = !model.runtime.attached
-      ? "Not evaluated without a run"
-      : !latest ? "Not evaluated without an attempt"
-      : runtime.drift.length ? `${runtime.drift.length} planned and actual mismatch${runtime.drift.length === 1 ? "" : "es"}`
-      : "No declared scope or policy mismatch";
+      ? ui.not_evaluated_run
+      : !latest ? ui.not_evaluated_attempt
+      : runtime.drift.length ? message("mismatches", {count: runtime.drift.length})
+      : ui.no_mismatch;
     return {planned, actual, verified, drift, loop};
   };
 
@@ -697,21 +926,21 @@ _SCRIPT = r"""
     const edges = childEdges.get(loop.id) || [];
     const parent = parentEdge.get(loop.id);
     const path = new Set(ancestors(loop.id));
-    const rootsMarkup = `<p class="level-label">Active roots</p>
+    const rootsMarkup = `<p class="level-label">${ui.active_roots}</p>
       <div class="loop-nav">${model.containment.roots.map((rootId) => {
         const root = byId.get(rootId);
         const current = rootId === loop.id;
-        const state = current ? "current" : path.has(rootId) ? "branch" : "open";
+        const state = current ? ui.current : path.has(rootId) ? ui.branch : ui.open;
         return `<button class="loop-button" type="button" data-loop="${esc(rootId)}"
           ${current ? 'aria-current="true"' : ""}>
           <strong>${esc(root.label)}</strong><span>${state}</span>
         </button>`;
       }).join("")}</div>`;
     const parentMarkup = parent
-      ? `<p class="level-label">Parent loop</p>
+      ? `<p class="level-label">${ui.parent_loop}</p>
          <div class="loop-nav">
            <button class="loop-button" type="button" data-loop="${esc(parent.parent_loop_id)}">
-             <strong>${esc(byId.get(parent.parent_loop_id).label)}</strong><span>up</span>
+             <strong>${esc(byId.get(parent.parent_loop_id).label)}</strong><span>${ui.up}</span>
            </button>
          </div>`
       : "";
@@ -719,10 +948,10 @@ _SCRIPT = r"""
       ? `<div class="loop-nav" id="child-loop-nav">${edges.map((edge) => {
           const child = byId.get(edge.child_loop_id);
           return `<button class="loop-button" type="button" data-loop="${esc(child.id)}">
-            <strong>${esc(child.label)}</strong><span>open</span>
+            <strong>${esc(child.label)}</strong><span>${ui.open}</span>
           </button>`;
         }).join("")}</div>`
-      : `<p class="empty">This loop contains no child loops. Its feedback stays in the local flow.</p>`;
+      : `<p class="empty">${ui.no_children}</p>`;
     document.getElementById("navigation-content").innerHTML = `
       <div class="loop-summary">
         <h3 tabindex="-1">${esc(loop.label)}</h3>
@@ -731,9 +960,10 @@ _SCRIPT = r"""
       </div>
       ${rootsMarkup}
       ${parentMarkup}
-      <p class="level-label">Contained loops</p>
+      <p class="level-label">${ui.contained_loops}</p>
       ${childrenMarkup}`;
-    document.getElementById("navigation-count").textContent = `${edges.length} child${edges.length === 1 ? "" : "ren"}`;
+    document.getElementById("navigation-count").textContent =
+      message("children_count", {count: edges.length});
   };
 
   const renderFlow = (loop) => {
@@ -741,9 +971,10 @@ _SCRIPT = r"""
     const states = list(flow.states);
     const transitions = list(flow.transitions);
     const feedback = transitions.filter((item) => item.kind === "feedback");
-    document.getElementById("flow-title").textContent = `${loop.label} local flow`;
+    document.getElementById("flow-title").textContent =
+      message("flow_title", {label: loop.label});
     document.getElementById("flow-count").textContent =
-      `${states.length} states, ${transitions.length} transitions`;
+      message("flow_count", {states: states.length, transitions: transitions.length});
     const stateMarkup = states.length
       ? `<ol class="state-rail">${states.map((state) => `
           <li class="state-node" data-kind="${esc(state.kind)}">
@@ -751,32 +982,36 @@ _SCRIPT = r"""
             <strong>${esc(state.label)}</strong>
             <span class="state-id" translate="no">${esc(state.id)}</span>
           </li>`).join("")}</ol>`
-      : `<p class="empty">No local states are declared.</p>`;
+      : `<p class="empty">${ui.no_states}</p>`;
     const transitionMarkup = transitions.length
       ? `<ol class="transition-list">${transitions.map((transition) => `
           <li class="transition" data-kind="${esc(transition.kind)}">
             <span class="route-id" translate="no">${esc(transition.from)}</span>
-            <span class="arrow" aria-label="to">-&gt;</span>
+            <span class="arrow" aria-label="${ui.to}">-&gt;</span>
             <span class="route-id" translate="no">${esc(transition.to)}</span>
             <span class="guard">${esc(transition.kind)}: ${esc(transition.guard)}</span>
           </li>`).join("")}</ol>`
-      : `<p class="empty">No local transitions are declared.</p>`;
+      : `<p class="empty">${ui.no_transitions}</p>`;
     const feedbackMarkup = feedback.length
-      ? `<div class="feedback-note"><strong>Bounded feedback</strong>
+      ? `<div class="feedback-note"><strong>${ui.bounded_feedback}</strong>
           <ul>${feedback.map((item) => {
             const budget = item.feedback_budget || {};
-            return `<li>${esc(item.id)}: maximum ${esc(text(budget.max_traversals))} traversal${budget.max_traversals === 1 ? "" : "s"}.
-              Exhaustion goes to ${esc(text(budget.on_exhaustion_state))} with outcome ${esc(text(budget.on_exhaustion_outcome))}.</li>`;
+            return `<li>${esc(message("feedback_budget", {
+              id: item.id,
+              count: text(budget.max_traversals),
+              state: text(budget.on_exhaustion_state),
+              outcome: text(budget.on_exhaustion_outcome)
+            }))}</li>`;
           }).join("")}</ul></div>`
-      : `<p class="feedback-note">No cyclic feedback route is declared in this local flow.</p>`;
+      : `<p class="feedback-note">${ui.no_feedback}</p>`;
     document.getElementById("flow-content").innerHTML = `
       <div class="loop-summary">
         <h3>${esc(loop.label)}</h3>
-        <p>Containment selects the loop. The map below shows only this loop's local control flow.</p>
+        <p>${ui.flow_explainer}</p>
       </div>
       ${stateMarkup}
       <section class="transition-section" aria-labelledby="transition-heading">
-        <h3 id="transition-heading">Transition ledger</h3>
+        <h3 id="transition-heading">${ui.transition_ledger}</h3>
         ${transitionMarkup}
         ${feedbackMarkup}
       </section>`;
@@ -794,109 +1029,122 @@ _SCRIPT = r"""
     const latest = runtime.attempts.at(-1);
     const plannedList = runtime.planned.length
       ? `<ul class="plain-list">${runtime.planned.map((item) => `
-          <li><strong>${esc(item.node_id)}</strong> role ${esc(item.role)}.
-          Model: ${esc(item.model_intent)}. Skill: ${esc(item.skill_intent)}.
-          Reasoning: ${esc(item.reasoning_intent)}.</li>`).join("")}</ul>`
-      : `<p class="empty">${model.runtime.attached ? "No routed node is declared for this loop." : "The accepted loop contract is the only plan layer."}</p>`;
+          <li>${esc(message("planned_item", {
+            node: item.node_id,
+            role: item.role,
+            model: item.model_intent,
+            skill: item.skill_intent,
+            reasoning: item.reasoning_intent
+          }))}</li>`).join("")}</ul>`
+      : `<p class="empty">${model.runtime.attached ? ui.no_routed_declared : ui.only_plan}</p>`;
     const runtimeRows = [
-      ["Run", model.runtime.attached ? model.runtime.id : "No run attached"],
-      ["Loop status", model.runtime.attached ? runtime.status : "planned only"],
-      ["Attempts", runtime.attempts.length],
-      ["Evidence refs", runtime.evidence_ids.length],
-      ["Run outcome", model.runtime.outcome || "Not recorded"]
+      [ui.run, model.runtime.attached ? model.runtime.id : ui.no_run],
+      [ui.loop_status, model.runtime.attached ? runtime.status : ui.planned_only],
+      [ui.attempts, runtime.attempts.length],
+      [ui.evidence_refs, runtime.evidence_ids.length],
+      [ui.run_outcome, model.runtime.outcome || ui.not_recorded]
     ];
     const actualList = latest
       ? `<ul class="plain-list">
-          <li><strong>Agent</strong> ${esc(latest.effective_agent)}</li>
-          <li><strong>Model</strong> ${esc(latest.effective_model)}</li>
-          <li><strong>Skill</strong> ${esc(latest.effective_skill)}</li>
-          <li><strong>Result</strong> ${esc(latest.result)}</li>
-          <li><strong>Attempt</strong> ${esc(latest.id)}</li>
+          <li><strong>${ui.agent}</strong> ${esc(latest.effective_agent)}</li>
+          <li><strong>${ui.model}</strong> ${esc(latest.effective_model)}</li>
+          <li><strong>${ui.skill}</strong> ${esc(latest.effective_skill)}</li>
+          <li><strong>${ui.result}</strong> ${esc(latest.result)}</li>
+          <li><strong>${ui.attempt}</strong> ${esc(latest.id)}</li>
         </ul>`
-      : `<p class="empty">${model.runtime.attached ? "No attempt recorded for this loop." : "Attach a run card to inspect factual attempts."}</p>`;
+      : `<p class="empty">${model.runtime.attached ? ui.no_attempt_loop : ui.attach_run_attempts}</p>`;
     const driftList = runtime.drift.length
       ? `<ul class="plain-list">${runtime.drift.map((item) =>
-          `<li><strong>${esc(item.field)}</strong> planned ${esc(text(item.planned))}; actual ${esc(text(item.actual))}</li>`
+          `<li>${esc(message("drift_item", {
+            field: item.field,
+            planned: text(item.planned),
+            actual: text(item.actual)
+          }))}</li>`
         ).join("")}</ul>`
-      : `<p class="empty">${latest ? "No declared scope or policy mismatch." : "Drift is not evaluated without a factual attempt."}</p>`;
+      : `<p class="empty">${latest ? ui.no_mismatch : ui.drift_without_attempt}</p>`;
     const evidenceList = runtime.evidence.length
-      ? `<p class="empty">Recorded reference metadata only. This Atlas does not reload or revalidate payload bytes.</p>
+      ? `<p class="empty">${ui.reference_only}</p>
          <ul class="plain-list">${runtime.evidence.map((item) => `
            <li><strong>${esc(item.id)}</strong> ${esc(item.path)}.
-           Digest: ${esc(item.digest)}</li>`).join("")}</ul>`
-      : `<p class="empty">${model.runtime.attached ? "No evidence reference is recorded for this loop." : "Attach a run card to inspect recorded evidence references."}</p>`;
+           ${ui.digest}: ${esc(item.digest)}</li>`).join("")}</ul>`
+      : `<p class="empty">${model.runtime.attached ? ui.no_evidence_loop : ui.attach_run_evidence}</p>`;
     const contractList = contracts.length
       ? `<ul class="plain-list">${contracts.map((item) => `
           <li><strong>${esc(item.id)}</strong> ${esc(item.description)}
-          Required claims: ${esc(text(item.required_claims, "none"))}.
-          Accepted results: ${esc(text(item.accepted_results, "none"))}.
-          Producer: ${esc(item.producer_capability)}.
-          Candidate binding: ${item.candidate_binding_required ? "required" : "not required"}.
-          Policy binding: ${item.policy_binding_required ? "required" : "not required"}.
-          Reviewer: ${esc(text(item.reviewer_capability, "not required"))}.
-          Independence from: ${esc(text(item.independent_from_capability, "not required"))}.</li>`).join("")}</ul>`
-      : `<p class="empty">No evidence contract is referenced by this loop.</p>`;
+          ${ui.required_claims}: ${esc(text(item.required_claims, ui.none))}.
+          ${ui.accepted_results}: ${esc(text(item.accepted_results, ui.none))}.
+          ${ui.producer}: ${esc(item.producer_capability)}.
+          ${ui.candidate_binding}: ${item.candidate_binding_required ? ui.required : ui.not_required}.
+          ${ui.policy_binding}: ${item.policy_binding_required ? ui.required : ui.not_required}.
+          ${ui.reviewer}: ${esc(text(item.reviewer_capability, ui.not_required))}.
+          ${ui.independence}: ${esc(text(item.independent_from_capability, ui.not_required))}.</li>`).join("")}</ul>`
+      : `<p class="empty">${ui.no_contract}</p>`;
     const invocationList = invocations.length
       ? `<ul class="plain-list">${invocations.map((item) => `
-          <li><strong>${esc(item.child_loop_id)}</strong> at ${esc(item.at_state)}.
-          Timeout ${esc(item.timeout_seconds)} seconds; failure goes to ${esc(item.failure_state)}.</li>`).join("")}</ul>`
-      : `<p class="empty">No child invocation is declared.</p>`;
-    document.getElementById("details-title").textContent = `${loop.label} contract`;
+          <li>${esc(message("invocation_item", {
+            child: item.child_loop_id,
+            state: item.at_state,
+            seconds: item.timeout_seconds,
+            failure: item.failure_state
+          }))}</li>`).join("")}</ul>`
+      : `<p class="empty">${ui.no_invocation}</p>`;
+    document.getElementById("details-title").textContent =
+      message("contract_title", {label: loop.label});
     document.getElementById("details-status").textContent =
-      model.runtime.attached ? runtime.status : "planned";
+      model.runtime.attached ? runtime.status : ui.planned;
     document.getElementById("details-content").innerHTML = `
       <section class="detail-group">
-        <h3>Interface</h3>
+        <h3>${ui.interface}</h3>
         <dl class="kv">${kvRows([
-          ["Inputs", loop.inputs],
-          ["Outputs", loop.outputs],
-          ["Entry state", loop.local_control_flow.entry_state],
-          ["Terminal states", loop.local_control_flow.terminal_state_ids]
+          [ui.inputs, loop.inputs],
+          [ui.outputs, loop.outputs],
+          [ui.entry_state, loop.local_control_flow.entry_state],
+          [ui.terminal_states, loop.local_control_flow.terminal_state_ids]
         ])}</dl>
       </section>
       <section class="detail-group">
-        <h3>Budgets</h3>
+        <h3>${ui.budgets}</h3>
         <dl class="kv">${kvRows([
-          ["Attempts", budgets.max_attempts],
-          ["Elapsed seconds", budgets.max_elapsed_seconds],
-          ["Cost units", budgets.max_cost_units],
-          ["On exhaustion", budgets.on_exhaustion]
+          [ui.attempts, budgets.max_attempts],
+          [ui.elapsed_seconds, budgets.max_elapsed_seconds],
+          [ui.cost_units, budgets.max_cost_units],
+          [ui.on_exhaustion, budgets.on_exhaustion]
         ])}</dl>
       </section>
       <section class="detail-group">
-        <h3>Authority</h3>
+        <h3>${ui.authority}</h3>
         <dl class="kv">${kvRows([
-          ["Execute", authority.execute_capability],
-          ["Accept", authority.accept_capability],
-          ["Escalate", authority.escalate_capability]
+          [ui.execute, authority.execute_capability],
+          [ui.accept, authority.accept_capability],
+          [ui.escalate, authority.escalate_capability]
         ])}</dl>
       </section>
       <section class="detail-group">
-        <h3>Run truth</h3>
+        <h3>${ui.run_truth}</h3>
         <dl class="kv">${kvRows(runtimeRows)}</dl>
       </section>
       <section class="detail-group">
-        <h3>Recorded evidence references</h3>
+        <h3>${ui.recorded_evidence}</h3>
         ${evidenceList}
       </section>
       <section class="detail-group">
-        <h3>Planned route</h3>
+        <h3>${ui.planned_route}</h3>
         ${plannedList}
       </section>
       <section class="detail-group">
-        <h3>Latest actual route</h3>
+        <h3>${ui.latest_route}</h3>
         ${actualList}
       </section>
       <section class="detail-group">
-        <h3>Drift</h3>
+        <h3>${ui.drift}</h3>
         ${driftList}
       </section>
       <section class="detail-group">
-        <h3>Evidence contracts</h3>
+        <h3>${ui.evidence_contracts}</h3>
         ${contractList}
       </section>
       <section class="detail-group">
-        <h3>Child invocations</h3>
+        <h3>${ui.child_invocations}</h3>
         ${invocationList}
       </section>`;
   };
@@ -911,8 +1159,9 @@ _SCRIPT = r"""
     renderNavigation(loop);
     renderFlow(loop);
     renderDetails(loop, runtime);
-    document.title = `${loop.label} | Concord Loom Atlas`;
-    document.getElementById("selection-live").textContent = `Selected loop: ${loop.label}`;
+    document.title = `${loop.label} | ${ui.title}`;
+    document.getElementById("selection-live").textContent =
+      message("selected_loop", {label: loop.label});
   };
 
   document.addEventListener("click", (event) => {
@@ -1267,9 +1516,13 @@ def render_atlas(
     registry: Mapping[str, Any],
     policy: Mapping[str, Any],
     run_card: Mapping[str, Any] | None = None,
+    locale: str = "en",
 ) -> str:
     """Render validated inputs to deterministic standalone HTML."""
 
+    if locale not in _ATLAS_UI:
+        raise AtlasError(f"unsupported Atlas locale: {locale!r}")
+    ui = _ATLAS_UI[locale]
     store = SchemaStore()
     binding_value = deepcopy(dict(binding))
     registry_value = deepcopy(dict(registry))
@@ -1292,7 +1545,14 @@ def render_atlas(
             schema_store=store,
         )
     model = _atlas_model(binding_value, registry_value, policy_value, run_value)
-    script = "const ATLAS_MODEL=" + _script_safe_json(model) + ";\n" + _SCRIPT
+    script = (
+        "const ATLAS_MODEL="
+        + _script_safe_json(model)
+        + ";\nconst ATLAS_COPY="
+        + _script_safe_json(ui)
+        + ";\n"
+        + _SCRIPT
+    )
     csp = (
         "default-src 'none'; "
         f"style-src 'sha256-{_csp_hash(_STYLE)}'; "
@@ -1301,71 +1561,71 @@ def render_atlas(
         "object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
     )
     runtime_label = (
-        f"run {run_value['id']}: {run_value['status']}"
+        ui["run_label"].format(id=run_value["id"], status=run_value["status"])
         if run_value is not None
-        else "No run attached"
+        else ui["no_run"]
     )
     return f"""<!doctype html>
-<html lang="en">
+<html lang="{locale}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#f1f3f0">
   <meta http-equiv="Content-Security-Policy" content="{csp}">
-  <title>Concord Loom Atlas</title>
+  <title>{html_escape(ui["title"])}</title>
   <style>{_STYLE}</style>
 </head>
 <body>
-  <a class="skip-link" href="#atlas-main">Skip to Atlas</a>
+  <a class="skip-link" href="#atlas-main">{html_escape(ui["skip"])}</a>
   <header class="masthead">
     <div class="brand">
-      <h1>Concord Loom Atlas</h1>
-      <p>Nested loop system</p>
+      <h1>{html_escape(ui["title"])}</h1>
+      <p>{html_escape(ui["subtitle"])}</p>
     </div>
     <div class="masthead-meta">
       <strong>{html_escape(runtime_label)}</strong>
       <p translate="no">{html_escape(str(binding_value["id"]))}</p>
     </div>
   </header>
-  <nav class="breadcrumbs" id="breadcrumbs" aria-label="Loop path"></nav>
-  <section class="truth-bar" aria-label="Truth layers">
+  <nav class="breadcrumbs" id="breadcrumbs" aria-label="{html_escape(ui["loop_path"])}"></nav>
+  <section class="truth-bar" aria-label="{html_escape(ui["truth_layers"])}">
     <div class="truth-cell" data-layer="planned">
-      <h2>Planned</h2><p id="truth-planned"></p>
+      <h2>{html_escape(ui["planned"])}</h2><p id="truth-planned"></p>
     </div>
     <div class="truth-cell" data-layer="actual">
-      <h2>Actual</h2><p id="truth-actual"></p>
+      <h2>{html_escape(ui["actual"])}</h2><p id="truth-actual"></p>
     </div>
     <div class="truth-cell" data-layer="verified">
-      <h2>Verified</h2><p id="truth-verified"></p>
+      <h2>{html_escape(ui["verified"])}</h2><p id="truth-verified"></p>
     </div>
     <div class="truth-cell" data-layer="drift">
-      <h2>Drift</h2><p id="truth-drift"></p>
+      <h2>{html_escape(ui["drift"])}</h2><p id="truth-drift"></p>
     </div>
   </section>
   <main class="atlas-shell" id="atlas-main">
     <aside class="panel navigation-panel" aria-labelledby="navigation-title">
       <div class="panel-heading">
-        <h2 id="navigation-title">Containment</h2>
+        <h2 id="navigation-title">{html_escape(ui["containment"])}</h2>
         <span id="navigation-count"></span>
       </div>
       <div id="navigation-content"></div>
     </aside>
     <section class="panel flow-panel" aria-labelledby="flow-title">
       <div class="panel-heading">
-        <h2 id="flow-title">Local flow</h2>
+        <h2 id="flow-title">{html_escape(ui["local_flow"])}</h2>
         <span id="flow-count"></span>
       </div>
-      <div class="map-key" aria-label="Map key">
-        <span class="key-item"><span class="key-mark" aria-hidden="true"></span>local transition</span>
-        <span class="key-item"><span class="key-mark feedback" aria-hidden="true"></span>bounded feedback</span>
-        <span class="key-item"><span class="key-mark containment" aria-hidden="true"></span>child invocation</span>
+      <div class="map-key" aria-label="{html_escape(ui["map_key"])}">
+        <span class="key-item"><span class="key-mark" aria-hidden="true"></span>{html_escape(ui["local_transition"])}</span>
+        <span class="key-item"><span class="key-mark feedback" aria-hidden="true"></span>{html_escape(ui["bounded_feedback"])}</span>
+        <span class="key-item"><span class="key-mark containment" aria-hidden="true"></span>{html_escape(ui["child_invocation"])}</span>
       </div>
       <div id="flow-content"></div>
     </section>
     <aside class="panel details-panel" aria-labelledby="details-title">
       <div class="panel-heading">
-        <h2 id="details-title">Loop contract</h2>
+        <h2 id="details-title">{html_escape(ui["loop_contract"])}</h2>
         <span class="run-status" id="details-status"></span>
       </div>
       <div class="detail-stack" id="details-content"></div>
@@ -1373,7 +1633,7 @@ def render_atlas(
   </main>
   <p id="selection-live" class="selection-live" aria-live="polite"></p>
   <footer class="footer">
-    <span>Accepted structure is not runtime verification.</span>
+    <span>{html_escape(ui["accepted_not_verified"])}</span>
     <span translate="no">{html_escape(str(binding_value["binding_digest"]))}</span>
   </footer>
   <script>{script}</script>
@@ -1390,6 +1650,7 @@ def generate_atlas(
     output: str | Path,
     run_card: Mapping[str, Any] | None = None,
     check: bool = False,
+    locale: str = "en",
 ) -> Path:
     """Write an Atlas atomically, or fail when check mode detects drift."""
 
@@ -1399,6 +1660,7 @@ def generate_atlas(
         registry=registry,
         policy=policy,
         run_card=run_card,
+        locale=locale,
     ).encode("utf-8")
     if check:
         try:

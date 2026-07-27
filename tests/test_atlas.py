@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -31,6 +32,22 @@ def artifacts() -> tuple[dict, dict, dict]:
         load(EXAMPLE / "binding.json"),
         load(EXAMPLE / "cycle-registry.json"),
         load(EXAMPLE / "policy.json"),
+    )
+
+
+def active_self_artifacts() -> tuple[dict, dict, dict]:
+    catalog = load(ROOT / "framework" / "concordloom" / "catalog.json")
+    active = next(
+        entry
+        for entry in catalog["entries"]
+        if entry["binding_digest"] == catalog["active_binding_digest"]
+    )
+    binding = load(ROOT / active["path"])
+    by_role = {artifact["role"]: artifact for artifact in binding["artifacts"]}
+    return (
+        binding,
+        load(ROOT / by_role["cycle_registry"]["path"]),
+        load(ROOT / by_role["policy"]["path"]),
     )
 
 
@@ -70,6 +87,105 @@ class AtlasTests(unittest.TestCase):
             "Candidate binding",
         ):
             self.assertIn(marker, first)
+
+    def test_russian_render_localizes_static_dynamic_and_accessible_ui(self) -> None:
+        binding, registry, policy = artifacts()
+        first = render_atlas(
+            binding=binding,
+            registry=registry,
+            policy=policy,
+            locale="ru",
+        )
+        second = render_atlas(
+            binding=binding,
+            registry=registry,
+            policy=policy,
+            locale="ru",
+        )
+
+        self.assertEqual(first, second)
+        for marker in (
+            '<html lang="ru">',
+            "<title>Атлас Concord Loom</title>",
+            'aria-label="Путь по циклам"',
+            'aria-label="Состояния сведений"',
+            'aria-label="Условные обозначения"',
+            'aria-live="polite"',
+            "Карточка запуска не подключена",
+            "Вложенность",
+            "Локальные переходы",
+            "Выбран цикл: {label}",
+            "const ATLAS_COPY=",
+        ):
+            self.assertIn(marker, first)
+        for unresolved in (
+            "No run attached",
+            "Loop path:",
+            "Selected loop:",
+            ">Containment<",
+            ">Local flow<",
+            'aria-label="Map key"',
+        ):
+            self.assertNotIn(unresolved, first)
+        with self.assertRaisesRegex(AtlasError, "unsupported Atlas locale"):
+            render_atlas(
+                binding=binding,
+                registry=registry,
+                policy=policy,
+                locale="de",
+            )
+
+    def test_checked_in_atlases_are_exact_english_and_russian_outputs(self) -> None:
+        binding, registry, policy = active_self_artifacts()
+        expected = {
+            ROOT / "docs" / "ATLAS.html": render_atlas(
+                binding=binding,
+                registry=registry,
+                policy=policy,
+                locale="en",
+            ),
+            ROOT / "docs" / "ru" / "ATLAS.html": render_atlas(
+                binding=binding,
+                registry=registry,
+                policy=policy,
+                locale="ru",
+            ),
+        }
+        for path, rendered in expected.items():
+            with self.subTest(path=path):
+                self.assertTrue(path.exists())
+                self.assertEqual(path.read_text(encoding="utf-8"), rendered)
+
+    def test_cli_accepts_explicit_atlas_locale(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / "atlas.ru.html"
+            environment = dict(os.environ)
+            environment["PYTHONPATH"] = str(ROOT / "src")
+            result = subprocess.run(
+                [
+                    "python3",
+                    "-m",
+                    "concordloom",
+                    "atlas",
+                    "--binding",
+                    str(EXAMPLE / "binding.json"),
+                    "--registry",
+                    str(EXAMPLE / "cycle-registry.json"),
+                    "--policy",
+                    str(EXAMPLE / "policy.json"),
+                    "--locale",
+                    "ru",
+                    "--output",
+                    str(output),
+                ],
+                cwd=ROOT,
+                env=environment,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn('<html lang="ru">', output.read_text(encoding="utf-8"))
 
     def test_repository_text_is_safe_inside_the_script_element(self) -> None:
         encoded = _script_safe_json(

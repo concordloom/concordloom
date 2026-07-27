@@ -1,0 +1,17 @@
+{
+  "activated_at": "2026-07-28T00:05:00Z",
+  "activation_decision_id": "activate-v8-token-routing-final",
+  "activation_evidence_digest": "sha256:db4f96c90d6a31ef576f53ef03ae6cf0f0949fa9b87200d0a1d3e01497e9f37b",
+  "activation_evidence_id": "activate-v8-token-routing-final-evidence",
+  "binding_digest": "sha256:a57e7cb815ac3bb14eebb9e1bd6ba1eeb2d312d172067797853cb496aea4f9bd",
+  "binding_proposal_digest": "sha256:27547aee81877ad5112dfdf48ec9423f7c7a8625b02b3cf106826b1e4fb44a6c",
+  "candidate_tree_digest": "sha256:7551b09d68ad80b879946306769f9afe4b4af8938e07592b8ec89816c480294b",
+  "evolution_decision_digest": "sha256:71aa1e2ab82b2be5bbe7502f8ee3f7949b4f6342e92b35d5331466f83a3e5abc",
+  "evolution_decision_id": "decide-v8-token-routing-final",
+  "id": "activate-concordloom-self-binding-v8-receipt",
+  "kind": "concordloom.activation-receipt",
+  "proposal_tree_digest": "sha256:7551b09d68ad80b879946306769f9afe4b4af8938e07592b8ec89816c480294b",
+  "review_recommendation_digest": "sha256:d776ce32ea886dc9444f99d63884a4c99a774a0d58333f4498c72d4aedf90a5e",
+  "review_recommendation_id": "review-v8-token-routing-final",
+  "schema_version": "0.1"
+}

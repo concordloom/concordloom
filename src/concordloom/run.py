@@ -481,39 +481,258 @@ def validate_binding(
 def _reachable_loop_ids(
     registry: Mapping[str, Any], root_loop_id: str
 ) -> set[str]:
+    return set(_ordered_reachable_loop_ids(registry, root_loop_id))
+
+
+def _ordered_reachable_loop_ids(
+    registry: Mapping[str, Any], root_loop_id: str
+) -> list[str]:
+    """Return a stable topological order using accepted containment order."""
+
     adjacency: dict[str, list[str]] = {}
     for edge in registry["containment_graph"]["edges"]:
         adjacency.setdefault(edge["parent_loop_id"], []).append(
             edge["child_loop_id"]
         )
+    discovery: list[str] = []
     reachable: set[str] = set()
-    pending = [root_loop_id]
-    while pending:
-        loop_id = pending.pop()
+
+    def discover(loop_id: str) -> None:
         if loop_id in reachable:
-            continue
+            return
         reachable.add(loop_id)
-        pending.extend(reversed(adjacency.get(loop_id, [])))
-    return reachable
+        discovery.append(loop_id)
+        for child_id in adjacency.get(loop_id, []):
+            discover(child_id)
+
+    discover(root_loop_id)
+    indegree = {loop_id: 0 for loop_id in reachable}
+    for parent_id, child_ids in adjacency.items():
+        if parent_id not in reachable:
+            continue
+        for child_id in child_ids:
+            if child_id in reachable:
+                indegree[child_id] += 1
+    rank = {loop_id: index for index, loop_id in enumerate(discovery)}
+    ready = sorted(
+        (loop_id for loop_id, degree in indegree.items() if degree == 0),
+        key=rank.__getitem__,
+    )
+    ordered: list[str] = []
+    while ready:
+        loop_id = ready.pop(0)
+        ordered.append(loop_id)
+        for child_id in adjacency.get(loop_id, []):
+            if child_id not in indegree:
+                continue
+            indegree[child_id] -= 1
+            if indegree[child_id] == 0:
+                ready.append(child_id)
+                ready.sort(key=rank.__getitem__)
+    if len(ordered) != len(reachable):
+        raise RunStateError("selected run root subtree is not acyclic")
+    return ordered
+
+
+def _target_ancestor_closure(
+    registry: Mapping[str, Any],
+    root_loop_id: str,
+    target_loop_ids: Sequence[str],
+) -> set[str]:
+    loops = {str(loop["id"]) for loop in registry["loops"]}
+    reachable = _reachable_loop_ids(registry, root_loop_id)
+    targets = list(target_loop_ids)
+    if len(targets) != len(set(targets)):
+        raise RunStateError("target loops must be unique")
+    unknown = set(targets) - loops
+    if unknown:
+        raise RunStateError(f"unknown target loops {sorted(unknown)!r}")
+    outside = set(targets) - reachable
+    if outside:
+        raise RunStateError(
+            f"target loops leave the selected run root subtree "
+            f"{sorted(outside)!r}"
+        )
+    parents: dict[str, list[str]] = {}
+    for edge in registry["containment_graph"]["edges"]:
+        child_id = str(edge["child_loop_id"])
+        parent_id = str(edge["parent_loop_id"])
+        parents.setdefault(child_id, []).append(parent_id)
+    selected = {root_loop_id}
+    for target_id in targets:
+        pending = [target_id]
+        while pending:
+            current = pending.pop()
+            if current in selected:
+                continue
+            selected.add(current)
+            if current == root_loop_id:
+                continue
+            reachable_parents = [
+                parent
+                for parent in parents.get(current, [])
+                if parent in reachable
+            ]
+            if not reachable_parents:
+                raise RunStateError(
+                    f"target loop {target_id!r} has no path to selected root"
+                )
+            pending.extend(reversed(reachable_parents))
+    return selected
+
+
+_ROUTE_ARRAY_FIELDS = (
+    "skills",
+    "mcp_servers",
+    "resources",
+    "tool_capabilities",
+    "subagent_identities",
+)
+
+
+def _records_by_id(
+    records: Sequence[Mapping[str, Any]], field: str
+) -> dict[str, Mapping[str, Any]]:
+    result: dict[str, Mapping[str, Any]] = {}
+    for record in records:
+        identifier = str(record.get("id", ""))
+        if not identifier or identifier in result:
+            raise RunStateError(f"route {field} must use unique non-empty ids")
+        result[identifier] = record
+    return result
+
+
+def _sorted_route_records(
+    records: Sequence[Mapping[str, Any]], field: str
+) -> list[dict[str, Any]]:
+    indexed = _records_by_id(records, field)
+    return [deepcopy(dict(indexed[identifier])) for identifier in sorted(indexed)]
+
+
+def _route_values_equal(left: Any, right: Any, field: str) -> bool:
+    if field in {"skills", "mcp_servers", "resources", "subagent_identities"}:
+        if not isinstance(left, Sequence) or isinstance(left, (str, bytes)):
+            return False
+        if not isinstance(right, Sequence) or isinstance(right, (str, bytes)):
+            return False
+        return {
+            identifier: dict(record)
+            for identifier, record in _records_by_id(left, field).items()
+        } == {
+            identifier: dict(record)
+            for identifier, record in _records_by_id(right, field).items()
+        }
+    if field == "tool_capabilities":
+        return sorted(left) == sorted(right)
+    return left == right
+
+
+def _verify_planned_route_metadata(
+    planned: Mapping[str, Any],
+    policy: Mapping[str, Any],
+    candidate_manifest: Mapping[str, Any],
+) -> None:
+    model_fields = ("model_provider", "model", "reasoning")
+    declared_model_fields = [field for field in model_fields if field in planned]
+    if declared_model_fields and len(declared_model_fields) != len(model_fields):
+        raise RunStateError(
+            "planned route model metadata must declare provider, model, and reasoning"
+        )
+    if declared_model_fields:
+        allowed_models = {
+            (item["provider"], item["model"])
+            for item in policy["execution"]["model_policy"]["allowed_models"]
+        }
+        identity = (planned["model_provider"], planned["model"])
+        if identity not in allowed_models:
+            raise RunStateError(
+                "planned route model is outside the bound model policy"
+            )
+
+    for field in ("skills", "mcp_servers", "resources", "subagent_identities"):
+        if field in planned:
+            _records_by_id(planned[field], field)
+    if "tool_capabilities" in planned and len(
+        planned["tool_capabilities"]
+    ) != len(set(planned["tool_capabilities"])):
+        raise RunStateError("planned route tool capabilities must be unique")
+
+    principals = policy_principals(policy)
+    for identity in planned.get("subagent_identities", []):
+        if identity["principal_id"] not in principals:
+            raise RunStateError(
+                "planned route names an unknown subagent principal"
+            )
+
+    scope = planned["scope"]
+    candidate_files = {
+        item["path"]: item for item in candidate_manifest["files"]
+    }
+    for resource in planned.get("resources", []):
+        if resource["kind"] != "repository_path":
+            continue
+        reference = resource["ref"]
+        access_mode = resource["access_mode"]
+        candidate_file = candidate_files.get(reference)
+        if candidate_file is None:
+            raise RunStateError(
+                f"planned repository resource is absent from candidate: {reference!r}"
+            )
+        if candidate_file["digest"] != resource["digest"]:
+            raise RunStateError(
+                f"planned repository resource digest mismatch: {reference!r}"
+            )
+        if access_mode in {"read", "read_write"} and not any(
+            path_within(reference, prefix) for prefix in scope["read_paths"]
+        ):
+            raise RunStateError(
+                f"planned resource read leaves node scope: {reference!r}"
+            )
+        if access_mode in {"write", "read_write"} and not any(
+            path_within(reference, prefix) for prefix in scope["write_paths"]
+        ):
+            raise RunStateError(
+                f"planned resource write leaves node scope: {reference!r}"
+            )
+
+
+def _verify_planned_actual_metadata(
+    planned: Mapping[str, Any],
+    actual: Mapping[str, Any],
+) -> None:
+    for field in ("model_provider", "model", "reasoning", *_ROUTE_ARRAY_FIELDS):
+        if field in planned:
+            if field not in actual:
+                raise RunStateError(
+                    f"effective route omits declared {field.replace('_', ' ')}"
+                )
+            if not _route_values_equal(planned[field], actual[field], field):
+                raise RunStateError(
+                    f"effective route {field.replace('_', ' ')} "
+                    "does not match the planned route"
+                )
+        elif field in _ROUTE_ARRAY_FIELDS and actual.get(field):
+            raise RunStateError(
+                f"effective route used undeclared {field.replace('_', ' ')}"
+            )
 
 
 def _default_route(
     registry: Mapping[str, Any],
     policy: Mapping[str, Any],
     root_loop_id: str,
+    selected_loop_ids: set[str],
+    development_model: Mapping[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     roles = policy_roles(policy)
     policy_scope = policy["execution"]["default_scope"]
-    reachable = _reachable_loop_ids(registry, root_loop_id)
+    ordered = _ordered_reachable_loop_ids(registry, root_loop_id)
+    loops = {str(loop["id"]): loop for loop in registry["loops"]}
     result: list[dict[str, Any]] = []
-    for loop in sorted(
-        (
-            item
-            for item in registry["loops"]
-            if item["id"] in reachable
-        ),
-        key=lambda item: item["id"],
-    ):
+    for loop_id in ordered:
+        if loop_id not in selected_loop_ids:
+            continue
+        loop = loops[loop_id]
         required_capability = _route_capability(loop, registry)
         eligible_roles = sorted(
             role_id
@@ -525,8 +744,7 @@ def _default_route(
                 f"no policy role can route loop {loop['id']!r} with capability "
                 f"{required_capability!r}"
             )
-        result.append(
-            {
+        route = {
             "node_id": loop["id"],
             "loop_id": loop["id"],
             "role": eligible_roles[0],
@@ -540,7 +758,51 @@ def _default_route(
                 policy_scope,
             ),
         }
-        )
+        if development_model is not None:
+            nodes = {
+                str(node["id"]): node
+                for node in development_model.get("nodes", [])
+            }
+            profiles = development_model.get("profiles", {})
+            node = nodes.get(loop_id)
+            if node is None:
+                raise RunStateError(
+                    f"development model omits routed loop {loop_id!r}"
+                )
+            profile = profiles.get(node.get("execution_profile"))
+            if not isinstance(profile, Mapping):
+                raise RunStateError(
+                    f"development model omits route profile for {loop_id!r}"
+                )
+            materialization = node.get(
+                "route_materialization",
+                profile.get("route_materialization"),
+            )
+            exact_materialization = (
+                "route_materialization"
+                in development_model.get("resource_semantics", {})
+            )
+            if materialization is None and not exact_materialization:
+                result.append(route)
+                continue
+            required = {
+                "model_provider",
+                "model",
+                "reasoning",
+                "skills",
+                "mcp_servers",
+                "resources",
+                "tool_capabilities",
+                "subagent_identities",
+            }
+            if not isinstance(materialization, Mapping) or set(
+                materialization
+            ) != required:
+                raise RunStateError(
+                    f"development model route for {loop_id!r} is not exact"
+                )
+            route.update(deepcopy(dict(materialization)))
+        result.append(route)
     return result
 
 
@@ -631,6 +893,9 @@ def create_run_card(
     scope: Mapping[str, Any] | None = None,
     budgets: Mapping[str, Any] | None = None,
     schema_store: SchemaStore | None = None,
+    target_loop_ids: Sequence[str] | None = None,
+    portfolio: bool = False,
+    development_model: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     store = schema_store or SchemaStore()
     validate_binding(binding, registry, policy, schema_store=store)
@@ -662,8 +927,42 @@ def create_run_card(
     ):
         raise RunStateError("run cost budget broadens the bound model policy")
     reachable = _reachable_loop_ids(registry, root_loop_id)
+    if development_model is not None:
+        atlas_artifacts = [
+            artifact
+            for artifact in binding["artifacts"]
+            if artifact["role"] == "atlas_input"
+        ]
+        if len(atlas_artifacts) != 1 or atlas_artifacts[0]["digest"] != digest(
+            development_model
+        ):
+            raise RunStateError(
+                "development model is not the binding's exact atlas input"
+            )
+    targets = list(target_loop_ids or [])
+    if planned_route is not None and (targets or portfolio):
+        raise RunStateError(
+            "custom planned route is mutually exclusive with targets and portfolio"
+        )
+    if targets and portfolio:
+        raise RunStateError("target loops are mutually exclusive with portfolio")
+    selected = (
+        set(_ordered_reachable_loop_ids(registry, root_loop_id))
+        if portfolio
+        else _target_ancestor_closure(
+            registry,
+            root_loop_id,
+            targets or [root_loop_id],
+        )
+    )
     route_source = (
-        _default_route(registry, policy, root_loop_id)
+        _default_route(
+            registry,
+            policy,
+            root_loop_id,
+            selected,
+            development_model,
+        )
         if planned_route is None
         else planned_route
     )
@@ -728,6 +1027,8 @@ def create_run_card(
         "evidence": [],
     }
     store.validate(card, "run-card.schema.json")
+    for item in card["planned_route"]:
+        _verify_planned_route_metadata(item, policy, candidate_manifest)
     return card
 
 
@@ -872,11 +1173,22 @@ def record_attempt(
     effective_model: str,
     effective_reasoning: str,
     effective_skill: str,
+    effective_model_provider: str | None = None,
+    effective_skills: Sequence[Mapping[str, Any]] | None = None,
+    effective_mcp_servers: Sequence[Mapping[str, Any]] | None = None,
+    effective_resources: Sequence[Mapping[str, Any]] | None = None,
+    effective_tool_capabilities: Sequence[str] | None = None,
+    effective_subagent_identities: Sequence[Mapping[str, Any]] | None = None,
     effective_subagents: Sequence[str] = (),
     effective_tools: Sequence[str] = (),
     data_egress: Mapping[str, Any] | None = None,
     network: str = "none",
     external_mutations: Sequence[str] = (),
+    input_tokens: int = 0,
+    output_tokens: int = 0,
+    reasoning_tokens: int = 0,
+    cached_tokens: int = 0,
+    token_accounting: str | None = None,
     cost_units: float = 0,
     result: str,
     repository: str | Path,
@@ -919,6 +1231,38 @@ def record_attempt(
         raise RunStateError("attempt cannot finish before it starts")
     if isinstance(cost_units, bool) or cost_units < 0:
         raise RunStateError("attempt cost_units must be a non-negative number")
+    token_metrics = {
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "reasoning_tokens": reasoning_tokens,
+        "cached_tokens": cached_tokens,
+    }
+    for field, value in token_metrics.items():
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            raise RunStateError(
+                f"attempt {field} must be a non-negative integer"
+            )
+    accounting = token_accounting
+    if effective_model == "none":
+        accounting = accounting or "not-applicable"
+        if accounting != "not-applicable" or any(token_metrics.values()):
+            raise RunStateError(
+                "model none requires not-applicable token accounting and zero tokens"
+            )
+    else:
+        if accounting not in {"measured", "unavailable"}:
+            raise RunStateError(
+                "model-assisted attempts must declare measured or unavailable "
+                "token accounting"
+            )
+        if accounting == "measured" and input_tokens + output_tokens <= 0:
+            raise RunStateError(
+                "measured token accounting requires input or output tokens"
+            )
+        if accounting == "unavailable" and any(token_metrics.values()):
+            raise RunStateError(
+                "unavailable token accounting requires zero token metrics"
+            )
     used_elapsed = sum(
         float(attempt.get("elapsed_seconds", 0))
         for node in card["nodes"]
@@ -960,6 +1304,19 @@ def record_attempt(
             )
         ),
     }
+    if effective_model_provider is not None:
+        route["model_provider"] = effective_model_provider
+    structured_arrays = (
+        ("skills", effective_skills),
+        ("mcp_servers", effective_mcp_servers),
+        ("resources", effective_resources),
+        ("subagent_identities", effective_subagent_identities),
+    )
+    for field, records in structured_arrays:
+        if records is not None:
+            route[field] = _sorted_route_records(records, field)
+    if effective_tool_capabilities is not None:
+        route["tool_capabilities"] = sorted(set(effective_tool_capabilities))
     _verify_effective_route_policy(
         {"effective_route": route, "node_id": node_id},
         card,
@@ -980,11 +1337,22 @@ def record_attempt(
         "network": network,
         "external_mutations": sorted(set(external_mutations)),
         "elapsed_seconds": elapsed_seconds,
+        "token_accounting": accounting,
+        **token_metrics,
         "cost_units": float(cost_units),
         "policy_digest": digest(policy),
         "candidate_tree_digest": candidate_manifest["tree_digest"],
         "result": result,
     }
+    if effective_model_provider is not None:
+        attempt["effective_model_provider"] = effective_model_provider
+    for field, records in structured_arrays:
+        if records is not None:
+            attempt[f"effective_{field}"] = _sorted_route_records(records, field)
+    if effective_tool_capabilities is not None:
+        attempt["effective_tool_capabilities"] = sorted(
+            set(effective_tool_capabilities)
+        )
     result_card = deepcopy(card)
     target = next(item for item in result_card["nodes"] if item["node_id"] == node_id)
     target["attempts"].append(attempt)
@@ -1066,6 +1434,30 @@ def _matching_attempt(
         raise RunStateError("evidence tools do not match the cited attempt")
     if attempt["data_egress"] != route["data_egress"]:
         raise RunStateError("evidence data egress does not match the cited attempt")
+    structured_fields = (
+        "model_provider",
+        "skills",
+        "mcp_servers",
+        "resources",
+        "tool_capabilities",
+        "subagent_identities",
+    )
+    for field in structured_fields:
+        attempt_field = f"effective_{field}"
+        route_declares = field in route
+        attempt_declares = attempt_field in attempt
+        if route_declares != attempt_declares:
+            raise RunStateError(
+                f"evidence {field.replace('_', ' ')} does not match "
+                "the cited attempt"
+            )
+        if route_declares and not _route_values_equal(
+            attempt[attempt_field], route[field], field
+        ):
+            raise RunStateError(
+                f"evidence {field.replace('_', ' ')} does not match "
+                "the cited attempt"
+            )
     return attempt
 
 
@@ -1081,22 +1473,33 @@ def _verify_effective_route_policy(
 
     model_policy = policy["execution"]["model_policy"]
     egress = route["data_egress"]
-    provider = egress["provider"]
+    egress_provider = egress["provider"]
+    model_provider = route.get("model_provider", egress_provider)
     paths = egress["path_prefixes"]
     content_classes = set(egress["content_classes"])
-    if provider and provider not in model_policy["allowed_providers"]:
+    if (
+        egress_provider
+        and "model_provider" in route
+        and egress_provider != model_provider
+    ):
+        raise RunStateError(
+            "model provider and data-egress provider do not match"
+        )
+    if model_provider and model_provider not in model_policy["allowed_providers"]:
         raise RunStateError("evidence route used a provider outside the bound policy")
     allowed_models = {
         (item["provider"], item["model"])
         for item in model_policy["allowed_models"]
     }
-    if (provider, route["model"]) not in allowed_models:
+    if (model_provider, route["model"]) not in allowed_models:
         raise RunStateError("evidence route used a model outside the bound policy")
-    if model_policy["privacy"] == "local_only" and provider:
+    if model_policy["privacy"] == "local_only" and egress_provider:
         raise RunStateError("local-only model policy forbids provider data egress")
-    if not provider and (paths or content_classes):
+    if not egress_provider and (paths or content_classes):
         raise RunStateError("data-egress scope requires a factual provider")
-    if route["model"] == "none" and (provider or paths or content_classes):
+    if route["model"] == "none" and (
+        model_provider or egress_provider or paths or content_classes
+    ):
         raise RunStateError("a no-model route cannot report model data egress")
     if content_classes - set(model_policy["allowed_content_classes"]):
         raise RunStateError(
@@ -1112,6 +1515,10 @@ def _verify_effective_route_policy(
 
     allowed_model_paths = model_policy["allowed_path_prefixes"]
     planned_scope = _route(card, evidence["node_id"])["scope"]
+    _verify_planned_actual_metadata(
+        _route(card, evidence["node_id"]),
+        route,
+    )
     for path in paths:
         if not any(path_within(path, prefix) for prefix in allowed_model_paths):
             raise RunStateError(

@@ -243,6 +243,7 @@ class CoreRuntimeTests(unittest.TestCase):
                 run_id="test-run",
                 root_loop_id="delivery",
                 candidate_author_principal_ids=["example-executor"],
+                target_loop_ids=["testing"],
             )
             card = authorize_run(
                 card,

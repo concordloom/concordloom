@@ -73,11 +73,11 @@ cryptographic reviewer identity.
 
 ## Verify the accepted self-binding
 
-The current repository transition records a successor to the generic SDLC
-example. Validate the exact binding, registry, policy, predecessor link, and
-append-only catalog rather than relying on the label “current.” The accepted
-root is `concord-change`; its children are observe, negotiate, bind, execute,
-verify, publish, and evolve.
+Validate the exact binding, registry, policy, predecessor link, and append-only
+catalog rather than relying on the label “current.” The accepted root is
+`steward-concordloom`; the active development model contains ten responsibility
+areas and 58 cycles. Observe, negotiate, bind, execute, verify, publish, and
+evolve are run phases, not the top-level containment graph.
 
 The binding was activated through a decision separate from the evolution
 proposal. The proposal retains `activation_allowed: false`, and the predecessor

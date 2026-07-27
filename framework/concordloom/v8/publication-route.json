@@ -1,0 +1,239 @@
+[
+  {
+    "loop_id": "steward-concordloom",
+    "mcp_servers": [],
+    "model": "none",
+    "model_intent": "none",
+    "model_provider": "",
+    "node_id": "steward-concordloom",
+    "reasoning": "deterministic",
+    "reasoning_intent": "authorize only the exact publication handoff",
+    "resources": [],
+    "role": "operator",
+    "scope": {
+      "external_mutations": [],
+      "network": "none",
+      "read_paths": [
+        "AGENTS.md",
+        "framework/concordloom/catalog.json",
+        "schemas"
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "record the operator publication decision",
+    "skills": [],
+    "subagent_identities": [],
+    "subagent_intent": [],
+    "tool_capabilities": []
+  },
+  {
+    "loop_id": "distribute-package",
+    "mcp_servers": [],
+    "model": "none",
+    "model_intent": "none",
+    "model_provider": "",
+    "node_id": "distribute-package",
+    "reasoning": "deterministic",
+    "reasoning_intent": "publish only the pinned tag and GitHub release assets",
+    "resources": [],
+    "role": "publisher",
+    "scope": {
+      "external_mutations": [
+        "github-release-assets",
+        "github-version-tag"
+      ],
+      "network": "write",
+      "read_paths": [
+        ".concord/runs",
+        "AGENTS.md",
+        "CITATION.cff",
+        "LICENSE",
+        "NOTICE",
+        "README.md",
+        "framework/concordloom/catalog.json",
+        "pyproject.toml",
+        "schemas",
+        "src"
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "publish the checked wheel, sdist and checksums",
+    "skills": [],
+    "subagent_identities": [],
+    "subagent_intent": [],
+    "tool_capabilities": []
+  },
+  {
+    "loop_id": "publish-site",
+    "mcp_servers": [],
+    "model": "none",
+    "model_intent": "none",
+    "model_provider": "",
+    "node_id": "publish-site",
+    "reasoning": "deterministic",
+    "reasoning_intent": "perform only the Pages effect",
+    "resources": [],
+    "role": "publisher",
+    "scope": {
+      "external_mutations": [
+        "github-pages"
+      ],
+      "network": "write",
+      "read_paths": [
+        "AGENTS.md",
+        "framework/concordloom/catalog.json",
+        "schemas",
+        "site"
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "publish the pinned static site",
+    "skills": [],
+    "subagent_identities": [],
+    "subagent_intent": [],
+    "tool_capabilities": []
+  },
+  {
+    "loop_id": "maintain-repository-presence",
+    "mcp_servers": [],
+    "model": "none",
+    "model_intent": "none",
+    "model_provider": "",
+    "node_id": "maintain-repository-presence",
+    "reasoning": "deterministic",
+    "reasoning_intent": "perform only the repository presence effects",
+    "resources": [],
+    "role": "publisher",
+    "scope": {
+      "external_mutations": [
+        "github-repository-homepage",
+        "github-repository-security-settings",
+        "github-repository-social-preview"
+      ],
+      "network": "write",
+      "read_paths": [
+        "AGENTS.md",
+        "docs/assets/concordloom-mark.png",
+        "docs/assets/concordloom-social-preview.png",
+        "framework/concordloom/catalog.json",
+        "schemas"
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "publish the pinned repository brand metadata",
+    "skills": [],
+    "subagent_identities": [],
+    "subagent_intent": [],
+    "tool_capabilities": []
+  },
+  {
+    "loop_id": "publish-source-change",
+    "mcp_servers": [],
+    "model": "none",
+    "model_intent": "none",
+    "model_provider": "",
+    "node_id": "publish-source-change",
+    "reasoning": "deterministic",
+    "reasoning_intent": "publish only the pinned branch and pull request",
+    "resources": [],
+    "role": "publisher",
+    "scope": {
+      "external_mutations": [
+        "github-pull-request",
+        "github-repository-source"
+      ],
+      "network": "write",
+      "read_paths": [
+        ".agents",
+        ".concord/research",
+        ".github",
+        ".gitignore",
+        "AGENTS.md",
+        "CITATION.cff",
+        "LICENSE",
+        "NOTICE",
+        "README.md",
+        "README.ru.md",
+        "concord",
+        "docs",
+        "examples",
+        "framework",
+        "framework/concordloom/catalog.json",
+        "plugins",
+        "pyproject.toml",
+        "schemas",
+        "site",
+        "src",
+        "tests",
+        "tools"
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "github:yeet",
+    "skills": [],
+    "subagent_identities": [],
+    "subagent_intent": [],
+    "tool_capabilities": []
+  },
+  {
+    "loop_id": "accept-source-change",
+    "mcp_servers": [],
+    "model": "none",
+    "model_intent": "none",
+    "model_provider": "",
+    "node_id": "accept-source-change",
+    "reasoning": "deterministic",
+    "reasoning_intent": "merge only the independently reviewed candidate",
+    "resources": [],
+    "role": "operator",
+    "scope": {
+      "external_mutations": [
+        "github-pull-request-merge"
+      ],
+      "network": "write",
+      "read_paths": [
+        ".concord/runs",
+        "AGENTS.md",
+        "framework/concordloom/catalog.json",
+        "schemas"
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "record the exact operator merge decision",
+    "skills": [],
+    "subagent_identities": [],
+    "subagent_intent": [],
+    "tool_capabilities": []
+  },
+  {
+    "loop_id": "maintain-organization-presence",
+    "mcp_servers": [],
+    "model": "none",
+    "model_intent": "none",
+    "model_provider": "",
+    "node_id": "maintain-organization-presence",
+    "reasoning": "deterministic",
+    "reasoning_intent": "perform only the organization profile effect",
+    "resources": [],
+    "role": "publisher",
+    "scope": {
+      "external_mutations": [
+        "github-organization-profile"
+      ],
+      "network": "write",
+      "read_paths": [
+        "AGENTS.md",
+        "docs/assets/concordloom-mark.png",
+        "framework/concordloom/catalog.json",
+        "schemas",
+        "site"
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "publish the approved organization identity",
+    "skills": [],
+    "subagent_identities": [],
+    "subagent_intent": [],
+    "tool_capabilities": []
+  }
+]

@@ -1,0 +1,78 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:4ee3712856d197a76b205b32f36b6cfec84d2dcf04ebe209a23b2d392bde8d28",
+  "decision_authority_ref": "operator",
+  "decision_required": true,
+  "expected_effect": "Bind each targeted route to the least costly adequate exact model while materializing accepted tool capabilities, pinning the repository-owned design skill where it governs the route, and leaving undeclared MCP resources and subagents empty.",
+  "generated_at": "2026-07-28T00:00:00Z",
+  "id": "bind-token-aware-route-materialization",
+  "kind": "concordloom.evolution-proposal",
+  "operations": [
+    {
+      "op": "add",
+      "target_id": "concordloom-self-policy-v8",
+      "target_kind": "policy",
+      "value": {
+        "exact_models": [
+          "none",
+          "gpt-5.6-luna",
+          "gpt-5.6-terra",
+          "gpt-5.6-sol"
+        ],
+        "max_reasoning_default": false,
+        "unchanged_containment_edge_count": 57,
+        "unchanged_cycle_count": 58
+      }
+    }
+  ],
+  "proposed_by": {
+    "id": "example-orchestrator",
+    "kind": "orchestrator"
+  },
+  "risk": {
+    "failure_modes": [
+      "An underpowered route may need explicit escalation.",
+      "Declared route metadata may drift from actual execution."
+    ],
+    "level": "medium",
+    "rollback": "Reject v8 and keep the active v7 binding."
+  },
+  "schema_version": "0.1",
+  "signals": [
+    {
+      "base_binding_digest": "sha256:4ee3712856d197a76b205b32f36b6cfec84d2dcf04ebe209a23b2d392bde8d28",
+      "category": "coverage",
+      "id": "unbound-model-intent-cannot-control-token-spend",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 4,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "v7-route-audit"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:252b5ddcffd3a9b0140c8abecebaec03c2eaea7f5f6443c48b9794ba7f02ef3d",
+      "summary": "Execution profiles describe intent but do not bind an exact provider, model, reasoning level, or empty resource set."
+    },
+    {
+      "base_binding_digest": "sha256:4ee3712856d197a76b205b32f36b6cfec84d2dcf04ebe209a23b2d392bde8d28",
+      "category": "friction",
+      "id": "full-strength-model-default-wastes-bounded-run-budget",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 3,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "v7-cost-audit"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:3d5aefaa822c55e72c60225ee2bddaebcf48561db5bb2fdab256db3d4c7421ae",
+      "summary": "Bounded triage and deterministic publication do not need the same model class as protocol and successor review."
+    }
+  ],
+  "status": "proposed"
+}

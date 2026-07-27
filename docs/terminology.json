@@ -62,6 +62,92 @@
       "concept": "activation",
       "english": "activation",
       "russian": "включение новой версии"
+    },
+    {
+      "concept": "runner",
+      "english": "runner",
+      "russian": "исполнитель запусков",
+      "machine_spelling": "runner"
+    },
+    {
+      "concept": "run_card",
+      "english": "run card",
+      "russian": "карточка запуска"
+    },
+    {
+      "concept": "digest",
+      "english": "digest",
+      "russian": "хеш содержимого",
+      "machine_spelling": "digest"
+    },
+    {
+      "concept": "registry",
+      "english": "cycle registry",
+      "russian": "реестр циклов",
+      "machine_spelling": "registry"
+    },
+    {
+      "concept": "policy",
+      "english": "policy",
+      "russian": "политика полномочий и границ",
+      "machine_spelling": "policy"
+    },
+    {
+      "concept": "scope",
+      "english": "scope",
+      "russian": "разрешённая область действий",
+      "machine_spelling": "scope"
+    },
+    {
+      "concept": "runtime",
+      "english": "runtime",
+      "russian": "среда исполнения"
+    },
+    {
+      "concept": "workflow",
+      "english": "workflow",
+      "russian": "процесс выполнения"
+    },
+    {
+      "concept": "skill",
+      "english": "skill",
+      "russian": "инструкция агента",
+      "machine_spelling": "skill"
+    },
+    {
+      "concept": "observe_phase",
+      "english": "observe",
+      "russian": "наблюдать"
+    },
+    {
+      "concept": "negotiate_phase",
+      "english": "negotiate",
+      "russian": "согласовать"
+    },
+    {
+      "concept": "bind_phase",
+      "english": "bind",
+      "russian": "зафиксировать правила"
+    },
+    {
+      "concept": "execute_phase",
+      "english": "execute",
+      "russian": "выполнить"
+    },
+    {
+      "concept": "verify_phase",
+      "english": "verify",
+      "russian": "проверить"
+    },
+    {
+      "concept": "publish_phase",
+      "english": "publish",
+      "russian": "опубликовать"
+    },
+    {
+      "concept": "evolve_phase",
+      "english": "evolve",
+      "russian": "предложить изменение системы"
     }
   ]
 }

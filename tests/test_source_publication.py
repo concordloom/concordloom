@@ -39,7 +39,7 @@ class SourcePublicationEvolutionTests(unittest.TestCase):
         self.v6_registry = load(V6 / "cycle-registry.json")
         self.v6_proposal = load(V6 / "binding-proposal.json")
 
-    def test_proposal_did_not_self_activate_and_exact_successor_is_active(self) -> None:
+    def test_proposal_did_not_self_activate_and_exact_successor_was_activated(self) -> None:
         self.assertEqual(
             EXPECTED_PROPOSAL_DIGEST,
             self.v6_proposal["proposal_digest"],
@@ -54,8 +54,15 @@ class SourcePublicationEvolutionTests(unittest.TestCase):
         self.assertFalse(evolution["activation_allowed"])
         binding = load(V6 / "binding.json")
         catalog = load(ROOT / "framework" / "concordloom" / "catalog.json")
+        validate_catalog(catalog, artifact_root=ROOT)
+        v6_entries = [
+            entry
+            for entry in catalog["entries"]
+            if entry["binding_digest"] == binding["binding_digest"]
+        ]
+        self.assertEqual(1, len(v6_entries))
         self.assertEqual(
-            binding["binding_digest"],
+            catalog["entries"][-1]["binding_digest"],
             catalog["active_binding_digest"],
         )
         self.assertEqual(
@@ -113,6 +120,7 @@ class SourcePublicationEvolutionTests(unittest.TestCase):
                 run_id="v6-route-contract",
                 root_loop_id="steward-concordloom",
                 candidate_author_principal_ids=["example-executor"],
+                portfolio=True,
             )
 
         routes = {route["loop_id"]: route for route in card["planned_route"]}

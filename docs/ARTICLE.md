@@ -14,8 +14,13 @@ policy process contains consultation and ratification. A consequential system
 of work is often a cycle composed of cycles.
 
 Nesting and iteration are established ideas. The open engineering problem is
-their governed composition. A loop needs a typed contract, terminal outcomes,
-bounded feedback, explicit evidence, named authority, and a precise rule for
+their governed composition. In ordinary terms, every loop must say what it
+receives, what counts as finished, what proves the result, who may decide, and
+when retrying must stop. A parent must not mistake a successful child task for
+success of the whole system.
+
+Formally, a loop needs a typed contract, terminal outcomes, bounded feedback,
+explicit evidence, named authority, and a precise rule for
 how a child result affects its parent. The system needs a finite containment
 graph separate from each loop's local control-flow graph. Its records must also
 keep observed, proposed, accepted, planned, actual, and verified facts distinct.
@@ -96,16 +101,17 @@ defines outcome-oriented security practices that organizations integrate into
 their chosen life cycles. Security crosses requirements, design,
 implementation, verification, release, and response.
 
-These precedents support a narrow claim:
+The claim is deliberately narrow:
 
-> The contribution is not nested loops. It is a portable boundary for governing
-> their composition, evidence, authority, execution facts, and evolution as a
-> versioned artifact chain.
+> Concord Loom does not claim to invent nested loops. Its contribution is one
+> inspectable contract for their boundaries: which loops contain which work,
+> what evidence supports a result, who may make a decision, what actually ran,
+> and how a new version of the rules is proposed and activated.
 
-“Executable” does not mean hiding arbitrary code in a diagram. It means that a
-validator can reject invalid declarative structures, an adapter can execute
-within a bound contract, and a consequential claim can point to exact candidate,
-policy, attempt, and evidence identities.
+Here, “executable” does not mean hiding arbitrary code in a diagram. A validator
+can reject an invalid declaration. An adapter can run work only within the
+accepted contract. A consequential claim must identify the exact result,
+policy, attempt, and evidence that support it.
 
 ## One grammar, many bindings
 
@@ -403,33 +409,39 @@ release authority.
 
 ## Concord Loom as its own worked binding
 
-Concord Loom can govern changes to Concord Loom without defining software
-delivery as the framework's boundary. Its accepted self-binding uses one root,
-`concord-change`, with domain-neutral child loops:
+Concord Loom governs its own development without defining software delivery as
+the framework's boundary. The active configuration has one root,
+`steward-concordloom`, and ten responsibility areas:
 
 ```text
-concord-change
-├── observe
-├── negotiate
-├── bind
-├── execute
-├── verify
-├── publish
-└── evolve
+steward-concordloom
+├── product-direction
+├── research-theory
+├── protocol-design
+├── runtime-tooling
+├── trust-assurance
+├── bindings-adapters
+├── knowledge-experience
+├── release-distribution
+├── adoption-feedback
+└── system-evolution
 ```
 
-This binding is evidence that the general grammar can describe the repository's
-own change path. It is not universal intent inferred from repository history:
-an operator corrected and accepted that intent, then separately accepted the
-loop design and activated the exact binding.
+Those areas contain 48 narrower cycles, for 58 cycles in total. They cover
+product decisions, theory, protocol, implementation, independent review,
+adapters, documentation, localization, the site, releases, adoption, and the
+full evolution circuit. The seven phases—observe, negotiate, bind, execute,
+verify, publish, and evolve—remain the grammar of a governed run. They are not
+the repository's top-level department chart.
 
-Self-application does not give the framework special authority. The active
-binding scopes execution, independent verification remains separate, publish
-performs only an explicitly authorized effect, and evolution emits a successor
-proposal with `activation_allowed: false`. The current binding decides who may
-activate the next one.
+This configuration was accepted by an operator; repository history did not
+promote itself into intent. Self-application also grants no special authority.
+The active configuration limits execution, keeps independent review separate,
+and reserves external effects for publisher or operator roles. Evolution
+produces a proposal with `activation_allowed: false`; a separate operator
+decision activates exact successor bytes.
 
-The self-binding is also not mandatory for adopters. A laboratory, studio,
+These self-governance rules are not mandatory for adopters. A laboratory, studio,
 operations team, public body, or software project defines its own policy,
 artifacts, identities, evidence, and loop topology.
 
@@ -484,7 +496,7 @@ permission to remove the gate that reports the friction. Evolution may propose
 new budgets, evidence, authority, or loop boundaries. Existing authority
 decides whether to accept the exact successor bytes.
 
-## Related work and explicit non-claims
+## Related work and limits of the claim
 
 Concord Loom composes established ideas:
 

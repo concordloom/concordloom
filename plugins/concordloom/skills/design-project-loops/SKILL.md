@@ -12,6 +12,8 @@ authority, decision, scope, candidate identity, or evidence is absent.
 Read [artifact-contract.md](references/artifact-contract.md) before accepting a
 graph, compiling a binding, recording evidence, or proposing evolution. Read
 [commands.md](references/commands.md) before invoking the v0.1 CLI.
+Read [model-routing.md](references/model-routing.md) before proposing the first
+binding, creating a run card, or changing a route through evolution.
 
 ## 1. Establish the boundary
 
@@ -108,6 +110,11 @@ design as another explicit delta before acceptance. Distinguish:
 
 Require every loop to state inputs, outputs, states, transitions, child
 contracts, evidence, authority, budgets, escalation, and terminal outcomes.
+Assign each model-assisted loop an exact provider, model, reasoning effort,
+skills, tools, and declared MCP resources. Use no model for deterministic or
+human-authority work. Start with the least costly eligible route and record the
+reason for every higher tier. Treat the route as proposed until the operator
+accepts the binding.
 Require a separate operator decision over the proposed design digest.
 
 Run the launcher's `compile` command only with the accepted graph, the exact
@@ -139,6 +146,9 @@ external mutations, elapsed time, cost, policy digest, candidate digest, and
 terminal result. Attach structured, candidate-bound evidence and verify its
 payload against real bytes through the declared payload root. Keep
 `planned`, `actual`, and `verified` separate and display drift explicitly.
+Reject undeclared model substitutions and reasoning increases. Escalate to a
+more capable or more expensive route only through the bound budget and record
+the failed or insufficient lower-tier attempt.
 
 Do not infer parent acceptance from child success. Do not let an author certify
 an independent gate. Do not call a run complete while any required gate,
@@ -150,6 +160,12 @@ Append content-addressed friction, drift, cadence, and failure signals. Run the
 launcher's `evolve` command only to produce a proposed diff against an exact base
 binding. Show contributing signals, graph operations, and stale-precondition
 checks.
+
+Aggregate candidate-bound route telemetry: input and output tokens, reasoning
+effort, latency, cost, retries, drift, terminal result, reviewer findings, and
+escalations. Propose the smallest route change that meets the evidence
+contract. Do not promote a model from preference or one successful run. Do not
+demote it after a failure caused by missing tools, bad scope, or bad input.
 
 Never activate an evolution proposal automatically. Require an explicit
 decision from authority bound by the base version, then compile and activate a
@@ -168,6 +184,9 @@ Stop with a concrete missing requirement instead of improvising when:
 - a path is outside the run-card scope;
 - containment, budget, escalation, or independence invariants fail;
 - effective-route or candidate-bound evidence is incomplete;
+- a route names an unavailable model, undeclared skill, or unbound MCP
+  resource;
+- a more expensive route lacks a bound reason, budget, or comparison evidence;
 - an evolution proposal is stale or lacks separate acceptance;
 - release readiness is mistaken for publication authority.
 
