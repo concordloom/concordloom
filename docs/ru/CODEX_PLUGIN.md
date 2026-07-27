@@ -17,7 +17,7 @@ Concord Loom управляется отдельно принятой привя
 Закрепите Marketplace на теге релиза, затем установите плагин:
 
 ```bash
-codex plugin marketplace add PullDakar/concordloom --ref v0.1.0
+codex plugin marketplace add concordloom/concordloom --ref v0.1.0
 codex plugin add concordloom@concordloom
 ```
 

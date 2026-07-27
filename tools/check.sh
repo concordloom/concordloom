@@ -64,6 +64,17 @@ PYTHONPATH=src python3 -m concordloom validate \
   --policy framework/concordloom/v4/policy.json \
   --base-binding framework/concordloom/v4/binding.json
 PYTHONPATH=src python3 -m concordloom validate \
+  --input framework/concordloom/v6/cycle-registry.json \
+  --graph framework/concordloom/v3/accepted-project-graph.json \
+  --decisions framework/concordloom/v3/decision-log.json \
+  --proposal framework/concordloom/v6/loop-design-proposal.json \
+  --design framework/concordloom/v6/loop-design.json \
+  --policy framework/concordloom/v6/policy.json
+PYTHONPATH=src python3 -m concordloom validate \
+  --input framework/concordloom/v6/evolution-proposal.json \
+  --policy framework/concordloom/v5/policy.json \
+  --base-binding framework/concordloom/v5/binding.json
+PYTHONPATH=src python3 -m concordloom validate \
   --input framework/concordloom/catalog.json \
   --artifact-root .
 PYTHONPATH=src python3 -m concordloom atlas \

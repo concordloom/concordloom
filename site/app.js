@@ -18,6 +18,11 @@ const copy = {
     input: "Input",
     output: "Output",
     source: "Source",
+    technicalDetails: "Technical details",
+    executionPlan: "How this cycle is planned to run",
+    profile: "Execution profile",
+    claims: "Required checks",
+    artifacts: "Artifacts",
     notDeclared: "Not declared",
     noSkills: "No required skill",
     bindingPlan: "Accepted binding plan",
@@ -26,6 +31,8 @@ const copy = {
     back: "Up one level",
     phaseBoundary: "Evolve stops here. Activation is a separate operator act.",
     docs: "Open document",
+    revision: "Revision",
+    acceptedSource: "Accepted development rules",
   },
   ru: {
     switchLanguage: "Переключить на английский",
@@ -37,23 +44,30 @@ const copy = {
     purpose: "Задача",
     responsibility: "Ответственный",
     contract: "Результат цикла",
-    resources: "Запланированные ресурсы",
+    resources: "Как планируется выполнять цикл",
     model: "Требования к модели",
-    skills: "Скиллы",
-    mcp: "MCP",
+    skills: "Инструкции агента",
+    mcp: "Подключения MCP",
     tools: "Инструменты",
     evidence: "Проверка",
     input: "Вход",
     output: "Выход",
     source: "Источник",
-    notDeclared: "Не задан",
-    noSkills: "Обязательный скилл не задан",
-    bindingPlan: "Принятый план",
-    actualNote: "Точная модель, скиллы и инструменты становятся фактом только после записи запуска.",
+    technicalDetails: "Технические данные",
+    executionPlan: "Как планируется выполнять этот цикл",
+    profile: "Профиль исполнения",
+    claims: "Обязательные проверки",
+    artifacts: "Артефакты",
+    notDeclared: "Не используется",
+    noSkills: "Специальная инструкция не требуется",
+    bindingPlan: "Утверждённый план",
+    actualNote: "Здесь показан план. Фактическая модель и инструменты появятся после записанного запуска.",
     open: "Открыть цикл",
     back: "На уровень выше",
-    phaseBoundary: "На этом Evolve заканчивается. Включение новой версии является отдельным решением оператора.",
+    phaseBoundary: "Предложение готово. Включение новой версии требует отдельного решения оператора.",
     docs: "Открыть документ",
+    revision: "Редакция",
+    acceptedSource: "Утверждённые правила разработки",
   },
 };
 
@@ -119,6 +133,15 @@ function applyLanguage(nextLanguage) {
   document.querySelectorAll("[data-en][data-ru]").forEach((element) => {
     element.textContent = element.dataset[language];
   });
+  document.querySelectorAll("[data-en-content][data-ru-content]").forEach((element) => {
+    element.setAttribute("content", element.dataset[`${language}Content`]);
+  });
+  document.querySelectorAll("[data-en-aria-label][data-ru-aria-label]").forEach((element) => {
+    element.setAttribute("aria-label", element.dataset[`${language}AriaLabel`]);
+  });
+  document.querySelectorAll("[data-en-alt][data-ru-alt]").forEach((element) => {
+    element.setAttribute("alt", element.dataset[`${language}Alt`]);
+  });
   const switcher = document.querySelector(".language-switch");
   switcher.querySelector("[data-lang-label]").textContent = language === "en" ? "RU" : "EN";
   switcher.setAttribute("aria-label", text("switchLanguage"));
@@ -126,6 +149,12 @@ function applyLanguage(nextLanguage) {
   renderReading();
   renderDocs();
   renderAtlas();
+}
+
+function persistLanguageInUrl() {
+  const url = new URL(location.href);
+  url.searchParams.set("lang", language);
+  history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
 }
 
 function renderGrammar() {
@@ -186,7 +215,6 @@ function renderDocs() {
     const title = language === "en" ? documentData.enTitle : documentData.ruTitle;
     const url = language === "en" ? documentData.enUrl : documentData.ruUrl;
     article.innerHTML = `
-      <span>${documentData.id}</span>
       <h2>${title}</h2>
       <a href="${url}">${text("docs")} ↗</a>
     `;
@@ -242,32 +270,40 @@ function renderInspector(loop) {
     ? profile.skills.map((skill) => `<li><code>${skill}</code></li>`).join("")
     : `<li>${text("noSkills")}</li>`;
   const tools = profile.tools.map((tool) => `<li><code>${tool}</code></li>`).join("");
+  const technical = `
+    <details class="technical-details">
+      <summary>${text("technicalDetails")}</summary>
+      <dl class="contract-grid">
+        <div><dt>ID</dt><dd><code>${loop.id}</code></dd></div>
+        <div><dt>${text("profile")}</dt><dd><code>${loop.profile}</code></dd></div>
+        <div><dt>${text("artifacts")}</dt><dd>${loop.artifacts.map((item) => `<code>${item}</code>`).join(" ")}</dd></div>
+        <div><dt>${text("claims")}</dt><dd>${loop.requiredClaims.map((item) => `<code>${item}</code>`).join(" ")}</dd></div>
+        <div><dt>${text("source")}</dt><dd>${text("acceptedSource")}</dd></div>
+      </dl>
+    </details>
+  `;
   inspector.innerHTML = `
     <p class="section-label">${text("current")}</p>
     <h2>${loopCopy(loop).label}</h2>
-    <code class="loop-id">${loop.id}</code>
     <p class="inspector-purpose">${loopCopy(loop).purpose}</p>
     <dl class="contract-grid">
       <div><dt>${text("responsibility")}</dt><dd>${loop.role[language]}</dd></div>
       <div><dt>${text("input")}</dt><dd>${loop.contract[language].input}</dd></div>
       <div><dt>${text("output")}</dt><dd>${loop.contract[language].output}</dd></div>
-      <div><dt>${language === "en" ? "Artifacts" : "Артефакты"}</dt><dd>${loop.artifacts.map((item) => `<code>${item}</code>`).join(" ")}</dd></div>
-      <div><dt>${text("evidence")}</dt><dd>${loop.requiredClaims.join(", ")}</dd></div>
     </dl>
     <section class="resource-panel">
       <div>
-        <p class="section-label">${text("resources")} / ${text("bindingPlan")}</p>
-        <strong>${loop.profile}</strong>
+        <p class="section-label">${text("executionPlan")}</p>
       </div>
       <dl>
         <div><dt>${text("model")}</dt><dd>${profile.model_intent[language]}</dd></div>
         <div><dt>${text("skills")}</dt><dd><ul>${skills}</ul></dd></div>
         <div><dt>${text("mcp")}</dt><dd>${profile.mcp.status === "not-declared" ? text("notDeclared") : profile.mcp.status}</dd></div>
         <div><dt>${text("tools")}</dt><dd><ul>${tools}</ul></dd></div>
-        <div><dt>${text("source")}</dt><dd>${profile.truth_layer} / active binding</dd></div>
       </dl>
       <p>${text("actualNote")}</p>
     </section>
+    ${technical}
     <section class="inner-grammar">
       <p class="section-label">${language === "en" ? "SHARED INNER RUN" : "ОБЩАЯ СХЕМА ЗАПУСКА"}</p>
       <ol>${atlasData.sharedRunGrammar.map((phase) => `<li><span>${phaseCopy[phase.id].code}</span>${phase.copy[language].label}</li>`).join("")}</ol>
@@ -281,12 +317,14 @@ function renderAtlas() {
   const requested = currentRoute().view === "atlas" ? currentRoute().detail : null;
   selectedLoopId = atlasLoop(requested) ? requested : (selectedLoopId && atlasLoop(selectedLoopId) ? selectedLoopId : rootId);
   const loop = atlasLoop(selectedLoopId);
-  document.querySelector("[data-atlas-binding]").textContent = atlasData.binding.id;
+  const revision = atlasData.binding.id.match(/-v(\d+)$/)?.[1] || "?";
+  document.querySelector("[data-product-release]").textContent = atlasData.product.release;
+  document.querySelector("[data-atlas-binding]").textContent = `${text("revision")} ${revision}`;
   document.querySelector("[data-atlas-binding]").title = atlasData.binding.digest;
   document.querySelector("[data-atlas-root]").textContent = loopCopy(atlasLoop(rootId)).label;
   document.querySelector("[data-atlas-count]").textContent = atlasData.loops.length;
   document.querySelector("[data-atlas-provenance]").textContent =
-    `${language === "en" ? "accepted binding" : "принятая версия"} / ${atlasData.binding.digest.slice(0, 19)}...`;
+    `${text("acceptedSource")} / ${atlasData.binding.digest.slice(0, 19)}…`;
 
   renderBreadcrumbs(loop);
   renderInspector(loop);
@@ -369,6 +407,7 @@ function route() {
 
 document.querySelector(".language-switch").addEventListener("click", () => {
   applyLanguage(language === "en" ? "ru" : "en");
+  persistLanguageInUrl();
 });
 
 document.querySelector(".menu-switch").addEventListener("click", (event) => {

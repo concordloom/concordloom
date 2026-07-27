@@ -15,7 +15,7 @@ from typing import Sequence
 
 RELEASE_VERSION = "0.1.0"
 RELEASE_ARCHIVE = (
-    "https://github.com/PullDakar/concordloom/"
+    "https://github.com/concordloom/concordloom/"
     f"archive/refs/tags/v{RELEASE_VERSION}.zip"
 )
 

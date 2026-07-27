@@ -1,0 +1,116 @@
+[
+  {
+    "loop_id": "steward-concordloom",
+    "model_intent": "none",
+    "node_id": "steward-concordloom",
+    "reasoning_intent": "verify the publisher handoff",
+    "role": "executor",
+    "scope": {
+      "external_mutations": [],
+      "network": "none",
+      "read_paths": [
+        "."
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "coordinate exact publication without external effects",
+    "subagent_intent": []
+  },
+  {
+    "loop_id": "publish-site",
+    "model_intent": "none",
+    "node_id": "publish-site",
+    "reasoning_intent": "perform only the Pages effect",
+    "role": "publisher",
+    "scope": {
+      "external_mutations": [
+        "github-pages"
+      ],
+      "network": "write",
+      "read_paths": [
+        "."
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "publish the pinned static site",
+    "subagent_intent": []
+  },
+  {
+    "loop_id": "maintain-repository-presence",
+    "model_intent": "none",
+    "node_id": "maintain-repository-presence",
+    "reasoning_intent": "perform only the repository presence effects",
+    "role": "publisher",
+    "scope": {
+      "external_mutations": [
+        "github-repository-homepage",
+        "github-repository-social-preview"
+      ],
+      "network": "write",
+      "read_paths": [
+        "."
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "publish the pinned repository brand metadata",
+    "subagent_intent": []
+  },
+  {
+    "loop_id": "publish-source-change",
+    "model_intent": "none",
+    "node_id": "publish-source-change",
+    "reasoning_intent": "publish only the pinned branch and pull request",
+    "role": "publisher",
+    "scope": {
+      "external_mutations": [
+        "github-pull-request",
+        "github-repository-source"
+      ],
+      "network": "write",
+      "read_paths": [
+        "."
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "github:yeet",
+    "subagent_intent": []
+  },
+  {
+    "loop_id": "accept-source-change",
+    "model_intent": "none",
+    "node_id": "accept-source-change",
+    "reasoning_intent": "merge only the independently reviewed candidate",
+    "role": "operator",
+    "scope": {
+      "external_mutations": [
+        "github-pull-request-merge"
+      ],
+      "network": "write",
+      "read_paths": [
+        "."
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "record exact operator merge decision",
+    "subagent_intent": []
+  },
+  {
+    "loop_id": "maintain-organization-presence",
+    "model_intent": "none",
+    "node_id": "maintain-organization-presence",
+    "reasoning_intent": "perform only the organization profile effect",
+    "role": "publisher",
+    "scope": {
+      "external_mutations": [
+        "github-organization-profile"
+      ],
+      "network": "write",
+      "read_paths": [
+        "."
+      ],
+      "write_paths": []
+    },
+    "skill_intent": "publish the approved organization identity",
+    "subagent_intent": []
+  }
+]

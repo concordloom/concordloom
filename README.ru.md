@@ -14,8 +14,8 @@
 
 ## Системы, которые умеют менять себя — но не могут сами себе это разрешить.
 
-[![CI](https://github.com/PullDakar/concordloom/actions/workflows/ci.yml/badge.svg)](https://github.com/PullDakar/concordloom/actions/workflows/ci.yml)
-[![Pages](https://github.com/PullDakar/concordloom/actions/workflows/pages.yml/badge.svg)](https://github.com/PullDakar/concordloom/actions/workflows/pages.yml)
+[![CI](https://github.com/concordloom/concordloom/actions/workflows/ci.yml/badge.svg)](https://github.com/concordloom/concordloom/actions/workflows/ci.yml)
+[![Pages](https://github.com/concordloom/concordloom/actions/workflows/pages.yml/badge.svg)](https://github.com/concordloom/concordloom/actions/workflows/pages.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-c8ff00.svg)](LICENSE)
 
 **Concord Loom помогает описать сложную работу как систему вложенных циклов.
@@ -74,7 +74,7 @@ Concord Loom разделяет две структуры:
 
 ```bash
 python3 -m pip install \
-  "concordloom @ git+https://github.com/PullDakar/concordloom@v0.1.0"
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.0"
 
 mkdir -p .concord/discovery
 concordloom inspect . \
@@ -88,7 +88,7 @@ concordloom questions \
 Значимые решения должен принять оператор.
 
 Продолжите по [руководству быстрого старта](docs/ru/QUICKSTART.md) или откройте
-[интерактивный сайт Concord Loom](https://pulldakar.github.io/concordloom/).
+[интерактивный сайт Concord Loom](https://concordloom.github.io/concordloom/).
 
 ## Цепочка артефактов
 
@@ -103,9 +103,9 @@ concordloom questions \
   ↓
 реестр циклов + предложение конфигурации ──→ отдельное включение конфигурации
   ↓
-версия результата + запуск + данные проверки ──→ генерируемый Atlas
+версия результата + запуск + данные проверки ──→ генерируемый Атлас
   ↓
-повторяющиеся сигналы ──→ successor proposal ──→ отдельное решение оператора
+повторяющиеся сигналы ──→ предложение новой версии ──→ отдельное решение оператора
 ```
 
 Каждая стрелка создаёт новый артефакт. Поздние стадии ссылаются на точные
@@ -137,10 +137,10 @@ concordloom questions \
 | `propose` | проверяемое предложение дизайна |
 | `compile` | реестр циклов и предложение конфигурации |
 | `activate` | конфигурация, принятая отдельным решением |
-| `catalog` | append-only цепочка активных bindings |
+| `catalog` | неизменяемая цепочка активных конфигураций |
 | `candidate` | описание проверяемой версии результата с точным хешем |
 | `run` | управляемый жизненный цикл запуска |
-| `atlas` | детерминированная offline-проекция |
+| `atlas` | детерминированное автономное представление |
 | `evolve` | предложение преемника — никогда не активация |
 | `validate` | проверка схем и связей между артефактами |
 
@@ -158,7 +158,7 @@ concordloom questions \
 | [Codex plugin](docs/CODEX_PLUGIN.md) | [Плагин Codex](docs/ru/CODEX_PLUGIN.md) |
 | [Release verification](docs/RELEASE.md) | [Проверка релиза](docs/ru/RELEASE.md) |
 | [Cycles of Cycles](docs/ARTICLE.md) | [Циклы циклов](docs/ru/ARTICLE.md) |
-| [Atlas guide](docs/ATLAS.md) | [Руководство Atlas](docs/ru/ATLAS.md) |
+| [Atlas guide](docs/ATLAS.md) | [Руководство по Атласу](docs/ru/ATLAS.md) |
 | [Writing standard](docs/WRITING.md) | [Стандарт текста](docs/ru/WRITING.md) |
 | [Product decisions](docs/DECISIONS.md) | [Решения по продукту](docs/ru/DECISIONS.md) |
 | [Observed landscape](docs/research/OBSERVED_LANDSCAPE.md) | [Наблюдаемый ландшафт](docs/ru/research/OBSERVED_LANDSCAPE.md) |
@@ -166,7 +166,7 @@ concordloom questions \
 ## Плагин Codex
 
 ```bash
-codex plugin marketplace add PullDakar/concordloom --ref v0.1.0
+codex plugin marketplace add concordloom/concordloom --ref v0.1.0
 codex plugin add concordloom@concordloom
 ```
 
@@ -176,8 +176,9 @@ codex plugin add concordloom@concordloom
 
 ## Граница доверия
 
-Concord Loom проверяет декларативные артефакты, инварианты графов, scopes,
-контракты доказательств и разделение полномочий. Он не является OS sandbox,
+Concord Loom проверяет декларативные артефакты, инварианты графов, области
+разрешённых действий, контракты доказательств и разделение полномочий. Он не
+является средством изоляции процессов операционной системы,
 провайдером учётных данных, долговечным движком процессов или сервисом
 криптографической идентификации. Системы с высокими последствиями должны
 добавить платформенное принуждение и подписанные подтверждения согласно своей

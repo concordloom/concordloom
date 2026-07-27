@@ -112,7 +112,7 @@ class CompleteDevelopmentSystemTests(unittest.TestCase):
         )
         validate_registry(self.registry, self.policy)
 
-    def test_catalog_head_is_v5(self) -> None:
+    def test_v5_remains_a_valid_catalog_predecessor(self) -> None:
         catalog = json.loads(
             (ROOT / "framework" / "concordloom" / "catalog.json").read_text(
                 encoding="utf-8"
@@ -120,7 +120,14 @@ class CompleteDevelopmentSystemTests(unittest.TestCase):
         )
         validate_catalog(catalog, artifact_root=ROOT)
         binding = load("binding.json")
-        self.assertEqual(binding["binding_digest"], catalog["active_binding_digest"])
+        self.assertIn(
+            binding["binding_digest"],
+            {entry["binding_digest"] for entry in catalog["entries"]},
+        )
+        self.assertNotEqual(
+            binding["binding_digest"],
+            catalog["active_binding_digest"],
+        )
         self.assertEqual(
             "activate-concordloom-self-binding-v5",
             binding["accepted_by"]["decision_id"],

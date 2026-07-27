@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 import shutil
 import sys
+import tomllib
 
 from concordloom.canonical import canonical_bytes, load, save
 
@@ -34,7 +35,7 @@ PUBLIC_DOCS = [
     ("TRUST_MODEL", "Trust model", "Модель доверия"),
     ("QUICKSTART", "Quickstart", "Быстрый старт"),
     ("ARTICLE", "Theory paper", "Теоретическая статья"),
-    ("ATLAS", "Atlas", "Atlas"),
+    ("ATLAS", "Atlas", "Атлас"),
     ("CODEX_PLUGIN", "Codex plugin", "Плагин Codex"),
     ("DECISIONS", "Decisions", "Решения"),
     ("RELEASE", "Release", "Релиз"),
@@ -69,7 +70,7 @@ def inline_markup(value: str, source_path: Path | None = None) -> str:
             except ValueError:
                 return label
             href = (
-                "https://github.com/PullDakar/concordloom/blob/main/"
+                "https://github.com/concordloom/concordloom/blob/main/"
                 + html.escape(relative.as_posix(), quote=True)
             )
             return f'<a href="{href}" rel="noreferrer">{label}</a>'
@@ -236,10 +237,10 @@ def site_content() -> dict:
                 "enTitle": en_title,
                 "ruTitle": ru_title,
                 "enUrl": (
-                    f"https://github.com/PullDakar/concordloom/blob/main/docs/{stem}.md"
+                    f"https://github.com/concordloom/concordloom/blob/main/docs/{stem}.md"
                 ),
                 "ruUrl": (
-                    "https://github.com/PullDakar/concordloom/blob/main/"
+                    "https://github.com/concordloom/concordloom/blob/main/"
                     f"docs/ru/{stem}.md"
                 ),
             }
@@ -250,11 +251,11 @@ def site_content() -> dict:
             "enTitle": "Observed landscape",
             "ruTitle": "Обзор ландшафта",
             "enUrl": (
-                "https://github.com/PullDakar/concordloom/blob/main/"
+                "https://github.com/concordloom/concordloom/blob/main/"
                 "docs/research/OBSERVED_LANDSCAPE.md"
             ),
             "ruUrl": (
-                "https://github.com/PullDakar/concordloom/blob/main/"
+                "https://github.com/concordloom/concordloom/blob/main/"
                 "docs/ru/research/OBSERVED_LANDSCAPE.md"
             ),
         }
@@ -309,9 +310,14 @@ def atlas_projection(binding: dict, registry: dict, model: dict) -> dict:
                 "independentReview": "reviewer_capability" in contract,
             }
         )
+    package = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     return {
         "kind": "concordloom.atlas-projection",
         "schemaVersion": "0.2",
+        "product": {
+            "name": "Concord Loom",
+            "release": package["project"]["version"],
+        },
         "binding": {
             "id": binding["id"],
             "digest": binding["binding_digest"],

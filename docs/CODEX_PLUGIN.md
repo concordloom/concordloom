@@ -16,7 +16,7 @@ observe, negotiate, bind, execute, verify, publish, and evolve loops.
 Pin the marketplace to the release tag, then install the plugin:
 
 ```bash
-codex plugin marketplace add PullDakar/concordloom --ref v0.1.0
+codex plugin marketplace add concordloom/concordloom --ref v0.1.0
 codex plugin add concordloom@concordloom
 ```
 
