@@ -5,6 +5,12 @@ Date: 2026-07-24
 This note records the evidence used to set Concord Loom's v0.1 boundary. It is
 an observation, not a claim that inferred project intent is correct.
 
+The observations and dated name check below remain historical evidence. A
+later operator decision on 2026-07-27 corrected the product interpretation:
+Concord Loom is a universal framework for bounded systems of loops, while the
+generic SDLC is one example binding. That accepted decision is governance
+evidence, not a retroactive change to what was observed on 2026-07-24.
+
 ## What existing tools already do
 
 The problem has strong neighboring solutions:
@@ -25,6 +31,12 @@ The problem has strong neighboring solutions:
 
 Concord Loom must not compete by inventing another universal parser, graph
 database, or durable workflow runtime. Those are adapters or execution targets.
+
+Nor does universal positioning make a game engine, hosting platform, model
+provider, or repository layout mandatory. The reusable contribution is the
+finite containment, bounded feedback, explicit authority, candidate binding,
+and evidence chain; domain-specific observation and execution stay behind
+adapters.
 
 ## The missing governed chain
 
@@ -57,6 +69,11 @@ versioned artifact.
 - Keep the first release single-repository and local-first. Exclude hosted
   services, multi-repository identity, and arbitrary model-provider APIs.
 
+These are v0.1 extraction decisions, not permanent claims that every binding
+must be repository-shaped. The accepted self-binding demonstrates the generic
+grammar with observe, negotiate, bind, execute, verify, publish, and evolve
+loops while preserving the generic SDLC chain as predecessor evidence.
+
 ## Risks found before implementation
 
 - A containment hierarchy is not enough to model a cycle. The schema needs an
@@ -69,6 +86,19 @@ versioned artifact.
   relationship, not proof of desired architecture.
 - Generated HTML can drift unless generation and validation share canonical
   input.
+- A framework can deadlock its own evolution when the active binding cannot
+  write successor artifacts or authorize an external publication effect. The
+  lawful bridge is a proposal under the predecessor, a separate capable
+  decision, and a separately activated successor—not self-authorization.
+- A public website can blur planned, accepted, deployed, and verified facts.
+  Pages build evidence and live deployment evidence must remain distinct.
+
+## Public communication surfaces
+
+The bilingual Pages candidate and its hero/social artwork explain the accepted
+model to people. They are not new product evidence and do not alter the
+artifact chain. GitHub Pages is one scoped publishing adapter; it does not make
+GitHub hosting part of the portable core.
 
 ## Brand observation
 
@@ -76,4 +106,3 @@ versioned artifact.
 decisions, and nested loops. Exact-name checks found no obvious GitHub, PyPI, or
 npm collision on 2026-07-24. This is an engineering name check, not legal
 clearance.
-

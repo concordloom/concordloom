@@ -1,0 +1,1470 @@
+{
+  "containment_graph": {
+    "edges": [
+      {
+        "at_state": "invoke-concord-change-observe",
+        "child_loop_id": "observe",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": []
+          }
+        },
+        "id": "concord-change-observe",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "concord-change",
+        "success_state": "invoke-concord-change-negotiate",
+        "timeout_seconds": 3600
+      },
+      {
+        "at_state": "invoke-concord-change-negotiate",
+        "child_loop_id": "negotiate",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": []
+          }
+        },
+        "id": "concord-change-negotiate",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "concord-change",
+        "success_state": "invoke-concord-change-bind",
+        "timeout_seconds": 3600
+      },
+      {
+        "at_state": "invoke-concord-change-bind",
+        "child_loop_id": "bind",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": []
+          }
+        },
+        "id": "concord-change-bind",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "concord-change",
+        "success_state": "invoke-concord-change-execute",
+        "timeout_seconds": 3600
+      },
+      {
+        "at_state": "invoke-concord-change-execute",
+        "child_loop_id": "execute",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": [
+              ".github",
+              "README.md",
+              "README.ru.md",
+              "docs",
+              "framework",
+              "plugins",
+              "schemas",
+              "site",
+              "src",
+              "tests",
+              "tools"
+            ]
+          }
+        },
+        "id": "concord-change-execute",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "concord-change",
+        "success_state": "invoke-concord-change-verify",
+        "timeout_seconds": 3600
+      },
+      {
+        "at_state": "invoke-concord-change-verify",
+        "child_loop_id": "verify",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence",
+            "review-candidate"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": []
+          }
+        },
+        "id": "concord-change-verify",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "concord-change",
+        "success_state": "invoke-concord-change-publish",
+        "timeout_seconds": 3600
+      },
+      {
+        "at_state": "invoke-concord-change-publish",
+        "child_loop_id": "publish",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence"
+          ],
+          "scope": {
+            "external_mutations": [
+              "github-pages",
+              "github-repository-social-preview"
+            ],
+            "network": "write",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": []
+          }
+        },
+        "id": "concord-change-publish",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "concord-change",
+        "success_state": "invoke-concord-change-evolve",
+        "timeout_seconds": 3600
+      },
+      {
+        "at_state": "invoke-concord-change-evolve",
+        "child_loop_id": "evolve",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "."
+            ],
+            "write_paths": []
+          }
+        },
+        "id": "concord-change-evolve",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "concord-change",
+        "success_state": "work",
+        "timeout_seconds": 3600
+      }
+    ],
+    "roots": [
+      "concord-change"
+    ]
+  },
+  "evidence_contracts": [
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that bind reached its accepted outcome.",
+      "id": "bind-acceptance",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "bind-outcome"
+      ]
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that concord-change reached its accepted outcome.",
+      "id": "concord-change-acceptance",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "concord-change-outcome"
+      ]
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that evolve reached its accepted outcome.",
+      "id": "evolve-acceptance",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "evolve-outcome"
+      ]
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that execute reached its accepted outcome.",
+      "id": "execute-acceptance",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "execute-outcome"
+      ]
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that negotiate reached its accepted outcome.",
+      "id": "negotiate-acceptance",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "negotiate-outcome"
+      ]
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that observe reached its accepted outcome.",
+      "id": "observe-acceptance",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "observe-outcome"
+      ]
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that publish reached its accepted outcome.",
+      "id": "publish-acceptance",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "publish-outcome"
+      ]
+    },
+    {
+      "accepted_results": [
+        "pass"
+      ],
+      "candidate_binding_required": true,
+      "description": "Evidence that verify reached its accepted outcome.",
+      "id": "verify-acceptance",
+      "independent_from_capability": "execute-work",
+      "policy_binding_required": true,
+      "producer_capability": "produce-evidence",
+      "required_claims": [
+        "verify-outcome"
+      ],
+      "reviewer_capability": "review-candidate"
+    }
+  ],
+  "id": "concordloom-self-cycle-registry-v3",
+  "kind": "concordloom.cycle-registry",
+  "loops": [
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "bind",
+      "inputs": [
+        {
+          "description": "Accepted intent and an unaccepted design proposal.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Bind",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "begin",
+            "kind": "progress",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "bind-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "One separately activated, content-addressed binding.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Compile accepted intent into finite loops, policy, and scope."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "concord-change",
+      "inputs": [
+        {
+          "description": "An operator-accepted outcome.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Concord Change",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "invoke-concord-change-observe",
+            "invocation_id": "concord-change-observe",
+            "kind": "child",
+            "label": "Invoke observe"
+          },
+          {
+            "id": "invoke-concord-change-negotiate",
+            "invocation_id": "concord-change-negotiate",
+            "kind": "child",
+            "label": "Invoke negotiate"
+          },
+          {
+            "id": "invoke-concord-change-bind",
+            "invocation_id": "concord-change-bind",
+            "kind": "child",
+            "label": "Invoke bind"
+          },
+          {
+            "id": "invoke-concord-change-execute",
+            "invocation_id": "concord-change-execute",
+            "kind": "child",
+            "label": "Invoke execute"
+          },
+          {
+            "id": "invoke-concord-change-verify",
+            "invocation_id": "concord-change-verify",
+            "kind": "child",
+            "label": "Invoke verify"
+          },
+          {
+            "id": "invoke-concord-change-publish",
+            "invocation_id": "concord-change-publish",
+            "kind": "child",
+            "label": "Invoke publish"
+          },
+          {
+            "id": "invoke-concord-change-evolve",
+            "invocation_id": "concord-change-evolve",
+            "kind": "child",
+            "label": "Invoke evolve"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "enter-concord-change-observe",
+            "kind": "progress",
+            "to": "invoke-concord-change-observe"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-observe",
+            "guard": "child receipt accepted by parent contract",
+            "id": "concord-change-observe-success",
+            "kind": "success",
+            "to": "invoke-concord-change-negotiate"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-observe",
+            "guard": "child failed, timed out, or escalated",
+            "id": "concord-change-observe-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-negotiate",
+            "guard": "child receipt accepted by parent contract",
+            "id": "concord-change-negotiate-success",
+            "kind": "success",
+            "to": "invoke-concord-change-bind"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-negotiate",
+            "guard": "child failed, timed out, or escalated",
+            "id": "concord-change-negotiate-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-bind",
+            "guard": "child receipt accepted by parent contract",
+            "id": "concord-change-bind-success",
+            "kind": "success",
+            "to": "invoke-concord-change-execute"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-bind",
+            "guard": "child failed, timed out, or escalated",
+            "id": "concord-change-bind-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-execute",
+            "guard": "child receipt accepted by parent contract",
+            "id": "concord-change-execute-success",
+            "kind": "success",
+            "to": "invoke-concord-change-verify"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-execute",
+            "guard": "child failed, timed out, or escalated",
+            "id": "concord-change-execute-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-verify",
+            "guard": "child receipt accepted by parent contract",
+            "id": "concord-change-verify-success",
+            "kind": "success",
+            "to": "invoke-concord-change-publish"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-verify",
+            "guard": "child failed, timed out, or escalated",
+            "id": "concord-change-verify-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-publish",
+            "guard": "child receipt accepted by parent contract",
+            "id": "concord-change-publish-success",
+            "kind": "success",
+            "to": "invoke-concord-change-evolve"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-publish",
+            "guard": "child failed, timed out, or escalated",
+            "id": "concord-change-publish-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-evolve",
+            "guard": "child receipt accepted by parent contract",
+            "id": "concord-change-evolve-success",
+            "kind": "success",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "invoke-concord-change-evolve",
+            "guard": "child failed, timed out, or escalated",
+            "id": "concord-change-evolve-failure",
+            "kind": "failure",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "concord-change-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "A verified effect or explicit escalation.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Govern one bounded change without assuming a domain."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "evolve",
+      "inputs": [
+        {
+          "description": "Pinned signals from the active binding.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Evolve",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "begin",
+            "kind": "progress",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "evolve-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "A successor proposal requiring a separate operator decision.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Reduce repeated signals into a non-activating successor proposal."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "execute",
+      "inputs": [
+        {
+          "description": "An authorized run card and exact scope.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Execute",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "begin",
+            "kind": "progress",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "execute-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "A pinned candidate and factual execution evidence.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Produce one scoped candidate within the active binding."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "negotiate",
+      "inputs": [
+        {
+          "description": "Observed facts and ranked questions.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Negotiate",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "begin",
+            "kind": "progress",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "negotiate-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "Accepted intent and an append-only decision log.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Resolve consequential intent through operator decisions."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "observe",
+      "inputs": [
+        {
+          "description": "A bounded subject and evidence sources.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Observe",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "begin",
+            "kind": "progress",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "observe-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "An observed graph with provenance.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Separate observed facts from inferred intent."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "publish",
+      "inputs": [
+        {
+          "description": "A verified candidate and publication authority.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Publish",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "begin",
+            "kind": "progress",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "publish-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "A publication receipt, a no-op receipt, or escalation.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Perform an explicitly authorized external effect, or record none."
+    },
+    {
+      "authority": {
+        "accept_capability": "accept-parent",
+        "escalate_capability": "escalate",
+        "execute_capability": "execute-work"
+      },
+      "budgets": {
+        "max_attempts": 3,
+        "max_cost_units": 10,
+        "max_elapsed_seconds": 3600,
+        "on_exhaustion": "failed"
+      },
+      "id": "verify",
+      "inputs": [
+        {
+          "description": "A candidate manifest and evidence contract.",
+          "name": "input",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "label": "Verify",
+      "local_control_flow": {
+        "entry_state": "start",
+        "states": [
+          {
+            "id": "start",
+            "kind": "start",
+            "label": "Start"
+          },
+          {
+            "id": "work",
+            "kind": "work",
+            "label": "Produce candidate"
+          },
+          {
+            "id": "gate",
+            "kind": "gate",
+            "label": "Evaluate evidence"
+          },
+          {
+            "id": "succeeded",
+            "kind": "terminal",
+            "label": "Succeeded",
+            "outcome": "succeeded"
+          },
+          {
+            "id": "escalated",
+            "kind": "terminal",
+            "label": "Escalated",
+            "outcome": "escalated"
+          }
+        ],
+        "terminal_state_ids": [
+          "escalated",
+          "succeeded"
+        ],
+        "transitions": [
+          {
+            "evidence_contract_ids": [],
+            "from": "start",
+            "guard": "accepted input is present",
+            "id": "begin",
+            "kind": "progress",
+            "to": "work"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "work",
+            "guard": "candidate and factual evidence are present",
+            "id": "evaluate",
+            "kind": "progress",
+            "to": "gate"
+          },
+          {
+            "evidence_contract_ids": [
+              "verify-acceptance"
+            ],
+            "from": "gate",
+            "guard": "parent evaluates required evidence as passing",
+            "id": "accept",
+            "kind": "success",
+            "to": "succeeded"
+          },
+          {
+            "evidence_contract_ids": [],
+            "from": "gate",
+            "guard": "terminal failure or explicit escalation",
+            "id": "escalate",
+            "kind": "escalation",
+            "to": "escalated"
+          },
+          {
+            "evidence_contract_ids": [],
+            "feedback_budget": {
+              "max_traversals": 2,
+              "on_exhaustion_outcome": "escalated",
+              "on_exhaustion_state": "escalated"
+            },
+            "from": "gate",
+            "guard": "evidence requests a bounded revision",
+            "id": "retry",
+            "kind": "feedback",
+            "to": "work"
+          }
+        ]
+      },
+      "outputs": [
+        {
+          "description": "An independent verification receipt.",
+          "name": "output",
+          "required": true,
+          "type": "artifact_ref"
+        }
+      ],
+      "purpose": "Independently evaluate the pinned candidate."
+    }
+  ],
+  "policy_digest": "sha256:dd05adc186e9017a26eaace5fb8a8d8006b8f6366e77f68766a959482a682124",
+  "schema_version": "0.1",
+  "source_decisions_digest": "sha256:4e67a46d2a578a5b442e8fb94e20cdc22733bd74c7c25834df430011716c3f43",
+  "source_graph_digest": "sha256:227869a6a026e1f131fb377c9c2438ee1416f72cfd8daee05bd1950a1fb85b1e",
+  "source_loop_design_digest": "sha256:594e87e264e3cc2f278419970f037d7289681ec131c6fd88bc4f0aab9f66cf4a"
+}

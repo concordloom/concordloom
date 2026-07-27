@@ -2,7 +2,14 @@
 
 Concord Loom ships a Codex plugin containing the `design-project-loops` skill.
 The plugin provides a conversational layer over the deterministic CLI and
-artifact contracts.
+artifact contracts. It is not limited to software delivery: it can describe
+any finite system of nested loops whose outcomes, evidence, authority, scope,
+budgets, and terminal states can be made explicit.
+
+The generic SDLC is an example binding, not the product boundary. Concord
+Loom's own repository is governed by the separately accepted
+`concordloom-self-binding`, whose domain-neutral `concord-change` loop contains
+observe, negotiate, bind, execute, verify, publish, and evolve loops.
 
 ## Install from the GitHub marketplace
 
@@ -44,6 +51,10 @@ The skill:
 7. maintains the offline Atlas; and
 8. records evidence-backed evolution proposals without activating them.
 
+The same sequence applies outside software repositories. Adapters may provide
+different evidence or executors, but they do not replace operator acceptance,
+finite containment, bounded feedback, or candidate-bound verification.
+
 ## Fresh repositories
 
 A repository with no Concord Loom binding enters a bounded read-only bootstrap:
@@ -69,9 +80,25 @@ files, tests, tools, models, and reviewers within those accepted boundaries.
 Model output is a proposal until deterministic validation and required
 authority accept it.
 
+The active binding also governs Concord Loom's public surfaces. The bilingual
+Pages site and its social-preview artwork are projections and communication
+assets: they may explain accepted artifacts, but cannot create or change
+authority. A Pages workflow is publication machinery, and a green build is not
+proof of a live deployment without the separately authorized publication
+receipt and deployed URL.
+
 ## Data and network policy
 
 The core inspector is local and does not execute target code. A Codex session
 may use model or connector services according to the user's environment.
 Bind allowed content classes, providers, network access, and data egress in
 policy; record the effective route in each attempt.
+
+## Languages
+
+English documents are canonical peers of the Russian files under `docs/ru/`.
+The plugin's two operator references also have `.ru.md` siblings, and the
+generic SDLC example includes `README.ru.md`. Translation must preserve command
+names, identifiers, digests, epistemic states, and authority boundaries; it
+must not turn a proposal or planned publication into an accepted or verified
+fact.

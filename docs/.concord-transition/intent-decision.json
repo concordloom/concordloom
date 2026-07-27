@@ -1,0 +1,28 @@
+{
+  "decision": {
+    "actor": {
+      "display_name": "Operator",
+      "id": "example-operator",
+      "kind": "operator"
+    },
+    "authority_ref": "operator",
+    "correction": "Treat Concord Loom as a universal loop-of-loops framework whose own repository is governed by an explicit self-binding, without making software delivery the product boundary.",
+    "decided_at": "2026-07-27T08:26:00Z",
+    "graph_delta": [
+      {
+        "op": "confirm",
+        "target_id": "repository-delivery-boundary",
+        "target_kind": "hypothesis"
+      }
+    ],
+    "id": "accept-universal-loop-system",
+    "rationale": "Concord Loom is a universal framework for bounded systems of loops. This repository is one self-governed instance; generic SDLC is only one example binding.",
+    "subject_id": "repository-delivery-boundary",
+    "verdict": "corrected"
+  },
+  "id": "accept-universal-loop-system",
+  "kind": "concordloom.decision-record",
+  "question_id": "question.repository-delivery-boundary",
+  "question_set_digest": "sha256:2b30794a4283ab91d81167788b510c4dbce49685cf4aed8ff28a32012daa9fd7",
+  "schema_version": "0.1"
+}

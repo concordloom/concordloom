@@ -1,0 +1,70 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:5797d2fb3552fda89c35ec0c20b10f0c8e65ee0254fa46aad34ae1e862b01bb5",
+  "decision_authority_ref": "operator",
+  "decision_required": true,
+  "expected_effect": "Allow the publisher node to set the exact prepared repository social preview without broadening executor or reviewer effects.",
+  "generated_at": "2026-07-27T09:00:00Z",
+  "id": "authorize-repository-social-preview",
+  "kind": "concordloom.evolution-proposal",
+  "operations": [
+    {
+      "op": "add",
+      "target_id": "github-repository-social-preview",
+      "target_kind": "policy",
+      "value": {
+        "external_mutation": "github-repository-social-preview",
+        "publisher_only": true
+      }
+    }
+  ],
+  "proposed_by": {
+    "id": "example-orchestrator",
+    "kind": "orchestrator"
+  },
+  "risk": {
+    "failure_modes": [
+      "The repository image could diverge from the candidate asset."
+    ],
+    "level": "low",
+    "rollback": "Restore the prior repository preview and reactivate the predecessor binding if publication evidence does not match the candidate bytes."
+  },
+  "schema_version": "0.1",
+  "signals": [
+    {
+      "base_binding_digest": "sha256:5797d2fb3552fda89c35ec0c20b10f0c8e65ee0254fa46aad34ae1e862b01bb5",
+      "category": "friction",
+      "id": "preview-asset-exists-without-publication-authority",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 1,
+      "provenance": [
+        {
+          "kind": "file",
+          "ref": "docs/assets/concordloom-social-preview.png"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:489dc61d427cf1b9507de209d7ef029ee27348486683f36b4f23deb276aae56e",
+      "summary": "The exact 1280x640 preview exists, but the active publication scope only authorizes GitHub Pages."
+    },
+    {
+      "base_binding_digest": "sha256:5797d2fb3552fda89c35ec0c20b10f0c8e65ee0254fa46aad34ae1e862b01bb5",
+      "category": "coverage",
+      "id": "operator-requested-repository-preview",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 1,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "repository-image-request"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:d811a6cbf982f11331151a8e92c2086f058c526f4afad0fb9e346f2d2eb5ae6c",
+      "summary": "The operator requested a branded social preview for the repository."
+    }
+  ],
+  "status": "proposed"
+}

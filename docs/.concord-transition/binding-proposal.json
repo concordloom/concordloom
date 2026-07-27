@@ -1,0 +1,58 @@
+{
+  "activation_required": true,
+  "active_root_loop_ids": [
+    "concord-change"
+  ],
+  "artifacts": [
+    {
+      "digest": "sha256:f72ca95018c13d181c0ef1c801111b38c7b72e567524aa32ebf25a2be666c6d5",
+      "path": "docs/.concord-transition/loop-design.json",
+      "role": "accepted_loop_design"
+    },
+    {
+      "digest": "sha256:227869a6a026e1f131fb377c9c2438ee1416f72cfd8daee05bd1950a1fb85b1e",
+      "path": "docs/.concord-transition/accepted-project-graph.json",
+      "role": "accepted_project_graph"
+    },
+    {
+      "digest": "sha256:3d0955511aa1354c53e2f02f6a15fc6d3100e815a1e835f2c0f0fabef55f6815",
+      "path": "docs/.concord-transition/cycle-registry.json",
+      "role": "cycle_registry"
+    },
+    {
+      "digest": "sha256:4e67a46d2a578a5b442e8fb94e20cdc22733bd74c7c25834df430011716c3f43",
+      "path": "docs/.concord-transition/decision-log.json",
+      "role": "decision_log"
+    },
+    {
+      "digest": "sha256:fe4352515297c84cd3ed1e9028d2c9b2c09a5b707351f898ff859992dcc1ae36",
+      "path": "docs/.concord-transition/evolution-proposal.json",
+      "role": "evolution_history"
+    },
+    {
+      "digest": "sha256:6fdf24ed76a85c3d4f413ddf03ba8a6558827c7f852e81ad7650868bb651f49a",
+      "path": "docs/.concord-transition/loop-design-proposal.json",
+      "role": "loop_design_proposal"
+    },
+    {
+      "digest": "sha256:ea66b68baca6f023568eca5a8c3aceb266761af275a53ec3e6a99436acf37ae9",
+      "path": "docs/.concord-transition/policy.json",
+      "role": "policy"
+    }
+  ],
+  "created_at": "2026-07-27T08:30:00Z",
+  "digest_contract": {
+    "algorithm": "sha256",
+    "canonicalization": "rfc8785",
+    "excluded_fields": [
+      "/proposal_digest"
+    ]
+  },
+  "framework_version": "0.1.0",
+  "id": "concordloom-self-binding-proposal",
+  "kind": "concordloom.binding-proposal",
+  "predecessor_binding_digest": "sha256:345aa744baf91089d5e12396b161101344aa0bbb5bb0686c8954758797a29f0b",
+  "proposal_digest": "sha256:1db5e8aaacc798d61f15db79e352bace180c65da3182b917a6765d079a309c1a",
+  "schema_version": "0.1",
+  "status": "proposed"
+}

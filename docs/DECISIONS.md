@@ -5,7 +5,7 @@ them, but may not silently change them.
 
 ## D-001 — Product identity
 
-**Status:** accepted  
+**Status:** accepted
 **Date:** 2026-07-24
 
 The framework is named **Concord Loom**. Its repository, Python distribution,
@@ -16,7 +16,7 @@ weaves evidence, decisions, and nested cycles into one inspectable Atlas.
 
 ## D-002 — Complete v0.1, not a concept demo
 
-**Status:** accepted  
+**Status:** accepted
 **Date:** 2026-07-24
 
 v0.1 must cover the whole framework path:
@@ -38,7 +38,7 @@ article. A static diagram without executable contracts does not satisfy v0.1.
 
 ## D-003 — Nested loops are first-class
 
-**Status:** accepted  
+**Status:** accepted
 **Date:** 2026-07-24
 
 An SDLC is a cycle of cycles. Requirements, design, implementation, testing,
@@ -57,7 +57,7 @@ multiple levels. A concrete containment graph cannot contain an ancestor cycle.
 
 ## D-004 — Operator authority
 
-**Status:** accepted  
+**Status:** accepted
 **Date:** 2026-07-24
 
 History and static analysis may propose architecture, ownership, and loop
@@ -73,7 +73,7 @@ design, but only an actor with bound product-intent authority can accept it.
 
 ## D-005 — Evidence and execution truth
 
-**Status:** accepted  
+**Status:** accepted
 **Date:** 2026-07-24
 
 Observed, inferred, accepted, planned, actual, and verified information remain
@@ -86,7 +86,7 @@ remain separate capabilities.
 
 ## D-006 — Portable core and adapter boundary
 
-**Status:** accepted  
+**Status:** accepted
 **Date:** 2026-07-24
 
 The portable core is engine-agnostic, local-first, Python 3.11+, standard
@@ -100,10 +100,69 @@ activation of governance changes.
 
 ## D-007 — Public release boundary
 
-**Status:** accepted  
+**Status:** accepted
 **Date:** 2026-07-24
 
 The release is a new public GitHub repository under Apache-2.0, tagged
 `v0.1.0`. Publication occurs only after independent reference, visual, quality,
 and release reviews of a pinned candidate. The published release is then
 smoke-tested before the run is complete.
+
+## D-008 — Universal product boundary
+
+**Status:** accepted
+**Date:** 2026-07-27
+
+Concord Loom is a universal framework for finite systems of bounded loops. It
+is not an SDLC product with optional extensions. Software delivery is one
+example domain alongside any other domain that can state outcomes, evidence,
+authority, budgets, scope, feedback, and terminal states without requiring a
+particular engine, host, model provider, or repository layout.
+
+“Universal” does not mean an omniscient parser or a universal safety
+certificate. Domain adapters may observe or execute specialized systems, while
+the portable core continues to govern the artifact and authority chain.
+
+## D-009 — Concord Loom governs itself through a successor binding
+
+**Status:** accepted
+**Date:** 2026-07-27
+
+The repository is one governed instance of the framework. The operator
+corrected the earlier delivery-shaped intent and separately activated the
+content-addressed `concordloom-self-binding` as successor to the v0.1 generic
+service binding.
+
+Its root `concord-change` loop contains observe, negotiate, bind, execute,
+verify, publish, and evolve. The accepted binding does not rewrite the v0.1
+generic SDLC evidence; that chain remains an example and the predecessor in the
+append-only catalog.
+
+## D-010 — Bilingual public documentation and visual identity
+
+**Status:** accepted
+**Date:** 2026-07-27
+
+The public explanation is available in English and Russian. Russian documents
+are maintained as explicit peers rather than machine-selected replacements;
+commands, identifiers, artifact states, and authority language retain the same
+meaning in both languages.
+
+The Pages presentation may use purpose-built hero and social-preview artwork.
+Those images are communication assets, not architectural evidence or sources
+of truth. The generated Atlas remains a projection of accepted binding data.
+
+## D-011 — Pages publication remains a governed external effect
+
+**Status:** accepted
+**Date:** 2026-07-27
+
+GitHub Pages is an optional publication adapter, not a required hosting
+platform. Its workflow builds and checks the bilingual static site, then a
+publisher with explicit scope may deploy the exact artifact.
+
+Build success, release readiness, deployment authority, and a verified live
+site remain distinct facts. Evolution may propose changes to publication
+scope, policy, or binding, but cannot accept or activate its own successor;
+the predecessor binding defines the capable operator and the catalog advances
+only through a separate activation decision.

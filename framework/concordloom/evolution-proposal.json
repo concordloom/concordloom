@@ -1,0 +1,77 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:fcde7fdeb0efade2cfcf345cde120c8b34bd20e5786688fcbe21c493d5e5ab85",
+  "decision_authority_ref": "operator",
+  "decision_required": true,
+  "expected_effect": "Preserve the accepted loop semantics while moving their exact source artifacts into a durable product-level framework namespace.",
+  "generated_at": "2026-07-27T08:45:00Z",
+  "id": "materialize-concordloom-self-binding",
+  "kind": "concordloom.evolution-proposal",
+  "operations": [
+    {
+      "op": "add",
+      "target_id": "durable-self-binding-location",
+      "target_kind": "policy",
+      "value": {
+        "path": "framework/concordloom"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "concordloom-binding-catalog",
+      "target_kind": "policy",
+      "value": {
+        "id": "concordloom-binding-catalog"
+      }
+    }
+  ],
+  "proposed_by": {
+    "id": "example-orchestrator",
+    "kind": "orchestrator"
+  },
+  "risk": {
+    "failure_modes": [
+      "Artifact-path digests could diverge from the accepted transition."
+    ],
+    "level": "low",
+    "rollback": "Reject the proposal and keep the docs-scoped transition binding active."
+  },
+  "schema_version": "0.1",
+  "signals": [
+    {
+      "base_binding_digest": "sha256:fcde7fdeb0efade2cfcf345cde120c8b34bd20e5786688fcbe21c493d5e5ab85",
+      "category": "drift",
+      "id": "transition-artifacts-need-durable-path",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 1,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "transition-binding-path-audit"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:d62e9cbf1f374084bfbfb2e4c9fb4a93513fd4184a08fed7b0ea9af9c433cfb5",
+      "summary": "The accepted bridge binding points at a temporary documentation namespace."
+    },
+    {
+      "base_binding_digest": "sha256:fcde7fdeb0efade2cfcf345cde120c8b34bd20e5786688fcbe21c493d5e5ab85",
+      "category": "drift",
+      "id": "active-catalog-retains-example-identity",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 1,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "catalog-identity-audit"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:ec35404f165b07acfff2325e9c6d855d92c04a4c9ed50baff450686488111f90",
+      "summary": "The active catalog still carries the generic-service example identity."
+    }
+  ],
+  "status": "proposed"
+}

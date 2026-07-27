@@ -1,16 +1,23 @@
 # Core concepts
 
-## A cycle of cycles
+[Русская версия](ru/CONCEPTS.md)
 
-An SDLC is an outer feedback loop whose apparent phases are themselves loops.
-Requirements revises hypotheses. Design evaluates alternatives.
-Implementation edits and repairs. Testing plans and interprets scenario runs.
-Release builds and smokes exact artifacts. Operations observes bounded windows
-and turns findings into new intent.
+Concord Loom models a bounded system as loops that contain other loops. It
+does not prescribe a domain, engine, runtime, provider, or repository layout.
+A software development life cycle (SDLC) is one possible binding of the model,
+not the identity of the framework.
 
-Testing can contain contract, migration, security, and performance loops. A
-scenario can contain setup or diagnosis loops. Concord Loom applies one
-contract pattern at every level while keeping concrete nesting finite.
+## A system of bounded loops
+
+A loop turns a declared input into a terminal outcome under evidence,
+authority, scope, and budget constraints. A parent loop may refine one of its
+states through a child loop. The same contract pattern applies at every level,
+but the resulting system remains finite.
+
+The shipped generic SDLC binding illustrates this pattern with requirements,
+implementation, testing, release, and operations. Another binding could govern
+research, content production, hardware qualification, incident response, or a
+mixed human-and-machine process without changing the core model.
 
 ## Containment is not feedback
 
@@ -44,19 +51,17 @@ required.
 
 ## A child receipt is not a parent decision
 
-The contract model requires a child to report a result scoped to its input,
-candidate, policy, producer, and evidence. Its parent evaluates that receipt
-against the parent's own contract.
+A child reports a result scoped to its input, candidate, policy, producer, and
+evidence. Its parent evaluates that receipt against the parent's own contract.
 
-A migration scenario can pass while a testing campaign remains open. A testing
-campaign can pass while release remains unauthorized. This rule prevents a
-green inner status from silently expanding its meaning.
+A scenario can pass while its campaign remains open. A campaign can pass
+while publication remains unauthorized. A valid child receipt supplies
+evidence; it never expands authority or closes its parent automatically.
 
 The v0.1 runner records attempts and evidence per planned loop node. It does
 not synthesize child receipts, traverse every local transition, or launch a
-durable child workflow. An execution adapter must supply the relevant
-candidate-bound evidence to the parent; the parent's own completion check
-remains authoritative.
+durable child workflow. An execution adapter supplies candidate-bound evidence
+to the parent, whose completion check remains authoritative.
 
 ## Epistemic states
 
@@ -64,52 +69,77 @@ Concord Loom keeps these states distinct:
 
 | State | Meaning |
 |---|---|
-| Observed | Derived from repository bytes or Git records |
-| Inferred | A heuristic hypothesis with provenance and confidence |
-| Accepted | Explicit operator intent |
-| Planned | Intended route, scope, model, skill, or reviewer |
-| Actual | What a runtime attempt recorded |
+| Observed | Derived directly from declared evidence sources |
+| Inferred | A hypothesis with provenance and confidence |
+| Accepted | Intent approved by an authorized operator |
+| Planned | Intended route, scope, model, tool, or reviewer |
+| Actual | What an attempt recorded |
 | Verified | Evidence satisfied a bound contract |
 | Drift | Planned and actual facts differ |
 
-Confidence helps rank a question. It never grants authority.
+Observation adapters may read a Git repository, an artifact store, a service
+API, or another bounded source. Confidence ranks questions; it never grants
+authority.
 
-## Three acceptance seams
+## Acceptance seams
 
-The operator accepts three different meanings:
+Three decisions carry different meanings:
 
-1. **Project intent:** decisions overlay an observed graph.
-2. **Loop design:** an exact proposal digest becomes an accepted design.
+1. **Intent acceptance:** decisions resolve consequential hypotheses.
+2. **Loop-design acceptance:** an exact proposal digest becomes an accepted
+   design.
 3. **Binding activation:** an exact compiled proposal becomes active.
 
-Collapsing these seams would let an inference or compiler output authorize
-itself.
+Collapsing these seams would let an inference, generator, or compiler authorize
+its own output.
 
 ## Candidate and evidence identity
 
-A candidate manifest covers tracked and explicitly selected untracked paths,
-content, modes, symlink targets, submodule commits, repository revision, and
-inventory. The runner rechecks the candidate at evidence and completion
-boundaries.
+A candidate is the exact subject of a run. The built-in repository adapter
+represents it as a canonical manifest of selected paths, content, modes,
+symlink targets, submodule commits, revision, and inventory. Other adapters
+must provide an equally stable identity contract.
 
 Evidence names the candidate, policy, factual attempt, producer, result,
-payload digest, provenance, and checks. Identical evidence IDs do not permit
-substituting different bytes.
+payload digest, provenance, and checks. Matching evidence IDs cannot justify
+substituting different bytes or a different subject.
 
 ## Binding and catalog
 
-A binding names exact accepted graph, decision log, design proposal, accepted
-design, registry, and policy digests. A run pins a binding digest, not the word
+A binding names exact accepted intent, decision log, accepted loop design,
+registry, and policy digests. A run pins a binding digest, never the word
 “current.”
 
 The catalog is append-only. Activating a successor preserves prior bindings so
-historical runs keep their original meaning.
+historical runs retain their original meaning.
 
-## Evolution is another governed loop
+## Concord Loom's self-binding
 
-Runs produce bounded signals about friction, failures, drift, or cadence.
-Signals can reduce into an evolution proposal with preconditions and risk.
-They cannot edit the active catalog.
+Concord Loom governs its own bounded changes with an operator-accepted
+self-binding:
 
-The active version defines who may accept its successor. An evolution proposal
-cannot grant itself that capability or activate itself.
+```text
+Observe → Negotiate → Bind → Execute → Verify → Publish → Evolve
+```
+
+- **Observe** separates facts from inferred intent.
+- **Negotiate** records operator decisions.
+- **Bind** compiles and separately activates exact loops, policy, and scope.
+- **Execute** produces a scoped candidate and factual attempt evidence.
+- **Verify** independently evaluates the pinned candidate.
+- **Publish** performs only an explicitly authorized external effect, or
+  records that no effect occurred.
+- **Evolve** reduces pinned signals into a successor proposal.
+
+This sequence is Concord Loom's accepted binding for its own repository. It is
+not a mandatory topology for every project.
+
+## Evolution cannot authorize itself
+
+Runs produce bounded signals about friction, failure, drift, or cadence.
+Signals may reduce into a proposal with explicit preconditions and risk. The
+proposal cannot edit the active catalog or grant itself activation authority.
+
+The active binding defines who may decide on its successor. A separately
+authorized decision and activation create the next binding; otherwise the
+current binding remains active.

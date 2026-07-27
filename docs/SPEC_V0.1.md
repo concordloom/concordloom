@@ -1,168 +1,223 @@
 # Concord Loom v0.1 product specification
 
+[Русская версия](ru/SPEC_V0.1.md)
+
 ## Outcome
 
-A developer can point Concord Loom at a Git repository, inspect provenance-rich
-project observations, answer a short generated interview, compile the accepted
-model into a valid bounded loop system, open an offline Atlas, and create an
-evidence-bound run card. A Codex skill guides the same workflow.
+An operator can turn bounded evidence into an accepted, executable, and
+inspectable system of loops without making any domain engine, workflow
+runtime, model provider, hosting platform, or repository layout mandatory.
+Concord Loom preserves the chain from observation through decision, binding,
+execution, verification, publication, and evolution.
+
+The v0.1 distribution proves this model through a local Git observation
+adapter, a file-backed runner, an offline Atlas, a Codex skill, and a generic
+SDLC reference binding. Those components form the first portable vertical
+slice; the SDLC example is not the product definition.
 
 ## Users
 
-- A product or engineering operator who owns intended outcomes.
-- An orchestrating coding agent that chooses execution machinery.
-- Executors and independent reviewers working under scoped run cards.
-- Maintainers evolving the loop system from accumulated execution evidence.
+- An operator who owns intended outcomes and accepts consequential changes.
+- An orchestrator that chooses machinery within accepted policy.
+- Scoped executors that produce candidates and factual evidence.
+- Independent reviewers that evaluate pinned candidates.
+- Publishers with explicit authority for external effects.
+- Maintainers that propose successors from accumulated signals.
 
-## Required artifacts
+## Required capabilities
 
-### 1. Observed project graph
+### 1. Observation
 
-`concordloom inspect <repository>` emits deterministic JSON containing:
+`concordloom inspect` reads a bounded source through the built-in Git adapter
+and emits deterministic JSON containing:
 
-- repository and revision identity;
+- source and revision identity;
 - files, categories, and detected languages;
-- commit-derived churn, renames, and co-change edges;
-- detected decision, build, test, CI, and agent-governance surfaces;
-- provenance references for every edge;
-- `observed` or `inferred` status and confidence.
+- commit-derived churn, renames, authors, and co-change;
+- detected decision, build, test, CI, documentation, and agent surfaces;
+- provenance references for every fact or hypothesis; and
+- coverage, truncation, status, and confidence.
 
-No inferred edge is presented as operator-approved intent.
+The adapter treats source material as data. It does not execute target code,
+hooks, or historical revisions. No inference counts as accepted intent.
 
-### 2. Operator interview and accepted graph
+The public artifact model permits future observation adapters, but v0.1 ships
+only the local Git implementation.
+
+### 2. Negotiation and accepted intent
 
 `concordloom questions` ranks unresolved hypotheses by expected graph impact.
-Questions expose the evidence and the graph delta that each answer would cause.
+Every question exposes evidence and the graph delta for each answer.
 
-`concordloom decide` records an explicit `confirmed`, `rejected`, or corrected
-decision with actor and rationale. `concordloom accept` produces an accepted
-graph only when every blocking question has a decision.
+`concordloom decide` records an explicit confirmation, rejection, or
+correction with actor and rationale. `concordloom accept` produces accepted
+intent only after all blocking questions have authorized decisions.
 
-### 3. Loop-system compiler
+### 3. Loop design and binding
 
-`concordloom propose` turns an accepted project graph into a reviewable loop
-design. The proposal exposes every inferred loop, child invocation, gate,
-authority grant, and budget as a graph delta. An actor with `accept_intent`
-capability must sign a decision over its digest.
+`concordloom propose` turns accepted intent into a reviewable loop-design
+delta. It exposes proposed loops, child invocations, gates, authority, scope,
+and budgets. An authorized actor must accept the exact proposal digest.
 
-`concordloom compile` validates and binds the accepted loop design plus policy
-into:
+`concordloom compile` validates the accepted design and policy and produces:
 
-- a loop registry;
-- a routing and authority policy;
-- a content-addressed binding;
-- an initial evolution history;
+- a finite loop registry;
+- routing, authority, compute, and evolution policy;
+- a content-addressed binding proposal;
+- an initial evolution history; and
 - Atlas input.
 
-Each loop defines typed input/output descriptions, local states and
-transitions, child-loop invocations, evidence requirements, authority,
-retry/time/cost budgets, escalation, and terminal outcomes.
+Each loop defines typed inputs and outputs, local states and transitions,
+children, evidence predicates, capabilities, budgets, escalation, and terminal
+outcomes.
 
 The compiler rejects:
 
-- missing child cycles;
-- cycles in the containment graph;
-- unreachable states, nonterminal dead ends, and states that cannot reach a
-  terminal or escalation outcome;
-- cyclic strongly connected components that do not consume a finite budget;
-- budget exhaustion without a terminal path;
-- child invocations without a finite deadline and escalation;
-- child write authority broader than its parent grant;
+- missing child loops or cyclic containment;
+- unreachable states, nonterminal dead ends, or missing terminal paths;
+- cyclic local flow without a decreasing finite budget;
+- budget exhaustion without terminal or escalation behavior;
+- child scope, budget, or authority broader than its parent;
+- child invocations without a deadline and failure path; and
 - independent gates that permit author self-certification.
+
+Binding activation requires a separate authorized decision. Compilation cannot
+authorize its own output.
 
 ### 4. Governed execution
 
-`concordloom run` supports creating, authorizing, guarding, recording, and
-completing run cards. A card pins the accepted binding. Actual attempts record
-the effective agent, model, reasoning level, skill, subagents, tools, and
-policy digest.
+`concordloom run` creates, authorizes, guards, records, and completes run cards.
+A public card pins an accepted binding, candidate manifest, route, policy, and
+evidence contract.
 
-Structured evidence identifies its scope, provenance, candidate tree digest,
-policy digest, producer, and result. Parent acceptance evaluates its own
-contract; child receipts do not compose automatically.
+Actual attempts record the effective principal, agent, model, reasoning, skill,
+subagents, tools, times, result, policy digest, and candidate digest. Structured
+evidence identifies its predicate, provenance, producer, checks, payload,
+candidate, policy, and attempt.
 
-v0.1 validates local state machines and containment but treats each planned
-loop node as one governed execution unit. It does not step every declarative
-transition or schedule durable child workflows. Execution adapters supply
-candidate-bound results to the relevant parent evidence contract.
+The built-in repository candidate manifest covers tracked and explicitly
+included untracked paths, content, modes, symlink targets, submodule commits,
+revision, and inventory. The runner checks identity at evidence and completion
+boundaries.
 
-The candidate digest covers a canonical manifest of tracked and explicitly
-included untracked paths, file modes, symlink targets, and submodule commits.
-The runner rechecks it when evidence is recorded and a gate completes.
-Principal IDs and capabilities come from the content-addressed authority policy;
-they are not free-text executor claims.
+The active binding grants the runner a narrow control-plane capability to
+append lifecycle receipts. That grant does not grant candidate writes.
+`guard` enforces declared policy scope but is not an operating-system sandbox.
 
-Creating a card and appending authorization, attempt, evidence, and completion
-events uses a narrow runner-mediated control-plane grant in the active binding.
-Read-only reviewers cannot change candidate files; the runner may append their
-governance receipts.
+Concord Loom v0.1 validates local state machines and containment while treating
+each planned node as one governed unit. It does not step every transition or
+schedule durable child workflows. Execution adapters perform work and return
+candidate-bound evidence.
 
-### 5. Atlas
+### 5. Independent verification
 
-`concordloom atlas` generates one self-contained, offline HTML file from the
-accepted binding and optional run card. It provides:
+Parent acceptance evaluates the parent's evidence contract. Child receipts do
+not compose automatically.
 
-- one-level-at-a-time recursive navigation with breadcrumbs and browser
-  history;
-- a visible distinction between containment and local feedback flow;
-- planned, actual, verified, and drift states;
-- evidence, authority, budget, and terminal-outcome inspection;
-- keyboard navigation, reduced-motion behavior, readable focus, and a useful
-  narrow viewport.
+When policy requires independence, the reviewer must differ from recorded
+candidate authors. A `PASSED` node means its declared evidence contract was met
+for its pinned candidate. It does not authorize publication or broaden any
+capability.
 
-The Atlas is a generated projection, not an execution authority or trace
-database.
+### 6. Publication
 
-### 6. Evolution
+Publication is an explicit external effect. It requires a verified candidate,
+a publisher capability, and scope that names the allowed mutation.
 
-`concordloom evolve` reduces repeated, content-addressed signals into a proposed
-graph diff. It never changes the active binding. Acceptance requires an
-explicit decision under the currently bound authority.
+A publish node records one of three outcomes: the authorized effect, a
+deliberate no-op, or escalation. Verification alone never implies permission
+to publish.
 
-### 7. Codex distribution
+### 7. Atlas
 
-The repository contains a valid Codex plugin with a `design-project-loops`
-skill. The skill:
+`concordloom atlas` generates one deterministic, self-contained HTML projection
+from accepted artifacts and optional run data. It provides:
 
-- analyzes the current repository and Git history;
-- asks only high-information product questions;
-- presents graph deltas before acceptance;
-- compiles and validates loop contracts;
-- maintains the Atlas and evolution signals;
-- fails closed when authority or evidence is missing.
+- one-level-at-a-time containment navigation;
+- distinct rendering for containment and local feedback;
+- planned, actual, verified, and drift layers;
+- evidence, authority, budget, and terminal-outcome inspection; and
+- keyboard, reduced-motion, focus, and narrow-viewport support.
 
-## Reference example
+The Atlas is a projection, not an authority or trace database.
 
-The shipped example contains a small generic software service with an outer
-delivery loop and nested requirements, implementation, testing, release, and
-operation loops. Testing contains a runtime-scenario child loop. It demonstrates
-containment, bounded retry, escalation, and parent evidence evaluation without
-depending on a game engine or cloud service.
+### 8. Evolution
+
+`concordloom evolve` reduces repeated content-addressed signals into a proposed
+graph or policy delta. A proposal names the active base binding, contributing
+signals, preconditions, risk, and required decision authority.
+
+The reducer cannot modify the active catalog. The proposal cannot accept or
+activate itself. A successor requires a separate authorized decision under the
+active binding and a separate activation step.
+
+### 9. Codex distribution
+
+The repository contains a Codex plugin with the `design-project-loops` skill.
+The skill:
+
+- performs bounded read-only discovery;
+- asks high-information questions;
+- displays graph deltas before acceptance;
+- compiles and validates contracts;
+- records routes and evidence; and
+- proposes, but never self-authorizes, evolution.
+
+Model-assisted output remains untrusted input to schemas, policy, and
+invariant checks.
+
+## Accepted Concord Loom self-binding
+
+Concord Loom's repository uses an operator-accepted successor binding rooted at
+`concord-change`:
+
+```text
+Observe → Negotiate → Bind → Execute → Verify → Publish → Evolve
+```
+
+The binding separates observation, intent acceptance, design acceptance,
+activation, candidate production, independent verification, external effect,
+and successor proposal. It succeeded the initial generic-service binding by
+explicit operator decision. It is the accepted topology for Concord Loom
+itself, not a mandatory topology for adopters.
+
+## Reference bindings
+
+The shipped generic SDLC binding models a software service with delivery,
+requirements, implementation, testing, release, and operations loops. Testing
+contains a runtime-scenario child. This binding demonstrates containment,
+bounded retry, escalation, and parent-owned acceptance without requiring a
+game engine or cloud service.
+
+It is one example binding. The framework's schemas and invariants do not
+require SDLC phases or software-delivery vocabulary.
 
 ## Verification
 
-v0.1 is acceptable only when all of the following pass:
+v0.1 is acceptable only when the applicable checks pass:
 
 - unit and integration tests on Python 3.11+;
 - deterministic repeated inspection and Atlas generation;
-- JSON Schema validation for every public artifact;
-- malicious path, malformed Git output, ancestor containment, unbounded retry,
-  authority escalation, self-review, evidence mismatch, and self-authorizing
-  evolution tests;
-- Codex skill and plugin validators;
-- installed-package CLI smoke test in a clean virtual environment;
-- independent reference review against this specification;
-- independent Atlas review at desktop and narrow viewports;
-- independent quality review;
-- public GitHub release smoke test.
+- validation of every public JSON artifact;
+- adversarial tests for paths, Git output, containment, retry, authority,
+  self-review, evidence mismatch, and self-authorizing evolution;
+- Codex skill and plugin validation;
+- installed-package CLI smoke in a clean environment;
+- independent reference, visual, quality, and release reviews; and
+- public-release retrieval and smoke tests.
 
-Canonical digests cover a documented payload envelope and exclude wall-clock
-display metadata. Identical inputs therefore produce identical digests.
+Canonical digests cover documented payload envelopes and exclude declared
+wall-clock display metadata.
 
-## Explicit non-claims
+## Historical and explicit non-claims
 
-v0.1 does not claim to invent iterative development, nested workflows,
-statecharts, provenance, code graphs, or continuous improvement. It also does
-not claim measured productivity gains or ship a durable workflow runtime. Its
-testable contribution is the governed, repository-grounded composition of
-these ideas into one versioned loop system.
+The first release used a one-time, separate bootstrap protocol under
+`concord/`. Bootstrap receipts are trust-seed artifacts, not public v0.1 run
+cards. Public runs use `schemas/run-card.schema.json` and bind accepted
+registry, policy, binding, candidate, route, evidence, and authority.
+
+v0.1 does not claim to invent iteration, nested workflows, statecharts,
+provenance, graphs, or continuous improvement. It makes no measured
+productivity or universal-safety claim and ships no durable workflow runtime.
+Its testable contribution is the governed composition of bounded loops into a
+versioned, inspectable artifact chain.

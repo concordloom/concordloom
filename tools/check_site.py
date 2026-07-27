@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+"""Fail-closed checks for the bilingual static site and Atlas projection."""
+
+from __future__ import annotations
+
+from html.parser import HTMLParser
+from pathlib import Path
+import json
+import struct
+import sys
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SITE = ROOT / "site"
+
+
+class SiteParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.ids: list[str] = []
+        self.local_assets: list[str] = []
+        self.errors: list[str] = []
+        self.localized = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = dict(attrs)
+        if identifier := values.get("id"):
+            self.ids.append(identifier)
+        if "data-en" in values or "data-ru" in values:
+            self.localized += 1
+            if not values.get("data-en") or not values.get("data-ru"):
+                self.errors.append(f"{tag} has incomplete data-en/data-ru copy")
+        if tag == "img":
+            if not values.get("alt"):
+                self.errors.append("img is missing non-empty alt text")
+            if not values.get("width") or not values.get("height"):
+                self.errors.append("img is missing intrinsic width/height")
+        for key in ("src", "href"):
+            value = values.get(key)
+            if not value or value.startswith(("#", "https://", "mailto:")):
+                continue
+            if "://" in value:
+                self.errors.append(f"unexpected external asset: {value}")
+                continue
+            self.local_assets.append(value.split("#", 1)[0])
+
+
+def png_dimensions(path: Path) -> tuple[int, int]:
+    payload = path.read_bytes()[:24]
+    if payload[:8] != b"\x89PNG\r\n\x1a\n":
+        raise ValueError(f"{path} is not a PNG")
+    return struct.unpack(">II", payload[16:24])
+
+
+def main() -> int:
+    errors: list[str] = []
+    index = SITE / "index.html"
+    parser = SiteParser()
+    parser.feed(index.read_text(encoding="utf-8"))
+    errors.extend(parser.errors)
+    if len(parser.ids) != len(set(parser.ids)):
+        errors.append("HTML contains duplicate ids")
+    if parser.localized < 25:
+        errors.append(f"expected substantial bilingual copy, found {parser.localized}")
+
+    for asset in parser.local_assets:
+        target = SITE / asset
+        if not target.exists():
+            errors.append(f"missing local asset: {asset}")
+
+    styles = (SITE / "styles.css").read_text(encoding="utf-8")
+    script = (SITE / "app.js").read_text(encoding="utf-8")
+    if "prefers-reduced-motion" not in styles:
+        errors.append("site lacks reduced-motion handling")
+    if "focus-visible" not in styles:
+        errors.append("site lacks visible keyboard focus")
+    if "localStorage" not in script or "document.documentElement.lang" not in script:
+        errors.append("language preference or document language is not maintained")
+
+    social = SITE / "assets" / "concordloom-social-preview.png"
+    if png_dimensions(social) != (1280, 640):
+        errors.append("social preview must be exactly 1280x640")
+
+    atlas = json.loads((SITE / "data" / "atlas.json").read_text(encoding="utf-8"))
+    loop_ids = {loop["id"] for loop in atlas["loops"]}
+    roots = set(atlas["binding"]["rootLoopIds"])
+    if roots != {"concord-change"}:
+        errors.append(f"unexpected active Atlas roots: {sorted(roots)}")
+    expected_children = {
+        "observe",
+        "negotiate",
+        "bind",
+        "execute",
+        "verify",
+        "publish",
+        "evolve",
+    }
+    if not expected_children <= loop_ids:
+        errors.append("Atlas projection omits universal self-binding loops")
+    for edge in atlas["containment"]["edges"]:
+        if edge["parent_loop_id"] not in loop_ids or edge["child_loop_id"] not in loop_ids:
+            errors.append(f"Atlas edge {edge['id']} references an unknown loop")
+
+    if errors:
+        for error in errors:
+            print(f"SITE_CHECK_ERROR {error}")
+        return 1
+    print(
+        "SITE_CHECK_OK "
+        f"localized={parser.localized} loops={len(loop_ids)} assets={len(set(parser.local_assets))}"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

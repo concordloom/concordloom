@@ -1,0 +1,21 @@
+{
+  "active_binding_digest": "sha256:fcde7fdeb0efade2cfcf345cde120c8b34bd20e5786688fcbe21c493d5e5ab85",
+  "entries": [
+    {
+      "activated_by_decision_digest": "sha256:1031fe2d9439d8acf1dd56e0258c24f548a43e381b346f6d4ad99b73372fa132",
+      "binding_digest": "sha256:345aa744baf91089d5e12396b161101344aa0bbb5bb0686c8954758797a29f0b",
+      "binding_id": "generic-service-binding",
+      "path": "framework/generic-sdlc/binding.json"
+    },
+    {
+      "activated_by_decision_digest": "sha256:66c96f5fd3f9edbf5ddcf240fbeaffb6005257236fdbee0308f4a8a47ee511d6",
+      "binding_digest": "sha256:fcde7fdeb0efade2cfcf345cde120c8b34bd20e5786688fcbe21c493d5e5ab85",
+      "binding_id": "concordloom-self-binding",
+      "path": "docs/.concord-transition/binding.json",
+      "previous_binding_digest": "sha256:345aa744baf91089d5e12396b161101344aa0bbb5bb0686c8954758797a29f0b"
+    }
+  ],
+  "id": "generic-service-catalog",
+  "kind": "concordloom.catalog",
+  "schema_version": "0.1"
+}

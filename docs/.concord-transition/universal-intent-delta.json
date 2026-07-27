@@ -1,0 +1,7 @@
+[
+  {
+    "op": "confirm",
+    "target_id": "repository-delivery-boundary",
+    "target_kind": "hypothesis"
+  }
+]

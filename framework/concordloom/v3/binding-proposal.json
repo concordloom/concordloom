@@ -1,0 +1,58 @@
+{
+  "activation_required": true,
+  "active_root_loop_ids": [
+    "concord-change"
+  ],
+  "artifacts": [
+    {
+      "digest": "sha256:594e87e264e3cc2f278419970f037d7289681ec131c6fd88bc4f0aab9f66cf4a",
+      "path": "framework/concordloom/v3/loop-design.json",
+      "role": "accepted_loop_design"
+    },
+    {
+      "digest": "sha256:227869a6a026e1f131fb377c9c2438ee1416f72cfd8daee05bd1950a1fb85b1e",
+      "path": "framework/concordloom/v3/accepted-project-graph.json",
+      "role": "accepted_project_graph"
+    },
+    {
+      "digest": "sha256:c7f30543bb30e7bfe4dc4c2aff2e08209ad18296386be00f5843bcf258e6e9fe",
+      "path": "framework/concordloom/v3/cycle-registry.json",
+      "role": "cycle_registry"
+    },
+    {
+      "digest": "sha256:4e67a46d2a578a5b442e8fb94e20cdc22733bd74c7c25834df430011716c3f43",
+      "path": "framework/concordloom/v3/decision-log.json",
+      "role": "decision_log"
+    },
+    {
+      "digest": "sha256:685e60dbf033cb430004491303afd088a48a4bd558c5e369560b392a4fc281fa",
+      "path": "framework/concordloom/v3/evolution-proposal.json",
+      "role": "evolution_history"
+    },
+    {
+      "digest": "sha256:38696c8ec098cea854ca4818f3555f267565e71622a7e5d1585a6149ca4a3788",
+      "path": "framework/concordloom/v3/loop-design-proposal.json",
+      "role": "loop_design_proposal"
+    },
+    {
+      "digest": "sha256:dd05adc186e9017a26eaace5fb8a8d8006b8f6366e77f68766a959482a682124",
+      "path": "framework/concordloom/v3/policy.json",
+      "role": "policy"
+    }
+  ],
+  "created_at": "2026-07-27T09:00:00Z",
+  "digest_contract": {
+    "algorithm": "sha256",
+    "canonicalization": "rfc8785",
+    "excluded_fields": [
+      "/proposal_digest"
+    ]
+  },
+  "framework_version": "0.1.0",
+  "id": "concordloom-self-binding-v3-proposal",
+  "kind": "concordloom.binding-proposal",
+  "predecessor_binding_digest": "sha256:5797d2fb3552fda89c35ec0c20b10f0c8e65ee0254fa46aad34ae1e862b01bb5",
+  "proposal_digest": "sha256:5d5ef9f008dea3e0c532d2f3166a3e30a903f2dc2166b21c31f29e484a9dfb70",
+  "schema_version": "0.1",
+  "status": "proposed"
+}

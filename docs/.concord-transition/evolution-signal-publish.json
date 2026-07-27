@@ -1,0 +1,17 @@
+{
+  "base_binding_digest": "sha256:345aa744baf91089d5e12396b161101344aa0bbb5bb0686c8954758797a29f0b",
+  "category": "recurring-failure",
+  "id": "self-evolution-publication-deadlock",
+  "kind": "concordloom.evolution-signal",
+  "occurrences": 1,
+  "provenance": [
+    {
+      "kind": "evidence",
+      "ref": "pages-scope-audit-2026-07-27"
+    }
+  ],
+  "schema_version": "0.1",
+  "severity": "critical",
+  "source_digest": "sha256:c4dbcea3a9164aa329531df0a5a90937aea7fe6e5b6bb4b5618762b943aaf15c",
+  "summary": "The active binding forbids every network and external publication effect."
+}

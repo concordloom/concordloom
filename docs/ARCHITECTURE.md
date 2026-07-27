@@ -1,87 +1,86 @@
 # Concord Loom v0.1 architecture
 
+[Русская версия](ru/ARCHITECTURE.md)
+
 ## 1. System boundary
 
-Concord Loom is a compiler and governance harness around repository evidence.
-It does not replace a compiler, semantic index, workflow runtime, CI system, or
-human product authority.
+Concord Loom is a domain-neutral compiler and governance harness for bounded
+systems of loops. It binds accepted intent, finite loop contracts, policy,
+execution facts, and evidence into a content-addressed chain. It does not
+replace a domain engine, workflow runtime, model provider, hosting platform,
+identity service, or operator authority.
+
+The portable kernel has five boundaries:
 
 ```text
-Git repository
-    │
-    ▼
-Inspector ──► observed graph ──► ranked questions
-                                      │
-                                      ▼
-                              decision records
-                                      │
-                                      ▼
-accepted project graph ──► proposed loop design ──► operator acceptance
-                                                       │
-                                                       ▼
-accepted loop design + policies ──► binder ──► content-addressed binding
-                                                   │
-                         ┌─────────────────────────┼───────────────┐
-                         ▼                         ▼               ▼
-                     run cards                 Atlas          evolution
+evidence sources → observation adapters → accepted loop model
+                                             │
+                                             ▼
+                                   compiler and policy kernel
+                                             │
+                       ┌─────────────────────┼─────────────────────┐
+                       ▼                     ▼                     ▼
+               execution adapters        Atlas             evolution proposals
 ```
 
-Every arrow produces a persisted artifact. Later stages refer to exact
-digests; they do not overwrite the meaning of earlier evidence.
+Git inspection, the local file-backed runner, and the generic SDLC model are
+shipped adapters and examples. They demonstrate the kernel; they do not define
+its product boundary.
 
-## 2. Artifact states
+Every transformation persists a new artifact. Later artifacts cite exact
+digests instead of rewriting earlier evidence.
 
-Project knowledge uses explicit epistemic states:
+## 2. Knowledge and authority
+
+Concord Loom separates what the system knows from what an operator authorizes:
 
 | State | Meaning | May authorize execution? |
 |---|---|---|
-| `observed` | Directly derived from repository bytes or Git records | No |
-| `inferred` | A deterministic heuristic proposed a meaning | No |
-| `confirmed` | An operator accepted the proposed meaning | Yes, after compile |
+| `observed` | Direct evidence from a declared source | No |
+| `inferred` | A deterministic or model-assisted hypothesis | No |
+| `confirmed` | An operator accepted the proposed meaning | After compilation |
 | `rejected` | An operator rejected the proposal | No |
-| `runtime_verified` | A bound execution produced contract-valid evidence | Only for its evidence scope |
+| `runtime_verified` | Bound evidence met a declared predicate | Only within that predicate |
 
-Edges carry `source_refs`, `first_seen`, `last_seen`, `weight`, `confidence`,
-and optional `decision_id`. Confidence is a ranking aid, not authority.
+Observations retain provenance. Inferences retain confidence and their source
+references. Acceptance overlays append-only decisions; it never rewrites an
+inference as an observation. Confidence helps rank questions, but grants no
+capability.
 
-The inspector emits observations and hypotheses. `accept` overlays immutable
-decision records to produce an accepted view. It never rewrites an inference
-as if it had always been observed. Artifact references form a one-way chain:
-observed graph → decision log → accepted graph → loop-design decision →
-binding. Two content-addressed documents never contain each other's digest.
+The artifact chain is one-way:
+
+```text
+observations → questions → decisions → accepted intent
+             → loop-design proposal → design acceptance
+             → registry and binding proposal → binding activation
+             → run facts and evidence → successor proposal
+```
 
 ## 3. Two graphs define a loop system
 
-Calling every hierarchy a “recursive cycle” hides an important distinction.
-Concord Loom stores two graphs.
-
 ### 3.1 Containment
 
-`contains(parent_cycle, child_cycle)` means a composite state in the parent
-invokes the child using a typed contract. The containment graph must be finite
-and acyclic. A child cannot directly or indirectly contain an ancestor.
+`contains(parent_loop, child_loop)` means a composite parent state invokes a
+child through a typed contract. The containment graph must be finite and
+acyclic. A child cannot contain an ancestor.
 
-This graph supports recursive navigation and recursive application of the loop
-contract pattern. It does not authorize unbounded runtime recursion.
+Containment supports recursive navigation and repeated use of the loop
+contract pattern. It never authorizes unbounded runtime recursion.
 
 ### 3.2 Local control flow
 
-Each cycle has a directed state graph. Forward and feedback transitions are
-both allowed. Every cyclic strongly connected component must consume a finite,
-monotonic budget. Exhausting that budget must lead to a terminal outcome or an
-escalation state.
+Each loop has a directed state graph. Forward and feedback transitions are
+allowed. Every cyclic strongly connected component must consume a finite,
+monotonic budget; exhaustion must lead to a terminal or escalation outcome.
 
 ```text
-testing:
-  plan → execute → interpret → decide ──pass────► ACCEPTED
-                    ▲          │
-                    └─retest── diagnose
-                                 │
-                                 └─budget exhausted──► ESCALATED
+prepare → act → inspect → decide ──accept──► ACCEPTED
+            ▲       │          │
+            └─retry─┘          └──────────► ESCALATED
 ```
 
-Continuous activities are modeled as a sequence of bounded runs. An operation
-window or incident ends; a later signal can create a new run.
+Continuous activity becomes a sequence of bounded runs. One run ends; a later
+signal may start another.
 
 ### 3.3 Loop contract
 
@@ -91,118 +90,88 @@ A loop is:
 L = (I, O, S, δ, C, E, A, B, X)
 ```
 
-- `I`, `O`: human-readable typed input and output contracts;
-- `S`: states;
-- `δ`: local transitions;
-- `C`: child-cycle invocations attached to composite states;
+- `I`, `O`: typed input and output descriptions;
+- `S`, `δ`: states and declarative local transitions;
+- `C`: child invocations and their mappings;
 - `E`: evidence predicates;
-- `A`: actor capabilities and independence requirements;
+- `A`: capabilities and independence rules;
 - `B`: attempt, time, cost, and tool budgets;
-- `X`: terminal outcomes such as `ACCEPTED`, `REVISE`, `ESCALATED`, and
-  `CANCELLED`.
+- `X`: terminal outcomes.
 
-The validator checks a single entry, state references, reachability, and a path
-from every reachable nonterminal state to a terminal or escalation. It rejects
-nonterminal dead ends. Every child invocation needs a finite deadline and a
-cancellation or escalation path. The validator proves structural invariants;
-it cannot prove that a human judgment was wise.
+The validator checks one entry, reachability, terminal paths, finite child
+deadlines, bounded feedback, scope containment, and authority separation.
+Predicates use a finite declarative grammar; they contain no executable code.
 
-Transitions use a finite declarative grammar: named events, state or terminal
-targets, optional child receipts, and receipt requirements over producer
-capability, candidate/policy digest equality, allowed result, and minimum count.
-No predicate contains executable code.
+## 4. Adapters
 
-## 4. Repository inspection
+### 4.1 Observation adapters
 
-v0.1 uses only Git and repository bytes.
-
-### Structural observations
+An observation adapter turns bounded source evidence into provenance-rich
+facts and hypotheses. The v0.1 built-in adapter reads one local Git repository.
+It records:
 
 - tracked files, sizes, extensions, and language categories;
 - conventional build, test, CI, decision, documentation, and agent surfaces;
-- lightweight import edges between tracked local Python modules; and
-- repository-relative paths on file nodes.
+- lightweight local Python import edges;
+- commit identity, timestamps, churn, authors, renames, and co-change; and
+- coverage, truncation, and stable source references.
 
-JavaScript and TypeScript files receive language categories, but v0.1 does not
-parse their imports. It also does not synthesize directory nodes or directory
-containment edges. Those are explicit future adapter opportunities rather than
-facts in the observed graph.
+The v0.1 inspector does not parse JavaScript or TypeScript imports, synthesize
+directory nodes, check out historical revisions, import target code, or run
+repository hooks. It caps history depth, file count, bytes, subprocess time,
+paths per commit, and co-change pairs.
 
-### Historical observations
+Future adapters may observe other repositories, artifact stores, services, or
+physical-process receipts. They must preserve the same fact/inference and
+authority boundaries.
 
-- commit identity and timestamps;
-- file churn and distinct author counts;
-- rename records;
-- weighted file co-change edges.
+### 4.2 Execution adapters
 
-Co-change is computed over commits within configured limits. Generated,
-vendored, binary, and oversized files are excluded from semantic hints but
-remain visible as files. Every metric records its command-free source
-reference, such as a commit and path.
+The kernel validates contracts and records governed facts. An execution
+adapter may use a workflow engine, CI, an agent graph, a local process, or a
+mixed runtime. It must return candidate- and policy-bound evidence.
 
-The v0.1 inspector never checks out historical revisions and never executes
-repository code. Git calls disable hooks, pagers, prompts, optional locks,
-external diff/text conversion, replace objects, and fsmonitor where applicable.
-History depth, file count, bytes read, paths per commit, subprocess bytes and
-time, and co-change pairs have explicit caps. Coverage and truncation are
-visible and must be acknowledged before acceptance.
+Concord Loom v0.1 validates local state machines and containment but does not
+step every transition, schedule durable children, or derive parent acceptance
+from a child status.
 
-### Determinism
+### 4.3 Projections
 
-The revision identity, configuration, stable path ordering, and canonical JSON
-encoding define inspector output. A canonical digest envelope contains
-`schema_version`, `artifact_kind`, and `payload`. Wall-clock invocation
-timestamps and display metadata live outside the payload and are excluded from
-its digest.
+The Atlas is a deterministic, self-contained HTML projection of accepted
+artifacts and optional run data. It shows containment separately from feedback
+and keeps planned, actual, verified, and drift layers distinct. It is not a
+source of truth or execution authority.
 
-## 5. Interview and acceptance
+## 5. Negotiation and acceptance
 
-Question ranking favors decisions that would change the most downstream loop
-or ownership edges. A question contains:
+Questions rank unresolved hypotheses by downstream impact and uncertainty.
+Each question identifies its evidence, why the answer matters, and the graph
+delta for each option.
 
-- the hypothesis;
-- evidence references and confidence;
-- why the answer matters;
-- mutually exclusive answer identifiers;
-- an explicit graph delta for each answer;
-- whether it blocks compilation.
+An accepted model requires decisions for every blocking question. The actor
+and capability resolve through content-addressed policy. A correction creates
+a decision-backed replacement; it does not mutate the observation.
 
-v0.1 ranks by the number of proposed graph operations, then confidence
-uncertainty, then stable question ID. Rejected hypotheses stay visible with
-their decision reference; unresolved non-blocking hypotheses stay inferred and
-cannot grant authority.
-
-The CLI does not impersonate a conversational UI. It emits portable question
-JSON and accepts explicit decision arguments or decision files. A Codex skill
-provides the conversational layer.
-
-An accepted graph is valid only when all blocking questions have decisions and
-their actor/rationale fields are present. Actor IDs and the `accept_intent`
-capability resolve through a content-addressed authority policy. A correction
-creates a replacement edge with decision provenance; it does not mutate the
-observed edge.
+Loop design and binding activation have separate acceptance seams. The
+compiler can reject an unsafe proposal, but it cannot approve one.
 
 ## 6. Compilation and binding
 
-The proposal stage consumes an accepted project graph and emits a loop-design
-delta. Its confidence supplies no authority. The binder consumes:
+The binder consumes accepted intent, an accepted loop design, registry,
+authority and routing policy, compute policy, and evolution policy. It
+validates schemas and cross-artifact invariants, computes canonical SHA-256
+digests, and emits a binding over those exact inputs.
 
-- an accepted project graph;
-- a loop registry whose digest has an authorized acceptance decision;
-- an authority/routing policy;
-- a compute-intent policy;
-- an evolution policy.
+Runs pin a binding digest. The catalog appends successor bindings and preserves
+their predecessors. No component may resolve authority from an unpinned
+“current workflow.”
 
-It validates every public artifact against its JSON Schema, checks cross-file
-invariants, computes canonical SHA-256 digests, and emits a binding containing
-those digests. Runs pin a binding digest, never the word “current.”
+Canonical JSON is deterministic UTF-8 with a trailing newline. Digest
+envelopes exclude declared mutable display metadata.
 
-A catalog is append-only: a new binding adds a successor entry. Prior entries
-and their artifacts remain addressable.
+## 7. Governed execution
 
-## 7. Execution model
-
-A run card is the source of execution state for one objective.
+A run card is the execution record for one objective:
 
 ```text
 PENDING → AUTHORIZED → RUNNING → PASSED
@@ -211,81 +180,60 @@ PENDING → AUTHORIZED → RUNNING → PASSED
                           └────► CANCELLED
 ```
 
-Authorization checks dependency outcomes and scope. `guard` rejects reads and
-writes outside the node grant. It is a policy check, not an operating-system
-sandbox; callers that need hostile-code isolation must add one.
+Authorization checks dependencies, capabilities, budgets, and scope. `guard`
+compares intended reads and writes with the node grant. It is a policy check,
+not an operating-system sandbox.
 
-The active binding grants the runner a narrow control-plane capability to
-create cards and append authorization, attempt, evidence, and completion
-events. This is distinct from candidate write scope. A reviewer can be
-read-only with respect to candidate files while the runner records the review
-receipt. The transparent bootstrap binding grants this lane for the first full
-run.
+An actual attempt records the effective principal, model and reasoning when
+used, skill, subagents, tools, policy digest, candidate digest, times, and
+terminal result. Evidence records its producer, predicate scope, candidate,
+policy, provenance, checks, and payload digest.
 
-An actual attempt records:
+Parent contracts choose which child receipts matter. A passing child never
+closes its parent automatically. Independent gates reject a principal that
+authored candidate content when policy requires separation. A passed gate
+proves its evidence contract; it does not grant publication authority.
 
-- effective executor and independent-review identity;
-- model and reasoning when a model was used;
-- skill, subagents, and tool versions;
-- policy digest and candidate tree digest;
-- start/end and terminal result.
+## 8. Concord Loom self-binding
 
-Evidence is structured and content-addressed. It states its producer, candidate
-digest, policy digest, scope, result, provenance, and checks. A parent contract
-chooses which child receipts are necessary and evaluates its own predicates.
+Concord Loom's own repository now has an operator-accepted successor binding
+with root loop `concord-change`:
 
-The v0.1 runner treats each planned loop node as a governed execution unit. It
-validates the declared local state graph but does not step each transition or
-schedule child workflows. A workflow, CI, agent, or local adapter executes the
-child and supplies its candidate-bound result to the parent's evidence
-contract. The runner never promotes a child status into parent acceptance.
+```text
+Observe → Negotiate → Bind → Execute → Verify → Publish → Evolve
+```
 
-Independent gates reject an executor identity that authored candidate content.
-Release readiness and the external authority to publish remain separate.
+The stages have explicit meanings:
 
-Candidate identity is a canonical manifest of selected tracked and explicitly
-included untracked paths, file modes, symlink targets, and submodule commits.
-The runner rechecks the manifest digest when evidence is recorded and a gate
-completes. Identity and capability claims resolve through the bound authority
-policy; arbitrary strings are not authenticated principals. Protecting policy
-and run files from a hostile local writer requires OS or VCS enforcement
-outside the portable core.
+| Stage | Contract outcome |
+|---|---|
+| Observe | Provenance-rich facts, hypotheses, and coverage |
+| Negotiate | Accepted intent and append-only decisions |
+| Bind | Separately activated loops, policy, and scope |
+| Execute | A scoped candidate and factual attempt evidence |
+| Verify | An independent receipt for the pinned candidate |
+| Publish | An authorized effect, no-op receipt, or escalation |
+| Evolve | A non-activating successor proposal |
 
-## 8. Atlas
-
-The Atlas renderer reads accepted binding artifacts and, optionally, one run
-card. It emits a self-contained HTML document with no network dependencies.
-
-The primary view shows one containment level. Selecting a composite state
-descends into its child cycle; breadcrumbs and browser history preserve
-location. Local transitions use a different visual vocabulary from containment.
-
-Plan and fact are never merged:
-
-- **planned** comes from the binding and run card route;
-- **actual** comes from recorded attempts;
-- **verified** requires candidate-bound evidence;
-- **drift** is a visible comparison, not an implicit correction.
-
-The renderer is deterministic and the CLI supports `--check` to detect stale
-generated output.
+This self-binding succeeded the original generic-service binding through an
+explicit operator decision. It governs Concord Loom itself; other projects may
+accept different topologies.
 
 ## 9. Evolution
 
-Signals are append-only, source-addressed observations about repeated friction,
-drift, failure, or cadence. The reducer deduplicates them and may emit a
-proposed graph diff with supporting signal IDs.
+Signals are append-only observations about repeated friction, drift, failure,
+or cadence. A reducer may deduplicate them and propose a graph or policy delta.
+Every proposal identifies its base binding, source signals, preconditions,
+risk, and required authority.
 
 ```text
 binding vN → runs → signals → proposal
-       └──────── defines who may accept ────────┘
+       └──────── defines who may decide ────────┘
 ```
 
-Every proposal names `base_binding_digest`, contributing signal digests, and
-per-operation precondition digests. The reducer cannot edit the active catalog.
-A decision under `vN` must accept the proposal before a binder can create
-`vN+1`; stale preconditions fail closed. Historical runs remain pinned to their
-original binding.
+The reducer cannot edit the catalog. The proposal cannot authorize or activate
+itself. A separate decision under `vN` must accept the proposal before the
+binder can create and activate `vN+1`; stale preconditions fail closed.
 
 ## 10. Modules
 
@@ -293,49 +241,34 @@ original binding.
 src/concordloom/
   canonical.py       deterministic JSON and digests
   schema.py          public schema validation
-  graph.py           project graph and decision overlays
-  inspect_repo.py    safe repository/Git inspection
+  graph.py           observations and decision overlays
+  inspect_repo.py    built-in Git observation adapter
   interview.py       question ranking and decisions
-  loops.py           containment/control-flow invariants
+  loops.py           containment and control-flow invariants
   compiler.py        accepted model to binding
   run.py             governed execution lifecycle
-  atlas.py           offline HTML renderer
+  atlas.py           offline projection
   evolution.py       signal reduction and proposals
   cli.py             stable command surface
 ```
 
-The core is standard-library only. JSON Schema validation implements the
-deliberately small keyword subset used by shipped schemas; unsupported schema
-keywords fail closed. External full-schema validators may be used as an
-additional check.
+Python 3.11 and the standard library form the portable core. The built-in
+schema validator implements the deliberately small JSON Schema subset used by
+the shipped schemas and rejects unsupported keywords.
 
-## 11. Security and trust
+## 11. Security and v0.1 limits
 
-- Inspection uses argument-vector subprocess calls and does not invoke a shell.
-- Paths are normalized beneath the selected repository root.
-- Scope prefixes match complete path components, not string prefixes. Paths are
-  stored as UTF-8 with explicit rejection metadata for names that cannot be
-  represented safely.
-- Symbolic links are observed but not followed outside the root.
-- No repository code, hooks, build scripts, or CI files are executed by
-  inspection.
-- Artifact digests exclude mutable filesystem metadata.
-- Inspection reports tracked, untracked, ignored, and dirty coverage. Binding a
-  dirty or truncated snapshot requires an explicit operator acknowledgement;
-  release policy may reject it outright.
-- Model-assisted output is untrusted input until schema and invariant checks
-  pass.
-- Secrets and file contents are not included in the graph by default.
-- The portable core has zero network egress. Model-assisted skills obey a bound
-  data policy for allowed paths, content classes, providers, and privacy; the
-  actual egress route and content scope are recorded.
-- The Atlas escapes all repository-controlled text and ships a restrictive
-  content-security policy.
+The Git adapter normalizes paths beneath its root, observes but does not follow
+external symlinks, disables interactive and executable Git features, and
+exposes dirty or truncated coverage. Model-assisted output remains untrusted
+until schema and invariant checks pass. The portable core performs no implicit
+network egress.
 
-## 12. v0.1 constraints
+The first public release remains a complete local vertical slice: one local
+Git observation adapter, one accepted binding at a time, deterministic JSON,
+an offline Atlas, and file-backed runs. These are v0.1 implementation limits,
+not universal ontology.
 
-The first release intentionally favors a complete, inspectable vertical slice:
-one local Git repository, one accepted binding at a time, deterministic JSON,
-an offline Atlas, and file-backed runs. Adapters may later provide deeper
-semantic graphs, hosted coordination, or durable workflow execution without
-changing the core authority model.
+The first release used a separate bootstrap trust-seed protocol under
+`concord/`. Public projects use `schemas/run-card.schema.json` and an accepted
+binding. Bootstrap cards must never be represented as public v0.1 run cards.

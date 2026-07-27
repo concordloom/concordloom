@@ -10,10 +10,39 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 while IFS= read -r -d '' file; do
   python3 -m json.tool "$file" >/dev/null
 done < <(find schemas concord framework examples plugins .agents .concord \
+  docs/.concord-transition site/data \
   -type f -name '*.json' -print0 2>/dev/null | sort -z)
 
 PYTHONPATH=src python3 -m concordloom --help >/dev/null
 PYTHONPATH=src python3 tools/generate_generic_example.py --check
+PYTHONPATH=src python3 tools/build_site.py --check
+PYTHONPATH=src python3 tools/check_site.py
+PYTHONPATH=src python3 tools/check_docs.py
+PYTHONPATH=src python3 -m concordloom validate \
+  --input framework/concordloom/cycle-registry.json \
+  --graph framework/concordloom/accepted-project-graph.json \
+  --decisions framework/concordloom/decision-log.json \
+  --proposal framework/concordloom/loop-design-proposal.json \
+  --design framework/concordloom/loop-design.json \
+  --policy framework/concordloom/policy.json
+PYTHONPATH=src python3 -m concordloom validate \
+  --input framework/concordloom/evolution-proposal.json \
+  --policy framework/concordloom/policy.json \
+  --base-binding docs/.concord-transition/binding.json
+PYTHONPATH=src python3 -m concordloom validate \
+  --input framework/concordloom/v3/cycle-registry.json \
+  --graph framework/concordloom/v3/accepted-project-graph.json \
+  --decisions framework/concordloom/v3/decision-log.json \
+  --proposal framework/concordloom/v3/loop-design-proposal.json \
+  --design framework/concordloom/v3/loop-design.json \
+  --policy framework/concordloom/v3/policy.json
+PYTHONPATH=src python3 -m concordloom validate \
+  --input framework/concordloom/v3/evolution-proposal.json \
+  --policy framework/concordloom/policy.json \
+  --base-binding framework/concordloom/binding.json
+PYTHONPATH=src python3 -m concordloom validate \
+  --input framework/concordloom/catalog.json \
+  --artifact-root .
 PYTHONPATH=src python3 -m concordloom atlas \
   --binding framework/generic-sdlc/binding.json \
   --registry framework/generic-sdlc/cycle-registry.json \

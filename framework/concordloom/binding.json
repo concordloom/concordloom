@@ -1,0 +1,68 @@
+{
+  "accepted_by": {
+    "accepted_at": "2026-07-27T08:46:00Z",
+    "actor": {
+      "display_name": "Operator",
+      "id": "example-operator",
+      "kind": "operator"
+    },
+    "authority_ref": "operator",
+    "decision_id": "activate-durable-concordloom-self-binding",
+    "proposal_digest": "sha256:cda21ffa8a49e9f1ebf083301f50f5032b6a8b991881d14dd9940540ceed68a2",
+    "rationale": "Activate the exact path-only successor after a separate operator decision; cycle semantics remain unchanged."
+  },
+  "active_root_loop_ids": [
+    "concord-change"
+  ],
+  "artifacts": [
+    {
+      "digest": "sha256:f72ca95018c13d181c0ef1c801111b38c7b72e567524aa32ebf25a2be666c6d5",
+      "path": "framework/concordloom/loop-design.json",
+      "role": "accepted_loop_design"
+    },
+    {
+      "digest": "sha256:227869a6a026e1f131fb377c9c2438ee1416f72cfd8daee05bd1950a1fb85b1e",
+      "path": "framework/concordloom/accepted-project-graph.json",
+      "role": "accepted_project_graph"
+    },
+    {
+      "digest": "sha256:3d0955511aa1354c53e2f02f6a15fc6d3100e815a1e835f2c0f0fabef55f6815",
+      "path": "framework/concordloom/cycle-registry.json",
+      "role": "cycle_registry"
+    },
+    {
+      "digest": "sha256:4e67a46d2a578a5b442e8fb94e20cdc22733bd74c7c25834df430011716c3f43",
+      "path": "framework/concordloom/decision-log.json",
+      "role": "decision_log"
+    },
+    {
+      "digest": "sha256:4b4b7520de7ab495f01663f8877f20a3a777e4f2a67eebc75ccc6beaddf9e581",
+      "path": "framework/concordloom/evolution-proposal.json",
+      "role": "evolution_history"
+    },
+    {
+      "digest": "sha256:6fdf24ed76a85c3d4f413ddf03ba8a6558827c7f852e81ad7650868bb651f49a",
+      "path": "framework/concordloom/loop-design-proposal.json",
+      "role": "loop_design_proposal"
+    },
+    {
+      "digest": "sha256:ea66b68baca6f023568eca5a8c3aceb266761af275a53ec3e6a99436acf37ae9",
+      "path": "framework/concordloom/policy.json",
+      "role": "policy"
+    }
+  ],
+  "binding_digest": "sha256:5797d2fb3552fda89c35ec0c20b10f0c8e65ee0254fa46aad34ae1e862b01bb5",
+  "created_at": "2026-07-27T08:46:00Z",
+  "digest_contract": {
+    "algorithm": "sha256",
+    "canonicalization": "rfc8785",
+    "excluded_fields": [
+      "/binding_digest"
+    ]
+  },
+  "framework_version": "0.1.0",
+  "id": "concordloom-self-binding-v2",
+  "kind": "concordloom.binding",
+  "predecessor_binding_digest": "sha256:fcde7fdeb0efade2cfcf345cde120c8b34bd20e5786688fcbe21c493d5e5ab85",
+  "schema_version": "0.1"
+}

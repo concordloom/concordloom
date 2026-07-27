@@ -1,0 +1,133 @@
+[
+  {
+    "loop_id": "concord-change",
+    "model_intent": "select within bound model policy",
+    "node_id": "concord-change",
+    "reasoning_intent": "coordinate bounded child outcomes",
+    "role": "executor",
+    "scope": {
+      "external_mutations": [],
+      "network": "none",
+      "read_paths": ["."],
+      "write_paths": ["docs"]
+    },
+    "skill_intent": "orchestration",
+    "subagent_intent": ["content-audit", "visual-audit", "governance-audit"]
+  },
+  {
+    "loop_id": "observe",
+    "model_intent": "select within bound model policy",
+    "node_id": "observe",
+    "reasoning_intent": "separate evidence from intent",
+    "role": "executor",
+    "scope": {
+      "external_mutations": [],
+      "network": "read",
+      "read_paths": ["."],
+      "write_paths": ["docs"]
+    },
+    "skill_intent": "repository and public-positioning audit",
+    "subagent_intent": ["content-audit", "visual-audit", "governance-audit"]
+  },
+  {
+    "loop_id": "negotiate",
+    "model_intent": "select within bound model policy",
+    "node_id": "negotiate",
+    "reasoning_intent": "record operator-approved universal intent",
+    "role": "executor",
+    "scope": {
+      "external_mutations": [],
+      "network": "none",
+      "read_paths": ["."],
+      "write_paths": ["docs", "framework"]
+    },
+    "skill_intent": "writing-clearly-and-concisely",
+    "subagent_intent": []
+  },
+  {
+    "loop_id": "bind",
+    "model_intent": "select within bound model policy",
+    "node_id": "bind",
+    "reasoning_intent": "compile and activate exact operator-approved binding",
+    "role": "executor",
+    "scope": {
+      "external_mutations": [],
+      "network": "none",
+      "read_paths": ["."],
+      "write_paths": ["docs", "framework", "tests", "tools"]
+    },
+    "skill_intent": "governance migration",
+    "subagent_intent": []
+  },
+  {
+    "loop_id": "execute",
+    "model_intent": "openai gpt-5",
+    "node_id": "execute",
+    "reasoning_intent": "implement localized docs, site, Atlas, art, and harness",
+    "role": "executor",
+    "scope": {
+      "external_mutations": [],
+      "network": "read",
+      "read_paths": ["."],
+      "write_paths": [
+        ".github",
+        "README.md",
+        "README.ru.md",
+        "docs",
+        "framework",
+        "plugins",
+        "site",
+        "src",
+        "tests",
+        "tools"
+      ]
+    },
+    "skill_intent": "design-taste-frontend, writing-clearly-and-concisely, imagegen",
+    "subagent_intent": ["content-audit", "visual-audit", "governance-audit"]
+  },
+  {
+    "loop_id": "verify",
+    "model_intent": "independent reviewer",
+    "node_id": "verify",
+    "reasoning_intent": "evaluate immutable candidate and evidence",
+    "role": "reviewer",
+    "scope": {
+      "external_mutations": [],
+      "network": "read",
+      "read_paths": ["."],
+      "write_paths": []
+    },
+    "skill_intent": "independent accessibility, localization, and governance review",
+    "subagent_intent": []
+  },
+  {
+    "loop_id": "publish",
+    "model_intent": "none",
+    "node_id": "publish",
+    "reasoning_intent": "publish only the independently verified site",
+    "role": "publisher",
+    "scope": {
+      "external_mutations": ["github-pages"],
+      "network": "write",
+      "read_paths": ["."],
+      "write_paths": [".github", "docs", "site"]
+    },
+    "skill_intent": "GitHub Pages publication",
+    "subagent_intent": []
+  },
+  {
+    "loop_id": "evolve",
+    "model_intent": "select within bound model policy",
+    "node_id": "evolve",
+    "reasoning_intent": "record signals and propose successors without activation",
+    "role": "executor",
+    "scope": {
+      "external_mutations": [],
+      "network": "none",
+      "read_paths": ["."],
+      "write_paths": ["docs", "framework"]
+    },
+    "skill_intent": "evolution signal reduction",
+    "subagent_intent": []
+  }
+]

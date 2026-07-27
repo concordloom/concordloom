@@ -1,7 +1,12 @@
-# Release verification
+# Release and public-site verification
 
 Concord Loom v0.1 releases bind source, package, independent reviews, and a
 durable bootstrap receipt.
+
+The `v0.1.0` instructions below are historical verification for that immutable
+tag. Current development additionally carries the accepted, domain-neutral
+Concord Loom self-binding and a bilingual Pages candidate. Do not use current
+working-tree files to revise claims about the tagged release.
 
 ## Verify source
 
@@ -66,7 +71,48 @@ Do not collapse these claims:
 None of these alone proves product value, complete test oracles, or
 cryptographic reviewer identity.
 
+## Verify the accepted self-binding
+
+The current repository transition records a successor to the generic SDLC
+example. Validate the exact binding, registry, policy, predecessor link, and
+append-only catalog rather than relying on the label “current.” The accepted
+root is `concord-change`; its children are observe, negotiate, bind, execute,
+verify, publish, and evolve.
+
+The binding was activated through a decision separate from the evolution
+proposal. The proposal retains `activation_allowed: false`, and the predecessor
+binding remains addressable in the catalog. This is the evidence for governed
+self-binding; a generated Atlas or website copy is not.
+
+## Verify the bilingual Pages candidate
+
+From a checkout containing the current candidate:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 tools/build_site.py --check
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 tools/check_site.py
+```
+
+The checks bind `site/data/atlas.json` to the active accepted binding, require
+substantial English/Russian copy, verify local assets and accessibility hooks,
+and require the social preview to be exactly 1280 × 640 pixels. The hero and
+social-preview files under `docs/assets/` are source communication assets; the
+copies under `site/assets/` must match the deterministic site build.
+
+The Pages workflow is scoped publication machinery. Review its trigger,
+artifact path, `contents: read`, `pages: write`, and `id-token: write`
+permissions, plus the separate `github-pages` deployment environment. A
+successful local check or workflow build proves neither that Pages was
+authorized nor that a public URL is live.
+
+Live verification requires the deployment record and URL for the exact
+candidate, followed by a fresh fetch that checks the bilingual switch, local
+assets, social metadata, and accepted Atlas digest. Until that evidence exists,
+describe the site as a Pages candidate, not as deployed.
+
 ## Maintainer release sequence
+
+For the immutable v0.1 release:
 
 1. Finish authoring and documentation.
 2. Generate and inspect the offline Atlas.
@@ -77,5 +123,16 @@ cryptographic reviewer identity.
 7. Record proposal-only evolution signals.
 8. Complete the bootstrap run and export its receipt bundle.
 9. Attach the bundle and final checksums to the GitHub release.
+
+For a successor and Pages publication:
+
+1. Pin the candidate under the active predecessor binding.
+2. Validate bilingual docs, site output, social assets, and Atlas provenance.
+3. Obtain independent verification of the exact candidate.
+4. Record a separate capable operator decision for any successor activation.
+5. Append the activated binding without replacing predecessor history.
+6. Let the scoped publisher deploy only the verified `site/` artifact.
+7. Capture the deployment receipt and smoke-test the live URL.
+8. Record later friction as signals; never auto-activate their proposal.
 
 If source bytes change after the candidate is pinned, start a new run.

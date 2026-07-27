@@ -1,0 +1,17 @@
+{
+  "base_binding_digest": "sha256:345aa744baf91089d5e12396b161101344aa0bbb5bb0686c8954758797a29f0b",
+  "category": "recurring-failure",
+  "id": "self-evolution-scope-deadlock",
+  "kind": "concordloom.evolution-signal",
+  "occurrences": 1,
+  "provenance": [
+    {
+      "kind": "evidence",
+      "ref": "guard-scope-audit-2026-07-27"
+    }
+  ],
+  "schema_version": "0.1",
+  "severity": "critical",
+  "source_digest": "sha256:b04ea5460854b2842e50ba09a52e6afa9c3dba372caafa3095e59bec9b39efde",
+  "summary": "The active binding cannot write a successor outside src, tests, or docs."
+}

@@ -1,0 +1,61 @@
+{
+  "id": "concordloom-observed-questions",
+  "kind": "concordloom.question-set",
+  "questions": [
+    {
+      "blocking": true,
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "kind": "file",
+          "ref": ".agents/plugins/marketplace.json"
+        }
+      ],
+      "hypothesis_id": "repository-delivery-boundary",
+      "id": "question.repository-delivery-boundary",
+      "impact_score": 1.0,
+      "options": [
+        {
+          "graph_delta": [
+            {
+              "op": "confirm",
+              "target_id": "repository-delivery-boundary",
+              "target_kind": "hypothesis"
+            }
+          ],
+          "id": "confirm",
+          "label": "Confirm the proposed intent",
+          "verdict": "confirmed"
+        },
+        {
+          "graph_delta": [
+            {
+              "op": "reject",
+              "target_id": "repository-delivery-boundary",
+              "target_kind": "hypothesis"
+            }
+          ],
+          "id": "reject",
+          "label": "Reject the proposed intent",
+          "verdict": "rejected"
+        },
+        {
+          "graph_delta": [
+            {
+              "op": "reject",
+              "target_id": "repository-delivery-boundary",
+              "target_kind": "hypothesis"
+            }
+          ],
+          "id": "correct",
+          "label": "Reject this wording and provide a correction",
+          "verdict": "corrected"
+        }
+      ],
+      "prompt": "Should Concord Loom accept this intent: Treat this repository as one governed delivery boundary.",
+      "why_it_matters": "The answer changes 1 proposed graph operation(s) across hypothesis. Compilation is blocked until an authorized operator decides it."
+    }
+  ],
+  "schema_version": "0.1",
+  "source_graph_digest": "sha256:04a59f7cd5f0f65b6b6e36c2fb040e3d8484f92735a8646448ea1034cf7741b3"
+}

@@ -1,0 +1,79 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:345aa744baf91089d5e12396b161101344aa0bbb5bb0686c8954758797a29f0b",
+  "decision_authority_ref": "operator",
+  "decision_required": true,
+  "expected_effect": "Replace the SDLC-shaped self-binding with a domain-neutral cycle and make successor proposal plus scoped publication possible.",
+  "generated_at": "2026-07-27T08:30:00Z",
+  "id": "concordloom-universal-self-evolution",
+  "kind": "concordloom.evolution-proposal",
+  "operations": [
+    {
+      "op": "add",
+      "target_id": "concord-change",
+      "target_kind": "loop",
+      "value": {
+        "successor_registry_id": "concordloom-self-cycle-registry"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "concordloom-self-policy",
+      "target_kind": "policy",
+      "value": {
+        "allow_self_activation": false,
+        "scoped_external_mutation": "github-pages"
+      }
+    }
+  ],
+  "proposed_by": {
+    "id": "example-orchestrator",
+    "kind": "orchestrator"
+  },
+  "risk": {
+    "failure_modes": [
+      "An overly broad run route could grant publishing to a non-publisher.",
+      "A successor could be mistaken for self-authorized evolution."
+    ],
+    "level": "high",
+    "rollback": "Keep the generic-service binding active and reject the successor proposal before catalog activation."
+  },
+  "schema_version": "0.1",
+  "signals": [
+    {
+      "base_binding_digest": "sha256:345aa744baf91089d5e12396b161101344aa0bbb5bb0686c8954758797a29f0b",
+      "category": "recurring-failure",
+      "id": "self-evolution-scope-deadlock",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 1,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "guard-scope-audit-2026-07-27"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "critical",
+      "source_digest": "sha256:b04ea5460854b2842e50ba09a52e6afa9c3dba372caafa3095e59bec9b39efde",
+      "summary": "The active binding cannot write a successor outside src, tests, or docs."
+    },
+    {
+      "base_binding_digest": "sha256:345aa744baf91089d5e12396b161101344aa0bbb5bb0686c8954758797a29f0b",
+      "category": "recurring-failure",
+      "id": "self-evolution-publication-deadlock",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 1,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "pages-scope-audit-2026-07-27"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "critical",
+      "source_digest": "sha256:c4dbcea3a9164aa329531df0a5a90937aea7fe6e5b6bb4b5618762b943aaf15c",
+      "summary": "The active binding forbids every network and external publication effect."
+    }
+  ],
+  "status": "proposed"
+}
