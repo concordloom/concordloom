@@ -91,7 +91,7 @@ def main() -> int:
         errors.append(
             "wide reading layout must balance equal margins around the prose"
         )
-    if 'html[lang="en"].heroh1em{margin-top:0.1em;}' not in compact_styles:
+    if 'html[lang="en"].heroh1em{margin-top:0.22em;}' not in compact_styles:
         errors.append("English hero lines must clear descenders")
     if (
         ".stage-readout{display:grid;grid-template-rows:3.5remminmax(0,1fr);"
