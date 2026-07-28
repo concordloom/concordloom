@@ -149,11 +149,32 @@ def main() -> int:
     for view in ("concept", "theory", "quickstart", "atlas", "docs"):
         if f'data-view="{view}"' not in index.read_text(encoding="utf-8"):
             errors.append(f"site misses the {view} destination")
+        if f'id="{view}" data-view="{view}"' not in index.read_text(encoding="utf-8"):
+            errors.append(f"site lacks a no-JS target for {view}")
+    for marker in (
+        "<noscript>",
+        "<!-- GENERATED:article:start -->",
+        "<!-- GENERATED:quickstart:start -->",
+        ".view:target",
+    ):
+        if marker not in index.read_text(encoding="utf-8") + design_styles:
+            errors.append(f"site lacks no-JS reading contract: {marker}")
+    for section in ("article", "quickstart"):
+        block = re.search(
+            rf"<!-- GENERATED:{section}:start -->(.*?)"
+            rf"<!-- GENERATED:{section}:end -->",
+            index.read_text(encoding="utf-8"),
+            flags=re.DOTALL,
+        )
+        if not block or len(block.group(1).strip()) < 4_000:
+            errors.append(f"site lacks substantial static {section} content")
     if "#atlas/" not in script or "atlas-breadcrumbs" not in styles:
         errors.append("Atlas lacks reloadable drill-down paths or breadcrumbs")
     for marker in (
         'href="design-system.css"',
         'href="design-tokens.css"',
+        'class="system-rail"',
+        'class="atlas-commandbar"',
         "data-atlas-graph",
         "data-atlas-history",
         'class="atlas-inspector"',
@@ -176,6 +197,10 @@ def main() -> int:
         ".atlas-graph",
         ".atlas-history",
         ".atlas-inspector",
+        "signal-constellation-stage.png",
+        ".parent-constellation",
+        '.atlas-stage[data-motion="forward"]',
+        '.atlas-stage[data-motion="back"]',
         "prefers-reduced-motion",
     ):
         if marker not in token_styles + design_styles:
@@ -206,6 +231,8 @@ def main() -> int:
         errors.append("design token source lacks the four-level authority chain")
     if set(token_source.get("modes", {})) != {"compact", "high-contrast"}:
         errors.append("design token source lacks compact and high-contrast modes")
+    if token_source.get("version") != "2.0.0":
+        errors.append("Signal Constellation requires design-token contract 2.0.0")
     if 'window.addEventListener("scroll"' in script:
         errors.append("site must not run continuous JavaScript on scroll")
     if "offsetWidth" in script or "getBoundingClientRect" in script:
@@ -241,6 +268,12 @@ def main() -> int:
         errors.append("social preview must be exactly 1280x640")
     if social.stat().st_size >= 1_000_000:
         errors.append("social preview must stay below GitHub's 1 MB upload limit")
+    reference = ROOT / "docs" / "assets" / "signal-constellation-reference.png"
+    if png_dimensions(reference) != (1672, 941):
+        errors.append("Signal Constellation reference lock must remain exactly 1672x941")
+    stage = SITE / "assets" / "signal-constellation-stage.png"
+    if png_dimensions(stage) != (1672, 941):
+        errors.append("Signal Constellation material stage must remain exactly 1672x941")
 
     atlas = json.loads((SITE / "data" / "atlas.json").read_text(encoding="utf-8"))
     loop_ids = {loop["id"] for loop in atlas["loops"]}

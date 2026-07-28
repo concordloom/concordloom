@@ -4,7 +4,7 @@ Language: **English** | [Русский](ru/DESIGN_SYSTEM.md)
 
 Status: **normative**
 
-Version: **1.0.0**
+Version: **2.0.0**
 
 Machine source: [`site/design-tokens.json`](../site/design-tokens.json)
 
@@ -37,14 +37,44 @@ ornament, generic dashboard cards, glass effects, and decorative gradients.
 The complete system should still be recognizable with every label removed:
 dark concentric mechanisms, taut paths, and one active acid route.
 
+### Signal Constellation reference lock
+
+[`signal-constellation-reference.png`](assets/signal-constellation-reference.png)
+is the normative visual benchmark for the 2.0 system. It is not mood-board
+material. Implementations must preserve its visual logic:
+
+- blackened metal and stone have visible depth, wear, rims, fasteners, and
+  concentric construction;
+- the Atlas is a dense working mechanism, not a sparse chart placed on a dark
+  page;
+- a drilled view keeps the parent system on the left, expands the current
+  system in the center, and uses the right side as an instrument inspector;
+- warm structural threads show real relationships, while acid chartreuse
+  marks one active route;
+- labels, controls, navigation, reading surfaces, and the homepage belong to
+  the same machine.
+
+[`signal-constellation-stage.png`](assets/signal-constellation-stage.png) is the
+clean material stage derived from that benchmark. Live nodes and paths remain
+data-driven projections over the stage; they must never be baked into the
+image.
+
+A token-only reskin, flat circles, a generic dashboard grid, a sparse radial
+diagram, or an Atlas that alone uses this style does not satisfy the reference
+lock.
+
 ## Token architecture
 
-Tokens follow three layers:
+Tokens follow four layers:
 
 1. **Primitive tokens** store raw color, space, type, line, and timing values.
 2. **Semantic tokens** name purpose, such as `surface-void`, `text-primary`,
    `line-quiet`, and `signal`.
-3. **Component rules** apply semantic tokens to navigation, reading surfaces,
+3. **Component tokens** define reusable component roles without binding them
+   to one page.
+4. **Compatibility tokens** preserve supported legacy names during migration.
+
+Component rules apply those layers to navigation, reading surfaces,
    the Atlas, controls, and status.
 
 Canonical machine values live in
@@ -119,8 +149,8 @@ reserved for identifiers, code, measurements, and machine values.
 - The scale is `2xs` 10 px, `xs` 12 px, `sm` 14 px, body 16 px, responsive
   lead, title, and display sizes.
 - Body text uses 1.6 line height. Long-form reading uses 1.72.
-- Display text uses weights 650 or 800 and tracking from -0.04 em to
-  -0.065 em. Labels use uppercase mono at 0.12 em.
+- Display text uses weights 650 or 800 and tracking no tighter than -0.04 em.
+  Labels use uppercase mono at 0.12 em.
 - Body copy remains at a 72-character measure, within the accepted 65-75
   character range.
 - Russian and English use the same hierarchy, not identical line breaks.
@@ -250,6 +280,19 @@ would duplicate responsibilities and make the Atlas harder to understand.
 Repository checks treat this document, the authored tokens, the interactive
 Atlas structure, reduced-motion behavior, and the generated documentation index
 as one contract. A change that breaks any part of it does not pass.
+
+Reference acceptance also requires:
+
+- the 1672 by 941 reference and material assets remain exact, local, and free
+  of runtime dependencies;
+- desktop evidence shows the parent, current system, and inspector together;
+- 390 px evidence keeps the active graph legible and the inspector reachable;
+- forward and back traversal communicate direction, while reduced motion
+  removes travel;
+- English and Russian preserve the same layout, meaning, controls, and
+  accessible names;
+- a reviewer compares the implementation with the reference image, not merely
+  with token and component checklists.
 
 ## Evolution
 

@@ -44,6 +44,7 @@ PUBLIC_DOCS = [
 ]
 TOKEN_SOURCE = SITE / "design-tokens.json"
 TOKEN_OUTPUT = SITE / "design-tokens.css"
+INDEX = SITE / "index.html"
 TOKEN_LAYERS = ("primitive", "semantic", "component", "compatibility")
 
 
@@ -141,6 +142,7 @@ def markdown_fragment(
     source: str,
     *,
     source_path: Path | None = None,
+    anchor_prefix: str = "",
 ) -> tuple[str, list[dict[str, str]]]:
     # The public reader uses a plain hyphen. Long typographic dashes made the
     # already abstract prose harder to scan and read like generated filler.
@@ -202,6 +204,7 @@ def markdown_fragment(
             else:
                 detail_index += 1
                 anchor = f"section-{section_index:02d}-detail-{detail_index:02d}"
+            anchor = f"{anchor_prefix}{anchor}"
             if level <= 2:
                 toc.append({"id": anchor, "title": re.sub(r"[*`]", "", title)})
             output.append(
@@ -277,6 +280,7 @@ def site_content() -> dict:
             fragment, toc = markdown_fragment(
                 path.read_text(encoding="utf-8"),
                 source_path=path,
+                anchor_prefix=f"{section}-",
             )
             sections[section][language] = {"html": fragment, "toc": toc}
 
@@ -313,6 +317,28 @@ def site_content() -> dict:
     )
     sections["documents"] = documents
     return sections
+
+
+def index_with_static_reading(content: dict) -> bytes:
+    """Project default-English reading content into the no-JS HTML shell."""
+
+    source = INDEX.read_text(encoding="utf-8")
+    for section in ("article", "quickstart"):
+        start = f"<!-- GENERATED:{section}:start -->"
+        end = f"<!-- GENERATED:{section}:end -->"
+        pattern = re.compile(
+            rf"{re.escape(start)}.*?{re.escape(end)}",
+            flags=re.DOTALL,
+        )
+        replacement = (
+            f"{start}\n"
+            f"{content[section]['en']['html']}\n"
+            f"            {end}"
+        )
+        source, count = pattern.subn(replacement, source, count=1)
+        if count != 1:
+            raise ValueError(f"site index lacks one generated {section} block")
+    return source.encode("utf-8")
 
 
 def active_documents() -> tuple[dict, dict, dict]:
@@ -407,7 +433,9 @@ def main() -> int:
     output = SITE / "data" / "atlas.json"
     expected = canonical_bytes(projection) + b"\n"
     content_output = SITE / "data" / "content.json"
-    expected_content = canonical_bytes(site_content()) + b"\n"
+    content = site_content()
+    expected_content = canonical_bytes(content) + b"\n"
+    expected_index = index_with_static_reading(content)
     expected_tokens = design_tokens_css()
     assets = {
         ROOT / "docs" / "assets" / "concordloom-hero.webp": (
@@ -415,6 +443,9 @@ def main() -> int:
         ),
         ROOT / "docs" / "assets" / "concordloom-social-preview.png": (
             SITE / "assets" / "concordloom-social-preview.png"
+        ),
+        ROOT / "docs" / "assets" / "signal-constellation-stage.png": (
+            SITE / "assets" / "signal-constellation-stage.png"
         ),
         ROOT / "docs" / "assets" / "concordloom-mark.png": (
             SITE / "assets" / "concordloom-mark.png"
@@ -438,6 +469,8 @@ def main() -> int:
             stale.append(str(content_output.relative_to(ROOT)))
         if not check_bytes(TOKEN_OUTPUT, expected_tokens):
             stale.append(str(TOKEN_OUTPUT.relative_to(ROOT)))
+        if not check_bytes(INDEX, expected_index):
+            stale.append(str(INDEX.relative_to(ROOT)))
         for source, target in assets.items():
             if not target.exists() or source.read_bytes() != target.read_bytes():
                 stale.append(str(target.relative_to(ROOT)))
@@ -451,6 +484,7 @@ def main() -> int:
     content_output.parent.mkdir(parents=True, exist_ok=True)
     content_output.write_bytes(expected_content)
     TOKEN_OUTPUT.write_bytes(expected_tokens)
+    INDEX.write_bytes(expected_index)
     for source, target in assets.items():
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, target)

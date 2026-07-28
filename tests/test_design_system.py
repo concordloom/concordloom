@@ -17,10 +17,11 @@ class DesignSystemAuthorityTests(unittest.TestCase):
             encoding="utf-8"
         )
         for text in (english, russian):
-            self.assertIn("1.0.0", text)
+            self.assertIn("2.0.0", text)
             self.assertIn("design-tokens.json", text)
             self.assertIn("design-tokens.css", text)
             self.assertIn("design-system.css", text)
+            self.assertIn("signal-constellation-reference.png", text)
         self.assertIn("Status: **normative**", english)
         self.assertIn("Статус: **нормативный документ**", russian)
 
@@ -29,7 +30,7 @@ class DesignSystemAuthorityTests(unittest.TestCase):
             (SITE / "design-tokens.json").read_text(encoding="utf-8")
         )
         self.assertEqual("concordloom.design-tokens", tokens["kind"])
-        self.assertEqual("1.0.0", tokens["version"])
+        self.assertEqual("2.0.0", tokens["version"])
         self.assertEqual(
             ["primitive", "semantic", "component", "compatibility"],
             list(tokens["layers"]),
@@ -91,6 +92,30 @@ class DesignSystemAuthorityTests(unittest.TestCase):
             }
             <= cycle_ids
         )
+
+    def test_signal_constellation_reference_lock_is_enforced(self) -> None:
+        reference = ROOT / "docs" / "assets" / "signal-constellation-reference.png"
+        self.assertTrue(reference.is_file())
+        self.assertGreater(reference.stat().st_size, 100_000)
+        index = (SITE / "index.html").read_text(encoding="utf-8")
+        script = (SITE / "app.js").read_text(encoding="utf-8")
+        styles = (SITE / "design-system.css").read_text(encoding="utf-8")
+        for marker in ("system-rail", "atlas-commandbar"):
+            self.assertIn(marker, index)
+        for marker in ("parent-constellation", 'motion = "forward"'):
+            self.assertIn(marker, script)
+        for marker in (
+            "signal-constellation-stage.png",
+            ".parent-constellation",
+            '.atlas-stage[data-motion="forward"]',
+            '.atlas-stage[data-motion="back"]',
+            ".view:target",
+            ".node-label",
+        ):
+            self.assertIn(marker, styles)
+        self.assertIn("<noscript>", index)
+        self.assertNotIn('data-view="theory" hidden', index)
+        self.assertNotIn('data-view="quickstart" hidden', index)
 
 
 if __name__ == "__main__":

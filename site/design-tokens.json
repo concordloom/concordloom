@@ -1,6 +1,6 @@
 {
   "kind": "concordloom.design-tokens",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "layers": {
     "primitive": {
       "cl-black-1000": "#070807",
