@@ -72,10 +72,30 @@ Concord Loom разделяет две структуры:
 Достаточно Python 3.11+ и Git. Переносимое ядро использует только стандартную
 библиотеку.
 
-```bash
-python3 -m pip install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.0"
+Если вы работаете в Codex, установите плагин и передайте первичную настройку
+навыку:
 
+```bash
+codex plugin marketplace add concordloom/concordloom --ref v0.1.1
+codex plugin add concordloom@concordloom
+```
+
+Затем попросите:
+
+```text
+Use $design-project-loops to onboard this repository safely, inspect it
+read-only, and show me the highest-impact unresolved loop decision.
+```
+
+Навык проверит CLI, при необходимости предложит безопасную установку
+закреплённой версии и спросит разрешение перед изменением окружения. До
+принятия изменений графа он не меняет репозиторий.
+
+Для ручного запуска через CLI:
+
+```bash
+pipx install \
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.1"
 mkdir -p .concord/discovery
 concordloom inspect . \
   --output .concord/discovery/observed-project-graph.json
@@ -166,7 +186,7 @@ concordloom questions \
 ## Плагин Codex
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.0
+codex plugin marketplace add concordloom/concordloom --ref v0.1.1
 codex plugin add concordloom@concordloom
 ```
 

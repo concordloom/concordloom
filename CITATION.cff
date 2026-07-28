@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use Concord Loom, please cite this software."
 title: "Concord Loom"
 type: software
-version: 0.1.0
-date-released: 2026-07-24
+version: 0.1.1
+date-released: 2026-07-28
 authors:
   - name: "Concord Loom contributors"
 repository-code: "https://github.com/concordloom/concordloom"

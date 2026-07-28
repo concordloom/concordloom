@@ -39,6 +39,12 @@ class CliTests(unittest.TestCase):
         )
         return path
 
+    def test_version_matches_the_package_release(self) -> None:
+        result = self.run_cli("--version")
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.strip(), "concordloom 0.1.1")
+
     def observed_graph(self) -> dict[str, object]:
         oid = "1" * 40
         digest = "sha256:" + "a" * 64

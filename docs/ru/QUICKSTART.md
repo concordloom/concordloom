@@ -17,22 +17,49 @@
 Следующие разделы объясняют, как превратить наблюдение в принятую и исполнимую
 систему циклов.
 
-## 1. Установите
+## Рекомендуемый путь: первичная настройка через навык Codex
+
+Если вы используете Codex, установите плагин по
+[инструкции](CODEX_PLUGIN.md), откройте целевой репозиторий и попросите:
+
+```text
+Use $design-project-loops to onboard this repository safely, inspect it
+read-only, and show me the highest-impact unresolved loop decision.
+```
+
+Навык выполнит предварительную проверку. Если CLI отсутствует, он покажет один
+безопасный план установки и попросит разрешение перед изменением окружения
+пользователя. Следующие команды нужны только для ручной или автоматической
+настройки без Codex.
+
+## 1. Установите CLI
 
 ```bash
-python3 -m pip install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.0"
+pipx install \
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.1"
 concordloom --version
 ```
+
+Если `pipx` недоступен, но вы уже используете `uv`:
+
+```bash
+uv tool install \
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.1"
+```
+
+Не используйте `--break-system-packages` и не устанавливайте пакет в системный
+Python с внешним управлением.
 
 Для работы из клона:
 
 ```bash
-python3 -m pip install -e .
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -e .
 ./tools/check.sh
 ```
 
-Ожидаемый результат: команда версии печатает `concordloom 0.1.0`, а проверка
+Ожидаемый результат: команда версии печатает `concordloom 0.1.1`, а проверка
 заканчивается строкой `CHECK_OK`.
 
 ## 2. Исследуйте репозиторий
@@ -84,7 +111,7 @@ python3 -m http.server --directory site 8000
 разработки:
 
 ```text
-Concord Loom 0.1.0
+Concord Loom 0.1.1
 Правила разработки: редакция 8
 ```
 

@@ -1,13 +1,13 @@
 {
   "name": "concordloom",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Discover and govern evidence-bound systems of nested development loops.",
   "author": {
-    "name": "PullDakar",
-    "url": "https://github.com/PullDakar"
+    "name": "Concord Loom contributors",
+    "url": "https://github.com/concordloom"
   },
-  "homepage": "https://github.com/PullDakar/concordloom",
-  "repository": "https://github.com/PullDakar/concordloom",
+  "homepage": "https://concordloom.github.io/concordloom/",
+  "repository": "https://github.com/concordloom/concordloom",
   "license": "Apache-2.0",
   "keywords": [
     "codex",
@@ -21,14 +21,14 @@
     "displayName": "Concord Loom",
     "shortDescription": "Govern project-specific systems of loops.",
     "longDescription": "Inspect repository evidence, negotiate intent with an operator, compile bounded nested loops, and maintain execution evidence and an offline Atlas.",
-    "developerName": "PullDakar",
+    "developerName": "Concord Loom contributors",
     "category": "Productivity",
     "capabilities": [
       "Interactive",
       "Read",
       "Write"
     ],
-    "websiteURL": "https://github.com/PullDakar/concordloom",
+    "websiteURL": "https://concordloom.github.io/concordloom/",
     "defaultPrompt": [
       "Discover this repository's loop system.",
       "Show the highest-impact unresolved loop decision.",

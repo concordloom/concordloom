@@ -19,10 +19,16 @@ When the plugin is installed without that source tree, it uses an installed
 python3 scripts/concordloom_cli.py --resolve
 ```
 
-If the dependency is absent, the launcher and preflight emit `install_argv`
-for the matching v0.1 source release. Run that explicit argument vector, then
-rerun `--resolve`; do not install an unpinned package or copy source into the
-target repository.
+If the dependency is absent, the launcher and preflight emit an `install_plan`
+for the matching v0.1 release. The plan prefers `pipx`, then `uv tool`, then a
+dedicated virtual environment managed outside the target repository. Show the
+plan to the operator and obtain approval before executing every command. Then
+rerun `--resolve`.
+
+Never use system `pip`, `--break-system-packages`, an unpinned package, or
+source copied into the target repository. `install_argv` remains as a
+compatibility field containing the first command; use the complete
+`install_plan`.
 
 ## Fresh repository
 

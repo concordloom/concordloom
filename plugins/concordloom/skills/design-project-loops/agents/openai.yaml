@@ -1,4 +1,4 @@
 interface:
   display_name: "Design Project Loops"
-  short_description: "Discover and govern project loop systems"
-  default_prompt: "Use $design-project-loops to discover this repository’s loop system and negotiate an accepted design."
+  short_description: "Onboard and govern project loop systems"
+  default_prompt: "Use $design-project-loops to onboard this repository safely, inspect it read-only, and show me the highest-impact unresolved loop decision."
