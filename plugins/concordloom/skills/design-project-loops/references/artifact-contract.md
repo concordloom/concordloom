@@ -26,6 +26,11 @@ repository snapshot
 Do not overwrite an earlier artifact to make a later conclusion appear
 observed. Store mutable display metadata outside canonical digest payloads.
 
+Communication and presentation locale are display metadata. Keep them outside
+canonical graph, policy, binding, candidate, and evidence payloads unless an
+accepted schema explicitly makes locale part of that artifact. A translated
+projection must preserve machine identifiers, exact values, and digests.
+
 ## Epistemic states
 
 | State | Basis | Grants authority |

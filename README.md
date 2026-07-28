@@ -79,7 +79,7 @@ With Codex, install the skill and let it conduct onboarding:
 
 ```text
 Use $skill-installer to install
-https://github.com/concordloom/concordloom/tree/v0.1.2/plugins/concordloom/skills/design-project-loops
+https://github.com/concordloom/concordloom/tree/v0.1.3/plugins/concordloom/skills/design-project-loops
 ```
 
 Start a new thread, then ask:
@@ -97,7 +97,7 @@ For a CLI-only start:
 
 ```bash
 pipx install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.2"
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.3"
 mkdir -p .concord/discovery
 concordloom inspect . \
   --output .concord/discovery/observed-project-graph.json
@@ -189,7 +189,7 @@ Every public guide is maintained in English and Russian.
 
 ```text
 Use $skill-installer to install
-https://github.com/concordloom/concordloom/tree/v0.1.2/plugins/concordloom/skills/design-project-loops
+https://github.com/concordloom/concordloom/tree/v0.1.3/plugins/concordloom/skills/design-project-loops
 ```
 
 Ask Codex to use `$design-project-loops`. The skill begins with bounded,

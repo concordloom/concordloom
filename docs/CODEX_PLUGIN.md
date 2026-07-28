@@ -17,7 +17,7 @@ Ask Codex:
 
 ```text
 Use $skill-installer to install
-https://github.com/concordloom/concordloom/tree/v0.1.2/plugins/concordloom/skills/design-project-loops
+https://github.com/concordloom/concordloom/tree/v0.1.3/plugins/concordloom/skills/design-project-loops
 ```
 
 Start a new Codex thread after installation. The skill will then be available
@@ -33,7 +33,7 @@ Pin the marketplace to the release tag, confirm that Codex can see it, then
 install the plugin:
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.2
+codex plugin marketplace add concordloom/concordloom --ref v0.1.3
 codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
@@ -46,7 +46,7 @@ If `marketplace add` reports success but the list does not contain
 
 ```bash
 codex plugin marketplace remove concordloom
-codex plugin marketplace add concordloom/concordloom --ref v0.1.2
+codex plugin marketplace add concordloom/concordloom --ref v0.1.3
 codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
@@ -80,18 +80,20 @@ read-only, and show me the highest-impact unresolved loop decision.
 
 The skill:
 
-1. runs bounded, read-only preflight;
-2. if the CLI is missing, selects `pipx`, `uv tool`, or an isolated virtual
+1. asks whether to use English or Russian for the conversation and generated
+   human-readable materials;
+2. runs bounded, read-only preflight;
+3. if the CLI is missing, selects `pipx`, `uv tool`, or an isolated virtual
    environment and presents the exact pinned installation plan;
-3. asks before changing the user environment or using the network;
-4. reruns preflight and inspects the repository without executing its code;
-5. presents observations, inferences, coverage, and high-impact questions;
-6. records the operator's accepted, rejected, or corrected intent;
-7. proposes a loop system and waits for exact acceptance;
-8. compiles and validates the accepted contracts;
-9. routes governed execution through run cards;
-10. maintains the offline Atlas; and
-11. records evidence-backed evolution proposals without activating them.
+4. asks before changing the user environment or using the network;
+5. reruns preflight and inspects the repository without executing its code;
+6. presents observations, inferences, coverage, and high-impact questions;
+7. records the operator's accepted, rejected, or corrected intent;
+8. proposes a loop system and waits for exact acceptance;
+9. compiles and validates the accepted contracts;
+10. routes governed execution through run cards;
+11. maintains the offline Atlas in the selected language; and
+12. records evidence-backed evolution proposals without activating them.
 
 The skill never uses system `pip`, never passes `--break-system-packages`, and
 never installs silently.

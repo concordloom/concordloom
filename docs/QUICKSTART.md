@@ -34,7 +34,7 @@ below only for a manual or headless CLI setup.
 
 ```bash
 pipx install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.2"
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.3"
 concordloom --version
 ```
 
@@ -42,7 +42,7 @@ If `pipx` is unavailable and you already use `uv`, run:
 
 ```bash
 uv tool install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.2"
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.3"
 ```
 
 Do not pass `--break-system-packages` or install into an
@@ -57,7 +57,7 @@ python -m pip install -e .
 ./tools/check.sh
 ```
 
-Expected result: the version command prints `concordloom 0.1.2`. The check
+Expected result: the version command prints `concordloom 0.1.3`. The check
 script ends with `CHECK_OK`.
 
 ## 2. Inspect a repository
@@ -110,7 +110,7 @@ The page distinguishes the product release from the internal revision of its
 development rules:
 
 ```text
-Concord Loom 0.1.2
+Concord Loom 0.1.3
 Development rules: revision 8
 ```
 

@@ -55,6 +55,11 @@ accepts the exact first-binding writes.
 | Visualize | `concordloom atlas` | Deterministic offline HTML projection |
 | Evolve | `concordloom evolve` | Proposed successor diff, never activation |
 
+The Atlas renderer supports `--locale en` and `--locale ru`. Pass the
+operator's explicit onboarding choice on both generation and `--check`; do not
+rely on the default locale. This changes human-readable presentation, not
+canonical binding or run data.
+
 The `run` family covers `new`, `authorize`, `attempt`, `evidence`, `guard`, and
 `complete`. Always inspect the nested help before use. Run `guard` before
 task-scoped inspection or mutation and include every intended path. Attempt

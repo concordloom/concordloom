@@ -56,6 +56,11 @@ run-card authorization и binding activation запрещены, пока опе
 | Visualize | `concordloom atlas` | Детерминированная офлайн HTML projection |
 | Evolve | `concordloom evolve` | Предложенная successor delta без activation |
 
+Renderer атласа поддерживает `--locale en` и `--locale ru`. При генерации и
+проверке с `--check` передавайте явно выбранный оператором язык; не полагайтесь
+на locale по умолчанию. Выбор меняет человекочитаемое представление, но не
+канонические binding или run data.
+
 Семейство `run` содержит `new`, `authorize`, `attempt`, `evidence`, `guard` и
 `complete`. Перед использованием всегда смотрите вложенную справку. Запускайте
 `guard` до task-scoped чтения или изменения и перечисляйте каждый

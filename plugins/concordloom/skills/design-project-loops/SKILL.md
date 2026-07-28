@@ -13,6 +13,32 @@ Make this skill the conversational onboarding entrypoint. Do not ask a new
 user to install the CLI, create temporary directories, or choose artifact
 commands before preflight establishes what is needed.
 
+## 0. Choose the language
+
+Before reading repository files or running preflight, ask:
+
+> Which language should I use for our conversation and generated
+> human-readable materials: English or Russian?
+
+Do not infer the answer from the user's operating system, location, repository
+content, or first message. Wait for an explicit choice. Keep it as
+`communication_locale` for the onboarding session:
+
+- `en`: communicate in English and generate the Atlas with `--locale en`;
+- `ru`: communicate in Russian and generate the Atlas with `--locale ru`.
+
+Use the chosen language for questions, explanations, summaries, decision
+rationales drafted for the operator, Atlas UI, and other human-readable
+projections. Keep commands, paths, JSON keys, schema values, loop IDs, model
+IDs, digests, and exact evidence in their original machine spelling.
+
+Language is presentation metadata. It does not accept product intent, grant
+authority, change canonical digests, or create a second machine contract.
+Keep the choice outside canonical candidate bytes unless an accepted project
+policy explicitly defines a default presentation language. If the requested
+language is not supported by the Atlas renderer, explain that limitation and
+ask the operator to choose `en` or `ru` for generated Atlas output.
+
 Read [artifact-contract.md](references/artifact-contract.md) before accepting a
 graph, compiling a binding, recording evidence, or proposing evolution. Read
 [commands.md](references/commands.md) before invoking the v0.1 CLI.
@@ -137,8 +163,10 @@ or self-review. Do not weaken a contract just to make compilation pass.
 
 ## 5. Generate and inspect the Atlas
 
-Generate the offline Atlas with the launcher's `atlas` command from the exact accepted
-binding and, when applicable, a run card. Verify its deterministic check mode.
+Generate the offline Atlas with the launcher's `atlas` command from the exact
+accepted binding and, when applicable, a run card. Always pass the session's
+explicit `--locale en` or `--locale ru`; never rely on a renderer default.
+Verify its deterministic check mode with the same locale.
 Inspect recursive navigation, breadcrumbs, containment versus feedback flow,
 authority, budgets, evidence, terminal outcomes, and
 planned/actual/verified/drift distinctions. Treat the Atlas as a projection,
