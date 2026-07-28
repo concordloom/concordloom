@@ -1,3 +1,3 @@
 """Concord Loom: evidence-governed systems of development loops."""
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"

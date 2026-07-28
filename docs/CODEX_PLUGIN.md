@@ -17,7 +17,7 @@ Ask Codex:
 
 ```text
 Use $skill-installer to install
-https://github.com/concordloom/concordloom/tree/v0.1.4/plugins/concordloom/skills/design-project-loops
+https://github.com/concordloom/concordloom/tree/v0.1.5/plugins/concordloom/skills/design-project-loops
 ```
 
 Start a new Codex thread after installation. The skill will then be available
@@ -33,7 +33,7 @@ Pin the marketplace to the release tag, confirm that Codex can see it, then
 install the plugin:
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.4
+codex plugin marketplace add concordloom/concordloom --ref v0.1.5
 codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
@@ -46,7 +46,7 @@ If `marketplace add` reports success but the list does not contain
 
 ```bash
 codex plugin marketplace remove concordloom
-codex plugin marketplace add concordloom/concordloom --ref v0.1.4
+codex plugin marketplace add concordloom/concordloom --ref v0.1.5
 codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
@@ -74,23 +74,22 @@ You do not need to install the Concord Loom CLI first. Open the target
 repository and ask Codex:
 
 ```text
-Use $design-project-loops to onboard this repository safely, inspect it
-read-only, and show me the highest-impact unresolved loop decision.
+Use $design-project-loops to onboard this repository safely. Analyze it
+read-only, build a draft Atlas, and ask me only whether the map is correct.
 ```
 
 The skill:
 
-1. asks whether to use English or Russian for the conversation and generated
-   human-readable materials;
+1. asks for the language and then the name to show in the conversation and
+   Atlas;
 2. runs bounded, read-only preflight;
 3. if the CLI is missing, selects `pipx`, `uv tool`, or an isolated virtual
    environment and presents the exact pinned installation plan;
 4. asks before changing the user environment or using the network;
 5. reruns preflight and inspects the repository without executing its code;
-6. explains observations and uncertainty in plain language, keeps machine
-   identifiers in optional technical details, and asks one clear next
-   question;
-7. records the operator's accepted, rejected, or corrected intent;
+6. builds an interactive draft Atlas before asking project questions;
+7. asks only whether the map is correct and accepts ordinary-language
+   corrections from any participant;
 8. proposes a loop system and waits for exact acceptance;
 9. compiles and validates the accepted contracts;
 10. routes governed execution through run cards;
@@ -100,9 +99,9 @@ The skill:
 The skill never uses system `pip`, never passes `--break-system-packages`, and
 never installs silently.
 
-The onboarding conversation must not end at a diagnostic report while a
-blocking decision remains. Each step states what the operator needs to decide,
-why it matters, and which plain-language answers are available.
+The onboarding conversation does not expose role assignment, authority
+references, temporary paths, digests, schemas, or raw CLI output. Those remain
+internal implementation details. The person sees the Atlas first.
 This rule covers every operator-facing scenario: installation, read-only
 inspection, decisions, loop design, activation, Atlas, governed work, failures,
 completion, and evolution. Raw CLI JSON and internal identifiers are supporting
@@ -119,7 +118,7 @@ A repository with no Concord Loom binding enters a bounded read-only bootstrap:
 - no product authority is inferred;
 - no candidate or source mutation is authorized;
 - discovery budgets remain explicit;
-- the skill shows the proposed graph and required decisions; and
+- the skill shows the draft Atlas before asking for corrections; and
 - mutation remains blocked until the operator establishes the first accepted
   binding.
 

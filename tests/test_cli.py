@@ -45,7 +45,7 @@ class CliTests(unittest.TestCase):
         result = self.run_cli("--version")
 
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(result.stdout.strip(), "concordloom 0.1.4")
+        self.assertEqual(result.stdout.strip(), "concordloom 0.1.5")
 
     def test_run_attempt_forwards_structured_route_metadata(self) -> None:
         from concordloom.cli import _cmd_run_attempt

@@ -13,9 +13,11 @@ Make this skill the conversational onboarding entrypoint. Do not ask a new
 user to install the CLI, create temporary directories, or choose artifact
 commands before preflight establishes what is needed.
 
-## 0. Choose the language
+## 0. Learn how to address the person
 
-Before reading repository files or running preflight, ask:
+Before reading repository files or running preflight, ask which language to
+use. After the answer, ask what name to use in the conversation and Atlas.
+Ask these two short questions one at a time.
 
 > Which language should I use for our conversation and generated
 > human-readable materials: English or Russian?
@@ -31,6 +33,11 @@ Use the chosen language for questions, explanations, summaries, decision
 rationales drafted for the operator, Atlas UI, and other human-readable
 projections. Keep commands, paths, JSON keys, schema values, loop IDs, model
 IDs, digests, and exact evidence in their original machine spelling.
+
+Keep the supplied name as display-only session metadata. Derive a machine
+identifier internally if an artifact needs one. Never show placeholders such
+as `current-operator`, `example-operator`, or an authority reference as the
+person's name.
 
 Language is presentation metadata. It does not accept product intent, grant
 authority, change canonical digests, or create a second machine contract.
@@ -87,7 +94,7 @@ binding, creating a run card, or changing a route through evolution.
 Read the matching operator-conversation reference before the first
 operator-facing report or question.
 
-## 1. Establish the boundary
+## 1. Build the first Atlas without interviewing the person
 
 1. Read repository instructions. Do not assume that a fresh repository already
    has a Concord Loom binding.
@@ -106,9 +113,9 @@ operator-facing report or question.
    matching same-repository source, then an installed command, then the
    launcher's managed environment. Inspect `--help` and relevant subcommand
    help. Never guess flags or edit canonical JSON to imitate success.
-5. Determine who may accept intent, authorize runs, review candidates, activate
-   bindings, and publish releases. The skill itself grants none of these
-   capabilities.
+5. Do not ask the person to assign roles, authority references, graph
+   boundaries, artifact paths, or temporary storage. Existing repository rules
+   remain evidence. If none exist, keep the first Atlas explicitly provisional.
 
 ### Fresh repository bootstrap lane
 
@@ -121,28 +128,37 @@ binding:
 2. Stay within the preflight caps: three 15-second Git identity/status calls,
    1 MiB per Git stream, at most 10,000 status entries, zero repository writes,
    zero network calls, and zero external mutations.
-3. Run only read-only inspection and question generation. Never run repository
-   code, authorize a run, mutate a catalog, claim a capability, or treat an
-   inference as accepted intent.
-4. Summarize the bootstrap findings in ordinary language and ask the first
-   blocking question. Keep revision, coverage, graph digest, proposed changes,
-   first-binding outputs, and granted authority in optional technical details.
-5. Stop for explicit operator acceptance. The lane grants no authority. A
-   directly accepted, recorded bootstrap decision authorizes only the stated
-   first-binding writes; creating that binding ends bootstrap.
-6. Rerun preflight with `--binding <exact-path>`, validate the first binding,
+3. Run only read-only inspection and draft-Atlas generation. Never run
+   repository code, authorize a run, mutate a catalog, claim a capability, or
+   treat an inference as accepted intent.
+4. Run one deterministic onboarding command:
+
+   `python3 scripts/onboard.py --repo <repository> --locale <en|ru>
+   --person-name <name> --output <temporary-atlas.html>
+   --model-output <temporary-model.json>`
+
+   It inspects tracked files, languages, repository areas, imports, bounded Git
+   history, and co-change evidence. It writes only to the operating-system
+   temporary directory. The result is a draft, not an active binding.
+5. Give the person the Atlas and ask only whether the map describes the project
+   correctly. Do not show a bootstrap packet, terminal transcript, artifact
+   list, or technical questionnaire.
+6. If the person corrects the map, update the temporary model and rerender with
+   `--model`. Any participant may suggest a correction. Do not ask about roles.
+7. After the person accepts the map, record the required machine decisions
+   internally and ask separately before activation. Never debug actor kinds,
+   authority references, schemas, or shell quoting in the user conversation.
+8. Rerun preflight with `--binding <exact-path>`, validate the first binding,
    and use normal bound governance for every later mutation.
 
-If the operator does not accept the packet, leave the repository byte-for-byte
+If the person does not accept the Atlas, leave the repository byte-for-byte
 unchanged. A first binding cannot approve its own creation retroactively.
 
-## 2. Discover the project graph
+## 2. Review the Atlas
 
-Run the launcher's `inspect` command against the selected repository and
-preserve its output as the observed project graph. In bootstrap discovery,
-write it only to the temporary directory. Verify the pinned revision, coverage,
-limits, ignored/untracked handling, and truncation markers before interpreting
-it.
+Open or link the generated Atlas. It must let the person click a cycle and
+descend into nested cycles. Show recognizable project language first. Keep
+source paths as supporting evidence inside the Atlas.
 
 Keep each claim in its emitted state:
 
@@ -152,41 +168,19 @@ Keep each claim in its emitted state:
 - `runtime_verified`: evidence valid only for its recorded scope and candidate.
 
 Never relabel confidence as authority. Never execute repository code merely to
-inspect it.
+inspect it. Never demand answers about internal mechanics before showing the
+map.
 
 ## 3. Negotiate intent
 
-Generate ranked questions with the launcher's `questions` command. Ask one blocking,
-high-information question at a time. Phrase it in product outcomes, ownership,
-or evidence expectations; do not ask the operator to choose files, models,
-tools, reviewers, or internal routing.
+Generate machine questions only after the person reviews the Atlas. Do not
+present them as an onboarding questionnaire. Convert a correction or approval
+given in ordinary language into the corresponding internal record.
 
-For every question, first show:
-
-- one plain-language question in the chosen communication language;
-- one or two sentences explaining the concrete consequence;
-- short answer choices, including a correction in the operator's own words;
-- a direct request to choose or correct one option.
-
-Then, only when it helps the decision, show:
-
-- the hypothesis and whether it is observed or inferred;
-- source references, confidence, and coverage caveats;
-- why the decision matters;
-- the exact graph operations for every answer;
-- the resulting added, removed, or corrected nodes and edges;
-- whether the unresolved decision blocks acceptance.
-
-For example, do not ask a Russian-speaking operator whether the repository is
-“one governed delivery boundary.” Ask whether the repository should be treated
-as one project with shared development, verification, and release rules. Offer
-“yes,” “no, it contains independent projects,” and “partly; let me describe
-the boundary.” Keep `repository-delivery-boundary` only in optional technical
-details.
-
-Record the chosen answer with the launcher's `decide` command, including actor and
-rationale. If a free-form answer does not map unambiguously to one delta, show
-the proposed mapping and obtain confirmation before recording it.
+After plain approval, use `scripts/record_answer.py` for each machine question
+already represented by the Atlas. Never assemble `decide` arguments by hand.
+If a correction does not map unambiguously, update the visible Atlas and ask
+whether the revised map is correct before recording anything.
 
 Run the launcher's `accept` command only after all blocking questions have decisions and
 the acting principal has the required intent capability. Preserve rejected
