@@ -8,5 +8,7 @@ __pycache__/
 .venv/
 build/
 dist/
+node_modules/
+.artifacts/
 .concord/runs/
 .concord/signals/

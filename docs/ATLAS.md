@@ -12,7 +12,7 @@ an external change, or activate evolution.
 ## Interactive project Atlas
 
 The [public Atlas](https://concordloom.github.io/concordloom/#atlas/steward-concordloom)
-shows all 58 cycles used to develop Concord Loom. Start at the root and select
+shows all 65 cycles used to develop Concord Loom. Start at the root and select
 a child to move one level deeper.
 
 The first screen shows plain-language information:
@@ -28,8 +28,8 @@ required claims, or the accepted source digest.
 The header keeps 2 version axes separate:
 
 ```text
-Product release: 0.1.0
-Development rules: revision 8
+Product release: 0.1.5
+Development rules: revision 9
 ```
 
 Revision 8 is the eighth accepted version of Concord Loom's own development

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 from html.parser import HTMLParser
 from pathlib import Path
+import hashlib
 import json
 import re
 import struct
@@ -247,17 +248,33 @@ def main() -> int:
     ):
         if marker not in all_styles:
             errors.append(f"web-interface contract is missing {marker}")
+    catalog = json.loads(
+        (ROOT / "framework" / "concordloom" / "catalog.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    active_entry = catalog["entries"][-1]
+    active_binding = json.loads(
+        (ROOT / active_entry["path"]).read_text(encoding="utf-8")
+    )
+    registry_artifact = next(
+        artifact
+        for artifact in active_binding["artifacts"]
+        if artifact["role"] == "cycle_registry"
+    )
+    active_registry = json.loads(
+        (ROOT / registry_artifact["path"]).read_text(encoding="utf-8")
+    )
+    frontend_cycle_ids = {
+        edge["child_loop_id"]
+        for edge in active_registry["containment_graph"]["edges"]
+        if edge["parent_loop_id"] == "design-site-experience"
+    }
     design_contract = (
         (ROOT / "docs" / "DESIGN_SYSTEM.md").read_text(encoding="utf-8")
         + (ROOT / "docs" / "ru" / "DESIGN_SYSTEM.md").read_text(encoding="utf-8")
     )
-    for loop_id in (
-        "design-information-architecture",
-        "review-comprehension",
-        "design-site-experience",
-        "project-atlas",
-        "system-evolution",
-    ):
+    for loop_id in {"design-site-experience", *frontend_cycle_ids}:
         if design_contract.count(f"`{loop_id}`") != 2:
             errors.append(
                 f"design-system cycle ownership is not bilingual for {loop_id}"
@@ -268,9 +285,19 @@ def main() -> int:
         errors.append("social preview must be exactly 1280x640")
     if social.stat().st_size >= 1_000_000:
         errors.append("social preview must stay below GitHub's 1 MB upload limit")
-    reference = ROOT / "docs" / "assets" / "signal-constellation-reference.png"
-    if png_dimensions(reference) != (1672, 941):
-        errors.append("Signal Constellation reference lock must remain exactly 1672x941")
+    reference = (
+        ROOT
+        / "design"
+        / "frontend"
+        / "reference"
+        / "signal-constellation-concept.png"
+    )
+    if png_dimensions(reference) != (2410, 1334):
+        errors.append("accepted Signal Constellation concept must remain 2410x1334")
+    if hashlib.sha256(reference.read_bytes()).hexdigest() != (
+        "4226c0ac5a181d5f26f9e2270b8973c153e80949fc5de5537f223502df22a619"
+    ):
+        errors.append("accepted Signal Constellation concept bytes changed")
     stage = SITE / "assets" / "signal-constellation-stage.png"
     if png_dimensions(stage) != (1672, 941):
         errors.append("Signal Constellation material stage must remain exactly 1672x941")
@@ -296,8 +323,12 @@ def main() -> int:
         "review-comprehension",
         "activate-successor",
     }
-    if len(loop_ids) != 58:
-        errors.append(f"Atlas must expose all 58 development cycles, found {len(loop_ids)}")
+    expected_loop_count = len(active_registry["loops"])
+    if len(loop_ids) != expected_loop_count:
+        errors.append(
+            "Atlas must expose every active development cycle: "
+            f"expected {expected_loop_count}, found {len(loop_ids)}"
+        )
     for required_loop_id in (
         "publish-source-change",
         "accept-source-change",
@@ -335,8 +366,15 @@ def main() -> int:
         profile = atlas.get("profiles", {}).get(loop.get("profile"))
         if not profile:
             errors.append(f"Atlas loop {loop['id']} lacks an execution profile")
-        elif profile.get("mcp", {}).get("status") != "not-declared":
-            errors.append(f"Atlas profile {loop['profile']} invents an MCP assignment")
+        elif profile.get("mcp", {}).get("status") not in {
+            "not-declared",
+            "not-required",
+            "not-used-as-oracle",
+            "optional-adapter",
+        }:
+            errors.append(
+                f"Atlas profile {loop['profile']} has an unsupported MCP status"
+            )
         else:
             route = profile.get("route_materialization")
             required_route_fields = {
@@ -356,6 +394,10 @@ def main() -> int:
             elif not required_route_fields <= route.keys():
                 errors.append(
                     f"Atlas profile {loop['profile']} has an incomplete planned route"
+                )
+            elif route["mcp_servers"]:
+                errors.append(
+                    f"Atlas profile {loop['profile']} invents an MCP assignment"
                 )
     routes = {
         loop["id"]: loop.get("route_materialization", {})

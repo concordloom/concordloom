@@ -457,12 +457,34 @@ class MetadataMaintenanceEvolutionTests(unittest.TestCase):
             )
 
     def test_every_tracked_source_has_a_leaf_owner(self) -> None:
+        catalog = load(ROOT / "framework" / "concordloom" / "catalog.json")
+        active_entry = next(
+            entry
+            for entry in catalog["entries"]
+            if entry["binding_digest"] == catalog["active_binding_digest"]
+        )
+        active_binding = load(ROOT / active_entry["path"])
+        active_registry_path = next(
+            artifact["path"]
+            for artifact in active_binding["artifacts"]
+            if artifact["role"] == "cycle_registry"
+        )
+        active_model_path = next(
+            artifact["path"]
+            for artifact in active_binding["artifacts"]
+            if artifact["role"] == "atlas_input"
+        )
+        active_registry = load(ROOT / active_registry_path)
+        active_model = load(ROOT / active_model_path)
         leaves = {
             node["id"]
-            for node in self.v7_model["nodes"]
+            for node in active_model["nodes"]
             if not node["children"]
         }
-        edges = self.edges()
+        edges = {
+            edge["child_loop_id"]: edge
+            for edge in active_registry["containment_graph"]["edges"]
+        }
         leaf_scopes = {
             loop_id: edges[loop_id]["grant"]["scope"]["write_paths"]
             for loop_id in leaves

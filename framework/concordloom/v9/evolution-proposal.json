@@ -1,0 +1,210 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:a57e7cb815ac3bb14eebb9e1bd6ba1eeb2d312d172067797853cb496aea4f9bd",
+  "decision_authority_ref": "operator",
+  "decision_required": true,
+  "expected_effect": "Make an accepted visual contract, production-state workshop, deterministic Playwright evidence and an independent visual critic mandatory before the site experience can pass.",
+  "generated_at": "2026-07-28T22:30:00Z",
+  "id": "add-evidence-driven-frontend-system",
+  "kind": "concordloom.evolution-proposal",
+  "operations": [
+    {
+      "op": "replace",
+      "path": "/purpose",
+      "precondition_digest": "sha256:7a922988f35745c4941a563668e94b600c27892fb2953289acab22353e839eb7",
+      "target_id": "design-site-experience",
+      "target_kind": "loop",
+      "value": "Turn an accepted visual contract into a browser-verified, independently critiqued interface."
+    },
+    {
+      "op": "add",
+      "target_id": "define-frontend-concept",
+      "target_kind": "loop",
+      "value": {
+        "input_outcome": "Concept art, product truth and target user tasks.",
+        "output_outcome": "A digest-bound visual contract, state inventory and viewport matrix.",
+        "parent_loop_id": "design-site-experience",
+        "purpose": "Turn an approved concept into exact visual, responsive, motion and state constraints."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "accept-frontend-concept",
+      "target_kind": "loop",
+      "value": {
+        "input_outcome": "A digest-bound visual contract.",
+        "output_outcome": "An operator decision bound to the exact contract digest.",
+        "parent_loop_id": "design-site-experience",
+        "purpose": "Accept or reject the exact visual contract as a separate human decision."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "maintain-component-workshop",
+      "target_kind": "loop",
+      "value": {
+        "input_outcome": "An accepted visual contract and production component boundaries.",
+        "output_outcome": "A local workshop covering normal, long-copy, loading, empty, error and stale states.",
+        "parent_loop_id": "design-site-experience",
+        "purpose": "Expose real production components in every consequential state."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "implement-frontend-surface",
+      "target_kind": "loop",
+      "value": {
+        "input_outcome": "Accepted visual contract, content, Atlas data and workshop fixtures.",
+        "output_outcome": "A pinned responsive bilingual frontend candidate.",
+        "parent_loop_id": "design-site-experience",
+        "purpose": "Build the site and Atlas from the accepted visual contract and production components."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "maintain-frontend-verification",
+      "target_kind": "loop",
+      "value": {
+        "input_outcome": "Accepted visual contract and supported browser matrix.",
+        "output_outcome": "A pinned Playwright and axe harness with immutable approved baselines.",
+        "parent_loop_id": "design-site-experience",
+        "purpose": "Keep deterministic browser, layout, accessibility and visual-regression checks exact."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "verify-frontend-candidate",
+      "target_kind": "loop",
+      "value": {
+        "input_outcome": "A pinned candidate, visual contract, harness and approved baselines.",
+        "output_outcome": "A deterministic report with screenshots, diffs, geometry, accessibility and runtime evidence.",
+        "parent_loop_id": "design-site-experience",
+        "purpose": "Measure the exact candidate across locale, viewport, zoom, motion and browser states."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "critique-frontend-experience",
+      "target_kind": "loop",
+      "value": {
+        "input_outcome": "Exact concept, candidate, browser report and screenshots.",
+        "output_outcome": "An independent pass, revise or indeterminate visual and comprehension verdict.",
+        "parent_loop_id": "design-site-experience",
+        "purpose": "Independently reject candidates that pass mechanics but miss the accepted concept."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "design-site-experience.define-frontend-concept",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "define-frontend-concept",
+        "parent_loop_id": "design-site-experience"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "design-site-experience.accept-frontend-concept",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "accept-frontend-concept",
+        "parent_loop_id": "design-site-experience"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "design-site-experience.maintain-component-workshop",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "maintain-component-workshop",
+        "parent_loop_id": "design-site-experience"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "design-site-experience.implement-frontend-surface",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "implement-frontend-surface",
+        "parent_loop_id": "design-site-experience"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "design-site-experience.maintain-frontend-verification",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "maintain-frontend-verification",
+        "parent_loop_id": "design-site-experience"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "design-site-experience.verify-frontend-candidate",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "verify-frontend-candidate",
+        "parent_loop_id": "design-site-experience"
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "design-site-experience.critique-frontend-experience",
+      "target_kind": "containment",
+      "value": {
+        "child_loop_id": "critique-frontend-experience",
+        "parent_loop_id": "design-site-experience"
+      }
+    }
+  ],
+  "proposed_by": {
+    "id": "example-orchestrator",
+    "kind": "orchestrator"
+  },
+  "risk": {
+    "failure_modes": [
+      "Visual baselines may be accepted from an already broken candidate.",
+      "Browser dependencies may increase repository maintenance cost."
+    ],
+    "level": "medium",
+    "rollback": "Reject v9 and retain active v8."
+  },
+  "schema_version": "0.1",
+  "signals": [
+    {
+      "base_binding_digest": "sha256:a57e7cb815ac3bb14eebb9e1bd6ba1eeb2d312d172067797853cb496aea4f9bd",
+      "category": "friction",
+      "id": "frontend-source-checks-missed-live-layout-failure",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 4,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "operator-screenshots"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "critical",
+      "source_digest": "sha256:2f9677e04c3f7030f02969eed82f549f9261a341b3b25b2c258c921cdaf05ba9",
+      "summary": "Committed and deployed pages passed string-based gates while headings, controls and Atlas panels visibly overlapped."
+    },
+    {
+      "base_binding_digest": "sha256:a57e7cb815ac3bb14eebb9e1bd6ba1eeb2d312d172067797853cb496aea4f9bd",
+      "category": "coverage",
+      "id": "frontend-implementation-drifted-from-accepted-concept",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 2,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "independent-visual-audit"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "critical",
+      "source_digest": "sha256:85b33bf8ee5bdf7d1e22f4d159e0aecc0a852ba9cf88cbefff9b0379e7647bcb",
+      "summary": "The Atlas preserved colors and texture but lost the accepted concept's immersive parent-current-inspector composition."
+    }
+  ],
+  "status": "proposed"
+}

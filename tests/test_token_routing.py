@@ -57,12 +57,15 @@ class TokenAwareRoutingTests(unittest.TestCase):
             cls.checkout / "framework" / "concordloom" / "catalog.json"
         )
         catalog = load(catalog_path)
-        if catalog["entries"][-1]["binding_id"] == "concordloom-self-binding-v8":
+        while (
+            catalog["entries"][-1]["binding_id"]
+            != "concordloom-self-binding-v7"
+        ):
             catalog["entries"].pop()
-            catalog["active_binding_digest"] = catalog["entries"][-1][
-                "binding_digest"
-            ]
-            catalog_path.write_bytes(canonical_bytes(catalog) + b"\n")
+        catalog["active_binding_digest"] = catalog["entries"][-1][
+            "binding_digest"
+        ]
+        catalog_path.write_bytes(canonical_bytes(catalog) + b"\n")
         for name in ("binding.json", "activation-receipt.json"):
             activated_output = (
                 cls.checkout / "framework" / "concordloom" / "v8" / name

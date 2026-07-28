@@ -111,7 +111,7 @@ development rules:
 
 ```text
 Concord Loom 0.1.5
-Development rules: revision 8
+Development rules: revision 9
 ```
 
 ## 4. Decide what the observation means

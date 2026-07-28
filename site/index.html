@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="color-scheme: dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="design-system.css">
     <script src="app.js" defer></script>
   </head>
-  <body>
+  <body tabindex="-1">
     <!--
       THESIS: Concord Loom is a machine you can enter. The interface rejects flat documentation chrome and makes accepted structure spatial.
       OWN-WORLD: Off-black stone, blackened metal, warm-white tension lines and one acid signal. Circular gates live inside sharp instrument panels.
@@ -43,7 +43,7 @@
     <a class="skip-link" href="#main" data-en="Skip to content" data-ru="Перейти к содержанию">Skip to content</a>
 
     <header class="site-header">
-      <a class="brand" href="#concept" data-view-link="concept" aria-label="Concord Loom home"
+      <a class="brand" href="#concept" data-view-link="concept" aria-label="Concord Loom home" translate="no"
         data-en-aria-label="Concord Loom home" data-ru-aria-label="Главная Concord Loom">
         <img src="assets/concordloom-mark-192.png" width="40" height="40" alt="Concord Loom mark"
           data-en-alt="Concord Loom mark" data-ru-alt="Знак Concord Loom">
@@ -62,11 +62,11 @@
       </nav>
       <ol class="system-rail" aria-label="Change lifecycle"
         data-en-aria-label="Change lifecycle" data-ru-aria-label="Цикл изменений">
-        <li><span data-en="Map" data-ru="Карта">Map</span></li>
-        <li><span data-en="Build" data-ru="Сборка">Build</span></li>
-        <li><span data-en="Verify" data-ru="Проверка">Verify</span></li>
-        <li><span data-en="Publish" data-ru="Публикация">Publish</span></li>
-        <li class="is-active"><span data-en="Evolve" data-ru="Эволюция">Evolve</span></li>
+        <li data-system-stage="map"><span data-en="Map" data-ru="Карта">Map</span></li>
+        <li data-system-stage="build"><span data-en="Build" data-ru="Сборка">Build</span></li>
+        <li data-system-stage="verify"><span data-en="Verify" data-ru="Проверка">Verify</span></li>
+        <li data-system-stage="publish"><span data-en="Publish" data-ru="Публикация">Publish</span></li>
+        <li data-system-stage="evolve"><span data-en="Evolve" data-ru="Эволюция">Evolve</span></li>
       </ol>
       <div class="header-actions">
         <button class="language-switch" type="button" aria-label="Switch language">
@@ -100,7 +100,7 @@
           </div>
           <div class="hero-readout" aria-label="Atlas capabilities"
             data-en-aria-label="Atlas capabilities" data-ru-aria-label="Возможности Атласа">
-            <p><span>58</span><b data-en="development cycles" data-ru="циклов разработки">development cycles</b></p>
+            <p><span data-loop-count>0</span><b data-en="development cycles" data-ru="циклов разработки">development cycles</b></p>
             <p><span>∞</span><b data-en="drill-down context" data-ru="контекст погружения">drill-down context</b></p>
             <p><span>1</span><b data-en="active source of truth" data-ru="действующий первоисточник">active source of truth</b></p>
           </div>
@@ -207,7 +207,7 @@
 <p>Here, “executable” does not mean hiding arbitrary code in a diagram. A validator can reject an invalid declaration. An adapter can run work only within the accepted contract. A consequential claim must identify the exact result, policy, attempt, and evidence that support it.</p>
 <h2 id="article-section-04">One grammar, many bindings</h2>
 <p>Concord Loom treats a domain process as a binding of a general change grammar:</p>
-<pre><code class="language-text">observe
+<pre tabindex="0"><code class="language-text">observe
   → negotiate
   → bind
   → execute
@@ -226,7 +226,7 @@
 <p>Calling the whole system a recursive graph collapses two different relationships.</p>
 <p>The <strong>containment graph</strong> says that a composite state in one loop invokes another loop. An experiment can invoke calibration; an incident can invoke recovery; a production can invoke legal review. Containment explains refinement, scope, and parent-child ownership. It must be finite and acyclic. A loop cannot contain itself, directly or through descendants.</p>
 <p>The <strong>local control-flow graph</strong> describes progress inside one loop. It may contain feedback. An experiment can return from analysis to measurement; a recovery loop can return from validation to mitigation; an edit can return from critique to revision. Each feedback cycle must consume a finite budget and retain a path to a terminal or escalation outcome.</p>
-<pre><code class="language-text">Containment (finite DAG)              Local flow (bounded)
+<pre tabindex="0"><code class="language-text">Containment (finite DAG)              Local flow (bounded)
 
 program                               prepare → act → evaluate → ACCEPT
 ├── workstream                                  ▲       │
@@ -239,10 +239,10 @@ program                               prepare → act → evaluate → ACCEPT
 <p>Continuous operations use the same discipline. A research program, service, or governance regime may last for years, but one run covers a bounded question, incident, observation window, or change. A later signal starts another run. This makes an ongoing system distinguishable from an execution that cannot terminate.</p>
 <h2 id="article-section-06">A minimal formal model</h2>
 <p>Let a governed system be:</p>
-<pre><code class="language-text">K = (H, {Lᵢ}, Π, V)</code></pre>
+<pre tabindex="0"><code class="language-text">K = (H, {Lᵢ}, Π, V)</code></pre>
 <p><code>H</code> is the containment graph, <code>{Lᵢ}</code> is the set of loop contracts, <code>Π</code> is the policy that maps child receipts into parent decisions, and <code>V</code> is the versioned binding over the exact contracts and policy.</p>
 <p>Each loop is:</p>
-<pre><code class="language-text">Lᵢ = (I, O, S, s₀, Δ, C, E, A, B, X)</code></pre>
+<pre tabindex="0"><code class="language-text">Lᵢ = (I, O, S, s₀, Δ, C, E, A, B, X)</code></pre>
 <ul>
 <li><code>I</code> and <code>O</code> define input and output contracts.</li>
 <li><code>S</code> and <code>s₀</code> define states and the single entry.</li>
@@ -255,10 +255,10 @@ program                               prepare → act → evaluate → ACCEPT
 </ul>
 <p>and <code>CANCELLED</code>.</p>
 <p>A containment edge records more than “parent calls child”:</p>
-<pre><code class="language-text">h = (parent, state, child, map_in, map_out, deadline, receipt_predicate)</code></pre>
+<pre tabindex="0"><code class="language-text">h = (parent, state, child, map_in, map_out, deadline, receipt_predicate)</code></pre>
 <p>The maps prevent hidden shared state from becoming the real contract. The deadline and cancellation or escalation path bound the invocation. The receipt predicate states what the parent may learn from the child.</p>
 <p>A child receipt should bind at least:</p>
-<pre><code class="language-text">r = digest(
+<pre tabindex="0"><code class="language-text">r = digest(
   child_contract,
   run_id,
   input_digest,
@@ -326,7 +326,7 @@ program                               prepare → act → evaluate → ACCEPT
 <h3 id="article-section-09-detail-05">Software delivery</h3>
 <p>Consider service candidate <code>C7</code> under policy <code>P3</code>. A testing parent requires API contract, database migration, authorization, and performance children, plus an independent producer and complete candidate-bound receipts.</p>
 <p>The migration child receives an immutable database image and <code>C7</code>:</p>
-<pre><code class="language-text">prepare → migrate → verify → rollback → verify_restore → report
+<pre tabindex="0"><code class="language-text">prepare → migrate → verify → rollback → verify_restore → report
              ▲         │
              └ diagnose┘</code></pre>
 <p>The first attempt fails because the isolated fixture lacks an extension. Diagnosis classifies environment drift, preparation repairs the fixture, and the second attempt succeeds. The child emits a <code>PASS</code> receipt for <code>C7/P3</code> with logs, snapshots, rollback observations, attempt count, and producer identity. Its retry budget is exhausted; a third attempt would escalate.</p>
@@ -334,7 +334,7 @@ program                               prepare → act → evaluate → ACCEPT
 <p>The delivery parent still requires a release build, independent review, and publication decision. The test receipt supplies evidence; it does not grant release authority.</p>
 <h2 id="article-section-10">Concord Loom as its own worked binding</h2>
 <p>Concord Loom governs its own development without defining software delivery as the framework&#x27;s boundary. The active configuration has one root, <code>steward-concordloom</code>, and ten responsibility areas:</p>
-<pre><code class="language-text">steward-concordloom
+<pre tabindex="0"><code class="language-text">steward-concordloom
 ├── product-direction
 ├── research-theory
 ├── protocol-design
@@ -345,7 +345,7 @@ program                               prepare → act → evaluate → ACCEPT
 ├── release-distribution
 ├── adoption-feedback
 └── system-evolution</code></pre>
-<p>Those areas contain 48 narrower cycles, for 58 cycles in total. They cover product decisions, theory, protocol, implementation, independent review, adapters, documentation, localization, the site, releases, adoption, and the full evolution circuit. The seven phases-observe, negotiate, bind, execute, verify, publish, and evolve-remain the grammar of a governed run. They are not the repository&#x27;s top-level department chart.</p>
+<p>Those areas contain 55 narrower cycles, for 65 cycles in total. They cover product decisions, theory, protocol, implementation, independent review, adapters, documentation, localization, the site, releases, adoption, and the full evolution circuit. The seven phases-observe, negotiate, bind, execute, verify, publish, and evolve-remain the grammar of a governed run. They are not the repository&#x27;s top-level department chart.</p>
 <p>This configuration was accepted by an operator; repository history did not promote itself into intent. Self-application also grants no special authority. The active configuration limits execution, keeps independent review separate, and reserves external effects for publisher or operator roles. Evolution produces a proposal with <code>activation_allowed: false</code>; a separate operator decision activates exact successor bytes.</p>
 <p>These self-governance rules are not mandatory for adopters. A laboratory, studio, operations team, public body, or software project defines its own policy, artifacts, identities, evidence, and loop topology.</p>
 <h2 id="article-section-11">Runtime and generated-view boundaries</h2>
@@ -355,7 +355,7 @@ program                               prepare → act → evaluate → ACCEPT
 <p>The Atlas is a generated projection of accepted artifacts and recorded run facts. It can explain the system and expose drift. It cannot change a binding, authorize a transition, revalidate referenced payload bytes, or become a source of truth by being edited.</p>
 <h2 id="article-section-12">The evolution loop</h2>
 <p>No initial binding remains correct forever. Repeated timeouts, unused evidence, ambiguous questions, failed handoffs, or unnecessary gates are signals about the system itself.</p>
-<pre><code class="language-text">observe bounded signals
+<pre tabindex="0"><code class="language-text">observe bounded signals
   → diagnose contract or routing friction
   → propose a graph or policy delta
   → assess risk and compatibility
@@ -428,26 +428,26 @@ program                               prepare → act → evaluate → ACCEPT
 <p>The later sections explain how to turn that observation into an accepted, executable loop system.</p>
 <h2 id="quickstart-section-02">Recommended: let the Codex skill onboard the repository</h2>
 <p>If you use Codex, install the plugin as described in the <a href="https://github.com/concordloom/concordloom/blob/main/docs/CODEX_PLUGIN.md" rel="noreferrer">Codex plugin guide</a>, open the target repository, and ask:</p>
-<pre><code class="language-text">Use $design-project-loops to onboard this repository safely, inspect it
+<pre tabindex="0"><code class="language-text">Use $design-project-loops to onboard this repository safely, inspect it
 read-only, and show me the highest-impact unresolved loop decision.</code></pre>
 <p>The skill runs preflight, presents one safe installation plan if the CLI is missing, and asks for approval before changing the user environment. Continue below only for a manual or headless CLI setup.</p>
 <h2 id="quickstart-section-03">1. Install the CLI</h2>
-<pre><code class="language-bash">pipx install \
+<pre tabindex="0"><code class="language-bash">pipx install \
   &quot;concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5&quot;
 concordloom --version</code></pre>
 <p>If <code>pipx</code> is unavailable and you already use <code>uv</code>, run:</p>
-<pre><code class="language-bash">uv tool install \
+<pre tabindex="0"><code class="language-bash">uv tool install \
   &quot;concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5&quot;</code></pre>
 <p>Do not pass <code>--break-system-packages</code> or install into an externally-managed system Python.</p>
 <p>When working from a clone:</p>
-<pre><code class="language-bash">python3 -m venv .venv
+<pre tabindex="0"><code class="language-bash">python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -e .
 ./tools/check.sh</code></pre>
 <p>Expected result: the version command prints <code>concordloom 0.1.5</code>. The check script ends with <code>CHECK_OK</code>.</p>
 <h2 id="quickstart-section-04">2. Inspect a repository</h2>
 <p>Run these commands from a clean Git repository:</p>
-<pre><code class="language-bash">TARGET_REPOSITORY=&quot;$(git rev-parse --show-toplevel)&quot;
+<pre tabindex="0"><code class="language-bash">TARGET_REPOSITORY=&quot;$(git rev-parse --show-toplevel)&quot;
 WORK_DIR=&quot;$(mktemp -d /tmp/concordloom-quickstart-XXXXXX)&quot;
 
 concordloom inspect &quot;$TARGET_REPOSITORY&quot; \
@@ -457,18 +457,18 @@ concordloom questions \
   --output &quot;$WORK_DIR/questions.json&quot;</code></pre>
 <p>Expected result: <code>observed-project-graph.json</code> contains the discovered files and relationships. <code>questions.json</code> contains decisions that cannot be inferred safely.</p>
 <p>Inspect the summary:</p>
-<pre><code class="language-bash">jq &#x27;.coverage, .hypotheses&#x27; &quot;$WORK_DIR/observed-project-graph.json&quot;
+<pre tabindex="0"><code class="language-bash">jq &#x27;.coverage, .hypotheses&#x27; &quot;$WORK_DIR/observed-project-graph.json&quot;
 jq &#x27;.questions[] | {prompt, why_it_matters, options}&#x27; &quot;$WORK_DIR/questions.json&quot;</code></pre>
 <p>An <code>observed</code> relationship comes from repository evidence. An <code>inferred</code> relationship is a hypothesis. Neither one becomes accepted intent until an operator decides.</p>
 <h2 id="quickstart-section-05">3. Open the Atlas</h2>
 <p>The <a href="https://concordloom.github.io/concordloom/#atlas/steward-concordloom" rel="noreferrer">public Atlas</a> shows the complete development system used by this repository. It is a read-only projection: it can explain accepted rules and recorded runs, but cannot grant authority or change them.</p>
 <p>From a source checkout:</p>
-<pre><code class="language-bash">PYTHONPATH=src python3 tools/build_site.py --check
+<pre tabindex="0"><code class="language-bash">PYTHONPATH=src python3 tools/build_site.py --check
 python3 -m http.server --directory site 8000</code></pre>
 <p>Open <code>http://localhost:8000/?lang=en#atlas/steward-concordloom</code>.</p>
 <p>The page distinguishes the product release from the internal revision of its development rules:</p>
-<pre><code class="language-text">Concord Loom 0.1.5
-Development rules: revision 8</code></pre>
+<pre tabindex="0"><code class="language-text">Concord Loom 0.1.5
+Development rules: revision 9</code></pre>
 <h2 id="quickstart-section-06">4. Decide what the observation means</h2>
 <p>The inspection result is evidence, not permission. A governed setup names:</p>
 <ul>
@@ -480,7 +480,7 @@ Development rules: revision 8</code></pre>
 </ul>
 <p>Use <code>concordloom decide</code> for each blocking question, then <code>concordloom accept</code> to create an accepted project graph. Run <code>concordloom decide --help</code> and <code>concordloom accept --help</code> for the exact input files. The commands fail closed when a required decision is missing.</p>
 <p>An operator decision identifies its authority explicitly:</p>
-<pre><code class="language-bash">concordloom decide \
+<pre tabindex="0"><code class="language-bash">concordloom decide \
   --questions &quot;$WORK_DIR/questions.json&quot; \
   --question question-id \
   --verdict confirmed \
@@ -492,13 +492,13 @@ Development rules: revision 8</code></pre>
   --output &quot;$WORK_DIR/decision.json&quot;</code></pre>
 <h2 id="quickstart-section-07">5. Build an executable loop system</h2>
 <p>The remaining artifact chain is deliberate:</p>
-<pre><code class="language-text">accepted project graph
+<pre tabindex="0"><code class="language-text">accepted project graph
   → proposed loop design
   → operator-accepted loop design
   → compiled registry and configuration proposal
   → separately activated configuration</code></pre>
 <p>Create it with:</p>
-<pre><code class="language-bash">concordloom propose --help
+<pre tabindex="0"><code class="language-bash">concordloom propose --help
 concordloom accept --help
 concordloom compile --help
 concordloom activate --help
@@ -506,7 +506,7 @@ concordloom catalog --help</code></pre>
 <p>The repository includes a complete software-delivery example under <code>framework/generic-sdlc/</code>. It is a worked example, not Concord Loom&#x27;s universal process.</p>
 <h2 id="quickstart-section-08">6. Run one governed change</h2>
 <p>Create a manifest for the exact candidate bytes, then create and authorize a run:</p>
-<pre><code class="language-bash">concordloom candidate &quot;$TARGET_REPOSITORY&quot; \
+<pre tabindex="0"><code class="language-bash">concordloom candidate &quot;$TARGET_REPOSITORY&quot; \
   --generated-at 2026-07-24T12:25:00Z \
   --output &quot;$WORK_DIR/candidate.json&quot;
 
@@ -521,14 +521,14 @@ concordloom run new \
   --candidate-author project-executor \
   --output &quot;$WORK_DIR/run-card.json&quot;</code></pre>
 <p>Your accepted configuration supplies the real root loop and principal IDs. <code>--target-loop</code> routes only that responsibility and its ancestors; unrelated release and evolution branches stay out of the run. Omitting it creates a coordination-only root run. Use <code>--portfolio</code> only for an intentional audit of the complete reachable system. Advance the card with:</p>
-<pre><code class="language-bash">concordloom run authorize --help
+<pre tabindex="0"><code class="language-bash">concordloom run authorize --help
 concordloom run attempt --help
 concordloom run evidence --help
 concordloom run complete --help</code></pre>
 <p>A planned route becomes factual only after an attempt records the effective principal, model, instructions, tools, network use, external effects, elapsed time, and result. A run is finished only when <code>run complete</code> succeeds.</p>
 <h2 id="quickstart-section-09">7. Understand evolution</h2>
 <p>Repeated, content-addressed signals may support a successor proposal:</p>
-<pre><code class="language-bash">concordloom evolve --help</code></pre>
+<pre tabindex="0"><code class="language-bash">concordloom evolve --help</code></pre>
 <p>The proposal always has <code>activation_allowed: false</code>. The active configuration decides who may review and activate its successor. Evolution can propose its replacement; it cannot authorize itself.</p>
 <h2 id="quickstart-section-10">Where to go next</h2>
 <ul>
@@ -543,6 +543,7 @@ concordloom run complete --help</code></pre>
       </div>
 
       <div class="view atlas-view" id="atlas" data-view="atlas">
+        <h1 class="visually-hidden" data-en="Concord Loom Atlas" data-ru="Атлас Concord Loom">Concord Loom Atlas</h1>
         <section class="atlas-commandbar" aria-label="Active development system"
           data-en-aria-label="Active development system" data-ru-aria-label="Действующая система разработки">
           <p><span data-en="PRODUCT" data-ru="ПРОДУКТ">PRODUCT</span><strong data-product-release>0.1.0</strong></p>
@@ -584,7 +585,7 @@ concordloom run complete --help</code></pre>
         </section>
 
         <details class="full-outline">
-          <summary data-en="Show the complete 58-cycle outline" data-ru="Показать полную схему из 58 циклов">Show the complete 58-cycle outline</summary>
+          <summary data-outline-summary data-en="Show the complete cycle outline" data-ru="Показать полную схему циклов">Show the complete cycle outline</summary>
           <div data-atlas-outline></div>
         </details>
       </div>
@@ -599,7 +600,7 @@ concordloom run complete --help</code></pre>
     </main>
 
     <footer class="site-footer">
-      <span>CONCORD LOOM</span>
+      <span translate="no">CONCORD LOOM</span>
       <span data-en="FINITE LOOPS. EXPLICIT AUTHORITY." data-ru="КОНЕЧНЫЕ ЦИКЛЫ. ЯВНЫЕ ПОЛНОМОЧИЯ.">FINITE LOOPS. EXPLICIT AUTHORITY.</span>
       <a href="https://github.com/concordloom/concordloom">GITHUB ↗</a>
     </footer>

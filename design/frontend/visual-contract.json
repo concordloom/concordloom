@@ -1,0 +1,61 @@
+{
+  "acceptance": {
+    "accessibility": {
+      "axe_max_critical": 0,
+      "axe_max_serious": 0,
+      "minimum_target_css_px": 44
+    },
+    "atlas_desktop": {
+      "graph_min_viewport_width_ratio": 0.72,
+      "inspector_max_viewport_width_ratio": 0.22,
+      "inspector_min_viewport_width_ratio": 0.18,
+      "parent_min_graph_height_ratio": 0.32,
+      "path_max_css_px": 160,
+      "path_max_viewport_width_ratio": 0.1,
+      "top_chrome_max_viewport_height_ratio": 0.14
+    },
+    "layout": {
+      "document_overflow_tolerance_css_px": 1,
+      "maximum_unrequested_route_scroll_delta_css_px": 2,
+      "mobile_graph_first_viewport_min_ratio": 0.55,
+      "stack_breakpoint_css_px": 880
+    },
+    "viewports": [
+      "360x800",
+      "390x844",
+      "768x1024",
+      "1024x768",
+      "1440x900",
+      "1920x1080",
+      "2048x1152"
+    ]
+  },
+  "baseline_policy": {
+    "allowed_masks": [
+      "provenance-digest",
+      "live-led-halo-16px"
+    ],
+    "ci_may_update": false,
+    "owner": "accepted-visual-contract",
+    "path": "design/frontend/baselines"
+  },
+  "id": "signal-constellation-v1",
+  "kind": "concordloom.visual-contract",
+  "locales": [
+    "en",
+    "ru"
+  ],
+  "motion": {
+    "maximum_duration_ms": 650,
+    "minimum_duration_ms": 180,
+    "reduced_motion_is_immediate": true
+  },
+  "reference": {
+    "height": 1334,
+    "path": "design/frontend/reference/signal-constellation-concept.png",
+    "sha256": "4226c0ac5a181d5f26f9e2270b8973c153e80949fc5de5537f223502df22a619",
+    "width": 2410
+  },
+  "schema_version": "0.1",
+  "status": "accepted"
+}

@@ -197,10 +197,10 @@ proves its evidence contract; it does not grant publication authority.
 ## 8. Concord Loom's development system
 
 The active, operator-accepted configuration has root
-`steward-concordloom`, ten responsibility areas, and 58 cycles in total. The
+`steward-concordloom`, ten responsibility areas, and 65 cycles in total. The
 interactive Atlas projects that complete containment graph.
 
-Ordinary run cards do not execute all 58 cycles. By default they contain only
+Ordinary run cards do not execute all 65 cycles. By default they contain only
 the root coordinator. A task selects one or more leaves with `--target-loop`;
 the route adds only their ancestors. `--portfolio` is an explicit full-system
 audit mode.
