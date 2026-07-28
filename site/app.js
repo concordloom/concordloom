@@ -405,6 +405,12 @@ function appendGraphNode(svg, loop, x, y, radius, current = false) {
   link.append(title);
   link.append(svgElement("circle", { class: "node-outer", cx: x, cy: y, r: radius + 10 }));
   link.append(svgElement("circle", { class: "node-inner", cx: x, cy: y, r: radius }));
+  link.append(svgElement("circle", {
+    class: "node-bezel",
+    cx: x,
+    cy: y,
+    r: Math.max(radius - 8, 12),
+  }));
 
   const count = svgElement("text", {
     class: "node-count",
@@ -430,10 +436,57 @@ function appendGraphNode(svg, loop, x, y, radius, current = false) {
   svg.append(link);
 }
 
+function appendParentConstellation(svg, parent, selectedChild, x, y) {
+  const group = svgElement("g", { class: "parent-constellation" });
+  const parentLink = svgElement("a", {
+    href: `#atlas/${encodeURIComponent(parent.id)}`,
+    "aria-label": `${text("back")}: ${loopCopy(parent).label}`,
+  });
+  const title = svgElement("title");
+  title.textContent = `${text("back")}: ${loopCopy(parent).label}`;
+  parentLink.append(title);
+  parentLink.append(svgElement("circle", {
+    class: "parent-housing",
+    cx: x,
+    cy: y,
+    r: 52,
+  }));
+  parentLink.append(svgElement("circle", {
+    class: "parent-core",
+    cx: x,
+    cy: y,
+    r: 34,
+  }));
+  group.append(parentLink);
+
+  const siblings = parent.children.map(atlasLoop);
+  siblings.forEach((sibling, index) => {
+    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / Math.max(siblings.length, 1);
+    const nodeX = x + Math.cos(angle) * 92;
+    const nodeY = y + Math.sin(angle) * 78;
+    group.append(svgElement("line", {
+      class: sibling.id === selectedChild.id ? "parent-thread is-active" : "parent-thread",
+      x1: x,
+      y1: y,
+      x2: nodeX,
+      y2: nodeY,
+    }));
+    group.append(svgElement("circle", {
+      class: sibling.id === selectedChild.id ? "parent-node is-active" : "parent-node",
+      cx: nodeX,
+      cy: nodeY,
+      r: sibling.id === selectedChild.id ? 10 : 6,
+    }));
+  });
+  svg.append(group);
+}
+
 function renderGraph(loop) {
   const svg = document.querySelector("[data-atlas-graph]");
   const stage = document.querySelector("[data-atlas-stage]");
   svg.innerHTML = "";
+  const compact = window.matchMedia("(max-width: 560px)").matches;
+  svg.setAttribute("viewBox", compact ? "180 70 640 600" : "0 0 1000 760");
 
   const previous = previousLoopId ? atlasLoop(previousLoopId) : null;
   let motion = "none";
@@ -448,9 +501,10 @@ function renderGraph(loop) {
     });
   }
 
-  const centerX = 500;
+  const parent = !compact && loop.parentId ? atlasLoop(loop.parentId) : null;
+  const centerX = parent ? 625 : 500;
   const centerY = 370;
-  [310, 225, 118].forEach((radius, index) => {
+  [parent ? 285 : 310, parent ? 215 : 225, 118].forEach((radius, index) => {
     svg.append(svgElement("circle", {
       class: `graph-ring${index === 1 ? " is-signal" : ""}`,
       cx: centerX,
@@ -459,10 +513,26 @@ function renderGraph(loop) {
     }));
   });
 
+  if (parent) {
+    appendParentConstellation(svg, parent, loop, 132, centerY);
+    svg.append(svgElement("path", {
+      class: "level-thread",
+      d: `M 236 ${centerY} C 330 ${centerY}, 390 ${centerY}, ${centerX - 118} ${centerY}`,
+    }));
+    [0.25, 0.5, 0.75].forEach((progress) => {
+      svg.append(svgElement("circle", {
+        class: "level-thread-marker",
+        cx: 236 + (centerX - 118 - 236) * progress,
+        cy: centerY,
+        r: 3,
+      }));
+    });
+  }
+
   const children = loop.children.map(atlasLoop);
   const positions = children.map((child, index) => {
     const count = Math.max(children.length, 1);
-    const ring = children.length > 8 && index % 2 ? 265 : 230;
+    const ring = children.length > 8 && index % 2 ? 248 : 208;
     const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
     return {
       child,
@@ -614,6 +684,10 @@ document.addEventListener("keydown", (event) => {
 window.addEventListener("hashchange", route);
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const compactAtlas = window.matchMedia("(max-width: 560px)");
+compactAtlas.addEventListener?.("change", () => {
+  if (atlasData && currentRoute().view === "atlas") renderAtlas();
+});
 Promise.all([
   fetch("data/atlas.json").then((response) => {
     if (!response.ok) throw new Error(`Atlas ${response.status}`);
