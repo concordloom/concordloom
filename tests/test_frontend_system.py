@@ -177,6 +177,12 @@ class FrontendDevelopmentSystemTests(unittest.TestCase):
             contracts["critique-frontend-experience-acceptance"]["producer_capability"],
         )
 
+    def test_frontend_workflow_uses_a_firefox_compatible_container_home(self) -> None:
+        workflow = (
+            ROOT / ".github" / "workflows" / "frontend.yml"
+        ).read_text(encoding="utf-8")
+        self.assertIn("    env:\n      HOME: /root\n    container:\n", workflow)
+
     def test_child_receipts_and_publication_gate_are_machine_bound(self) -> None:
         loops = {loop["id"]: loop for loop in self.registry["loops"]}
         transitions = {
