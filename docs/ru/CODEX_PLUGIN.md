@@ -15,12 +15,31 @@ Concord Loom использует отдельно принятую систем
 
 ## Установка из GitHub Marketplace
 
-Закрепите Marketplace на теге релиза, затем установите плагин:
+Закрепите Marketplace на теге релиза, убедитесь, что Codex его видит, затем
+установите плагин:
 
 ```bash
 codex plugin marketplace add concordloom/concordloom --ref v0.1.2
+codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
+
+В списке должна появиться строка `concordloom`. Последняя команда должна
+сообщить: `Added plugin 'concordloom' from marketplace 'concordloom'`.
+
+Если команда `marketplace add` сообщила об успехе, но `concordloom` не появился
+в списке, удалите только незавершённую локальную копию Marketplace и добавьте
+её заново:
+
+```bash
+codex plugin marketplace remove concordloom
+codex plugin marketplace add concordloom/concordloom --ref v0.1.2
+codex plugin marketplace list
+codex plugin add concordloom@concordloom
+```
+
+После установки откройте новый диалог Codex: тогда он загрузит установленный
+навык.
 
 Запись Marketplace указывает на пакет `plugins/concordloom` в репозитории.
 Если среда требует ручной проверки доверия, до установки проверьте

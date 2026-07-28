@@ -13,12 +13,29 @@ execute, verify, publish, and evolve are the phases of each governed run.
 
 ## Install from the GitHub marketplace
 
-Pin the marketplace to the release tag, then install the plugin:
+Pin the marketplace to the release tag, confirm that Codex can see it, then
+install the plugin:
 
 ```bash
 codex plugin marketplace add concordloom/concordloom --ref v0.1.2
+codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
+
+The list must contain `concordloom`. The final command should report
+`Added plugin 'concordloom' from marketplace 'concordloom'`.
+
+If `marketplace add` reports success but the list does not contain
+`concordloom`, remove only that incomplete local snapshot and add it again:
+
+```bash
+codex plugin marketplace remove concordloom
+codex plugin marketplace add concordloom/concordloom --ref v0.1.2
+codex plugin marketplace list
+codex plugin add concordloom@concordloom
+```
+
+Then start a new Codex thread so it loads the installed skill.
 
 The marketplace entry resolves the repository-local
 `plugins/concordloom` bundle. Inspect

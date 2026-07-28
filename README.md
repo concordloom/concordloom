@@ -79,6 +79,7 @@ With Codex, install the plugin and let the skill conduct onboarding:
 
 ```bash
 codex plugin marketplace add concordloom/concordloom --ref v0.1.2
+codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
 
@@ -189,6 +190,7 @@ Every public guide is maintained in English and Russian.
 
 ```bash
 codex plugin marketplace add concordloom/concordloom --ref v0.1.2
+codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
 
