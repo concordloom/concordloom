@@ -17,7 +17,7 @@ Ask Codex:
 
 ```text
 Use $skill-installer to install
-https://github.com/concordloom/concordloom/tree/v0.1.3/plugins/concordloom/skills/design-project-loops
+https://github.com/concordloom/concordloom/tree/v0.1.4/plugins/concordloom/skills/design-project-loops
 ```
 
 Start a new Codex thread after installation. The skill will then be available
@@ -33,7 +33,7 @@ Pin the marketplace to the release tag, confirm that Codex can see it, then
 install the plugin:
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.3
+codex plugin marketplace add concordloom/concordloom --ref v0.1.4
 codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
@@ -46,7 +46,7 @@ If `marketplace add` reports success but the list does not contain
 
 ```bash
 codex plugin marketplace remove concordloom
-codex plugin marketplace add concordloom/concordloom --ref v0.1.3
+codex plugin marketplace add concordloom/concordloom --ref v0.1.4
 codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
@@ -87,7 +87,9 @@ The skill:
    environment and presents the exact pinned installation plan;
 4. asks before changing the user environment or using the network;
 5. reruns preflight and inspects the repository without executing its code;
-6. presents observations, inferences, coverage, and high-impact questions;
+6. explains observations and uncertainty in plain language, keeps machine
+   identifiers in optional technical details, and asks one clear next
+   question;
 7. records the operator's accepted, rejected, or corrected intent;
 8. proposes a loop system and waits for exact acceptance;
 9. compiles and validates the accepted contracts;
@@ -97,6 +99,14 @@ The skill:
 
 The skill never uses system `pip`, never passes `--break-system-packages`, and
 never installs silently.
+
+The onboarding conversation must not end at a diagnostic report while a
+blocking decision remains. Each step states what the operator needs to decide,
+why it matters, and which plain-language answers are available.
+This rule covers every operator-facing scenario: installation, read-only
+inspection, decisions, loop design, activation, Atlas, governed work, failures,
+completion, and evolution. Raw CLI JSON and internal identifiers are supporting
+technical details, not the conversation.
 
 The same sequence applies outside software repositories. Adapters may provide
 different evidence or executors, but they do not replace operator acceptance,

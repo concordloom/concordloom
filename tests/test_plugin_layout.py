@@ -69,7 +69,7 @@ class PluginLayoutTests(unittest.TestCase):
         )
 
         self.assertEqual(manifest["name"], "concordloom")
-        self.assertEqual(manifest["version"], "0.1.3")
+        self.assertEqual(manifest["version"], "0.1.4")
         self.assertEqual(manifest["skills"], "./skills/")
         self.assertEqual(manifest["license"], "Apache-2.0")
         self.assertNotIn("[TODO:", json.dumps(manifest))
@@ -110,6 +110,14 @@ class PluginLayoutTests(unittest.TestCase):
             "Do not infer the answer",
             "Always pass the session's",
             "`--locale en` or `--locale ru`",
+            "## Speak plainly and keep the conversation moving",
+            "Never mix untranslated English prose",
+            "Do not end onboarding with a status report",
+            "ask exactly one next question",
+            "`repository-delivery-boundary` only in optional technical",
+            "operator-conversation.md",
+            "Do not paste CLI JSON",
+            "End with the operator outcome and the one next action",
         ):
             self.assertIn(phrase, content)
 
@@ -135,9 +143,46 @@ class PluginLayoutTests(unittest.TestCase):
             openai_yaml,
             re.compile(
                 r'default_prompt: "Use \$design-project-loops .*'
-                r'Ask which language to use'
+                r'Ask for the language first.*operator comprehension gate'
+                r'.*explain findings plainly'
             ),
         )
+
+        conversation = (
+            SKILL / "references" / "operator-conversation.md"
+        ).read_text(encoding="utf-8")
+        conversation_ru = (
+            SKILL / "references" / "operator-conversation.ru.md"
+        ).read_text(encoding="utf-8")
+        for heading in (
+            "## Comprehension gate",
+            "### Installation permission",
+            "### Read-only inspection",
+            "### Decision recorded",
+            "### Project map ready",
+            "### Loop design ready",
+            "### Activation",
+            "### Atlas",
+            "### Governed task",
+            "### Failure",
+            "### Evolution",
+            "## Completion rule",
+        ):
+            self.assertIn(heading, conversation)
+        for requirement in (
+            "contains at most one primary question",
+            "ends with a direct question or one concrete next action",
+            "Never expose a raw machine report",
+            "Until then, every response must continue the conversation",
+        ):
+            self.assertIn(requirement, conversation)
+        for requirement in (
+            "## Проверка понятности",
+            "В сообщении не больше одного главного вопроса",
+            "Нельзя выдавать сырой машинный отчёт",
+            "каждый ответ продолжает разговор одним понятным вопросом",
+        ):
+            self.assertIn(requirement, conversation_ru)
 
         commands = (SKILL / "references" / "commands.md").read_text(
             encoding="utf-8"
@@ -218,7 +263,7 @@ class PluginLayoutTests(unittest.TestCase):
             self.assertTrue(plan["requires_operator_approval"])
             self.assertEqual(plan["repository_writes"], 0)
             serialized = json.dumps(plan)
-            self.assertIn("@v0.1.3", serialized)
+            self.assertIn("@v0.1.4", serialized)
             self.assertNotIn("--break-system-packages", serialized)
 
     def test_install_plan_falls_back_to_a_dedicated_venv(self) -> None:
@@ -228,8 +273,8 @@ class PluginLayoutTests(unittest.TestCase):
         self.assertEqual(plan["kind"], "isolated-venv")
         self.assertEqual(commands[0][1:3], ["-m", "venv"])
         self.assertEqual(commands[1][1:4], ["-m", "pip", "install"])
-        self.assertIn("concordloom/venvs/0.1.3", commands[0][3])
-        self.assertIn("@v0.1.3", commands[1][-1])
+        self.assertIn("concordloom/venvs/0.1.4", commands[0][3])
+        self.assertIn("@v0.1.4", commands[1][-1])
         self.assertNotIn("--break-system-packages", json.dumps(plan))
 
     def test_preflight_auto_discovers_and_validates_the_catalog_head(self) -> None:

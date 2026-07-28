@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "concordloom"
-version = "0.1.3"
+version = "0.1.4"
 description = "A universal grammar for evidence-governed systems of development loops"
 readme = "README.md"
 requires-python = ">=3.11"

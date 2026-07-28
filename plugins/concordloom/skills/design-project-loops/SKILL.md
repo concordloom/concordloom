@@ -39,11 +39,53 @@ policy explicitly defines a default presentation language. If the requested
 language is not supported by the Atlas renderer, explain that limitation and
 ask the operator to choose `en` or `ru` for generated Atlas output.
 
+## Speak plainly and keep the conversation moving
+
+Write for an operator who has never seen Concord Loom. Lead with the practical
+meaning, not the framework term. Never mix untranslated English prose into a
+Russian sentence or untranslated Russian prose into an English sentence.
+
+Keep machine spellings only when the operator needs an exact command, path,
+JSON key, status value, digest, or identifier. Put optional implementation
+details after the plain explanation under a short “Technical details” or
+“Технические детали” label. Do not make the operator decode terms such as
+`governed delivery boundary`, `epistemic state`, `graph delta`, `raw impact`,
+`nodes/edges`, or `project intent`.
+
+Translate their meaning in context:
+
+- `governed delivery boundary`: which work shares one set of development,
+  verification, and release rules;
+- `inferred`: a system hypothesis that the operator has not confirmed;
+- `confidence`: how strong the available evidence is, not probability of
+  truth;
+- `raw impact`: how much of the proposed project map this answer may change;
+- `nodes/edges`: project parts and the relationships between them;
+- `epistemic state`: whether a claim is observed, proposed, accepted, actual,
+  or verified;
+- `project intent`: the operator-accepted understanding of the project.
+
+After every step, ask exactly one next question or offer one concrete next
+action. Do not end onboarding with a status report, artifact list, digest, or
+“completed” message while a blocking operator decision remains. State what
+needs deciding, why it matters, and provide plain answer choices. Preserve
+exact machine values only as supporting detail.
+
+Before sending any operator-facing message, apply the comprehension gate in
+[operator-conversation.md](references/operator-conversation.md) or its
+[Russian peer](references/operator-conversation.ru.md), according to the
+chosen language. This gate applies to installation, discovery, negotiation,
+design, activation, Atlas, execution, failures, completion, and evolution.
+Do not paste CLI JSON or technical reference prose into the conversation.
+Translate its meaning, then offer technical details only on request.
+
 Read [artifact-contract.md](references/artifact-contract.md) before accepting a
 graph, compiling a binding, recording evidence, or proposing evolution. Read
 [commands.md](references/commands.md) before invoking the v0.1 CLI.
 Read [model-routing.md](references/model-routing.md) before proposing the first
 binding, creating a run card, or changing a route through evolution.
+Read the matching operator-conversation reference before the first
+operator-facing report or question.
 
 ## 1. Establish the boundary
 
@@ -82,9 +124,9 @@ binding:
 3. Run only read-only inspection and question generation. Never run repository
    code, authorize a run, mutate a catalog, claim a capability, or treat an
    inference as accepted intent.
-4. Present one bootstrap packet: revision and coverage, observed graph digest,
-   unresolved questions, proposed policy/loop deltas, exact first-binding
-   outputs, and the authority that the first binding would grant.
+4. Summarize the bootstrap findings in ordinary language and ask the first
+   blocking question. Keep revision, coverage, graph digest, proposed changes,
+   first-binding outputs, and granted authority in optional technical details.
 5. Stop for explicit operator acceptance. The lane grants no authority. A
    directly accepted, recorded bootstrap decision authorizes only the stated
    first-binding writes; creating that binding ends bootstrap.
@@ -119,7 +161,14 @@ high-information question at a time. Phrase it in product outcomes, ownership,
 or evidence expectations; do not ask the operator to choose files, models,
 tools, reviewers, or internal routing.
 
-For every question show:
+For every question, first show:
+
+- one plain-language question in the chosen communication language;
+- one or two sentences explaining the concrete consequence;
+- short answer choices, including a correction in the operator's own words;
+- a direct request to choose or correct one option.
+
+Then, only when it helps the decision, show:
 
 - the hypothesis and whether it is observed or inferred;
 - source references, confidence, and coverage caveats;
@@ -127,6 +176,13 @@ For every question show:
 - the exact graph operations for every answer;
 - the resulting added, removed, or corrected nodes and edges;
 - whether the unresolved decision blocks acceptance.
+
+For example, do not ask a Russian-speaking operator whether the repository is
+“one governed delivery boundary.” Ask whether the repository should be treated
+as one project with shared development, verification, and release rules. Offer
+“yes,” “no, it contains independent projects,” and “partly; let me describe
+the boundary.” Keep `repository-delivery-boundary` only in optional technical
+details.
 
 Record the chosen answer with the launcher's `decide` command, including actor and
 rationale. If a free-form answer does not map unambiguously to one delta, show
@@ -228,6 +284,9 @@ Stop with a concrete missing requirement instead of improvising when:
 - an evolution proposal is stale or lacks separate acceptance;
 - release readiness is mistaken for publication authority.
 
-End with artifact paths and digests, unresolved decisions, exact checks run,
-the candidate identity, and the next authority boundary. Avoid claiming that a
-generated file, passing child loop, or confidence score proves acceptance.
+End with the operator outcome and the one next action. If work is genuinely
+complete, say what is now usable and how to use or inspect it. If work is
+blocked, ask the one decision needed to continue. Put artifact paths, digests,
+exact checks, candidate identity, and authority boundaries in an optional
+technical appendix. Avoid claiming that a generated file, passing child loop,
+or confidence score proves acceptance.
