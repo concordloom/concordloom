@@ -77,6 +77,7 @@ Concord Loom разделяет две структуры:
 
 ```bash
 codex plugin marketplace add concordloom/concordloom --ref v0.1.2
+codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
 
@@ -187,6 +188,7 @@ concordloom questions \
 
 ```bash
 codex plugin marketplace add concordloom/concordloom --ref v0.1.2
+codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
 
