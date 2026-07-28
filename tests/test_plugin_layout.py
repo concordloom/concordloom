@@ -69,7 +69,7 @@ class PluginLayoutTests(unittest.TestCase):
         )
 
         self.assertEqual(manifest["name"], "concordloom")
-        self.assertEqual(manifest["version"], "0.1.2")
+        self.assertEqual(manifest["version"], "0.1.3")
         self.assertEqual(manifest["skills"], "./skills/")
         self.assertEqual(manifest["license"], "Apache-2.0")
         self.assertNotIn("[TODO:", json.dumps(manifest))
@@ -105,8 +105,18 @@ class PluginLayoutTests(unittest.TestCase):
             "input and output tokens",
             "install_plan",
             "Never use a system `pip`",
+            "## 0. Choose the language",
+            "communication_locale",
+            "Do not infer the answer",
+            "Always pass the session's",
+            "`--locale en` or `--locale ru`",
         ):
             self.assertIn(phrase, content)
+
+        self.assertLess(
+            content.index("## 0. Choose the language"),
+            content.index("## 1. Establish the boundary"),
+        )
 
         routing = (SKILL / "references" / "model-routing.md").read_text(
             encoding="utf-8"
@@ -123,7 +133,28 @@ class PluginLayoutTests(unittest.TestCase):
         )
         self.assertRegex(
             openai_yaml,
-            re.compile(r'default_prompt: "Use \$design-project-loops '),
+            re.compile(
+                r'default_prompt: "Use \$design-project-loops .*'
+                r'Ask which language to use'
+            ),
+        )
+
+        commands = (SKILL / "references" / "commands.md").read_text(
+            encoding="utf-8"
+        )
+        commands_ru = (SKILL / "references" / "commands.ru.md").read_text(
+            encoding="utf-8"
+        )
+        for reference in (commands, commands_ru):
+            self.assertIn("`--locale en`", reference)
+            self.assertIn("`--locale ru`", reference)
+
+        artifact_contract = (
+            SKILL / "references" / "artifact-contract.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn(
+            "Communication and presentation locale are display metadata",
+            artifact_contract,
         )
 
     def test_preflight_reports_bounded_bootstrap_without_mutating_repo(self) -> None:
@@ -187,7 +218,7 @@ class PluginLayoutTests(unittest.TestCase):
             self.assertTrue(plan["requires_operator_approval"])
             self.assertEqual(plan["repository_writes"], 0)
             serialized = json.dumps(plan)
-            self.assertIn("@v0.1.2", serialized)
+            self.assertIn("@v0.1.3", serialized)
             self.assertNotIn("--break-system-packages", serialized)
 
     def test_install_plan_falls_back_to_a_dedicated_venv(self) -> None:
@@ -197,8 +228,8 @@ class PluginLayoutTests(unittest.TestCase):
         self.assertEqual(plan["kind"], "isolated-venv")
         self.assertEqual(commands[0][1:3], ["-m", "venv"])
         self.assertEqual(commands[1][1:4], ["-m", "pip", "install"])
-        self.assertIn("concordloom/venvs/0.1.2", commands[0][3])
-        self.assertIn("@v0.1.2", commands[1][-1])
+        self.assertIn("concordloom/venvs/0.1.3", commands[0][3])
+        self.assertIn("@v0.1.3", commands[1][-1])
         self.assertNotIn("--break-system-packages", json.dumps(plan))
 
     def test_preflight_auto_discovers_and_validates_the_catalog_head(self) -> None:
