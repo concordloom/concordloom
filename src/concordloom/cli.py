@@ -724,8 +724,38 @@ def _cmd_run_attempt(args: argparse.Namespace) -> None:
         effective_principal_id=str(attempt["effective_principal_id"]),
         effective_agent=str(attempt["effective_agent"]),
         effective_model=str(attempt["effective_model"]),
+        effective_model_provider=(
+            str(attempt["effective_model_provider"])
+            if "effective_model_provider" in attempt
+            else None
+        ),
         effective_reasoning=str(attempt["effective_reasoning"]),
         effective_skill=str(attempt["effective_skill"]),
+        effective_skills=(
+            list(attempt["effective_skills"])
+            if "effective_skills" in attempt
+            else None
+        ),
+        effective_mcp_servers=(
+            list(attempt["effective_mcp_servers"])
+            if "effective_mcp_servers" in attempt
+            else None
+        ),
+        effective_resources=(
+            list(attempt["effective_resources"])
+            if "effective_resources" in attempt
+            else None
+        ),
+        effective_tool_capabilities=(
+            list(attempt["effective_tool_capabilities"])
+            if "effective_tool_capabilities" in attempt
+            else None
+        ),
+        effective_subagent_identities=(
+            list(attempt["effective_subagent_identities"])
+            if "effective_subagent_identities" in attempt
+            else None
+        ),
         effective_subagents=list(attempt.get("effective_subagents", [])),
         effective_tools=list(attempt.get("effective_tools", [])),
         data_egress=dict(attempt["data_egress"]),

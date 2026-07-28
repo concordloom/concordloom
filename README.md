@@ -78,7 +78,7 @@ library.
 With Codex, install the plugin and let the skill conduct onboarding:
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.1
+codex plugin marketplace add concordloom/concordloom --ref v0.1.2
 codex plugin add concordloom@concordloom
 ```
 
@@ -97,7 +97,7 @@ For a CLI-only start:
 
 ```bash
 pipx install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.1"
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.2"
 mkdir -p .concord/discovery
 concordloom inspect . \
   --output .concord/discovery/observed-project-graph.json
@@ -188,7 +188,7 @@ Every public guide is maintained in English and Russian.
 ## Codex plugin
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.1
+codex plugin marketplace add concordloom/concordloom --ref v0.1.2
 codex plugin add concordloom@concordloom
 ```
 

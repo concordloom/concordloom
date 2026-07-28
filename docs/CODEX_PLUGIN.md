@@ -16,7 +16,7 @@ execute, verify, publish, and evolve are the phases of each governed run.
 Pin the marketplace to the release tag, then install the plugin:
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.1
+codex plugin marketplace add concordloom/concordloom --ref v0.1.2
 codex plugin add concordloom@concordloom
 ```
 
