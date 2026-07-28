@@ -18,7 +18,7 @@ Concord Loom использует отдельно принятую систем
 Закрепите Marketplace на теге релиза, затем установите плагин:
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.1
+codex plugin marketplace add concordloom/concordloom --ref v0.1.2
 codex plugin add concordloom@concordloom
 ```
 

@@ -6,7 +6,9 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -43,7 +45,76 @@ class CliTests(unittest.TestCase):
         result = self.run_cli("--version")
 
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(result.stdout.strip(), "concordloom 0.1.1")
+        self.assertEqual(result.stdout.strip(), "concordloom 0.1.2")
+
+    def test_run_attempt_forwards_structured_route_metadata(self) -> None:
+        from concordloom.cli import _cmd_run_attempt
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            card = self.write_json(root / "card.json", {})
+            policy = self.write_json(root / "policy.json", {})
+            candidate = self.write_json(root / "candidate.json", {})
+            output = root / "output.json"
+            attempt = self.write_json(
+                root / "attempt.json",
+                {
+                    "id": "attempt-1",
+                    "started_at": "2026-07-28T11:30:00Z",
+                    "finished_at": "2026-07-28T11:30:00Z",
+                    "effective_principal_id": "example-publisher",
+                    "effective_agent": "publisher",
+                    "effective_model": "none",
+                    "effective_model_provider": "",
+                    "effective_reasoning": "deterministic",
+                    "effective_skill": "release",
+                    "effective_skills": [{"id": "release", "version": "1"}],
+                    "effective_mcp_servers": [],
+                    "effective_resources": [],
+                    "effective_tool_capabilities": ["github"],
+                    "effective_subagent_identities": [],
+                    "effective_subagents": [],
+                    "effective_tools": ["github"],
+                    "data_egress": {
+                        "provider": "",
+                        "path_prefixes": [],
+                        "content_classes": [],
+                    },
+                    "network": "write",
+                    "external_mutations": ["github-release-assets"],
+                    "input_tokens": 0,
+                    "output_tokens": 0,
+                    "reasoning_tokens": 0,
+                    "cached_tokens": 0,
+                    "token_accounting": "not-applicable",
+                    "cost_units": 0,
+                    "result": "pass",
+                },
+            )
+            args = SimpleNamespace(
+                card=str(card),
+                policy=str(policy),
+                candidate=str(candidate),
+                node="publish",
+                attempt=str(attempt),
+                repository=str(root),
+                output=str(output),
+            )
+
+            with patch(
+                "concordloom.run.record_attempt", return_value={"recorded": True}
+            ) as record:
+                _cmd_run_attempt(args)
+
+            kwargs = record.call_args.kwargs
+            self.assertEqual(kwargs["effective_model_provider"], "")
+            self.assertEqual(
+                kwargs["effective_skills"], [{"id": "release", "version": "1"}]
+            )
+            self.assertEqual(kwargs["effective_mcp_servers"], [])
+            self.assertEqual(kwargs["effective_resources"], [])
+            self.assertEqual(kwargs["effective_tool_capabilities"], ["github"])
+            self.assertEqual(kwargs["effective_subagent_identities"], [])
 
     def observed_graph(self) -> dict[str, object]:
         oid = "1" * 40

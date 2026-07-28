@@ -76,7 +76,7 @@ Concord Loom разделяет две структуры:
 навыку:
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.1
+codex plugin marketplace add concordloom/concordloom --ref v0.1.2
 codex plugin add concordloom@concordloom
 ```
 
@@ -95,7 +95,7 @@ read-only, and show me the highest-impact unresolved loop decision.
 
 ```bash
 pipx install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.1"
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.2"
 mkdir -p .concord/discovery
 concordloom inspect . \
   --output .concord/discovery/observed-project-graph.json
@@ -186,7 +186,7 @@ concordloom questions \
 ## Плагин Codex
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.1
+codex plugin marketplace add concordloom/concordloom --ref v0.1.2
 codex plugin add concordloom@concordloom
 ```
 
