@@ -34,6 +34,30 @@ class PluginLayoutTests(unittest.TestCase):
             ["git", "-C", str(repo), "commit", "-qm", "seed"], check=True
         )
 
+    def _installation_plan(self, *available_tools: str) -> dict[str, object]:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bin_dir = root / "bin"
+            bin_dir.mkdir()
+            for name in available_tools:
+                executable = bin_dir / name
+                executable.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+                executable.chmod(0o755)
+            environment = os.environ.copy()
+            environment["PATH"] = str(bin_dir)
+            environment["HOME"] = str(root / "home")
+            environment["XDG_DATA_HOME"] = str(root / "data")
+            result = subprocess.run(
+                [sys.executable, str(LAUNCHER), "--install-plan"],
+                env=environment,
+                check=False,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        return json.loads(result.stdout)["install_plan"]
+
     def test_manifest_and_marketplace_are_linked(self) -> None:
         manifest = json.loads(
             (PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8")
@@ -45,7 +69,7 @@ class PluginLayoutTests(unittest.TestCase):
         )
 
         self.assertEqual(manifest["name"], "concordloom")
-        self.assertEqual(manifest["version"], "0.1.0")
+        self.assertEqual(manifest["version"], "0.1.1")
         self.assertEqual(manifest["skills"], "./skills/")
         self.assertEqual(manifest["license"], "Apache-2.0")
         self.assertNotIn("[TODO:", json.dumps(manifest))
@@ -79,6 +103,8 @@ class PluginLayoutTests(unittest.TestCase):
             "model-routing.md",
             "least costly eligible route",
             "input and output tokens",
+            "install_plan",
+            "Never use a system `pip`",
         ):
             self.assertIn(phrase, content)
 
@@ -144,8 +170,36 @@ class PluginLayoutTests(unittest.TestCase):
         self.assertEqual(report["discovery_limits"]["network_calls"], 0)
         self.assertEqual(report["discovery_limits"]["external_mutations"], 0)
         self.assertEqual(report["cli_route"]["kind"], "same-release-source")
+        self.assertIsNone(report["install_plan"])
         self.assertEqual(before, after)
         self.assertFalse((repo / ".concord").exists())
+
+    def test_install_plan_prefers_isolated_tool_installers(self) -> None:
+        pipx = self._installation_plan("uv", "pipx")
+        self.assertEqual(pipx["kind"], "pipx")
+        self.assertEqual(Path(pipx["commands"][0][0]).name, "pipx")
+
+        uv = self._installation_plan("uv")
+        self.assertEqual(uv["kind"], "uv-tool")
+        self.assertEqual(Path(uv["commands"][0][0]).name, "uv")
+
+        for plan in (pipx, uv):
+            self.assertTrue(plan["requires_operator_approval"])
+            self.assertEqual(plan["repository_writes"], 0)
+            serialized = json.dumps(plan)
+            self.assertIn("@v0.1.1", serialized)
+            self.assertNotIn("--break-system-packages", serialized)
+
+    def test_install_plan_falls_back_to_a_dedicated_venv(self) -> None:
+        plan = self._installation_plan()
+        commands = plan["commands"]
+
+        self.assertEqual(plan["kind"], "isolated-venv")
+        self.assertEqual(commands[0][1:3], ["-m", "venv"])
+        self.assertEqual(commands[1][1:4], ["-m", "pip", "install"])
+        self.assertIn("concordloom/venvs/0.1.1", commands[0][3])
+        self.assertIn("@v0.1.1", commands[1][-1])
+        self.assertNotIn("--break-system-packages", json.dumps(plan))
 
     def test_preflight_auto_discovers_and_validates_the_catalog_head(self) -> None:
         catalog = json.loads(
@@ -280,9 +334,10 @@ class PluginLayoutTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn("scripts/concordloom_cli.py", commands)
+        self.assertIn("install_plan", commands)
         self.assertIn("install_argv", commands)
         self.assertIn(
-            "https://github.com/concordloom/concordloom/",
+            "git+https://github.com/concordloom/concordloom",
             LAUNCHER.read_text(encoding="utf-8"),
         )
 

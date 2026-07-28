@@ -75,10 +75,29 @@ means. A green child receipt never becomes parent authority by accident.
 Python 3.11+ and Git are enough. The portable core uses only the standard
 library.
 
-```bash
-python3 -m pip install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.0"
+With Codex, install the plugin and let the skill conduct onboarding:
 
+```bash
+codex plugin marketplace add concordloom/concordloom --ref v0.1.1
+codex plugin add concordloom@concordloom
+```
+
+Then ask:
+
+```text
+Use $design-project-loops to onboard this repository safely, inspect it
+read-only, and show me the highest-impact unresolved loop decision.
+```
+
+The skill checks the CLI, proposes a safe pinned installation when needed, and
+asks before changing the user environment. It does not mutate the repository
+before the operator accepts the graph delta.
+
+For a CLI-only start:
+
+```bash
+pipx install \
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.1"
 mkdir -p .concord/discovery
 concordloom inspect . \
   --output .concord/discovery/observed-project-graph.json
@@ -169,7 +188,7 @@ Every public guide is maintained in English and Russian.
 ## Codex plugin
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.0
+codex plugin marketplace add concordloom/concordloom --ref v0.1.1
 codex plugin add concordloom@concordloom
 ```
 

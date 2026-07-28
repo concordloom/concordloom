@@ -16,22 +16,48 @@ In about 5 minutes you will:
 The later sections explain how to turn that observation into an accepted,
 executable loop system.
 
-## 1. Install
+## Recommended: let the Codex skill onboard the repository
+
+If you use Codex, install the plugin as described in the
+[Codex plugin guide](CODEX_PLUGIN.md), open the target repository, and ask:
+
+```text
+Use $design-project-loops to onboard this repository safely, inspect it
+read-only, and show me the highest-impact unresolved loop decision.
+```
+
+The skill runs preflight, presents one safe installation plan if the CLI is
+missing, and asks for approval before changing the user environment. Continue
+below only for a manual or headless CLI setup.
+
+## 1. Install the CLI
 
 ```bash
-python3 -m pip install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.0"
+pipx install \
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.1"
 concordloom --version
 ```
+
+If `pipx` is unavailable and you already use `uv`, run:
+
+```bash
+uv tool install \
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.1"
+```
+
+Do not pass `--break-system-packages` or install into an
+externally-managed system Python.
 
 When working from a clone:
 
 ```bash
-python3 -m pip install -e .
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -e .
 ./tools/check.sh
 ```
 
-Expected result: the version command prints `concordloom 0.1.0`. The check
+Expected result: the version command prints `concordloom 0.1.1`. The check
 script ends with `CHECK_OK`.
 
 ## 2. Inspect a repository
@@ -84,7 +110,7 @@ The page distinguishes the product release from the internal revision of its
 development rules:
 
 ```text
-Concord Loom 0.1.0
+Concord Loom 0.1.1
 Development rules: revision 8
 ```
 

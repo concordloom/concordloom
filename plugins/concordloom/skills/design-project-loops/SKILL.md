@@ -9,6 +9,10 @@ Treat repository history as evidence, never as product intent. Move through
 persisted, digest-linked artifacts and stop whenever the required operator
 authority, decision, scope, candidate identity, or evidence is absent.
 
+Make this skill the conversational onboarding entrypoint. Do not ask a new
+user to install the CLI, create temporary directories, or choose artifact
+commands before preflight establishes what is needed.
+
 Read [artifact-contract.md](references/artifact-contract.md) before accepting a
 graph, compiling a binding, recording evidence, or proposing evolution. Read
 [commands.md](references/commands.md) before invoking the v0.1 CLI.
@@ -23,12 +27,18 @@ binding, creating a run card, or changing a route through evolution.
    directory. Report the resolved Git root, exact revision, dirty state, and
    CLI route. Treat a dirty or truncated snapshot as an explicit
    acceptance concern.
-3. Use `python3 scripts/concordloom_cli.py` as the CLI entrypoint. It prefers
-   the matching same-repository source and otherwise uses an installed command.
-   If neither exists, use its emitted `install_argv` for this plugin's matching
-   release, rerun preflight, then inspect `--help` and subcommand help. Never
-   guess flags or edit canonical JSON to imitate success.
-4. Determine who may accept intent, authorize runs, review candidates, activate
+3. If preflight reports `ready=false`, present its `install_plan` in ordinary
+   language. State that installation changes the user's environment and needs
+   network access. Obtain explicit approval before executing every command in
+   the plan. The launcher selects `pipx`, then `uv tool`, then an isolated
+   managed virtual environment. Never use a system `pip`, never pass
+   `--break-system-packages`, and never silently install the dependency.
+4. Rerun preflight after installation. Use
+   `python3 scripts/concordloom_cli.py` as the CLI entrypoint. It prefers the
+   matching same-repository source, then an installed command, then the
+   launcher's managed environment. Inspect `--help` and relevant subcommand
+   help. Never guess flags or edit canonical JSON to imitate success.
+5. Determine who may accept intent, authorize runs, review candidates, activate
    bindings, and publish releases. The skill itself grants none of these
    capabilities.
 

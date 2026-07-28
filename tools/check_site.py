@@ -157,8 +157,8 @@ def main() -> int:
     atlas = json.loads((SITE / "data" / "atlas.json").read_text(encoding="utf-8"))
     loop_ids = {loop["id"] for loop in atlas["loops"]}
     roots = set(atlas["binding"]["rootLoopIds"])
-    if atlas.get("product", {}).get("release") != "0.1.0":
-        errors.append("Atlas does not distinguish product release 0.1.0")
+    if atlas.get("product", {}).get("release") != "0.1.1":
+        errors.append("Atlas does not distinguish product release 0.1.1")
     if roots != {"steward-concordloom"}:
         errors.append(f"unexpected active Atlas roots: {sorted(roots)}")
     expected_cycles = {

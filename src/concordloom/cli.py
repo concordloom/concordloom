@@ -14,6 +14,7 @@ from pathlib import Path
 import sys
 from typing import Any
 
+from . import __version__
 from .canonical import digest, load, save
 
 
@@ -895,7 +896,9 @@ def build_parser() -> argparse.ArgumentParser:
             "evidence-governed systems of development loops."
         ),
     )
-    parser.add_argument("--version", action="version", version="concordloom 0.1.0")
+    parser.add_argument(
+        "--version", action="version", version=f"concordloom {__version__}"
+    )
     commands = parser.add_subparsers(dest="command", required=True)
 
     inspect = commands.add_parser(

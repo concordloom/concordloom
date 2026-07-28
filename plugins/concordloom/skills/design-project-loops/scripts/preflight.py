@@ -12,7 +12,12 @@ import sys
 import tempfile
 from pathlib import Path
 
-from concordloom_cli import CliRoute, install_argv, resolve_route
+from concordloom_cli import (
+    CliRoute,
+    install_argv,
+    installation_plan,
+    resolve_route,
+)
 
 
 GIT_TIMEOUT_SECONDS = 15
@@ -340,6 +345,7 @@ def inspect(repo: Path, binding: Path | None = None) -> dict[str, object]:
             else None
         ),
         "cli_route": route.report() if route is not None else None,
+        "install_plan": installation_plan() if route is None else None,
         "install_argv": list(install_argv()) if route is None else None,
         "ready": route is not None,
     }
@@ -372,6 +378,7 @@ def main() -> int:
                     "schema_version": 1,
                     "ready": False,
                     "error": str(error),
+                    "install_plan": installation_plan(),
                     "install_argv": list(install_argv()),
                 },
                 ensure_ascii=False,

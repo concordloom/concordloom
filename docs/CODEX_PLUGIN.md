@@ -16,7 +16,7 @@ execute, verify, publish, and evolve are the phases of each governed run.
 Pin the marketplace to the release tag, then install the plugin:
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.0
+codex plugin marketplace add concordloom/concordloom --ref v0.1.1
 codex plugin add concordloom@concordloom
 ```
 
@@ -32,24 +32,31 @@ Codex plugin CLI help.
 
 ## Use
 
-In the target repository, ask Codex explicitly:
+You do not need to install the Concord Loom CLI first. Open the target
+repository and ask Codex:
 
 ```text
-Use $design-project-loops to inspect this repository and show me the
-highest-impact unresolved loop decision. Do not mutate the repository until I
-accept the graph delta.
+Use $design-project-loops to onboard this repository safely, inspect it
+read-only, and show me the highest-impact unresolved loop decision.
 ```
 
 The skill:
 
-1. runs bounded, read-only preflight and repository inspection;
-2. presents observations, inferences, coverage, and high-impact questions;
-3. records the operator's accepted, rejected, or corrected intent;
-4. proposes a loop system and waits for exact acceptance;
-5. compiles and validates the accepted contracts;
-6. routes governed execution through run cards;
-7. maintains the offline Atlas; and
-8. records evidence-backed evolution proposals without activating them.
+1. runs bounded, read-only preflight;
+2. if the CLI is missing, selects `pipx`, `uv tool`, or an isolated virtual
+   environment and presents the exact pinned installation plan;
+3. asks before changing the user environment or using the network;
+4. reruns preflight and inspects the repository without executing its code;
+5. presents observations, inferences, coverage, and high-impact questions;
+6. records the operator's accepted, rejected, or corrected intent;
+7. proposes a loop system and waits for exact acceptance;
+8. compiles and validates the accepted contracts;
+9. routes governed execution through run cards;
+10. maintains the offline Atlas; and
+11. records evidence-backed evolution proposals without activating them.
+
+The skill never uses system `pip`, never passes `--break-system-packages`, and
+never installs silently.
 
 The same sequence applies outside software repositories. Adapters may provide
 different evidence or executors, but they do not replace operator acceptance,
@@ -66,8 +73,9 @@ A repository with no Concord Loom binding enters a bounded read-only bootstrap:
 - mutation remains blocked until the operator establishes the first accepted
   binding.
 
-The bundled launcher reports an exact installation command when the
-`concordloom` CLI is unavailable. It does not silently download a package or
+The bundled launcher reports an exact installation plan when the `concordloom`
+CLI is unavailable. It prefers `pipx`, then `uv tool`, then a dedicated virtual
+environment outside the repository. It does not silently download a package or
 execute a repository-provided replacement.
 
 ## Authority boundary
