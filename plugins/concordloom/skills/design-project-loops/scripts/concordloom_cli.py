@@ -13,7 +13,7 @@ import sys
 from typing import Sequence
 
 
-RELEASE_VERSION = "0.1.3"
+RELEASE_VERSION = "0.1.4"
 RELEASE_SPEC = (
     "concordloom @ "
     "git+https://github.com/concordloom/concordloom"

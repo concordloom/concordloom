@@ -77,7 +77,7 @@ Concord Loom разделяет две структуры:
 
 ```text
 Use $skill-installer to install
-https://github.com/concordloom/concordloom/tree/v0.1.3/plugins/concordloom/skills/design-project-loops
+https://github.com/concordloom/concordloom/tree/v0.1.4/plugins/concordloom/skills/design-project-loops
 ```
 
 Откройте новый диалог, затем попросите:
@@ -95,7 +95,7 @@ read-only, and show me the highest-impact unresolved loop decision.
 
 ```bash
 pipx install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.3"
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.4"
 mkdir -p .concord/discovery
 concordloom inspect . \
   --output .concord/discovery/observed-project-graph.json
@@ -187,7 +187,7 @@ concordloom questions \
 
 ```text
 Use $skill-installer to install
-https://github.com/concordloom/concordloom/tree/v0.1.3/plugins/concordloom/skills/design-project-loops
+https://github.com/concordloom/concordloom/tree/v0.1.4/plugins/concordloom/skills/design-project-loops
 ```
 
 Попросите Codex использовать `$design-project-loops`. Навык начинает с

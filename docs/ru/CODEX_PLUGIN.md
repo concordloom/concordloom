@@ -19,7 +19,7 @@ Concord Loom использует отдельно принятую систем
 
 ```text
 Use $skill-installer to install
-https://github.com/concordloom/concordloom/tree/v0.1.3/plugins/concordloom/skills/design-project-loops
+https://github.com/concordloom/concordloom/tree/v0.1.4/plugins/concordloom/skills/design-project-loops
 ```
 
 После установки откройте новый диалог Codex. Навык будет доступен под именем
@@ -35,7 +35,7 @@ Concord Loom не требует приложения плагина или MCP-
 установите плагин:
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.3
+codex plugin marketplace add concordloom/concordloom --ref v0.1.4
 codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
@@ -49,7 +49,7 @@ codex plugin add concordloom@concordloom
 
 ```bash
 codex plugin marketplace remove concordloom
-codex plugin marketplace add concordloom/concordloom --ref v0.1.3
+codex plugin marketplace add concordloom/concordloom --ref v0.1.4
 codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
@@ -89,7 +89,9 @@ read-only, and show me the highest-impact unresolved loop decision.
    окружение и показывает точный план установки закреплённой версии;
 4. спрашивает разрешение перед изменением окружения и обращением к сети;
 5. снова выполняет проверку и исследует репозиторий, не запуская его код;
-6. показывает наблюдения, выводы, покрытие и наиболее важные вопросы;
+6. объясняет наблюдения и неопределённость обычным языком, выносит машинные
+   идентификаторы в необязательные технические детали и задаёт один понятный
+   следующий вопрос;
 7. записывает принятое, отклонённое или исправленное оператором намерение;
 8. предлагает систему циклов и ждёт точного принятия;
 9. компилирует и проверяет принятые контракты;
@@ -100,6 +102,15 @@ read-only, and show me the highest-impact unresolved loop decision.
 
 Навык не использует системный `pip`, не передаёт
 `--break-system-packages` и ничего не устанавливает без разрешения.
+
+Первичная настройка не должна заканчиваться диагностическим отчётом, пока
+остаётся блокирующее решение. На каждом шаге навык объясняет, что нужно решить,
+почему это важно и какие понятные варианты ответа доступны.
+Это правило действует во всех разговорах с оператором: при установке,
+обследовании без изменений, принятии решений, проектировании циклов, активации,
+работе с Атласом, выполнении задач, ошибках, завершении и эволюции. Сырой JSON
+из CLI и внутренние идентификаторы остаются техническими деталями, а не
+разговором с пользователем.
 
 Та же последовательность применима вне программных репозиториев. Адаптеры
 могут предоставлять другие данные или исполнителей, но не заменяют
