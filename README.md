@@ -182,6 +182,7 @@ Every public guide is maintained in English and Russian.
 | [Cycles of Cycles](docs/ARTICLE.md) | [Циклы циклов](docs/ru/ARTICLE.md) |
 | [Atlas guide](docs/ATLAS.md) | [Руководство Atlas](docs/ru/ATLAS.md) |
 | [Writing standard](docs/WRITING.md) | [Стандарт текста](docs/ru/WRITING.md) |
+| [Design system](docs/DESIGN_SYSTEM.md) | [Дизайн-система](docs/ru/DESIGN_SYSTEM.md) |
 | [Product decisions](docs/DECISIONS.md) | [Решения по продукту](docs/ru/DECISIONS.md) |
 | [Observed landscape](docs/research/OBSERVED_LANDSCAPE.md) | [Наблюдаемый ландшафт](docs/ru/research/OBSERVED_LANDSCAPE.md) |
 

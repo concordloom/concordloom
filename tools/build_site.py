@@ -40,7 +40,58 @@ PUBLIC_DOCS = [
     ("DECISIONS", "Decisions", "Решения"),
     ("RELEASE", "Release", "Релиз"),
     ("WRITING", "Writing for humans", "Как писать для людей"),
+    ("DESIGN_SYSTEM", "Design system", "Дизайн-система"),
 ]
+TOKEN_SOURCE = SITE / "design-tokens.json"
+TOKEN_OUTPUT = SITE / "design-tokens.css"
+TOKEN_LAYERS = ("primitive", "semantic", "component", "compatibility")
+
+
+def design_tokens_css() -> bytes:
+    document = load(TOKEN_SOURCE)
+    if document.get("kind") != "concordloom.design-tokens":
+        raise ValueError("design token source has the wrong kind")
+    layers = document.get("layers")
+    if not isinstance(layers, dict) or tuple(layers) != TOKEN_LAYERS:
+        raise ValueError("design token layers must be ordered primitive to compatibility")
+    names: set[str] = set()
+    lines = ["/* Generated from design-tokens.json. Do not edit. */", ":root {"]
+    for layer in TOKEN_LAYERS:
+        tokens = layers[layer]
+        if not isinstance(tokens, dict) or not tokens:
+            raise ValueError(f"design token layer {layer} must not be empty")
+        lines.append(f"  /* {layer} */")
+        for name, value in tokens.items():
+            if not re.fullmatch(r"[a-z][a-z0-9-]*", name):
+                raise ValueError(f"invalid design token name: {name}")
+            if name in names:
+                raise ValueError(f"duplicate design token name: {name}")
+            if not isinstance(value, str) or not value.strip():
+                raise ValueError(f"design token {name} has no value")
+            names.add(name)
+            lines.append(f"  --{name}: {value};")
+    lines.append("}")
+    modes = document.get("modes")
+    if not isinstance(modes, dict) or not modes:
+        raise ValueError("design tokens must declare responsive or preference modes")
+    for mode, definition in modes.items():
+        query = definition.get("query")
+        overrides = definition.get("tokens")
+        if not isinstance(query, str) or not isinstance(overrides, dict):
+            raise ValueError(f"invalid design token mode: {mode}")
+        lines.extend([f"@media {query} {{", "  :root {"])
+        for name, value in overrides.items():
+            if name not in names:
+                raise ValueError(f"design token mode {mode} overrides unknown {name}")
+            lines.append(f"    --{name}: {value};")
+        lines.extend(["  }", "}"])
+    lines.append("")
+    payload = "\n".join(lines).encode("utf-8")
+    for reference in re.findall(rb"var\\(--([a-z][a-z0-9-]*)\\)", payload):
+        name = reference.decode("ascii")
+        if name not in names:
+            raise ValueError(f"design token references unknown token: {name}")
+    return payload
 
 
 def slugify(value: str) -> str:
@@ -357,6 +408,7 @@ def main() -> int:
     expected = canonical_bytes(projection) + b"\n"
     content_output = SITE / "data" / "content.json"
     expected_content = canonical_bytes(site_content()) + b"\n"
+    expected_tokens = design_tokens_css()
     assets = {
         ROOT / "docs" / "assets" / "concordloom-hero.webp": (
             SITE / "assets" / "concordloom-hero.webp"
@@ -384,6 +436,8 @@ def main() -> int:
             stale.append(str(output.relative_to(ROOT)))
         if not check_bytes(content_output, expected_content):
             stale.append(str(content_output.relative_to(ROOT)))
+        if not check_bytes(TOKEN_OUTPUT, expected_tokens):
+            stale.append(str(TOKEN_OUTPUT.relative_to(ROOT)))
         for source, target in assets.items():
             if not target.exists() or source.read_bytes() != target.read_bytes():
                 stale.append(str(target.relative_to(ROOT)))
@@ -396,6 +450,7 @@ def main() -> int:
     save(output, projection, pretty=False)
     content_output.parent.mkdir(parents=True, exist_ok=True)
     content_output.write_bytes(expected_content)
+    TOKEN_OUTPUT.write_bytes(expected_tokens)
     for source, target in assets.items():
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, target)

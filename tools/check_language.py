@@ -155,8 +155,8 @@ def main() -> int:
         if rejected in site_source or rejected in site_script:
             errors.append(f"site still exposes mixed-language copy {rejected!r}")
     for required in (
-        'data-atlas-binding data-en="Loading" data-ru="Загрузка"',
-        'data-atlas-root data-en="Loading" data-ru="Загрузка"',
+        'data-atlas-binding data-en="Loading…" data-ru="Загрузка…"',
+        'data-atlas-root data-en="Loading…" data-ru="Загрузка…"',
         'identifier: "Идентификатор"',
         'childCount: "Вложенных циклов"',
     ):

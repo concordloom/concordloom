@@ -1,7 +1,7 @@
 const copy = {
   en: {
     switchLanguage: "Switch to Russian",
-    loading: "Loading accepted data",
+    loading: "Loading accepted data…",
     loadError: "The accepted projection could not be loaded. Reload the page or inspect the source repository.",
     current: "Current cycle",
     children: "Contained cycles",
@@ -39,10 +39,16 @@ const copy = {
     identifier: "ID",
     childCount: "Contained cycles",
     noChildCount: "No contained cycles",
+    path: "Path",
+    level: "Level",
+    whatItDoes: "What it does",
+    needs: "Needs",
+    produces: "Produces",
+    resourcesOptional: "Models, skills and tools",
   },
   ru: {
     switchLanguage: "Переключить на английский",
-    loading: "Загружаются принятые данные",
+    loading: "Загружаются принятые данные…",
     loadError: "Не удалось загрузить принятую проекцию. Перезагрузите страницу или откройте исходные данные в репозитории.",
     current: "Текущий цикл",
     children: "Вложенные циклы",
@@ -80,6 +86,12 @@ const copy = {
     identifier: "Идентификатор",
     childCount: "Вложенных циклов",
     noChildCount: "Нет вложенных циклов",
+    path: "Путь",
+    level: "Уровень",
+    whatItDoes: "Что делает",
+    needs: "Что нужно",
+    produces: "Что получится",
+    resourcesOptional: "Модели, инструкции и инструменты",
   },
 };
 
@@ -102,6 +114,7 @@ let language =
 let atlasData = null;
 let contentData = null;
 let selectedLoopId = null;
+let previousLoopId = null;
 
 function text(key) {
   return copy[language][key];
@@ -265,7 +278,9 @@ function renderBreadcrumbs(loop) {
     cursor = cursor.parentId ? atlasLoop(cursor.parentId) : null;
   }
   const breadcrumbs = document.querySelector("[data-atlas-breadcrumbs]");
+  const history = document.querySelector("[data-atlas-history]");
   breadcrumbs.innerHTML = "";
+  history.innerHTML = "";
   path.forEach((entry, index) => {
     if (index) {
       const separator = document.createElement("span");
@@ -278,6 +293,17 @@ function renderBreadcrumbs(loop) {
     link.textContent = loopCopy(entry).label;
     if (index === path.length - 1) link.setAttribute("aria-current", "page");
     breadcrumbs.append(link);
+
+    const item = document.createElement("li");
+    const historyLink = document.createElement("a");
+    historyLink.href = `#atlas/${encodeURIComponent(entry.id)}`;
+    historyLink.innerHTML = `
+      <strong>${loopCopy(entry).label}</strong>
+      <small>${text("level")} ${String(index + 1).padStart(2, "0")}</small>
+    `;
+    if (index === path.length - 1) historyLink.setAttribute("aria-current", "page");
+    item.append(historyLink);
+    history.append(item);
   });
 }
 
@@ -313,18 +339,16 @@ function renderInspector(loop) {
     </details>
   `;
   inspector.innerHTML = `
-    <p class="section-label">${text("current")}</p>
+    <p class="instrument-label">${text("current")}</p>
     <h2>${loopCopy(loop).label}</h2>
     <p class="inspector-purpose">${loopCopy(loop).purpose}</p>
     <dl class="contract-grid">
-      <div><dt>${text("responsibility")}</dt><dd>${loop.role[language]}</dd></div>
-      <div><dt>${text("input")}</dt><dd>${loop.contract[language].input}</dd></div>
-      <div><dt>${text("output")}</dt><dd>${loop.contract[language].output}</dd></div>
+      <div><dt>${text("whatItDoes")}</dt><dd>${loopCopy(loop).purpose}</dd></div>
+      <div><dt>${text("needs")}</dt><dd>${loop.contract[language].input}</dd></div>
+      <div><dt>${text("produces")}</dt><dd>${loop.contract[language].output}</dd></div>
     </dl>
-    <section class="resource-panel">
-      <div>
-        <p class="section-label">${text("executionPlan")}</p>
-      </div>
+    <details class="resource-panel">
+      <summary>${text("resourcesOptional")}</summary>
       <dl>
         <div><dt>${text("provider")}</dt><dd><code>${provider}</code></dd></div>
         <div><dt>${text("model")}</dt><dd><code>${route.model}</code></dd></div>
@@ -335,13 +359,131 @@ function renderInspector(loop) {
         <div><dt>${text("tools")}</dt><dd><ul>${tools}</ul></dd></div>
       </dl>
       <p>${text("actualNote")}</p>
-    </section>
+    </details>
     ${technical}
     <section class="inner-grammar">
       <p class="section-label">${language === "en" ? "SHARED INNER RUN" : "ОБЩАЯ СХЕМА ЗАПУСКА"}</p>
       <ol>${atlasData.sharedRunGrammar.map((phase) => `<li><span>${phaseCopy[phase.id].code}</span>${phase.copy[language].label}</li>`).join("")}</ol>
     </section>
   `;
+}
+
+const SVG_NS = "http://www.w3.org/2000/svg";
+
+function svgElement(name, attributes = {}) {
+  const element = document.createElementNS(SVG_NS, name);
+  Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+  return element;
+}
+
+function graphLabel(textValue) {
+  const words = textValue.split(/\s+/);
+  if (words.length < 3 || textValue.length < 19) return [textValue];
+  let first = "";
+  let second = "";
+  words.forEach((word) => {
+    if (!second && `${first} ${word}`.trim().length <= Math.ceil(textValue.length / 2)) {
+      first = `${first} ${word}`.trim();
+    } else {
+      second = `${second} ${word}`.trim();
+    }
+  });
+  return second ? [first, second] : [first];
+}
+
+function appendGraphNode(svg, loop, x, y, radius, current = false) {
+  const link = svgElement("a", {
+    href: current ? `#atlas/${encodeURIComponent(loop.id)}` : `#atlas/${encodeURIComponent(loop.id)}`,
+    class: `graph-node${current ? " is-current" : ""}`,
+    "data-loop-id": loop.id,
+    "aria-label": `${loopCopy(loop).label}. ${
+      loop.children.length ? `${text("childCount")}: ${loop.children.length}` : text("noChildCount")
+    }`,
+  });
+  const title = svgElement("title");
+  title.textContent = `${loopCopy(loop).label}. ${loopCopy(loop).purpose}`;
+  link.append(title);
+  link.append(svgElement("circle", { class: "node-outer", cx: x, cy: y, r: radius + 10 }));
+  link.append(svgElement("circle", { class: "node-inner", cx: x, cy: y, r: radius }));
+
+  const count = svgElement("text", {
+    class: "node-count",
+    x,
+    y: current ? y - 25 : y + 4,
+    "text-anchor": "middle",
+  });
+  count.textContent = String(loop.children.length).padStart(current ? 2 : 1, "0");
+  link.append(count);
+
+  const label = svgElement("text", {
+    class: "node-label",
+    x,
+    y: current ? y - 2 : y + radius + 35,
+    "text-anchor": "middle",
+  });
+  graphLabel(loopCopy(loop).label).slice(0, current ? 3 : 2).forEach((line, index) => {
+    const span = svgElement("tspan", { x, dy: index ? 19 : 0 });
+    span.textContent = line;
+    label.append(span);
+  });
+  link.append(label);
+  svg.append(link);
+}
+
+function renderGraph(loop) {
+  const svg = document.querySelector("[data-atlas-graph]");
+  const stage = document.querySelector("[data-atlas-stage]");
+  svg.innerHTML = "";
+
+  const previous = previousLoopId ? atlasLoop(previousLoopId) : null;
+  let motion = "none";
+  if (previous && loop.parentId === previous.id) motion = "forward";
+  else if (previous && previous.parentId === loop.id) motion = "back";
+  else if (previous && previous.id !== loop.id) motion = "side";
+
+  stage.removeAttribute("data-motion");
+  if (motion !== "none" && !reducedMotion.matches) {
+    requestAnimationFrame(() => {
+      stage.dataset.motion = motion;
+    });
+  }
+
+  const centerX = 500;
+  const centerY = 370;
+  [310, 225, 118].forEach((radius, index) => {
+    svg.append(svgElement("circle", {
+      class: `graph-ring${index === 1 ? " is-signal" : ""}`,
+      cx: centerX,
+      cy: centerY,
+      r: radius,
+    }));
+  });
+
+  const children = loop.children.map(atlasLoop);
+  const positions = children.map((child, index) => {
+    const count = Math.max(children.length, 1);
+    const ring = children.length > 8 && index % 2 ? 265 : 230;
+    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
+    return {
+      child,
+      x: centerX + Math.cos(angle) * ring,
+      y: centerY + Math.sin(angle) * ring * 0.82,
+    };
+  });
+
+  positions.forEach(({ x, y }) => {
+    svg.append(svgElement("path", {
+      class: "graph-link",
+      d: `M ${centerX} ${centerY} C ${centerX} ${(centerY + y) / 2}, ${x} ${(centerY + y) / 2}, ${x} ${y}`,
+    }));
+    const dotX = centerX + (x - centerX) * 0.56;
+    const dotY = centerY + (y - centerY) * 0.56;
+    svg.append(svgElement("circle", { class: "graph-link-dot", cx: dotX, cy: dotY, r: 3 }));
+  });
+
+  positions.forEach(({ child, x, y }) => appendGraphNode(svg, child, x, y, 34));
+  appendGraphNode(svg, loop, centerX, centerY, 78, true);
+  previousLoopId = loop.id;
 }
 
 function renderAtlas() {
@@ -361,14 +503,7 @@ function renderAtlas() {
 
   renderBreadcrumbs(loop);
   renderInspector(loop);
-
-  const parent = document.querySelector("[data-atlas-parent]");
-  parent.innerHTML = "";
-  parent.append(atlasLink(loop, "atlas-current"));
-
-  const children = document.querySelector("[data-atlas-children]");
-  children.innerHTML = "";
-  loop.children.map(atlasLoop).forEach((child) => children.append(atlasLink(child, "atlas-child")));
+  renderGraph(loop);
   const empty = document.querySelector("[data-atlas-empty]");
   empty.hidden = loop.children.length > 0;
   empty.textContent = text("leaf");
@@ -419,9 +554,27 @@ function renderError() {
 
 function revealVisible() {
   document.querySelectorAll(".reveal:not(.is-visible)").forEach((element) => {
-    if (element.getBoundingClientRect().top < window.innerHeight * 0.94) {
-      element.classList.add("is-visible");
-    }
+    element.classList.add("is-visible");
+  });
+}
+
+const revealObserver = "IntersectionObserver" in window
+  ? new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -6% 0px" })
+  : null;
+
+function observeReveals() {
+  if (!revealObserver) {
+    revealVisible();
+    return;
+  }
+  document.querySelectorAll(".reveal:not(.is-visible)").forEach((element) => {
+    revealObserver.observe(element);
   });
 }
 
@@ -435,7 +588,7 @@ function route() {
   if (["theory", "quickstart"].includes(next.view) && next.detail) {
     requestAnimationFrame(() => document.getElementById(next.detail)?.scrollIntoView());
   }
-  requestAnimationFrame(revealVisible);
+  requestAnimationFrame(observeReveals);
 }
 
 document.querySelector(".language-switch").addEventListener("click", () => {
@@ -459,24 +612,8 @@ document.addEventListener("keydown", (event) => {
 });
 
 window.addEventListener("hashchange", route);
-window.addEventListener("scroll", revealVisible, { passive: true });
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-const heroArt = document.querySelector(".hero-art");
-if (heroArt && !reducedMotion.matches) {
-  heroArt.addEventListener("pointermove", (event) => {
-    const bounds = heroArt.getBoundingClientRect();
-    const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * -10;
-    const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * -8;
-    heroArt.style.setProperty("--hero-x", `${x}px`);
-    heroArt.style.setProperty("--hero-y", `${y}px`);
-  });
-  heroArt.addEventListener("pointerleave", () => {
-    heroArt.style.setProperty("--hero-x", "0px");
-    heroArt.style.setProperty("--hero-y", "0px");
-  });
-}
-
 Promise.all([
   fetch("data/atlas.json").then((response) => {
     if (!response.ok) throw new Error(`Atlas ${response.status}`);
@@ -501,4 +638,4 @@ Promise.all([
 
 applyLanguage(language);
 route();
-revealVisible();
+observeReveals();

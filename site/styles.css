@@ -1,16 +1,3 @@
-:root {
-  color-scheme: dark;
-  --ink: #0a0a09;
-  --paper: #f2f1ec;
-  --muted: #a3a39c;
-  --line: rgba(242, 241, 236, 0.18);
-  --acid: #c8ff00;
-  --acid-ink: #111500;
-  --display: "Arial Narrow", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
-  --radius: 0;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -67,7 +54,7 @@ button {
   height: 72px;
   padding: 0 2rem;
   border-bottom: 1px solid var(--line);
-  background: rgba(10, 10, 9, 0.88);
+  background: var(--cl-base-a88);
   backdrop-filter: blur(18px);
 }
 
@@ -225,7 +212,7 @@ html[lang="en"] .hero h1 em {
 .hero-bottom p {
   max-width: 34ch;
   margin: 0;
-  color: #c4c4bd;
+  color: var(--cl-silver-350);
   font-size: clamp(1rem, 1.4vw, 1.25rem);
 }
 
@@ -263,15 +250,15 @@ html[lang="en"] .hero h1 em {
   margin: 0 auto;
   overflow: hidden;
   border: 1px solid var(--line);
-  background: #050505;
+  background: var(--cl-black-1100);
 }
 
 .hero-art::after {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(10, 10, 9, 0.45), transparent 40%),
-    linear-gradient(0deg, rgba(10, 10, 9, 0.72), transparent 35%);
+    linear-gradient(90deg, var(--cl-base-a45), transparent 40%),
+    linear-gradient(0deg, var(--cl-base-a72), transparent 35%);
   content: "";
   pointer-events: none;
 }
@@ -353,7 +340,7 @@ html[lang="en"] .hero h1 em {
 
 .manifesto-columns p {
   margin: 0;
-  color: #c4c4bd;
+  color: var(--cl-silver-350);
   font-size: clamp(1.05rem, 1.8vw, 1.45rem);
   line-height: 1.5;
 }
@@ -475,7 +462,7 @@ html[lang="en"] .hero h1 em {
   height: 200px;
   padding: 1.4rem;
   border-left: 1px solid var(--acid);
-  background: #10100e;
+  background: var(--cl-black-875);
 }
 
 .stage-readout > span {
@@ -487,7 +474,7 @@ html[lang="en"] .hero h1 em {
 .stage-readout p {
   max-width: 26ch;
   margin: 0;
-  color: #c4c4bd;
+  color: var(--cl-silver-350);
 }
 
 .evolution {
@@ -524,7 +511,7 @@ html[lang="en"] .hero h1 em {
   bottom: -0.28em;
   z-index: -1;
   margin: 0;
-  color: rgba(17, 21, 0, 0.08);
+  color: var(--cl-acid-ink-a08);
   font-size: clamp(8rem, 24vw, 28rem);
   font-weight: 800;
   letter-spacing: -0.09em;
@@ -570,7 +557,7 @@ html[lang="en"] .hero h1 em {
 .atlas-hero > p {
   max-width: 40ch;
   margin: 0;
-  color: #c4c4bd;
+  color: var(--cl-silver-350);
   font-size: 1.1rem;
 }
 
@@ -626,7 +613,7 @@ html[lang="en"] .hero h1 em {
 
 .atlas-intro > p:last-child {
   max-width: 36ch;
-  color: #c4c4bd;
+  color: var(--cl-silver-350);
 }
 
 .atlas-machine {
@@ -640,15 +627,15 @@ html[lang="en"] .hero h1 em {
   border: 1px solid var(--line);
   border-radius: 50%;
   box-shadow:
-    0 0 0 70px rgba(242, 241, 236, 0.025),
-    0 0 0 140px rgba(242, 241, 236, 0.015);
+    0 0 0 70px var(--cl-warm-thread-a025),
+    0 0 0 140px var(--cl-warm-thread-a015);
 }
 
 .atlas-orbit::before,
 .atlas-orbit::after {
   position: absolute;
   inset: 16%;
-  border: 1px dashed rgba(200, 255, 0, 0.34);
+  border: 1px dashed var(--cl-acid-a34);
   border-radius: 50%;
   content: "";
 }
@@ -700,7 +687,7 @@ html[lang="en"] .hero h1 em {
   min-height: 210px;
   padding: 1.5rem;
   border: 1px solid var(--acid);
-  background: #10100e;
+  background: var(--cl-black-875);
   text-align: center;
   transform: translate(-50%, -50%);
 }
@@ -724,7 +711,7 @@ html[lang="en"] .hero h1 em {
 }
 
 .atlas-contract p {
-  color: #b9b9b1;
+  color: var(--cl-silver-400);
   font-size: 0.86rem;
 }
 
@@ -761,7 +748,7 @@ html[lang="en"] .hero h1 em {
 }
 
 .truth-table span {
-  color: #c4c4bd;
+  color: var(--cl-silver-350);
 }
 
 .atlas-footer-cta {
@@ -815,7 +802,7 @@ html[lang="en"] .hero h1 em {
 .reading-hero > p:last-child {
   max-width: 44ch;
   margin: 0;
-  color: #c4c4bd;
+  color: var(--cl-silver-350);
   font-size: clamp(1.05rem, 1.8vw, 1.4rem);
 }
 
@@ -866,10 +853,10 @@ html[lang="en"] .hero h1 em {
 
 .prose {
   grid-column: 2;
-  max-width: 72ch;
-  font-family: Arial, Helvetica, sans-serif;
+  max-width: var(--reading-measure);
+  font-family: var(--reading-font);
   font-size: 1.08rem;
-  line-height: 1.72;
+  line-height: var(--reading-leading);
 }
 
 .prose h1 {
@@ -897,7 +884,7 @@ html[lang="en"] .hero h1 em {
 
 .prose p,
 .prose li {
-  color: #d0d0ca;
+  color: var(--cl-silver-200);
 }
 
 .prose a {
@@ -910,7 +897,7 @@ html[lang="en"] .hero h1 em {
 .prose code,
 .loop-id {
   padding: 0.1em 0.25em;
-  background: #181815;
+  background: var(--cl-black-825);
   color: var(--acid);
   font-family: var(--mono);
   font-size: 0.88em;
@@ -921,13 +908,13 @@ html[lang="en"] .hero h1 em {
   padding: 1.25rem;
   overflow-x: auto;
   border: 1px solid var(--line);
-  background: #050505;
+  background: var(--cl-black-1100);
 }
 
 .prose pre code {
   padding: 0;
   background: transparent;
-  color: #e5e5df;
+  color: var(--cl-thread-200);
 }
 
 .prose blockquote {
@@ -958,8 +945,8 @@ html[lang="en"] .hero h1 em {
 
 .load-error {
   padding: 2rem;
-  border: 1px solid #ff675c;
-  color: #ff8d84;
+  border: 1px solid var(--cl-danger-500);
+  color: var(--cl-danger-300);
 }
 
 /* Interactive Atlas */
@@ -1014,11 +1001,11 @@ html[lang="en"] .hero h1 em {
   left: 50%;
   width: min(70vw, 610px);
   aspect-ratio: 1;
-  border: 1px solid rgba(200, 255, 0, 0.4);
+  border: 1px solid var(--cl-acid-a40);
   border-radius: 50%;
   box-shadow:
-    0 0 0 70px rgba(200, 255, 0, 0.025),
-    0 0 0 140px rgba(200, 255, 0, 0.015);
+    0 0 0 70px var(--cl-acid-a025),
+    0 0 0 140px var(--cl-acid-a015);
   content: "";
   transform: translate(-50%, -50%);
 }
@@ -1062,7 +1049,7 @@ html[lang="en"] .hero h1 em {
   display: grid;
   gap: 0.35rem;
   border: 1px solid var(--line);
-  background: rgba(10, 10, 9, 0.92);
+  background: var(--cl-base-a92);
 }
 
 .atlas-current {
@@ -1145,7 +1132,7 @@ html[lang="en"] .hero h1 em {
 
 .atlas-inspector {
   padding: 2rem;
-  background: #0e0e0c;
+  background: var(--cl-black-925);
 }
 
 .atlas-inspector h2 {
@@ -1158,7 +1145,7 @@ html[lang="en"] .hero h1 em {
 .inspector-purpose {
   max-width: 42ch;
   margin: 2rem 0;
-  color: #d0d0ca;
+  color: var(--cl-silver-200);
   font-size: 1.1rem;
 }
 
@@ -1331,7 +1318,7 @@ html[lang="en"] .hero h1 em {
 
 .full-outline a {
   text-decoration: underline;
-  text-decoration-color: rgba(200, 255, 0, 0.5);
+  text-decoration-color: var(--cl-acid-a50);
 }
 
 /* Docs */
