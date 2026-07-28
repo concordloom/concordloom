@@ -44,6 +44,11 @@ list, or a process-completed announcement.
 Ask which language to use. Wait for the answer before inspecting the
 repository. Do not infer it.
 
+### Name
+
+Ask what name to use. Show that name in the Atlas and conversation. Never show
+an internal participant identifier as a person's name.
+
 ### Installation permission
 
 Say what will be installed, where it will be installed, why it is needed, and
@@ -53,23 +58,18 @@ one proposed installation action.
 ### Read-only inspection
 
 Say that the repository was only read and remains unchanged. If inspection is
-incomplete, explain which evidence is missing and how that limits the next
-decision. Then ask the highest-impact project question in ordinary language.
+incomplete, explain which evidence is missing. Then build the draft Atlas. Do
+not ask technical project questions first.
 
-Russian example:
+Do not expose `repository-delivery-boundary`, `inferred`, `confidence`,
+`raw impact`, `graph delta`, `nodes/edges`, or `project intent`.
 
-> Я только прочитал файлы и историю репозитория; ничего не менял. Пока неясно,
-> нужно ли считать всё содержимое одним проектом с общими правилами разработки,
-> проверки и выпуска.
->
-> Как устроено на самом деле?
->
-> 1. Это один проект.
-> 2. Здесь несколько независимых проектов.
-> 3. Общая часть есть, но границу нужно описать точнее.
+### First Atlas
 
-Do not replace this with `repository-delivery-boundary`, `inferred`,
-`confidence`, `raw impact`, `graph delta`, `nodes/edges`, or `project intent`.
+Give the person the interactive draft and ask one question: “Does this map
+describe the project correctly?” Anyone may suggest a rename, move, addition,
+or removal. Do not ask about roles, authority, storage paths, or machine
+identifiers.
 
 ### Decision recorded
 

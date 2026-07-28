@@ -19,7 +19,7 @@ Concord Loom использует отдельно принятую систем
 
 ```text
 Use $skill-installer to install
-https://github.com/concordloom/concordloom/tree/v0.1.4/plugins/concordloom/skills/design-project-loops
+https://github.com/concordloom/concordloom/tree/v0.1.5/plugins/concordloom/skills/design-project-loops
 ```
 
 После установки откройте новый диалог Codex. Навык будет доступен под именем
@@ -35,7 +35,7 @@ Concord Loom не требует приложения плагина или MCP-
 установите плагин:
 
 ```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.4
+codex plugin marketplace add concordloom/concordloom --ref v0.1.5
 codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
@@ -49,7 +49,7 @@ codex plugin add concordloom@concordloom
 
 ```bash
 codex plugin marketplace remove concordloom
-codex plugin marketplace add concordloom/concordloom --ref v0.1.4
+codex plugin marketplace add concordloom/concordloom --ref v0.1.5
 codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
@@ -76,23 +76,21 @@ codex plugin add concordloom@concordloom
 репозиторий и попросите Codex:
 
 ```text
-Use $design-project-loops to onboard this repository safely, inspect it
-read-only, and show me the highest-impact unresolved loop decision.
+Use $design-project-loops to onboard this repository safely. Analyze it
+read-only, build a draft Atlas, and ask me only whether the map is correct.
 ```
 
 Навык:
 
-1. спрашивает, вести ли общение и человекочитаемые материалы на русском или
-   английском;
+1. спрашивает язык, а затем имя для разговора и Атласа;
 2. выполняет ограниченную предварительную проверку;
 3. если CLI отсутствует, выбирает `pipx`, `uv tool` или отдельное виртуальное
    окружение и показывает точный план установки закреплённой версии;
 4. спрашивает разрешение перед изменением окружения и обращением к сети;
 5. снова выполняет проверку и исследует репозиторий, не запуская его код;
-6. объясняет наблюдения и неопределённость обычным языком, выносит машинные
-   идентификаторы в необязательные технические детали и задаёт один понятный
-   следующий вопрос;
-7. записывает принятое, отклонённое или исправленное оператором намерение;
+6. до вопросов о проекте строит интерактивный черновой Атлас;
+7. спрашивает только, верна ли карта, и принимает обычные словесные поправки
+   от любого участника;
 8. предлагает систему циклов и ждёт точного принятия;
 9. компилирует и проверяет принятые контракты;
 10. маршрутизирует управляемое исполнение через карточки запуска;
@@ -103,9 +101,9 @@ read-only, and show me the highest-impact unresolved loop decision.
 Навык не использует системный `pip`, не передаёт
 `--break-system-packages` и ничего не устанавливает без разрешения.
 
-Первичная настройка не должна заканчиваться диагностическим отчётом, пока
-остаётся блокирующее решение. На каждом шаге навык объясняет, что нужно решить,
-почему это важно и какие понятные варианты ответа доступны.
+Первичная настройка не показывает выбор ролей, ссылки на полномочия, временные
+пути, хеши, схемы и сырой вывод CLI. Это внутренние детали. Сначала человек
+видит Атлас.
 Это правило действует во всех разговорах с оператором: при установке,
 обследовании без изменений, принятии решений, проектировании циклов, активации,
 работе с Атласом, выполнении задач, ошибках, завершении и эволюции. Сырой JSON
@@ -125,7 +123,7 @@ read-only, and show me the highest-impact unresolved loop decision.
 - полномочия в отношении продукта не выводятся автоматически;
 - изменение проверяемой версии или исходников не разрешено;
 - бюджеты исследования остаются явными;
-- навык показывает предложенный граф и необходимые решения;
+- навык показывает черновой Атлас до вопросов о поправках;
 - изменения заблокированы, пока оператор не установит первую принятую
   конфигурацию.
 

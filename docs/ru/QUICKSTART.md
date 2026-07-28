@@ -36,7 +36,7 @@ read-only, and show me the highest-impact unresolved loop decision.
 
 ```bash
 pipx install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.4"
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5"
 concordloom --version
 ```
 
@@ -44,7 +44,7 @@ concordloom --version
 
 ```bash
 uv tool install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.4"
+  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5"
 ```
 
 Не используйте `--break-system-packages` и не устанавливайте пакет в системный
@@ -59,7 +59,7 @@ python -m pip install -e .
 ./tools/check.sh
 ```
 
-Ожидаемый результат: команда версии печатает `concordloom 0.1.4`, а проверка
+Ожидаемый результат: команда версии печатает `concordloom 0.1.5`, а проверка
 заканчивается строкой `CHECK_OK`.
 
 ## 2. Исследуйте репозиторий
@@ -111,7 +111,7 @@ python3 -m http.server --directory site 8000
 разработки:
 
 ```text
-Concord Loom 0.1.4
+Concord Loom 0.1.5
 Правила разработки: редакция 8
 ```
 
