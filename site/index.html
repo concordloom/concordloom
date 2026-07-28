@@ -19,9 +19,19 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
     <link rel="apple-touch-icon" href="assets/concordloom-mark-192.png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="design-tokens.css">
+    <link rel="stylesheet" href="design-system.css">
     <script src="app.js" defer></script>
   </head>
   <body>
+    <!--
+      THESIS: Concord Loom is a machine you can enter. The interface rejects flat documentation chrome and makes accepted structure spatial.
+      OWN-WORLD: Off-black stone, blackened metal, warm-white tension lines and one acid signal. Circular gates live inside sharp instrument panels.
+      STORY: See the whole system, enter one cycle, understand its job, and retain the path back.
+      FIRST VIEWPORT: A mechanical loom establishes the material world; Atlas expands it into the primary operating surface.
+      FORM: Signal Constellation, chosen by the operator from three rendered concepts. The graph preserves its selected node while levels exchange places.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+    -->
     <a class="skip-link" href="#main" data-en="Skip to content" data-ru="Перейти к содержанию">Skip to content</a>
 
     <header class="site-header">
@@ -182,8 +192,8 @@
         <section class="atlas-status" aria-label="Active development system"
           data-en-aria-label="Active development system" data-ru-aria-label="Действующая система разработки">
           <div><span data-en="PRODUCT RELEASE" data-ru="ВЕРСИЯ ПРОДУКТА">PRODUCT RELEASE</span><strong data-product-release>0.1.0</strong></div>
-          <div><span data-en="DEVELOPMENT RULES" data-ru="ПРАВИЛА РАЗРАБОТКИ">DEVELOPMENT RULES</span><strong data-atlas-binding data-en="Loading" data-ru="Загрузка">Loading</strong></div>
-          <div><span data-en="ROOT CYCLE" data-ru="КОРНЕВОЙ ЦИКЛ">ROOT CYCLE</span><strong data-atlas-root data-en="Loading" data-ru="Загрузка">Loading</strong></div>
+          <div><span data-en="DEVELOPMENT RULES" data-ru="ПРАВИЛА РАЗРАБОТКИ">DEVELOPMENT RULES</span><strong data-atlas-binding data-en="Loading…" data-ru="Загрузка…">Loading…</strong></div>
+          <div><span data-en="ROOT CYCLE" data-ru="КОРНЕВОЙ ЦИКЛ">ROOT CYCLE</span><strong data-atlas-root data-en="Loading…" data-ru="Загрузка…">Loading…</strong></div>
           <div><span data-en="CYCLES" data-ru="ЦИКЛЫ">CYCLES</span><strong data-atlas-count>0</strong></div>
           <div><span data-en="MODE" data-ru="РЕЖИМ">MODE</span><strong data-en="Read only" data-ru="Только просмотр">Read only</strong></div>
         </section>
@@ -191,14 +201,20 @@
         <section class="atlas-workbench">
           <nav class="atlas-breadcrumbs" data-atlas-breadcrumbs aria-label="Cycle path"
             data-en-aria-label="Cycle path" data-ru-aria-label="Путь по циклам"></nav>
-          <div class="atlas-level">
-            <div class="atlas-map">
+          <div class="atlas-console">
+            <aside class="atlas-history" aria-label="Navigation history"
+              data-en-aria-label="Navigation history" data-ru-aria-label="История переходов">
+              <p class="instrument-label" data-en="PATH" data-ru="ПУТЬ">PATH</p>
+              <ol data-atlas-history></ol>
+            </aside>
+            <div class="atlas-stage" data-atlas-stage>
               <div class="atlas-map-head">
-                <p class="section-label" data-en="CURRENT LEVEL" data-ru="ТЕКУЩИЙ УРОВЕНЬ">CURRENT LEVEL</p>
+                <p class="instrument-label" data-en="ACTIVE LEVEL" data-ru="ТЕКУЩИЙ УРОВЕНЬ">ACTIVE LEVEL</p>
                 <p data-atlas-provenance></p>
               </div>
-              <div class="atlas-parent" data-atlas-parent></div>
-              <div class="atlas-children" data-atlas-children></div>
+              <svg class="atlas-graph" data-atlas-graph viewBox="0 0 1000 760"
+                role="group" aria-label="Contained cycle map"
+                data-en-aria-label="Contained cycle map" data-ru-aria-label="Карта вложенных циклов"></svg>
               <p class="atlas-empty" data-atlas-empty hidden></p>
             </div>
             <aside class="atlas-inspector" data-atlas-inspector aria-live="polite"></aside>

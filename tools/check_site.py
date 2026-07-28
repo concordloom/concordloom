@@ -6,6 +6,7 @@ from __future__ import annotations
 from html.parser import HTMLParser
 from pathlib import Path
 import json
+import re
 import struct
 import sys
 
@@ -78,10 +79,13 @@ def main() -> int:
             errors.append(f"missing local asset: {asset}")
 
     styles = (SITE / "styles.css").read_text(encoding="utf-8")
+    token_styles = (SITE / "design-tokens.css").read_text(encoding="utf-8")
+    design_styles = (SITE / "design-system.css").read_text(encoding="utf-8")
+    all_styles = styles + "\n" + token_styles + "\n" + design_styles
     script = (SITE / "app.js").read_text(encoding="utf-8")
-    if "prefers-reduced-motion" not in styles:
+    if "prefers-reduced-motion" not in all_styles:
         errors.append("site lacks reduced-motion handling")
-    if "focus-visible" not in styles:
+    if "focus-visible" not in all_styles:
         errors.append("site lacks visible keyboard focus")
     compact_styles = "".join(styles.split())
     if (
@@ -106,8 +110,8 @@ def main() -> int:
     if 'url.searchParams.set("lang", language)' not in script:
         errors.append("language switch does not persist the locale in the URL")
     for marker in (
-        'data-atlas-binding data-en="Loading" data-ru="Загрузка"',
-        'data-atlas-root data-en="Loading" data-ru="Загрузка"',
+        'data-atlas-binding data-en="Loading…" data-ru="Загрузка…"',
+        'data-atlas-root data-en="Loading…" data-ru="Загрузка…"',
     ):
         if marker not in index.read_text(encoding="utf-8"):
             errors.append(
@@ -147,6 +151,90 @@ def main() -> int:
             errors.append(f"site misses the {view} destination")
     if "#atlas/" not in script or "atlas-breadcrumbs" not in styles:
         errors.append("Atlas lacks reloadable drill-down paths or breadcrumbs")
+    for marker in (
+        'href="design-system.css"',
+        'href="design-tokens.css"',
+        "data-atlas-graph",
+        "data-atlas-history",
+        'class="atlas-inspector"',
+    ):
+        if marker not in index.read_text(encoding="utf-8"):
+            errors.append(f"Signal Constellation surface is missing {marker}")
+    for marker in (
+        "--cl-acid-500",
+        "--cl-font-display",
+        "--cl-font-mono",
+        "--cl-type-display",
+        "--cl-leading-reading",
+        "--cl-measure-reading",
+        "--surface-void",
+        "--type-display",
+        "--panel-background",
+        "--atlas-node-active",
+        "--reading-measure",
+        "--cl-duration-level",
+        ".atlas-graph",
+        ".atlas-history",
+        ".atlas-inspector",
+        "prefers-reduced-motion",
+    ):
+        if marker not in token_styles + design_styles:
+            errors.append(f"design system is missing {marker}")
+    if not token_styles.startswith(
+        "/* Generated from design-tokens.json. Do not edit. */"
+    ):
+        errors.append("design token CSS is not a declared generated projection")
+    for marker in ("--cl-black-1000:", "--cl-font-display:", "--control-min-size:"):
+        if marker in design_styles:
+            errors.append(f"component CSS redefines canonical token {marker}")
+    authored_css = styles + "\n" + design_styles
+    if re.search(r"#[0-9a-fA-F]{3,8}\b|rgba?\(", authored_css):
+        errors.append("authored CSS contains a raw color outside design-tokens.json")
+    for match in re.finditer(r"font-family:\\s*([^;]+)", authored_css):
+        if "var(--" not in match.group(1):
+            errors.append("authored CSS contains a raw font stack outside design tokens")
+            break
+    token_source = json.loads(
+        (SITE / "design-tokens.json").read_text(encoding="utf-8")
+    )
+    if tuple(token_source.get("layers", {})) != (
+        "primitive",
+        "semantic",
+        "component",
+        "compatibility",
+    ):
+        errors.append("design token source lacks the four-level authority chain")
+    if set(token_source.get("modes", {})) != {"compact", "high-contrast"}:
+        errors.append("design token source lacks compact and high-contrast modes")
+    if 'window.addEventListener("scroll"' in script:
+        errors.append("site must not run continuous JavaScript on scroll")
+    if "offsetWidth" in script or "getBoundingClientRect" in script:
+        errors.append("site must not force synchronous layout reads")
+    if "IntersectionObserver" not in script:
+        errors.append("site reveal effects must use IntersectionObserver")
+    for marker in (
+        "font-variant-numeric: tabular-nums",
+        "touch-action: manipulation",
+        "env(safe-area-inset-top)",
+        "text-wrap: balance",
+    ):
+        if marker not in all_styles:
+            errors.append(f"web-interface contract is missing {marker}")
+    design_contract = (
+        (ROOT / "docs" / "DESIGN_SYSTEM.md").read_text(encoding="utf-8")
+        + (ROOT / "docs" / "ru" / "DESIGN_SYSTEM.md").read_text(encoding="utf-8")
+    )
+    for loop_id in (
+        "design-information-architecture",
+        "review-comprehension",
+        "design-site-experience",
+        "project-atlas",
+        "system-evolution",
+    ):
+        if design_contract.count(f"`{loop_id}`") != 2:
+            errors.append(
+                f"design-system cycle ownership is not bilingual for {loop_id}"
+            )
 
     social = SITE / "assets" / "concordloom-social-preview.png"
     if png_dimensions(social) != (1280, 640):
@@ -308,8 +396,8 @@ def main() -> int:
                 )
 
     content = json.loads((SITE / "data" / "content.json").read_text(encoding="utf-8"))
-    if len(content.get("documents", [])) != 12:
-        errors.append("Docs hub must expose all 12 bilingual document pairs")
+    if len(content.get("documents", [])) != 13:
+        errors.append("Docs hub must expose all 13 bilingual document pairs")
     for section in ("article", "quickstart"):
         for locale in ("en", "ru"):
             rendered = content.get(section, {}).get(locale, {})
