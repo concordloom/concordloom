@@ -75,15 +75,14 @@ means. A green child receipt never becomes parent authority by accident.
 Python 3.11+ and Git are enough. The portable core uses only the standard
 library.
 
-With Codex, install the plugin and let the skill conduct onboarding:
+With Codex, install the skill and let it conduct onboarding:
 
-```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.2
-codex plugin marketplace list
-codex plugin add concordloom@concordloom
+```text
+Use $skill-installer to install
+https://github.com/concordloom/concordloom/tree/v0.1.2/plugins/concordloom/skills/design-project-loops
 ```
 
-Then ask:
+Start a new thread, then ask:
 
 ```text
 Use $design-project-loops to onboard this repository safely, inspect it
@@ -188,15 +187,15 @@ Every public guide is maintained in English and Russian.
 
 ## Codex plugin
 
-```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.2
-codex plugin marketplace list
-codex plugin add concordloom@concordloom
+```text
+Use $skill-installer to install
+https://github.com/concordloom/concordloom/tree/v0.1.2/plugins/concordloom/skills/design-project-loops
 ```
 
 Ask Codex to use `$design-project-loops`. The skill begins with bounded,
 read-only discovery and refuses to promote repository history into intent
-without an operator decision.
+without an operator decision. The [plugin guide](docs/CODEX_PLUGIN.md) also
+documents the optional GitHub Marketplace installation.
 
 ## Trust boundary
 

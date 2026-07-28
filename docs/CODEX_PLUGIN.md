@@ -11,7 +11,23 @@ Loom's repository uses the separately accepted 58-cycle development
 configuration rooted at `steward-concordloom`. Observe, negotiate, bind,
 execute, verify, publish, and evolve are the phases of each governed run.
 
-## Install from the GitHub marketplace
+## Recommended: install the skill directly
+
+Ask Codex:
+
+```text
+Use $skill-installer to install
+https://github.com/concordloom/concordloom/tree/v0.1.2/plugins/concordloom/skills/design-project-loops
+```
+
+Start a new Codex thread after installation. The skill will then be available
+as `$design-project-loops`.
+
+This is the simplest route in Orca and in other environments that provide the
+built-in `$skill-installer`. It installs only the onboarding skill; Concord
+Loom does not currently require a plugin app or MCP server.
+
+## Optional: install the full plugin from the GitHub marketplace
 
 Pin the marketplace to the release tag, confirm that Codex can see it, then
 install the plugin:
@@ -35,7 +51,12 @@ codex plugin marketplace list
 codex plugin add concordloom@concordloom
 ```
 
-Then start a new Codex thread so it loads the installed skill.
+If the marketplace disappears again, your host is replacing Codex's
+`config.toml`. Do not keep retrying or edit that generated file by hand. Use
+the direct skill installation above.
+
+After a successful plugin installation, start a new Codex thread so it loads
+the installed skill.
 
 The marketplace entry resolves the repository-local
 `plugins/concordloom` bundle. Inspect
