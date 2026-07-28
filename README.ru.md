@@ -72,16 +72,15 @@ Concord Loom разделяет две структуры:
 Достаточно Python 3.11+ и Git. Переносимое ядро использует только стандартную
 библиотеку.
 
-Если вы работаете в Codex, установите плагин и передайте первичную настройку
-навыку:
+Если вы работаете в Codex, установите навык и передайте ему первичную
+настройку:
 
-```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.2
-codex plugin marketplace list
-codex plugin add concordloom@concordloom
+```text
+Use $skill-installer to install
+https://github.com/concordloom/concordloom/tree/v0.1.2/plugins/concordloom/skills/design-project-loops
 ```
 
-Затем попросите:
+Откройте новый диалог, затем попросите:
 
 ```text
 Use $design-project-loops to onboard this repository safely, inspect it
@@ -186,15 +185,16 @@ concordloom questions \
 
 ## Плагин Codex
 
-```bash
-codex plugin marketplace add concordloom/concordloom --ref v0.1.2
-codex plugin marketplace list
-codex plugin add concordloom@concordloom
+```text
+Use $skill-installer to install
+https://github.com/concordloom/concordloom/tree/v0.1.2/plugins/concordloom/skills/design-project-loops
 ```
 
 Попросите Codex использовать `$design-project-loops`. Навык начинает с
 ограниченного исследования только для чтения. Он не выдаёт историю репозитория
 за намерение владельца: значимые выводы должен подтвердить оператор.
+[Руководство по плагину](docs/ru/CODEX_PLUGIN.md) также описывает
+необязательную установку через GitHub Marketplace.
 
 ## Граница доверия
 
