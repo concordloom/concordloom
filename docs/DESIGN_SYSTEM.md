@@ -2,8 +2,10 @@
 
 Language: **English** | [Русский](ru/DESIGN_SYSTEM.md)
 
-Status: **normative**  
-Version: **1.0.0**  
+Status: **normative**
+
+Version: **1.0.0**
+
 Machine source: [`site/design-tokens.json`](../site/design-tokens.json)
 
 The interface should feel like a precise machine that exposes how work is
