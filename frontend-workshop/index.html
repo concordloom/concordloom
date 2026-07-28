@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#080908">
+    <title>Signal Constellation Workshop</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/design-tokens.css">
+    <link rel="stylesheet" href="/design-system.css">
+    <link rel="stylesheet" href="/workshop/workshop.css">
+    <script src="/workshop/workshop.js" defer></script>
+  </head>
+  <body>
+    <main class="workshop">
+      <header class="workshop-header">
+        <div>
+          <p class="instrument-label" data-en="DEVELOPMENT FIXTURE" data-ru="СТЕНД РАЗРАБОТКИ">DEVELOPMENT FIXTURE</p>
+          <h1 data-en="Signal Constellation Workshop" data-ru="Стенд «Созвездие сигналов»">Signal Constellation Workshop</h1>
+        </div>
+        <div class="workshop-language" aria-label="Fixture language">
+          <button type="button" data-language="en" aria-pressed="true">EN</button>
+          <button type="button" data-language="ru" aria-pressed="false">RU</button>
+        </div>
+      </header>
+
+      <section class="workshop-panel" aria-labelledby="rail-title">
+        <div class="workshop-title">
+          <p class="instrument-label" data-en="STATE MATRIX" data-ru="МАТРИЦА СОСТОЯНИЙ">STATE MATRIX</p>
+          <h2 id="rail-title" data-en="Lifecycle rail" data-ru="Цикл изменений">Lifecycle rail</h2>
+        </div>
+        <ol class="system-rail" aria-label="Change lifecycle">
+          <li class="is-active" data-phase="map" aria-current="step"><span>Map</span></li>
+          <li data-phase="build"><span>Build</span></li>
+          <li data-phase="verify"><span>Verify</span></li>
+          <li data-phase="publish"><span>Publish</span></li>
+          <li data-phase="evolve"><span>Evolve</span></li>
+        </ol>
+        <div class="workshop-controls">
+          <button type="button" data-phase-control="map" data-en="Map" data-ru="Карта" aria-pressed="true">Map</button>
+          <button type="button" data-phase-control="build" data-en="Build" data-ru="Сборка" aria-pressed="false">Build</button>
+          <button type="button" data-phase-control="verify" data-en="Verify" data-ru="Проверка" aria-pressed="false">Verify</button>
+          <button type="button" data-phase-control="publish" data-en="Publish" data-ru="Публикация" aria-pressed="false">Publish</button>
+          <button type="button" data-phase-control="evolve" data-en="Evolve" data-ru="Эволюция" aria-pressed="false">Evolve</button>
+        </div>
+      </section>
+
+      <section class="workshop-panel" aria-labelledby="atlas-title">
+        <div class="workshop-title">
+          <p class="instrument-label" data-en="STRESS FIXTURE" data-ru="ПРОВЕРКА ПРЕДЕЛОВ">STRESS FIXTURE</p>
+          <h2 id="atlas-title" data-en="Atlas labels" data-ru="Подписи Атласа">Atlas labels</h2>
+        </div>
+        <div class="workshop-atlas">
+          <article class="workshop-node is-current">
+            <strong>10</strong>
+            <span class="workshop-node-label" data-en="Steward Concord Loom" data-ru="Развивать Concord Loom">Steward Concord Loom</span>
+          </article>
+          <article class="workshop-node">
+            <strong>4</strong>
+            <span class="workshop-node-label" data-en="Product Direction" data-ru="Направление продукта">Product Direction</span>
+          </article>
+          <article class="workshop-node">
+            <strong>8</strong>
+            <span class="workshop-node-label" data-en="Adoption and Feedback" data-ru="Применение и обратная связь">Adoption and Feedback</span>
+          </article>
+          <article class="workshop-node">
+            <strong>4</strong>
+            <span class="workshop-node-label" data-en="Bindings and Adapters" data-ru="Привязки и адаптеры">Bindings and Adapters</span>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

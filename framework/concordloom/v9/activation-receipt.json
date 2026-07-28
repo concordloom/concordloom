@@ -1,0 +1,17 @@
+{
+  "activated_at": "2026-07-28T23:00:00Z",
+  "activation_decision_id": "activate-v9-frontend-system",
+  "activation_evidence_digest": "sha256:c0e1a44eef35c3154e874d1d640c31cfbc1373d32efba388e1b51662a671041a",
+  "activation_evidence_id": "activate-v9-frontend-system-evidence",
+  "binding_digest": "sha256:1940a57ca917d6136c5742048dfccc68d0434c530da2ad3ef3b2ba486f866597",
+  "binding_proposal_digest": "sha256:d3106011c346c6349eb868d39bead5584865eb9cbd91fea76713847984f0144c",
+  "candidate_tree_digest": "sha256:3745b37d340e8472bd8ce5380252ad15eb708ea34b60add4930705f5cd1ae9a9",
+  "evolution_decision_digest": "sha256:5c24c0faeb5d205b455960a458318d3c1f9e22b488020955b57bec27626fb1d4",
+  "evolution_decision_id": "decide-v9-frontend-system",
+  "id": "activate-concordloom-self-binding-v9-receipt",
+  "kind": "concordloom.activation-receipt",
+  "proposal_tree_digest": "sha256:3745b37d340e8472bd8ce5380252ad15eb708ea34b60add4930705f5cd1ae9a9",
+  "review_recommendation_digest": "sha256:dc36f763a13553751eb5a01b7ce63927cf557ab7fbe4ae6bb70f93e3b969f157",
+  "review_recommendation_id": "review-v9-frontend-system",
+  "schema_version": "0.1"
+}

@@ -17,11 +17,12 @@ class DesignSystemAuthorityTests(unittest.TestCase):
             encoding="utf-8"
         )
         for text in (english, russian):
-            self.assertIn("2.0.0", text)
+            self.assertIn("3.0.0", text)
             self.assertIn("design-tokens.json", text)
             self.assertIn("design-tokens.css", text)
             self.assertIn("design-system.css", text)
-            self.assertIn("signal-constellation-reference.png", text)
+            self.assertIn("visual-contract.json", text)
+            self.assertIn("signal-constellation-concept.png", text)
         self.assertIn("Status: **normative**", english)
         self.assertIn("Статус: **нормативный документ**", russian)
 
@@ -94,9 +95,26 @@ class DesignSystemAuthorityTests(unittest.TestCase):
         )
 
     def test_signal_constellation_reference_lock_is_enforced(self) -> None:
-        reference = ROOT / "docs" / "assets" / "signal-constellation-reference.png"
+        reference = (
+            ROOT
+            / "design"
+            / "frontend"
+            / "reference"
+            / "signal-constellation-concept.png"
+        )
+        contract = json.loads(
+            (ROOT / "design" / "frontend" / "visual-contract.json").read_text(
+                encoding="utf-8"
+            )
+        )
         self.assertTrue(reference.is_file())
         self.assertGreater(reference.stat().st_size, 100_000)
+        self.assertEqual(
+            "signal-constellation-concept.png",
+            Path(contract["reference"]["path"]).name,
+        )
+        self.assertEqual(2410, contract["reference"]["width"])
+        self.assertEqual(1334, contract["reference"]["height"])
         index = (SITE / "index.html").read_text(encoding="utf-8")
         script = (SITE / "app.js").read_text(encoding="utf-8")
         styles = (SITE / "design-system.css").read_text(encoding="utf-8")

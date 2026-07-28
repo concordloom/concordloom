@@ -131,7 +131,9 @@ the portable core continues to govern the artifact and authority chain.
 The repository is one governed instance of the framework. The operator
 corrected the earlier delivery-shaped intent and later accepted the complete
 development system rooted at `steward-concordloom`. Its ten responsibility
-areas contain 58 cycles.
+areas now contain 65 cycles. The accepted frontend successor added an explicit
+concept, workshop, implementation, browser-verification, and independent
+visual-critique path without changing the ten top-level responsibilities.
 
 Observe, negotiate, bind, execute, verify, publish, and evolve define the shared
 run grammar. They no longer stand in for the repository's complete development

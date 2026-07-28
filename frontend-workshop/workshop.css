@@ -1,0 +1,150 @@
+.workshop {
+  display: grid;
+  gap: 2rem;
+  margin: 0 auto;
+  max-width: 90rem;
+  min-height: 100vh;
+  padding: 3rem;
+}
+
+.workshop-header,
+.workshop-panel {
+  background: var(--panel-background);
+  border: 1px solid var(--cl-steel-700);
+  padding: 2rem;
+}
+
+.workshop-panel {
+  min-height: 0;
+  position: relative;
+}
+
+.workshop-panel:first-of-type {
+  min-height: 22rem;
+  z-index: 2;
+}
+
+.workshop-header,
+.workshop-title,
+.workshop-language,
+.workshop-controls {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.workshop h1,
+.workshop h2,
+.workshop p {
+  margin: 0;
+}
+
+.workshop-language button,
+.workshop-controls button {
+  appearance: none;
+  background: var(--surface-instrument);
+  border: 1px solid var(--line-strong);
+  color: var(--text-primary);
+  font-family: var(--type-code);
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.75rem 1rem;
+}
+
+.workshop-language button[aria-pressed="true"],
+.workshop-controls button[aria-pressed="true"] {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--surface-void);
+  box-shadow: 0 0 1rem var(--cl-acid-a28);
+}
+
+.workshop-controls {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 3;
+}
+
+.workshop .system-rail {
+  display: grid;
+  height: auto;
+  min-height: 72px;
+  margin-top: 3rem;
+  overflow: visible;
+  padding: 0;
+}
+
+.workshop-atlas {
+  align-items: center;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 2rem;
+}
+
+.workshop-node {
+  align-items: center;
+  aspect-ratio: 1;
+  background: var(--atlas-node-background);
+  border: 2px solid var(--cl-steel-600);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+.workshop-node.is-current {
+  border-color: var(--atlas-node-active);
+  box-shadow: 0 0 2rem color-mix(in srgb, var(--atlas-node-active) 24%, transparent);
+}
+
+.workshop-node-label {
+  max-width: 12ch;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+  .workshop {
+    padding: 1rem;
+  }
+
+  .workshop-header,
+  .workshop-title {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .workshop-atlas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .workshop-panel:first-of-type {
+    min-height: 0;
+  }
+
+  .workshop .system-rail {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    margin-top: 2rem;
+  }
+
+  .workshop .system-rail li {
+    font-size: 9px;
+  }
+
+  .workshop .system-rail li span {
+    font-size: 0;
+  }
+
+  .workshop .system-rail li span::after {
+    content: attr(data-short);
+    font-size: 9px;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+}

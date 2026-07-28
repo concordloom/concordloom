@@ -185,7 +185,7 @@ def markdown_fragment(
                 f' class="language-{html.escape(language)}"' if language else ""
             )
             output.append(
-                f"<pre><code{class_name}>{html.escape(chr(10).join(code))}</code></pre>"
+                f'<pre tabindex="0"><code{class_name}>{html.escape(chr(10).join(code))}</code></pre>'
             )
         elif not stripped:
             flush_paragraph()

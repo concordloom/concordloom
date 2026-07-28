@@ -4,9 +4,13 @@ Language: **English** | [Русский](ru/DESIGN_SYSTEM.md)
 
 Status: **normative**
 
-Version: **2.0.0**
+Version: **3.0.0**
 
-Machine source: [`site/design-tokens.json`](../site/design-tokens.json)
+Machine contract:
+[`design/frontend/visual-contract.json`](../design/frontend/visual-contract.json)
+
+Accepted reference:
+[`signal-constellation-concept.png`](../design/frontend/reference/signal-constellation-concept.png)
 
 The interface should feel like a precise machine that exposes how work is
 connected. It must remain understandable when every decorative effect is
@@ -39,8 +43,8 @@ dark concentric mechanisms, taut paths, and one active acid route.
 
 ### Signal Constellation reference lock
 
-[`signal-constellation-reference.png`](assets/signal-constellation-reference.png)
-is the normative visual benchmark for the 2.0 system. It is not mood-board
+[`signal-constellation-concept.png`](../design/frontend/reference/signal-constellation-concept.png)
+is the normative visual benchmark for the 3.0 system. It is not mood-board
 material. Implementations must preserve its visual logic:
 
 - blackened metal and stone have visible depth, wear, rims, fasteners, and
@@ -87,11 +91,14 @@ documented replacement. Generated CSS must never be edited directly.
 
 ### Authority order
 
-1. This document defines intent, permitted patterns, and acceptance.
-2. `design-tokens.json` defines every reusable visual value.
-3. Generated `design-tokens.css` exposes those values to the browser.
-4. `design-system.css` composes components from the tokens.
-5. Page markup and behavior consume components.
+1. The accepted reference fixes the visual world and composition.
+2. `design/frontend/visual-contract.json` makes its measurable constraints
+   executable.
+3. This document defines intent, permitted patterns, and acceptance.
+4. `design-tokens.json` defines every reusable visual value.
+5. Generated `design-tokens.css` exposes those values to the browser.
+6. `design-system.css` composes components from the tokens.
+7. Page markup and behavior consume components.
 
 A lower layer cannot override the meaning of a higher layer. Local geometry,
 such as an SVG node coordinate or a grid column count, may remain in a
@@ -266,16 +273,28 @@ If any answer is no, the interface is unfinished.
 
 ## Cycle ownership
 
-The design system is enforced by existing development cycles. A new cycle
-would duplicate responsibilities and make the Atlas harder to understand.
+The design system is enforced by the accepted frontend development system.
+No implementation can skip directly from a mockup to publication.
 
 | Cycle | Mandatory responsibility |
 |---|---|
-| `design-information-architecture` | Keep the public path to inspect, Atlas, correction or approval, and continuous refresh. |
-| `review-comprehension` | Reject unexplained framework language, hidden next steps, and technical detail presented before the user task. |
-| `design-site-experience` | Apply the tokens, components, responsive rules, accessibility states, and motion grammar in this document. |
-| `project-atlas` | Render the complete accepted cycle map, preserve drill-down context, and fail when generated data is stale. |
-| `system-evolution` | Turn repeated failures into a reviewable successor proposal without granting it authority. |
+| `define-frontend-concept` | Pin the reference, visual contract, content hierarchy, responsive behavior, and acceptance matrix. |
+| `accept-frontend-concept` | Record the operator's decision for the exact concept bytes. |
+| `maintain-component-workshop` | Expose real production components in normal, long-copy, loading, empty, error, and reduced-motion states. |
+| `implement-frontend-surface` | Build only from the accepted concept and design-system sources. |
+| `maintain-frontend-verification` | Maintain the deterministic browser harness, accessibility rules, breakpoints, and CI contract. |
+| `verify-frontend-candidate` | Run the pinned candidate through Chromium, Firefox, WebKit, EN/RU, mobile, desktop, 200% zoom, keyboard, and reduced-motion checks. |
+| `critique-frontend-experience` | Compare fresh screenshots with the accepted reference in an independent context and reject visual drift that geometry tests cannot detect. |
+
+`design-site-experience` contains those seven cycles. Publication requires both
+browser-verification evidence and the independent visual verdict. Playwright
+Test is the deterministic oracle. Playwright MCP may help a critic inspect the
+candidate, but it does not replace the reproducible test gate.
+
+The dependency-free workshop uses the same HTML, CSS, JavaScript, assets, and
+fixtures as production. It is not a second frontend runtime. Accepted visual
+baselines live under `design/frontend/baselines/` and may be updated only after
+the critic passes the exact candidate.
 
 Repository checks treat this document, the authored tokens, the interactive
 Atlas structure, reduced-motion behavior, and the generated documentation index
@@ -283,7 +302,8 @@ as one contract. A change that breaks any part of it does not pass.
 
 Reference acceptance also requires:
 
-- the 1672 by 941 reference and material assets remain exact, local, and free
+- the 2410 by 1334 accepted concept and all material assets remain exact,
+  local, and free
   of runtime dependencies;
 - desktop evidence shows the parent, current system, and inspector together;
 - 390 px evidence keeps the active graph legible and the inspector reachable;
@@ -293,6 +313,12 @@ Reference acceptance also requires:
   accessible names;
 - a reviewer compares the implementation with the reference image, not merely
   with token and component checklists.
+
+The browser matrix covers 360x800, 390x844, 768x1024, 1024x768, 1440x900,
+1920x1080, and 2048x1152. It rejects page overflow, clipped text, overlapping
+regions, false lifecycle state, unreachable controls, graph/inspector
+collisions, missing focus, inaccessible scrolling, and untranslated accessible
+names. A green unit test or a locally attractive screenshot is not sufficient.
 
 ## Evolution
 

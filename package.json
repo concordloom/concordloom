@@ -1,0 +1,20 @@
+{
+  "name": "concordloom-frontend-verification",
+  "private": true,
+  "version": "0.0.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "mcp:playwright": "playwright-mcp --headless --isolated --browser chromium --block-service-workers --allowed-origins http://127.0.0.1:4173 --output-dir .artifacts/playwright/mcp",
+    "workshop": "node tests/frontend/server.mjs",
+    "test:frontend": "playwright test",
+    "test:frontend:chromium": "playwright test --project=desktop-chromium --project=mobile-chromium",
+    "test:frontend:evidence": "playwright test --project=visual-desktop --project=visual-mobile"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@playwright/mcp": "0.0.78",
+    "@playwright/test": "1.62.0"
+  }
+}

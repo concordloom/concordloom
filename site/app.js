@@ -135,6 +135,7 @@ function currentRoute() {
 }
 
 function setView(viewName) {
+  document.body.dataset.activeView = viewName;
   document.querySelectorAll("[data-view]").forEach((view) => {
     const active = view.dataset.view === viewName;
     view.hidden = !active;
@@ -148,6 +149,35 @@ function setView(viewName) {
   });
   document.querySelector(".view-tabs").classList.remove("is-open");
   document.querySelector(".menu-switch").setAttribute("aria-expanded", "false");
+}
+
+function hasAtlasAncestor(loopId, ancestorId) {
+  if (!atlasData || !loopId) return false;
+  let current = atlasLoop(loopId);
+  while (current) {
+    if (current.id === ancestorId) return true;
+    current = current.parentId ? atlasLoop(current.parentId) : null;
+  }
+  return false;
+}
+
+function renderSystemRail(routeState) {
+  let active = "map";
+  if (routeState.view === "quickstart") active = "build";
+  if (routeState.view === "theory" || routeState.view === "docs") active = "verify";
+  if (routeState.view === "atlas" && atlasData) {
+    const loopId = routeState.detail || atlasData.binding.rootLoopIds[0];
+    if (hasAtlasAncestor(loopId, "system-evolution")) active = "evolve";
+    else if (hasAtlasAncestor(loopId, "release-distribution")) active = "publish";
+    else if (hasAtlasAncestor(loopId, "trust-assurance")) active = "verify";
+    else if (hasAtlasAncestor(loopId, "runtime-tooling")) active = "build";
+  }
+  document.querySelectorAll("[data-system-stage]").forEach((item) => {
+    const selected = item.dataset.systemStage === active;
+    item.classList.toggle("is-active", selected);
+    if (selected) item.setAttribute("aria-current", "step");
+    else item.removeAttribute("aria-current");
+  });
 }
 
 function applyLanguage(nextLanguage) {
@@ -313,27 +343,27 @@ function renderInspector(loop) {
   const inspector = document.querySelector("[data-atlas-inspector]");
   const boundSkills = route.skills.length
     ? route.skills
-        .map((skill) => `<li><code>${skill.id}@${skill.version}</code></li>`)
+        .map((skill) => `<li><code translate="no">${skill.id}@${skill.version}</code></li>`)
         .join("")
     : `<li>${text("notDeclared")}</li>`;
   const skills = profile.skills.length
-    ? profile.skills.map((skill) => `<li><code>${skill}</code></li>`).join("")
+    ? profile.skills.map((skill) => `<li><code translate="no">${skill}</code></li>`).join("")
     : `<li>${text("noSkills")}</li>`;
   const tools = route.tool_capabilities.length
-    ? route.tool_capabilities.map((tool) => `<li><code>${tool}</code></li>`).join("")
+    ? route.tool_capabilities.map((tool) => `<li><code translate="no">${tool}</code></li>`).join("")
     : `<li>${text("notDeclared")}</li>`;
   const mcp = route.mcp_servers.length
-    ? route.mcp_servers.map((server) => `<code>${server}</code>`).join(" ")
+    ? route.mcp_servers.map((server) => `<code translate="no">${server}</code>`).join(" ")
     : text("notDeclared");
   const provider = route.model === "none" ? text("notDeclared") : route.model_provider;
   const technical = `
     <details class="technical-details">
       <summary>${text("technicalDetails")}</summary>
       <dl class="contract-grid">
-        <div><dt>${text("identifier")}</dt><dd><code>${loop.id}</code></dd></div>
-        <div><dt>${text("profile")}</dt><dd><code>${loop.profile}</code></dd></div>
-        <div><dt>${text("artifacts")}</dt><dd>${loop.artifacts.map((item) => `<code>${item}</code>`).join(" ")}</dd></div>
-        <div><dt>${text("claims")}</dt><dd>${loop.requiredClaims.map((item) => `<code>${item}</code>`).join(" ")}</dd></div>
+        <div><dt>${text("identifier")}</dt><dd><code translate="no">${loop.id}</code></dd></div>
+        <div><dt>${text("profile")}</dt><dd><code translate="no">${loop.profile}</code></dd></div>
+        <div><dt>${text("artifacts")}</dt><dd>${loop.artifacts.map((item) => `<code translate="no">${item}</code>`).join(" ")}</dd></div>
+        <div><dt>${text("claims")}</dt><dd>${loop.requiredClaims.map((item) => `<code translate="no">${item}</code>`).join(" ")}</dd></div>
         <div><dt>${text("source")}</dt><dd>${text("acceptedSource")}</dd></div>
       </dl>
     </details>
@@ -350,9 +380,9 @@ function renderInspector(loop) {
     <details class="resource-panel">
       <summary>${text("resourcesOptional")}</summary>
       <dl>
-        <div><dt>${text("provider")}</dt><dd><code>${provider}</code></dd></div>
-        <div><dt>${text("model")}</dt><dd><code>${route.model}</code></dd></div>
-        <div><dt>${text("reasoning")}</dt><dd><code>${route.reasoning}</code></dd></div>
+        <div><dt>${text("provider")}</dt><dd><code translate="no">${provider}</code></dd></div>
+        <div><dt>${text("model")}</dt><dd><code translate="no">${route.model}</code></dd></div>
+        <div><dt>${text("reasoning")}</dt><dd><code translate="no">${route.reasoning}</code></dd></div>
         <div><dt>${text("skills")}</dt><dd><ul>${boundSkills}</ul></dd></div>
         <div><dt>${text("guidance")}</dt><dd><ul>${skills}</ul></dd></div>
         <div><dt>${text("mcp")}</dt><dd>${mcp}</dd></div>
@@ -365,6 +395,7 @@ function renderInspector(loop) {
       <p class="section-label">${language === "en" ? "SHARED INNER RUN" : "ОБЩАЯ СХЕМА ЗАПУСКА"}</p>
       <ol>${atlasData.sharedRunGrammar.map((phase) => `<li><span>${phaseCopy[phase.id].code}</span>${phase.copy[language].label}</li>`).join("")}</ol>
     </section>
+    ${loop.parentId ? `<a class="atlas-back" href="#atlas/${encodeURIComponent(loop.parentId)}">← ${text("back")}: ${loopCopy(atlasLoop(loop.parentId)).label}</a>` : ""}
   `;
 }
 
@@ -378,11 +409,13 @@ function svgElement(name, attributes = {}) {
 
 function graphLabel(textValue) {
   const words = textValue.split(/\s+/);
-  if (words.length < 3 || textValue.length < 19) return [textValue];
+  if (words.length < 2 || textValue.length < 19) return [textValue];
   let first = "";
   let second = "";
   words.forEach((word) => {
-    if (!second && `${first} ${word}`.trim().length <= Math.ceil(textValue.length / 2)) {
+    if (!first) {
+      first = word;
+    } else if (!second && `${first} ${word}`.length <= Math.ceil(textValue.length / 2)) {
       first = `${first} ${word}`.trim();
     } else {
       second = `${second} ${word}`.trim();
@@ -391,7 +424,16 @@ function graphLabel(textValue) {
   return second ? [first, second] : [first];
 }
 
-function appendGraphNode(svg, loop, x, y, radius, current = false) {
+function appendGraphNode(
+  svg,
+  loop,
+  x,
+  y,
+  radius,
+  current = false,
+  labelOffset = 0,
+  labelYOffset = 0,
+) {
   const link = svgElement("a", {
     href: current ? `#atlas/${encodeURIComponent(loop.id)}` : `#atlas/${encodeURIComponent(loop.id)}`,
     class: `graph-node${current ? " is-current" : ""}`,
@@ -423,12 +465,12 @@ function appendGraphNode(svg, loop, x, y, radius, current = false) {
 
   const label = svgElement("text", {
     class: "node-label",
-    x,
-    y: current ? y - 2 : y + radius + 35,
+    x: x + labelOffset,
+    y: (current ? y - 2 : y + radius + 35) + labelYOffset,
     "text-anchor": "middle",
   });
   graphLabel(loopCopy(loop).label).slice(0, current ? 3 : 2).forEach((line, index) => {
-    const span = svgElement("tspan", { x, dy: index ? 19 : 0 });
+    const span = svgElement("tspan", { x: x + labelOffset, dy: index ? 19 : 0 });
     span.textContent = line;
     label.append(span);
   });
@@ -449,21 +491,21 @@ function appendParentConstellation(svg, parent, selectedChild, x, y) {
     class: "parent-housing",
     cx: x,
     cy: y,
-    r: 52,
+    r: 72,
   }));
   parentLink.append(svgElement("circle", {
     class: "parent-core",
     cx: x,
     cy: y,
-    r: 34,
+    r: 46,
   }));
   group.append(parentLink);
 
   const siblings = parent.children.map(atlasLoop);
   siblings.forEach((sibling, index) => {
     const angle = -Math.PI / 2 + (Math.PI * 2 * index) / Math.max(siblings.length, 1);
-    const nodeX = x + Math.cos(angle) * 92;
-    const nodeY = y + Math.sin(angle) * 78;
+    const nodeX = x + Math.cos(angle) * 120;
+    const nodeY = y + Math.sin(angle) * 120;
     group.append(svgElement("line", {
       class: sibling.id === selectedChild.id ? "parent-thread is-active" : "parent-thread",
       x1: x,
@@ -514,15 +556,15 @@ function renderGraph(loop) {
   });
 
   if (parent) {
-    appendParentConstellation(svg, parent, loop, 132, centerY);
+    appendParentConstellation(svg, parent, loop, 155, centerY);
     svg.append(svgElement("path", {
       class: "level-thread",
-      d: `M 236 ${centerY} C 330 ${centerY}, 390 ${centerY}, ${centerX - 118} ${centerY}`,
+      d: `M 290 ${centerY} C 350 ${centerY}, 410 ${centerY}, ${centerX - 118} ${centerY}`,
     }));
     [0.25, 0.5, 0.75].forEach((progress) => {
       svg.append(svgElement("circle", {
         class: "level-thread-marker",
-        cx: 236 + (centerX - 118 - 236) * progress,
+        cx: 290 + (centerX - 118 - 290) * progress,
         cy: centerY,
         r: 3,
       }));
@@ -530,12 +572,18 @@ function renderGraph(loop) {
   }
 
   const children = loop.children.map(atlasLoop);
+  const compactLabelOffsets = children.length > 8
+    ? [0, 24, -24, -20, 0, 0, 0, 24, 0, -24]
+    : [];
   const positions = children.map((child, index) => {
     const count = Math.max(children.length, 1);
-    const ring = children.length > 8 && index % 2 ? 248 : 208;
+    const ring = compact
+      ? (children.length > 8 && index % 2 ? 285 : 230)
+      : (children.length > 8 && index % 2 ? 248 : 208);
     const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
     return {
       child,
+      index,
       x: centerX + Math.cos(angle) * ring,
       y: centerY + Math.sin(angle) * ring * 0.82,
     };
@@ -551,7 +599,16 @@ function renderGraph(loop) {
     svg.append(svgElement("circle", { class: "graph-link-dot", cx: dotX, cy: dotY, r: 3 }));
   });
 
-  positions.forEach(({ child, x, y }) => appendGraphNode(svg, child, x, y, 34));
+  positions.forEach(({ child, index, x, y }) => appendGraphNode(
+    svg,
+    child,
+    x,
+    y,
+    34,
+    false,
+    compact ? (compactLabelOffsets[index] || 0) : 0,
+    compact && index === 0 ? -28 : 0,
+  ));
   appendGraphNode(svg, loop, centerX, centerY, 78, true);
   previousLoopId = loop.id;
 }
@@ -568,6 +625,11 @@ function renderAtlas() {
   document.querySelector("[data-atlas-binding]").title = atlasData.binding.digest;
   document.querySelector("[data-atlas-root]").textContent = loopCopy(atlasLoop(rootId)).label;
   document.querySelector("[data-atlas-count]").textContent = atlasData.loops.length;
+  document.querySelector("[data-loop-count]").textContent = atlasData.loops.length;
+  const outlineSummary = document.querySelector("[data-outline-summary]");
+  outlineSummary.textContent = language === "ru"
+    ? `Показать полную схему из ${atlasData.loops.length} циклов`
+    : `Show the complete ${atlasData.loops.length}-cycle outline`;
   document.querySelector("[data-atlas-provenance]").textContent =
     `${text("acceptedSource")} / ${atlasData.binding.digest.slice(0, 19)}…`;
 
@@ -648,16 +710,38 @@ function observeReveals() {
   });
 }
 
+let lastRoutedView = null;
+
 function route() {
   const next = currentRoute();
+  const atlasNavigationHadFocus = document.activeElement?.matches(
+    ".graph-node, .atlas-back, .atlas-history a",
+  );
+  const restoreAtlasFocus =
+    next.view === "atlas" &&
+    lastRoutedView === "atlas" &&
+    atlasNavigationHadFocus;
   setView(next.view);
   if (next.view === "atlas") {
     selectedLoopId = next.detail;
     renderAtlas();
+    if (restoreAtlasFocus) {
+      requestAnimationFrame(() => {
+        document
+          .querySelector(".graph-node.is-current")
+          ?.focus({ preventScroll: true });
+      });
+    }
   }
   if (["theory", "quickstart"].includes(next.view) && next.detail) {
-    requestAnimationFrame(() => document.getElementById(next.detail)?.scrollIntoView());
+    requestAnimationFrame(() => {
+      document.getElementById(next.detail)?.scrollIntoView({ block: "start" });
+    });
+  } else {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }
+  renderSystemRail(next);
+  lastRoutedView = next.view;
   requestAnimationFrame(observeReveals);
 }
 
@@ -674,6 +758,11 @@ document.querySelector(".menu-switch").addEventListener("click", (event) => {
 });
 
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Tab" && !event.shiftKey && document.activeElement === document.body) {
+    event.preventDefault();
+    document.querySelector(".skip-link").focus();
+    return;
+  }
   if (event.key === "Escape") {
     document.querySelector(".view-tabs").classList.remove("is-open");
     document.querySelector(".menu-switch").setAttribute("aria-expanded", "false");
@@ -682,6 +771,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 window.addEventListener("hashchange", route);
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const compactAtlas = window.matchMedia("(max-width: 560px)");
@@ -713,3 +803,4 @@ Promise.all([
 applyLanguage(language);
 route();
 observeReveals();
+document.body.focus({ preventScroll: true });
