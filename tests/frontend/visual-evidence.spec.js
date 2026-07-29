@@ -17,11 +17,10 @@ for (const language of ["en", "ru"]) {
       await expectNoHorizontalOverflow(page);
       if (view === "atlas" && testInfo.project.name.includes("desktop")) {
         await expect(page.locator(".atlas-history")).toBeHidden();
-        await expect(page.locator(".context-ring")).toHaveCount(3);
-        await expect(page.locator(".graph-ring")).toHaveCount(4);
+        await expect(page.locator(".context-ring, .graph-ring")).toHaveCount(0);
         await expect(page.locator(".node-assembly")).toHaveCount(22);
         await expect(page.locator(".level-thread")).toHaveCount(1);
-        await expect(page.locator(".inspector-dial img")).toBeVisible();
+        await expect(page.locator("[data-atlas-inspector]")).toBeHidden();
         const stageImage = await page.locator(".atlas-stage").evaluate(
           (element) => getComputedStyle(element).backgroundImage,
         );

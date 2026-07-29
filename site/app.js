@@ -45,6 +45,7 @@ const copy = {
     needs: "Needs",
     produces: "Produces",
     resourcesOptional: "Models, skills and tools",
+    closeInspector: "Close cycle details",
   },
   ru: {
     switchLanguage: "Переключить на английский",
@@ -92,6 +93,7 @@ const copy = {
     needs: "Что нужно",
     produces: "Что получится",
     resourcesOptional: "Модели, инструкции и инструменты",
+    closeInspector: "Закрыть сведения о цикле",
   },
 };
 
@@ -115,6 +117,8 @@ let atlasData = null;
 let contentData = null;
 let selectedLoopId = null;
 let previousLoopId = null;
+let inspectorRequested = false;
+let inspectorTrigger = null;
 
 function text(key) {
   return copy[language][key];
@@ -372,6 +376,8 @@ function renderInspector(loop) {
     </details>
   `;
   inspector.innerHTML = `
+    <button class="inspector-close" data-atlas-inspector-close type="button"
+      aria-label="${text("closeInspector")}">×</button>
     <div class="inspector-status">
       <i aria-hidden="true"></i>
       <span>${loop.children.length ? (language === "ru" ? "Открытый цикл" : "Open loop") : (language === "ru" ? "Конечный цикл" : "Terminal loop")}</span>
@@ -407,6 +413,21 @@ function renderInspector(loop) {
     </section>
     ${loop.parentId ? `<a class="atlas-back" href="#atlas/${encodeURIComponent(loop.parentId)}">← ${text("back")}: ${loopCopy(atlasLoop(loop.parentId)).label}</a>` : ""}
   `;
+  inspector.querySelector("[data-atlas-inspector-close]")
+    .addEventListener("click", () => setInspectorOpen(false, true));
+}
+
+function setInspectorOpen(open, restoreFocus = false) {
+  const inspector = document.querySelector("[data-atlas-inspector]");
+  const scrim = document.querySelector("[data-atlas-inspector-scrim]");
+  inspectorRequested = open;
+  inspector.classList.toggle("is-open", open);
+  inspector.setAttribute("aria-hidden", String(!open));
+  inspector.toggleAttribute("inert", !open);
+  scrim.hidden = !open;
+  if (!open && restoreFocus && inspectorTrigger?.isConnected) {
+    inspectorTrigger.focus({ preventScroll: true });
+  }
 }
 
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -570,22 +591,10 @@ function appendGraphNode(
   svg.append(group);
 }
 
-function appendConstellationRings(svg, x, y, radii, className) {
-  radii.forEach((radius, index) => {
-    svg.append(svgElement("circle", {
-      class: `${className}${index === radii.length - 2 ? " is-signal" : ""}`,
-      cx: x,
-      cy: y,
-      r: radius,
-    }));
-  });
-}
-
 function appendContextConstellation(svg, loop, selected, x, y) {
   const constellation = svgElement("g", { class: "parent-constellation" });
   const context = loop.parentId ? atlasLoop(loop.parentId) : loop;
   const items = context.children.map(atlasLoop);
-  appendConstellationRings(constellation, x, y, [216, 166, 108], "context-ring");
 
   items.forEach((item, index) => {
     const count = Math.max(items.length, 1);
@@ -636,14 +645,6 @@ function renderGraph(loop) {
 
   const centerX = compact ? 380 : 1060;
   const centerY = compact ? 370 : 450;
-  appendConstellationRings(
-    svg,
-    centerX,
-    centerY,
-    compact ? [320, 260, 198, 108] : [330, 275, 208, 112],
-    "graph-ring",
-  );
-
   if (!compact) {
     appendContextConstellation(svg, loop, loop, 260, centerY);
     svg.append(svgElement("path", {
@@ -733,6 +734,7 @@ function renderAtlas() {
   renderBreadcrumbs(loop);
   renderInspector(loop);
   renderGraph(loop);
+  setInspectorOpen(inspectorRequested);
   const empty = document.querySelector("[data-atlas-empty]");
   empty.hidden = loop.children.length > 0;
   empty.textContent = text("leaf");
@@ -812,7 +814,7 @@ let lastRoutedView = null;
 function route() {
   const next = currentRoute();
   const atlasNavigationHadFocus = document.activeElement?.matches(
-    ".graph-node, .atlas-back, .atlas-history a",
+    ".graph-node, .atlas-back, .atlas-history a, .atlas-breadcrumbs a",
   );
   const restoreAtlasFocus =
     next.view === "atlas" &&
@@ -854,6 +856,18 @@ document.querySelector(".menu-switch").addEventListener("click", (event) => {
   event.currentTarget.setAttribute("aria-expanded", String(open));
 });
 
+document.querySelector("[data-atlas-graph]").addEventListener("click", (event) => {
+  const node = event.target.closest(".graph-node");
+  if (!node) return;
+  inspectorTrigger = node;
+  inspectorRequested = true;
+  requestAnimationFrame(() => setInspectorOpen(true));
+});
+
+document.querySelector("[data-atlas-inspector-scrim]").addEventListener("click", () => {
+  setInspectorOpen(false, true);
+});
+
 document.addEventListener("keydown", (event) => {
   if (event.key === "Tab" && !event.shiftKey && document.activeElement === document.body) {
     event.preventDefault();
@@ -861,6 +875,10 @@ document.addEventListener("keydown", (event) => {
     return;
   }
   if (event.key === "Escape") {
+    if (inspectorRequested) {
+      setInspectorOpen(false, true);
+      return;
+    }
     document.querySelector(".view-tabs").classList.remove("is-open");
     document.querySelector(".menu-switch").setAttribute("aria-expanded", "false");
     document.querySelector(".menu-switch").focus();
