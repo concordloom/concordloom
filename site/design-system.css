@@ -3323,7 +3323,8 @@ body[data-active-view="atlas"] .atlas-workbench {
 }
 
 body[data-active-view="atlas"] .atlas-console {
-  grid-template-columns: minmax(0, 1fr) clamp(300px, 20vw, 410px);
+  position: relative;
+  grid-template-columns: minmax(0, 1fr);
   min-height: 0;
   height: 100%;
   border-block: 0;
@@ -3363,8 +3364,57 @@ body[data-active-view="atlas"] .atlas-graph {
 }
 
 body[data-active-view="atlas"] .atlas-inspector {
+  position: absolute;
+  z-index: 9;
+  inset: 0 0 0 auto;
+  width: clamp(320px, 22vw, 440px);
   height: 100%;
   border-left-color: var(--sc-thread-38);
+  box-shadow: -28px 0 64px var(--sc-black-45);
+  transform: translateX(102%);
+  visibility: hidden;
+  transition:
+    transform 260ms cubic-bezier(.22, 1, .36, 1),
+    visibility 0s linear 260ms;
+}
+
+body[data-active-view="atlas"] .atlas-inspector.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+body[data-active-view="atlas"] .atlas-inspector-scrim {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  width: 100%;
+  min-height: 100%;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: default;
+}
+
+body[data-active-view="atlas"] .inspector-close {
+  position: absolute;
+  z-index: 2;
+  inset: 14px 14px auto auto;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  color: var(--text-primary);
+  font: 24px/1 var(--font-mono);
+  background: var(--surface-base);
+  border: 1px solid var(--sc-thread-38);
+}
+
+body[data-active-view="atlas"] .inspector-close:hover,
+body[data-active-view="atlas"] .inspector-close:focus-visible {
+  color: var(--sc-acid);
+  border-color: var(--sc-acid);
 }
 
 @media (max-width: 900px) {
@@ -3397,7 +3447,10 @@ body[data-active-view="atlas"] .atlas-inspector {
   }
 
   body[data-active-view="atlas"] .atlas-inspector {
-    height: auto;
+    position: fixed;
+    inset: var(--cl-header-h) 0 0 auto;
+    width: min(92vw, 420px);
+    height: calc(100dvh - var(--cl-header-h));
   }
 }
 

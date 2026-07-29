@@ -51,9 +51,11 @@ At widths of 1440 CSS pixels and above, the Atlas is one viewport instrument:
   the inspector and never orbit the graph;
 - the inspector contains a large mechanical dial for the selected loop and
   reads as part of the same instrument, not a generic text sidebar;
+- the inspector is closed by default and overlays the graph only after a node
+  is activated; it never reserves permanent canvas width;
 - total top chrome occupies at most 14% of viewport height;
-- graph field occupies at least 72% of viewport width;
-- inspector occupies 18–22% of viewport width;
+- graph field occupies the full viewport width;
+- the open inspector overlays 18–24% of viewport width;
 - navigation context is integrated into the breadcrumb and graph; a permanent
   desktop path column is forbidden;
 - the parent constellation is fully visible in the left 0–36% of the graph;
@@ -64,6 +66,8 @@ At widths of 1440 CSS pixels and above, the Atlas is one viewport instrument:
 - parent structural contrast is at least 70% of current structural contrast;
 - header, graph, and inspector fit inside one viewport; the inspector scrolls
   internally when necessary and never increases the shared grid row.
+- structural orbit rings are omitted; containment is shown by exact links and
+  node placement, while decorative circles are forbidden.
 
 The live SVG is the semantic and visual signal layer. Selecting a node changes
 the acid route, current mechanism, breadcrumbs, URL, and inspector. Atlas stage

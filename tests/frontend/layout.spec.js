@@ -61,7 +61,6 @@ test("accepted desktop Atlas geometry is enforced at 1440 × 900", async ({ page
   const geometry = await page.evaluate(() => {
     const rect = (selector) => document.querySelector(selector).getBoundingClientRect();
     const graph = rect(".atlas-stage");
-    const context = rect(".context-ring");
     const inspector = document.querySelector(".atlas-inspector");
     const path = rect(".atlas-history");
     return {
@@ -70,15 +69,15 @@ test("accepted desktop Atlas geometry is enforced at 1440 × 900", async ({ page
       graphHeightRatio: graph.height / (innerHeight - graph.top),
       graphRatio: graph.width / innerWidth,
       historyVisible: getComputedStyle(document.querySelector(".atlas-history")).display !== "none",
+      inspectorVisible: getComputedStyle(inspector).visibility !== "hidden",
       inspectorRatio: inspector.getBoundingClientRect().width / innerWidth,
       inspectorOverflow: inspector.scrollWidth - inspector.clientWidth,
       stageBackgroundImage: getComputedStyle(document.querySelector(".atlas-stage")).backgroundImage,
-      contextRatio: context.height / rect(".atlas-graph").height,
       pathRatio: path.width / innerWidth,
       pathWidth: path.width,
       constellationCount:
-        Number(document.querySelectorAll(".context-ring").length > 0)
-        + Number(document.querySelectorAll(".graph-ring").length > 0),
+        Number(document.querySelectorAll(".parent-constellation").length > 0)
+        + Number(document.querySelectorAll(".graph-node.is-current").length > 0),
       nodeCount: document.querySelectorAll(".node-assembly").length,
       bridge: Boolean(document.querySelector(".level-thread")),
       inspectorDial: Boolean(document.querySelector(".inspector-dial img")),
@@ -87,19 +86,22 @@ test("accepted desktop Atlas geometry is enforced at 1440 × 900", async ({ page
   expect(geometry.chromeBottom / 900).toBeLessThanOrEqual(0.14);
   expect(geometry.documentHeight).toBeLessThanOrEqual(902);
   expect(geometry.graphHeightRatio).toBeGreaterThanOrEqual(0.98);
-  expect(geometry.graphRatio).toBeGreaterThanOrEqual(0.72);
+  expect(geometry.graphRatio).toBeGreaterThanOrEqual(0.99);
   expect(geometry.historyVisible).toBe(false);
+  expect(geometry.inspectorVisible).toBe(false);
   expect(geometry.inspectorRatio).toBeGreaterThanOrEqual(0.18);
-  expect(geometry.inspectorRatio).toBeLessThanOrEqual(0.22);
+  expect(geometry.inspectorRatio).toBeLessThanOrEqual(0.24);
   expect(geometry.inspectorOverflow).toBeLessThanOrEqual(1);
-  expect(geometry.contextRatio).toBeGreaterThanOrEqual(0.32);
   expect(geometry.pathRatio).toBeLessThanOrEqual(0.1);
   expect(geometry.pathWidth).toBeLessThanOrEqual(160);
   expect(geometry.stageBackgroundImage).not.toContain("url(");
   expect(geometry.constellationCount).toBe(2);
+  await expect(page.locator(".context-ring, .graph-ring")).toHaveCount(0);
   expect(geometry.nodeCount).toBeGreaterThanOrEqual(14);
   expect(geometry.bridge).toBe(true);
   expect(geometry.inspectorDial).toBe(true);
+  await page.locator(".graph-node.is-current").click();
+  await expect(page.locator("[data-atlas-inspector]")).toBeVisible();
   await expect(page.locator(".atlas-back")).toBeVisible();
 });
 

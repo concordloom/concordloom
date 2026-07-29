@@ -9,6 +9,7 @@ for (const language of ["en", "ru"]) {
   test(`direct Atlas entry does not steal focus in ${language}`, async ({ page }) => {
     await openView(page, "atlas", language, "system-evolution");
     await expect(page.locator(".graph-node.is-current")).not.toBeFocused();
+    await expect(page.locator("[data-atlas-inspector]")).toBeHidden();
   });
 
   test(`Atlas drill-down and back navigation work in ${language}`, async ({ page }) => {
@@ -20,8 +21,12 @@ for (const language of ["en", "ru"]) {
     await child.click();
     await expect(page).toHaveURL(new RegExp(`#atlas/${childId}$`));
     await expect(page.locator(".graph-node.is-current")).toBeFocused();
+    await expect(page.locator("[data-atlas-inspector]")).toBeVisible();
     await expect(page.locator(".atlas-history li")).toHaveCount(2);
-    await page.locator(".atlas-back").click();
+    await page.keyboard.press("Escape");
+    await expect(page.locator("[data-atlas-inspector]")).toBeHidden();
+    await expect(page.locator(".graph-node.is-current")).toBeFocused();
+    await page.locator(".atlas-breadcrumbs a").first().click();
     await expect(page).toHaveURL(new RegExp(`#atlas/${rootId}$`));
     await expect(page.locator(".graph-node.is-current")).toBeFocused();
   });
@@ -34,6 +39,7 @@ for (const language of ["en", "ru"]) {
     await expect(child).toBeFocused();
     await page.keyboard.press("Enter");
     await expect(page).toHaveURL(new RegExp(`#atlas/${childId}$`));
+    await expect(page.locator("[data-atlas-inspector]")).toBeVisible();
     await expect(page.locator("[data-atlas-inspector]")).toContainText(
       language === "ru" ? /[А-Яа-яЁё]/ : /[A-Za-z]/,
     );
@@ -47,6 +53,18 @@ test("Atlas assemblies stay inside the mechanical stage", async ({ page }) => {
     page.locator(".node-assembly"),
     page.locator(".atlas-stage"),
   );
+});
+
+test("cycle details overlay without changing the graph geometry", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await openView(page, "atlas", "en");
+  const before = await page.locator(".atlas-stage").boundingBox();
+  await page.locator(".graph-node.is-current").click();
+  await expect(page.locator("[data-atlas-inspector]")).toBeVisible();
+  const after = await page.locator(".atlas-stage").boundingBox();
+  expect(after).toEqual(before);
+  await page.locator("[data-atlas-inspector-close]").click();
+  await expect(page.locator("[data-atlas-inspector]")).toBeHidden();
 });
 
 test("Atlas exposes selected state and a useful accessible name", async ({ page }) => {
