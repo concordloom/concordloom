@@ -31,7 +31,7 @@ test("workshop stress states do not overlap or overflow", async ({ page }) => {
   await expect(page.locator(".system-rail")).toBeVisible();
   await expect(page.locator("h1")).toHaveText("Стенд «Созвездие сигналов»");
   await expect(page.locator("#rail-title")).toHaveText("Цикл изменений");
-  await expect(page.locator("#atlas-title")).toHaveText("Подписи Атласа");
+  await expect(page.locator("#atlas-title")).toHaveText("Состояния механических узлов");
   await expect(page.locator("[data-phase-control=publish]")).toHaveText("Публикация");
 
   const railTextIsContained = await page.locator(".system-rail li span").evaluateAll(

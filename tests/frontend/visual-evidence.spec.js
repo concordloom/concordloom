@@ -15,6 +15,13 @@ for (const language of ["en", "ru"]) {
     test(`${language} ${view} visual review evidence`, async ({ page }, testInfo) => {
       await openView(page, view, language);
       await expectNoHorizontalOverflow(page);
+      if (view === "atlas" && testInfo.project.name.includes("desktop")) {
+        await expect(page.locator(".context-ring")).toHaveCount(3);
+        await expect(page.locator(".graph-ring")).toHaveCount(4);
+        await expect(page.locator(".node-assembly")).toHaveCount(22);
+        await expect(page.locator(".level-thread")).toHaveCount(1);
+        await expect(page.locator(".inspector-dial img")).toBeVisible();
+      }
       await testInfo.attach("approved-concept-reference", {
         path: reference,
         contentType: "image/png",

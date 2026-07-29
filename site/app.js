@@ -341,6 +341,9 @@ function renderInspector(loop) {
   const profile = atlasData.profiles[loop.profile];
   const route = loop.route_materialization;
   const inspector = document.querySelector("[data-atlas-inspector]");
+  const loopIndex = atlasData.loops.findIndex((entry) => entry.id === loop.id) + 1;
+  const loopCode = `LOOP ${String(loopIndex).padStart(2, "0")}.${loop.children.length ? "A" : "T"}`;
+  const glyph = loopGlyph(loop);
   const boundSkills = route.skills.length
     ? route.skills
         .map((skill) => `<li><code translate="no">${skill.id}@${skill.version}</code></li>`)
@@ -369,11 +372,18 @@ function renderInspector(loop) {
     </details>
   `;
   inspector.innerHTML = `
-    <p class="instrument-label">${text("current")}</p>
+    <div class="inspector-status">
+      <i aria-hidden="true"></i>
+      <span>${loop.children.length ? (language === "ru" ? "Открытый цикл" : "Open loop") : (language === "ru" ? "Конечный цикл" : "Terminal loop")}</span>
+    </div>
+    <p class="inspector-code" translate="no">${loopCode}</p>
     <h2>${loopCopy(loop).label}</h2>
+    <div class="inspector-dial" aria-hidden="true">
+      <img src="assets/signal-dial-core.png" width="1254" height="1254" alt="">
+      <span>${glyph}</span>
+    </div>
     <p class="inspector-purpose">${loopCopy(loop).purpose}</p>
-    <dl class="contract-grid">
-      <div><dt>${text("whatItDoes")}</dt><dd>${loopCopy(loop).purpose}</dd></div>
+    <dl class="inspector-contract">
       <div><dt>${text("needs")}</dt><dd>${loop.contract[language].input}</dd></div>
       <div><dt>${text("produces")}</dt><dd>${loop.contract[language].output}</dd></div>
     </dl>
@@ -424,6 +434,66 @@ function graphLabel(textValue) {
   return second ? [first, second] : [first];
 }
 
+const LOOP_GLYPHS = ["◉", "⌬", "⊕", "◇", "⧉", "⌁", "⊙", "✣", "⟲", "◌", "⌘", "⦿"];
+
+function loopGlyph(loop) {
+  let hash = 0;
+  for (const character of loop.id) hash = (hash * 31 + character.charCodeAt(0)) >>> 0;
+  return LOOP_GLYPHS[hash % LOOP_GLYPHS.length];
+}
+
+function appendGraphDefs(svg) {
+  const defs = svgElement("defs");
+  const metal = svgElement("radialGradient", { id: "node-metal", cx: "42%", cy: "34%" });
+  [
+    ["0%", "#5b5d58"],
+    ["18%", "#242622"],
+    ["62%", "#0c0e0c"],
+    ["84%", "#2d302b"],
+    ["100%", "#050605"],
+  ].forEach(([offset, color]) => metal.append(svgElement("stop", { offset, "stop-color": color })));
+  defs.append(metal);
+
+  const core = svgElement("radialGradient", { id: "node-core", cx: "50%", cy: "40%" });
+  [
+    ["0%", "#1e211c"],
+    ["65%", "#0b0d0b"],
+    ["100%", "#030403"],
+  ].forEach(([offset, color]) => core.append(svgElement("stop", { offset, "stop-color": color })));
+  defs.append(core);
+
+  const signal = svgElement("filter", {
+    id: "signal-glow",
+    x: "-80%",
+    y: "-80%",
+    width: "260%",
+    height: "260%",
+  });
+  signal.append(svgElement("feGaussianBlur", { stdDeviation: "4", result: "blur" }));
+  const merge = svgElement("feMerge");
+  merge.append(svgElement("feMergeNode", { in: "blur" }));
+  merge.append(svgElement("feMergeNode", { in: "SourceGraphic" }));
+  signal.append(merge);
+  defs.append(signal);
+
+  const shadow = svgElement("filter", {
+    id: "node-shadow",
+    x: "-60%",
+    y: "-60%",
+    width: "220%",
+    height: "220%",
+  });
+  shadow.append(svgElement("feDropShadow", {
+    dx: "4",
+    dy: "9",
+    stdDeviation: "8",
+    "flood-color": "#000000",
+    "flood-opacity": ".9",
+  }));
+  defs.append(shadow);
+  svg.append(defs);
+}
+
 function appendGraphNode(
   svg,
   loop,
@@ -434,8 +504,12 @@ function appendGraphNode(
   labelOffset = 0,
   labelYOffset = 0,
 ) {
+  const group = svgElement("g", {
+    class: `node-assembly${current ? " is-current" : ""}`,
+    transform: `translate(${x} ${y})`,
+  });
   const link = svgElement("a", {
-    href: current ? `#atlas/${encodeURIComponent(loop.id)}` : `#atlas/${encodeURIComponent(loop.id)}`,
+    href: `#atlas/${encodeURIComponent(loop.id)}`,
     class: `graph-node${current ? " is-current" : ""}`,
     "data-loop-id": loop.id,
     "aria-label": `${loopCopy(loop).label}. ${
@@ -445,82 +519,98 @@ function appendGraphNode(
   const title = svgElement("title");
   title.textContent = `${loopCopy(loop).label}. ${loopCopy(loop).purpose}`;
   link.append(title);
-  link.append(svgElement("circle", { class: "node-outer", cx: x, cy: y, r: radius + 10 }));
-  link.append(svgElement("circle", { class: "node-inner", cx: x, cy: y, r: radius }));
+  link.append(svgElement("circle", { class: "node-shadow", cx: 0, cy: 0, r: radius + 14 }));
+  link.append(svgElement("circle", { class: "node-outer", cx: 0, cy: 0, r: radius + 12 }));
+  link.append(svgElement("circle", { class: "node-case", cx: 0, cy: 0, r: radius + 7 }));
+  link.append(svgElement("circle", { class: "node-inner", cx: 0, cy: 0, r: radius }));
   link.append(svgElement("circle", {
     class: "node-bezel",
-    cx: x,
-    cy: y,
+    cx: 0,
+    cy: 0,
     r: Math.max(radius - 8, 12),
   }));
+  link.append(svgElement("circle", {
+    class: "node-etch",
+    cx: 0,
+    cy: 0,
+    r: Math.max(radius - 15, 8),
+  }));
+
+  const boltRadius = radius + 8;
+  const boltCount = current ? 12 : 6;
+  for (let index = 0; index < boltCount; index += 1) {
+    const angle = (Math.PI * 2 * index) / boltCount;
+    link.append(svgElement("circle", {
+      class: "node-bolt",
+      cx: Math.cos(angle) * boltRadius,
+      cy: Math.sin(angle) * boltRadius,
+      r: current ? 2.4 : 1.7,
+    }));
+  }
 
   const count = svgElement("text", {
     class: "node-count",
-    x,
-    y: current ? y - 25 : y + 4,
+    x: 0,
+    y: current ? -31 : -radius - 19,
     "text-anchor": "middle",
   });
   count.textContent = String(loop.children.length).padStart(current ? 2 : 1, "0");
   link.append(count);
 
-  const label = svgElement("text", {
-    class: "node-label",
-    x: x + labelOffset,
-    y: (current ? y - 2 : y + radius + 35) + labelYOffset,
+  const glyph = svgElement("text", {
+    class: "node-glyph",
+    x: 0,
+    y: current ? 13 : 8,
     "text-anchor": "middle",
   });
-  graphLabel(loopCopy(loop).label).slice(0, current ? 3 : 2).forEach((line, index) => {
-    const span = svgElement("tspan", { x: x + labelOffset, dy: index ? 19 : 0 });
-    span.textContent = line;
-    label.append(span);
-  });
-  link.append(label);
-  svg.append(link);
+  glyph.textContent = loopGlyph(loop);
+  link.append(glyph);
+
+  group.append(link);
+  svg.append(group);
 }
 
-function appendParentConstellation(svg, parent, selectedChild, x, y) {
-  const group = svgElement("g", { class: "parent-constellation" });
-  const parentLink = svgElement("a", {
-    href: `#atlas/${encodeURIComponent(parent.id)}`,
-    "aria-label": `${text("back")}: ${loopCopy(parent).label}`,
+function appendConstellationRings(svg, x, y, radii, className) {
+  radii.forEach((radius, index) => {
+    svg.append(svgElement("circle", {
+      class: `${className}${index === radii.length - 2 ? " is-signal" : ""}`,
+      cx: x,
+      cy: y,
+      r: radius,
+    }));
   });
-  const title = svgElement("title");
-  title.textContent = `${text("back")}: ${loopCopy(parent).label}`;
-  parentLink.append(title);
-  parentLink.append(svgElement("circle", {
-    class: "parent-housing",
-    cx: x,
-    cy: y,
-    r: 72,
-  }));
-  parentLink.append(svgElement("circle", {
-    class: "parent-core",
-    cx: x,
-    cy: y,
-    r: 46,
-  }));
-  group.append(parentLink);
+}
 
-  const siblings = parent.children.map(atlasLoop);
-  siblings.forEach((sibling, index) => {
-    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / Math.max(siblings.length, 1);
-    const nodeX = x + Math.cos(angle) * 120;
-    const nodeY = y + Math.sin(angle) * 120;
-    group.append(svgElement("line", {
-      class: sibling.id === selectedChild.id ? "parent-thread is-active" : "parent-thread",
+function appendContextConstellation(svg, loop, selected, x, y) {
+  const constellation = svgElement("g", { class: "parent-constellation" });
+  const context = loop.parentId ? atlasLoop(loop.parentId) : loop;
+  const items = context.children.map(atlasLoop);
+  appendConstellationRings(constellation, x, y, [216, 166, 108], "context-ring");
+
+  items.forEach((item, index) => {
+    const count = Math.max(items.length, 1);
+    const radius = items.length > 8 && index % 2 ? 190 : 148;
+    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
+    const nodeX = x + Math.cos(angle) * radius;
+    const nodeY = y + Math.sin(angle) * radius * 0.88;
+    constellation.append(svgElement("line", {
+      class: item.id === selected.id ? "context-thread is-active" : "context-thread",
       x1: x,
       y1: y,
       x2: nodeX,
       y2: nodeY,
     }));
-    group.append(svgElement("circle", {
-      class: sibling.id === selectedChild.id ? "parent-node is-active" : "parent-node",
-      cx: nodeX,
-      cy: nodeY,
-      r: sibling.id === selectedChild.id ? 10 : 6,
-    }));
+    appendGraphNode(constellation, item, nodeX, nodeY, item.id === selected.id ? 26 : 20);
   });
-  svg.append(group);
+  appendGraphNode(
+    constellation,
+    context,
+    x,
+    y,
+    50,
+    Boolean(loop.parentId && context.id === selected.id),
+  );
+  svg.append(constellation);
 }
 
 function renderGraph(loop) {
@@ -528,7 +618,8 @@ function renderGraph(loop) {
   const stage = document.querySelector("[data-atlas-stage]");
   svg.innerHTML = "";
   const compact = window.matchMedia("(max-width: 560px)").matches;
-  svg.setAttribute("viewBox", compact ? "180 70 640 600" : "0 0 1000 760");
+  svg.setAttribute("viewBox", compact ? "0 0 760 760" : "0 0 1600 760");
+  appendGraphDefs(svg);
 
   const previous = previousLoopId ? atlasLoop(previousLoopId) : null;
   let motion = "none";
@@ -543,32 +634,38 @@ function renderGraph(loop) {
     });
   }
 
-  const parent = !compact && loop.parentId ? atlasLoop(loop.parentId) : null;
-  const centerX = parent ? 625 : 500;
-  const centerY = 370;
-  [parent ? 285 : 310, parent ? 215 : 225, 118].forEach((radius, index) => {
-    svg.append(svgElement("circle", {
-      class: `graph-ring${index === 1 ? " is-signal" : ""}`,
-      cx: centerX,
-      cy: centerY,
-      r: radius,
-    }));
-  });
+  const centerX = compact ? 380 : 1110;
+  const centerY = compact ? 370 : 380;
+  appendConstellationRings(
+    svg,
+    centerX,
+    centerY,
+    compact ? [320, 260, 198, 108] : [330, 275, 208, 112],
+    "graph-ring",
+  );
 
-  if (parent) {
-    appendParentConstellation(svg, parent, loop, 155, centerY);
+  if (!compact) {
+    appendContextConstellation(svg, loop, loop, 315, centerY);
     svg.append(svgElement("path", {
       class: "level-thread",
-      d: `M 290 ${centerY} C 350 ${centerY}, 410 ${centerY}, ${centerX - 118} ${centerY}`,
+      d: `M 535 ${centerY} C 650 ${centerY}, 770 ${centerY}, ${centerX - 112} ${centerY}`,
     }));
-    [0.25, 0.5, 0.75].forEach((progress) => {
+    [0.18, 0.36, 0.56, 0.76].forEach((progress) => {
       svg.append(svgElement("circle", {
         class: "level-thread-marker",
-        cx: 290 + (centerX - 118 - 290) * progress,
+        cx: 535 + (centerX - 112 - 535) * progress,
         cy: centerY,
-        r: 3,
+        r: progress === 0.56 ? 7 : 3,
       }));
     });
+    const arrow = svgElement("text", {
+      class: "level-thread-arrow",
+      x: 810,
+      y: centerY + 7,
+      "text-anchor": "middle",
+    });
+    arrow.textContent = "▶";
+    svg.append(arrow);
   }
 
   const children = loop.children.map(atlasLoop);
@@ -578,14 +675,14 @@ function renderGraph(loop) {
   const positions = children.map((child, index) => {
     const count = Math.max(children.length, 1);
     const ring = compact
-      ? (children.length > 8 && index % 2 ? 285 : 230)
-      : (children.length > 8 && index % 2 ? 248 : 208);
+      ? (children.length > 8 && index % 2 ? 272 : 220)
+      : (children.length > 8 && index % 2 ? 272 : 218);
     const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
     return {
       child,
       index,
       x: centerX + Math.cos(angle) * ring,
-      y: centerY + Math.sin(angle) * ring * 0.82,
+      y: centerY + Math.sin(angle) * ring * 0.9,
     };
   });
 
@@ -604,12 +701,12 @@ function renderGraph(loop) {
     child,
     x,
     y,
-    34,
+    compact ? 28 : 30,
     false,
     compact ? (compactLabelOffsets[index] || 0) : 0,
     compact && index === 0 ? -28 : 0,
   ));
-  appendGraphNode(svg, loop, centerX, centerY, 78, true);
+  appendGraphNode(svg, loop, centerX, centerY, compact ? 76 : 82, true);
   previousLoopId = loop.id;
 }
 
