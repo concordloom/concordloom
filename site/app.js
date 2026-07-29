@@ -618,7 +618,7 @@ function renderGraph(loop) {
   const stage = document.querySelector("[data-atlas-stage]");
   svg.innerHTML = "";
   const compact = window.matchMedia("(max-width: 560px)").matches;
-  svg.setAttribute("viewBox", compact ? "0 0 760 760" : "0 0 1600 760");
+  svg.setAttribute("viewBox", compact ? "0 0 760 760" : "0 0 1440 900");
   appendGraphDefs(svg);
 
   const previous = previousLoopId ? atlasLoop(previousLoopId) : null;
@@ -634,8 +634,8 @@ function renderGraph(loop) {
     });
   }
 
-  const centerX = compact ? 380 : 1110;
-  const centerY = compact ? 370 : 380;
+  const centerX = compact ? 380 : 1060;
+  const centerY = compact ? 370 : 450;
   appendConstellationRings(
     svg,
     centerX,
@@ -645,22 +645,22 @@ function renderGraph(loop) {
   );
 
   if (!compact) {
-    appendContextConstellation(svg, loop, loop, 315, centerY);
+    appendContextConstellation(svg, loop, loop, 260, centerY);
     svg.append(svgElement("path", {
       class: "level-thread",
-      d: `M 535 ${centerY} C 650 ${centerY}, 770 ${centerY}, ${centerX - 112} ${centerY}`,
+      d: `M 480 ${centerY} C 610 ${centerY}, 760 ${centerY}, ${centerX - 112} ${centerY}`,
     }));
     [0.18, 0.36, 0.56, 0.76].forEach((progress) => {
       svg.append(svgElement("circle", {
         class: "level-thread-marker",
-        cx: 535 + (centerX - 112 - 535) * progress,
+        cx: 480 + (centerX - 112 - 480) * progress,
         cy: centerY,
         r: progress === 0.56 ? 7 : 3,
       }));
     });
     const arrow = svgElement("text", {
       class: "level-thread-arrow",
-      x: 810,
+      x: 745,
       y: centerY + 7,
       "text-anchor": "middle",
     });

@@ -39,6 +39,10 @@ Forbidden:
 
 At widths of 1440 CSS pixels and above, the Atlas is one viewport instrument:
 
+- the Atlas consumes the full viewport below compact site chrome; it is not a
+  document section or a dashboard inside a page;
+- the graph itself is the primary material surface: rings, rails, nodes, and
+  signal light create depth without a photographic or raster stage background;
 - two constellations are visible at once: contextual structure on the left and
   the active loop on the right;
 - at least 18 physical node assemblies are visible at the root;
@@ -50,8 +54,8 @@ At widths of 1440 CSS pixels and above, the Atlas is one viewport instrument:
 - total top chrome occupies at most 14% of viewport height;
 - graph field occupies at least 72% of viewport width;
 - inspector occupies 18–22% of viewport width;
-- a dedicated path rail occupies at most 10% and 160 pixels, or is integrated
-  into the graph;
+- navigation context is integrated into the breadcrumb and graph; a permanent
+  desktop path column is forbidden;
 - the parent constellation is fully visible in the left 0–36% of the graph;
 - the current constellation is centered in the 48–64% region;
 - the inspector begins in the 78–83% region of the viewport;
@@ -61,13 +65,19 @@ At widths of 1440 CSS pixels and above, the Atlas is one viewport instrument:
 - header, graph, and inspector fit inside one viewport; the inspector scrolls
   internally when necessary and never increases the shared grid row.
 
-The live SVG is the only semantic signal layer. Selecting a node changes the
-acid route, current mechanism, breadcrumbs, URL, and inspector. The material
-image supplies texture and passive mechanical depth only.
+The live SVG is the semantic and visual signal layer. Selecting a node changes
+the acid route, current mechanism, breadcrumbs, URL, and inspector. Atlas stage
+CSS may use restrained tokenized light falloff, but it may not render a
+photographic or raster background image. Material artwork may appear elsewhere
+on the site only when it does not compete with live information.
 
 A single radial chart, even when placed over the accepted texture and colored
 with the accepted acid signal, is a contract failure. Palette and background
 similarity do not count as composition fidelity.
+
+A live graph placed over decorative machinery is also a contract failure. The
+machinery must be expressed by the graph's own assemblies, rails, rings, and
+motion so that every visually prominent object carries current system meaning.
 
 ## Responsive transformation
 
