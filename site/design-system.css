@@ -3293,3 +3293,117 @@ body[data-active-view="atlas"] .atlas-breadcrumbs a {
     min-height: 306px;
   }
 }
+
+/* Fullscreen Atlas canvas.
+   The graph is the instrument; no photographic plate sits behind it. */
+
+body[data-active-view="atlas"] {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+body[data-active-view="atlas"] main {
+  height: calc(100dvh - var(--cl-header-h));
+  overflow: hidden;
+}
+
+body[data-active-view="atlas"] .atlas-view {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+body[data-active-view="atlas"] .atlas-commandbar {
+  display: none;
+}
+
+body[data-active-view="atlas"] .atlas-workbench {
+  height: 100%;
+  grid-template-rows: 44px minmax(0, 1fr);
+}
+
+body[data-active-view="atlas"] .atlas-console {
+  grid-template-columns: minmax(0, 1fr) clamp(300px, 20vw, 410px);
+  min-height: 0;
+  height: 100%;
+  border-block: 0;
+}
+
+body[data-active-view="atlas"] .atlas-history {
+  display: none;
+}
+
+body[data-active-view="atlas"] .atlas-stage {
+  min-height: 0;
+  height: 100%;
+  background:
+    radial-gradient(circle at 72% 50%, var(--sc-acid-04), transparent 23%),
+    radial-gradient(circle at 18% 52%, var(--sc-thread-04), transparent 31%),
+    var(--sc-void-deep);
+  box-shadow:
+    inset -64px 0 100px var(--sc-black-45),
+    inset 0 1px var(--sc-thread-04);
+}
+
+body[data-active-view="atlas"] .atlas-stage::before {
+  background:
+    linear-gradient(90deg, transparent 0 72%, var(--sc-black-18)),
+    radial-gradient(circle at 50% 50%, transparent 52%, var(--sc-black-34) 100%);
+}
+
+body[data-active-view="atlas"] .atlas-stage::after {
+  border: 0;
+  box-shadow: inset 0 0 0 1px var(--sc-thread-12);
+}
+
+body[data-active-view="atlas"] .atlas-graph {
+  inset: 28px 0 0;
+  height: calc(100% - 28px);
+  min-height: 0;
+}
+
+body[data-active-view="atlas"] .atlas-inspector {
+  height: 100%;
+  border-left-color: var(--sc-thread-38);
+}
+
+@media (max-width: 900px) {
+  body[data-active-view="atlas"] {
+    height: auto;
+    overflow: visible;
+  }
+
+  body[data-active-view="atlas"] main,
+  body[data-active-view="atlas"] .atlas-view {
+    height: auto;
+    overflow: visible;
+  }
+
+  body[data-active-view="atlas"] .atlas-workbench {
+    height: auto;
+  }
+
+  body[data-active-view="atlas"] .atlas-console {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  body[data-active-view="atlas"] .atlas-stage {
+    height: calc(100svh - var(--cl-header-h) - 44px);
+    min-height: 520px;
+    background:
+      radial-gradient(circle at 50% 48%, var(--sc-acid-04), transparent 24%),
+      var(--sc-void-deep);
+  }
+
+  body[data-active-view="atlas"] .atlas-inspector {
+    height: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  body[data-active-view="atlas"] .atlas-stage {
+    min-height: 520px;
+    max-height: none;
+  }
+}

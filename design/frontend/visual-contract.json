@@ -6,6 +6,10 @@
       "minimum_target_css_px": 44
     },
     "atlas_desktop": {
+      "atlas_canvas_mode": "fullscreen-instrument",
+      "background_image_allowed": false,
+      "desktop_history_column_visible": false,
+      "graph_is_primary_surface": true,
       "graph_min_viewport_width_ratio": 0.72,
       "inspector_max_viewport_width_ratio": 0.22,
       "inspector_min_viewport_width_ratio": 0.18,
