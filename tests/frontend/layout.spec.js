@@ -33,7 +33,7 @@ test("hero headline, explanation and action do not overlap", async ({ page }) =>
   );
 });
 
-test("Atlas columns and visible labels remain separate", async ({ page }, testInfo) => {
+test("Atlas columns and mechanical node assemblies remain separate", async ({ page }, testInfo) => {
   await openView(page, "atlas", "ru");
   if (testInfo.project.name.includes("desktop")) {
     await expectNoPairwiseOverlap(
@@ -41,8 +41,7 @@ test("Atlas columns and visible labels remain separate", async ({ page }, testIn
       2,
     );
   }
-  await expectNoPairwiseOverlap(page.locator(".node-label"), 4);
-  await expectContained(page.locator(".node-label"), page.locator(".atlas-stage"));
+  await expectContained(page.locator(".node-assembly"), page.locator(".atlas-stage"));
 });
 
 test("primary touch controls meet the minimum target size", async ({ page }, testInfo) => {
@@ -62,21 +61,39 @@ test("accepted desktop Atlas geometry is enforced at 1440 × 900", async ({ page
   const geometry = await page.evaluate(() => {
     const rect = (selector) => document.querySelector(selector).getBoundingClientRect();
     const graph = rect(".atlas-stage");
-    const parent = rect(".parent-constellation");
+    const context = rect(".context-ring");
     const inspector = document.querySelector(".atlas-inspector");
+    const path = rect(".atlas-history");
     return {
       chromeBottom: graph.top,
       documentHeight: document.documentElement.scrollHeight,
       graphRatio: graph.width / innerWidth,
+      inspectorRatio: inspector.getBoundingClientRect().width / innerWidth,
       inspectorOverflow: inspector.scrollWidth - inspector.clientWidth,
-      parentRatio: parent.height / rect(".atlas-graph").height,
+      contextRatio: context.height / rect(".atlas-graph").height,
+      pathRatio: path.width / innerWidth,
+      pathWidth: path.width,
+      constellationCount:
+        Number(document.querySelectorAll(".context-ring").length > 0)
+        + Number(document.querySelectorAll(".graph-ring").length > 0),
+      nodeCount: document.querySelectorAll(".node-assembly").length,
+      bridge: Boolean(document.querySelector(".level-thread")),
+      inspectorDial: Boolean(document.querySelector(".inspector-dial img")),
     };
   });
   expect(geometry.chromeBottom / 900).toBeLessThanOrEqual(0.14);
   expect(geometry.documentHeight).toBeLessThanOrEqual(902);
   expect(geometry.graphRatio).toBeGreaterThanOrEqual(0.72);
+  expect(geometry.inspectorRatio).toBeGreaterThanOrEqual(0.18);
+  expect(geometry.inspectorRatio).toBeLessThanOrEqual(0.22);
   expect(geometry.inspectorOverflow).toBeLessThanOrEqual(1);
-  expect(geometry.parentRatio).toBeGreaterThanOrEqual(0.32);
+  expect(geometry.contextRatio).toBeGreaterThanOrEqual(0.32);
+  expect(geometry.pathRatio).toBeLessThanOrEqual(0.1);
+  expect(geometry.pathWidth).toBeLessThanOrEqual(160);
+  expect(geometry.constellationCount).toBe(2);
+  expect(geometry.nodeCount).toBeGreaterThanOrEqual(14);
+  expect(geometry.bridge).toBe(true);
+  expect(geometry.inspectorDial).toBe(true);
   await expect(page.locator(".atlas-back")).toBeVisible();
 });
 
@@ -98,11 +115,11 @@ test("Atlas remains graph-first at the 200 percent reflow equivalent", async ({ 
   expect(visibleRatio).toBeGreaterThanOrEqual(0.55);
 });
 
-test("mobile graph labels meet the readable-size contract", async ({ page }) => {
+test("mobile graph glyphs meet the readable-size contract", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openView(page, "atlas", "ru", "system-evolution");
-  const heights = await page.locator(".node-label").evaluateAll((labels) =>
-    labels.map((label) => label.getBoundingClientRect().height),
+  const heights = await page.locator(".node-glyph").evaluateAll((glyphs) =>
+    glyphs.map((glyph) => glyph.getBoundingClientRect().height),
   );
   expect(Math.min(...heights)).toBeGreaterThanOrEqual(12);
 });

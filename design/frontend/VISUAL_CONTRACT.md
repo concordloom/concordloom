@@ -39,6 +39,14 @@ Forbidden:
 
 At widths of 1440 CSS pixels and above, the Atlas is one viewport instrument:
 
+- two constellations are visible at once: contextual structure on the left and
+  the active loop on the right;
+- at least 18 physical node assemblies are visible at the root;
+- a luminous signal bridge visibly connects the two constellations;
+- nodes use engraved glyphs inside metal housings; long human labels belong in
+  the inspector and never orbit the graph;
+- the inspector contains a large mechanical dial for the selected loop and
+  reads as part of the same instrument, not a generic text sidebar;
 - total top chrome occupies at most 14% of viewport height;
 - graph field occupies at least 72% of viewport width;
 - inspector occupies 18–22% of viewport width;
@@ -56,6 +64,10 @@ At widths of 1440 CSS pixels and above, the Atlas is one viewport instrument:
 The live SVG is the only semantic signal layer. Selecting a node changes the
 acid route, current mechanism, breadcrumbs, URL, and inspector. The material
 image supplies texture and passive mechanical depth only.
+
+A single radial chart, even when placed over the accepted texture and colored
+with the accepted acid signal, is a contract failure. Palette and background
+similarity do not count as composition fidelity.
 
 ## Responsive transformation
 
@@ -175,4 +187,3 @@ For a stable candidate:
 - Deterministic verifier and visual critic are read-only.
 - Publisher may deploy only a candidate carrying both verifier and critic
   receipts.
-

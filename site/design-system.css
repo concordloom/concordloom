@@ -1407,6 +1407,822 @@ code,
   }
 }
 
+/* Signal Constellation fidelity pass.
+   This layer is intentionally structural: the accepted concept is a physical
+   instrument with two spatial levels, not a radial chart on a themed page. */
+
+:root {
+  --sc-void-deep: var(--cl-black-1100);
+  --sc-void: var(--cl-black-1000);
+  --sc-base: var(--cl-black-950);
+  --sc-raised: var(--cl-black-900);
+  --sc-instrument: var(--cl-black-850);
+  --sc-metal-dark: var(--cl-graphite-700);
+  --sc-metal-mid: var(--cl-graphite-500);
+  --sc-metal-soft: var(--cl-silver-300);
+  --sc-metal-bright: var(--cl-thread-200);
+  --sc-thread: var(--cl-thread-100);
+  --sc-black-08: color-mix(in srgb, var(--cl-black-1100) 8%, transparent);
+  --sc-black-18: color-mix(in srgb, var(--cl-black-1100) 18%, transparent);
+  --sc-black-28: color-mix(in srgb, var(--cl-black-1100) 28%, transparent);
+  --sc-black-34: color-mix(in srgb, var(--cl-black-1100) 34%, transparent);
+  --sc-black-42: color-mix(in srgb, var(--cl-black-1100) 42%, transparent);
+  --sc-black-45: color-mix(in srgb, var(--cl-black-1100) 45%, transparent);
+  --sc-black-48: color-mix(in srgb, var(--cl-black-1100) 48%, transparent);
+  --sc-black-74: color-mix(in srgb, var(--cl-black-1100) 74%, transparent);
+  --sc-black-78: color-mix(in srgb, var(--cl-black-1100) 78%, transparent);
+  --sc-thread-03: color-mix(in srgb, var(--cl-thread-100) 3%, transparent);
+  --sc-thread-04: color-mix(in srgb, var(--cl-thread-100) 4%, transparent);
+  --sc-thread-12: color-mix(in srgb, var(--cl-thread-100) 12%, transparent);
+  --sc-thread-14: color-mix(in srgb, var(--cl-thread-100) 14%, transparent);
+  --sc-thread-16: color-mix(in srgb, var(--cl-thread-100) 16%, transparent);
+  --sc-thread-18: color-mix(in srgb, var(--cl-thread-100) 18%, transparent);
+  --sc-thread-20: color-mix(in srgb, var(--cl-thread-100) 20%, transparent);
+  --sc-thread-22: color-mix(in srgb, var(--cl-thread-100) 22%, transparent);
+  --sc-thread-24: color-mix(in srgb, var(--cl-thread-100) 24%, transparent);
+  --sc-thread-38: color-mix(in srgb, var(--cl-thread-100) 38%, transparent);
+  --sc-thread-42: color-mix(in srgb, var(--cl-thread-100) 42%, transparent);
+  --sc-thread-58: color-mix(in srgb, var(--cl-thread-100) 58%, transparent);
+  --sc-thread-60: color-mix(in srgb, var(--cl-thread-100) 60%, transparent);
+  --sc-acid-04: color-mix(in srgb, var(--cl-acid-500) 4%, transparent);
+  --sc-acid-06: color-mix(in srgb, var(--cl-acid-500) 6%, transparent);
+  --sc-acid-08: color-mix(in srgb, var(--cl-acid-500) 8%, transparent);
+  --sc-acid-26: color-mix(in srgb, var(--cl-acid-500) 26%, transparent);
+  --sc-acid-30: color-mix(in srgb, var(--cl-acid-500) 30%, transparent);
+  --sc-acid-52: color-mix(in srgb, var(--cl-acid-500) 52%, transparent);
+  --sc-acid-58: color-mix(in srgb, var(--cl-acid-500) 58%, transparent);
+  --sc-acid-soft: color-mix(in srgb, var(--cl-acid-500) 72%, var(--cl-thread-100));
+}
+
+body[data-active-view="atlas"] {
+  overflow-x: clip;
+}
+
+.parent-constellation {
+  transform-box: view-box;
+  transform-origin: center;
+}
+
+body[data-active-view="atlas"] .atlas-view {
+  min-height: calc(100dvh - var(--cl-header-h));
+  background: var(--sc-void-deep);
+}
+
+body[data-active-view="atlas"] .atlas-commandbar {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: none;
+  min-height: 46px;
+  margin: 0;
+  border-color: var(--sc-thread-20);
+  background:
+    linear-gradient(180deg, var(--cl-base-a92), var(--cl-base-a92));
+  box-shadow:
+    inset 0 1px var(--sc-thread-04),
+    0 12px 28px var(--sc-black-42);
+}
+
+body[data-active-view="atlas"] .atlas-workbench {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+body[data-active-view="atlas"] .atlas-breadcrumbs {
+  min-height: 51px;
+  padding-inline: clamp(1rem, 2.4vw, 3rem);
+  border-color: var(--sc-thread-20);
+  background: var(--sc-void);
+}
+
+body[data-active-view="atlas"] .atlas-console {
+  display: grid;
+  grid-template-columns: min(8vw, 160px) minmax(0, 1fr) clamp(288px, 20vw, 400px);
+  min-height: min(790px, calc(100dvh - 178px));
+  border-block: 1px solid var(--sc-thread-20);
+  background: var(--sc-void-deep);
+}
+
+body[data-active-view="atlas"] .atlas-history {
+  position: relative;
+  z-index: 3;
+  min-width: 0;
+  padding: 1.55rem 0.85rem;
+  overflow: hidden;
+  border-right: 1px solid var(--sc-thread-24);
+  background:
+    linear-gradient(90deg, var(--sc-raised), var(--sc-base) 78%, var(--sc-void-deep));
+}
+
+body[data-active-view="atlas"] .atlas-history::before {
+  top: 70px;
+  bottom: 24px;
+  left: 18px;
+  width: 1px;
+  background: linear-gradient(var(--acid), var(--sc-acid-08));
+}
+
+body[data-active-view="atlas"] .atlas-history ol {
+  gap: 0;
+  margin-top: 1.4rem;
+}
+
+body[data-active-view="atlas"] .atlas-history a {
+  min-width: 0;
+  padding: 0.9rem 0.7rem 0.9rem 2rem;
+  border: 0;
+  border-bottom: 1px solid var(--sc-thread-12);
+  background: transparent;
+}
+
+body[data-active-view="atlas"] .atlas-history a::before {
+  left: 0.55rem;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--sc-thread-60);
+  background: var(--sc-base);
+}
+
+body[data-active-view="atlas"] .atlas-history a[aria-current="page"]::before {
+  border-color: var(--acid);
+  background: var(--acid);
+  box-shadow: 0 0 18px var(--sc-acid-58);
+}
+
+body[data-active-view="atlas"] .atlas-history strong {
+  overflow: hidden;
+  font-size: 0.72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-active-view="atlas"] .atlas-stage {
+  position: relative;
+  min-width: 0;
+  min-height: 760px;
+  overflow: hidden;
+  border: 0;
+  background:
+    linear-gradient(90deg, var(--sc-black-48), transparent 14%, transparent 84%, var(--sc-black-48)),
+    linear-gradient(var(--sc-black-18), var(--sc-black-34)),
+    url("assets/signal-constellation-stage.png") center / cover no-repeat;
+  box-shadow:
+    inset 0 0 110px var(--sc-black-74),
+    inset 0 1px var(--sc-thread-04);
+  isolation: isolate;
+}
+
+body[data-active-view="atlas"] .atlas-stage::before {
+  z-index: -1;
+  background:
+    radial-gradient(circle at 68% 50%, var(--sc-acid-04), transparent 25%),
+    linear-gradient(90deg, var(--sc-black-28), transparent 25% 78%, var(--sc-black-18));
+}
+
+body[data-active-view="atlas"] .atlas-stage::after {
+  z-index: 4;
+  border: 1px solid var(--sc-thread-16);
+  background: none;
+  box-shadow: inset 0 0 0 10px var(--sc-black-08);
+  pointer-events: none;
+}
+
+body[data-active-view="atlas"] .atlas-map-head {
+  z-index: 5;
+  padding: 1rem 1.15rem 0;
+}
+
+body[data-active-view="atlas"] .atlas-map-head > :last-child {
+  max-width: 45ch;
+  overflow: hidden;
+  opacity: 0.55;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body[data-active-view="atlas"] .atlas-graph {
+  position: absolute;
+  inset: 34px 0 0;
+  z-index: 2;
+  width: 100%;
+  height: calc(100% - 34px);
+  min-height: 700px;
+  overflow: visible;
+}
+
+.graph-ring,
+.context-ring {
+  fill: none;
+  stroke: var(--sc-thread-22);
+  stroke-width: 1;
+}
+
+.graph-ring:nth-of-type(2n),
+.context-ring:nth-of-type(2n) {
+  stroke-dasharray: 2 9;
+}
+
+.graph-ring.is-signal,
+.context-ring.is-signal {
+  stroke: var(--sc-acid-26);
+  stroke-dasharray: 4 14;
+}
+
+.context-thread,
+.graph-link {
+  fill: none;
+  stroke: var(--sc-thread-38);
+  stroke-width: 1.25;
+}
+
+.context-thread.is-active,
+.level-thread {
+  fill: none;
+  stroke: var(--sc-acid-soft);
+  stroke-width: 1.7;
+}
+
+.graph-link-dot,
+.level-thread-marker {
+  fill: var(--cl-silver-350);
+  stroke: var(--sc-instrument);
+  stroke-width: 1.5;
+}
+
+.level-thread-marker:nth-of-type(3n) {
+  fill: var(--acid);
+  filter: url("#signal-glow");
+}
+
+.level-thread-arrow {
+  fill: var(--acid);
+  filter: url("#signal-glow");
+  font-family: var(--mono);
+  font-size: 20px;
+}
+
+.node-shadow {
+  fill: var(--sc-black-78);
+  filter: url("#node-shadow");
+}
+
+.graph-node .node-outer {
+  fill: url("#node-metal");
+  stroke: var(--sc-thread-58);
+  stroke-width: 1.3;
+}
+
+.graph-node .node-case {
+  fill: var(--sc-base);
+  stroke: var(--sc-thread-42);
+  stroke-width: 4;
+}
+
+.graph-node .node-inner {
+  fill: url("#node-core");
+  stroke: var(--sc-thread-42);
+  stroke-width: 1.25;
+}
+
+.graph-node .node-bezel {
+  fill: none;
+  stroke: var(--sc-thread-38);
+  stroke-dasharray: 2 5;
+  stroke-width: 1;
+}
+
+.graph-node .node-etch {
+  fill: none;
+  stroke: var(--sc-thread-14);
+  stroke-dasharray: 1 7;
+  stroke-width: 3;
+}
+
+.graph-node .node-bolt {
+  fill: var(--sc-metal-soft);
+  stroke: var(--sc-void-deep);
+  stroke-width: 1;
+}
+
+.graph-node .node-count {
+  fill: var(--acid);
+  font-family: var(--mono);
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.graph-node .node-glyph {
+  fill: var(--cl-silver-350);
+  font-family: var(--mono);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.graph-node .node-label {
+  fill: var(--sc-metal-bright);
+  paint-order: stroke;
+  stroke: var(--cl-base-a92);
+  stroke-linejoin: round;
+  stroke-width: 5px;
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 550;
+}
+
+.graph-node:hover .node-outer,
+.graph-node:focus-visible .node-outer {
+  stroke: var(--acid);
+  stroke-width: 2;
+}
+
+.graph-node:hover .node-glyph,
+.graph-node:focus-visible .node-glyph {
+  fill: var(--acid);
+}
+
+.graph-node:focus-visible {
+  outline: none;
+}
+
+.graph-node:focus-visible .node-case {
+  stroke: var(--sc-thread);
+  stroke-width: 5;
+}
+
+.graph-node.is-current .node-outer {
+  fill: url("#node-metal");
+  stroke: var(--acid);
+  stroke-width: 3;
+  filter: url("#signal-glow");
+}
+
+.graph-node.is-current .node-case {
+  stroke: var(--sc-acid-52);
+  stroke-width: 6;
+}
+
+.graph-node.is-current .node-inner {
+  fill: var(--cl-base-a92);
+  stroke: var(--sc-acid-soft);
+  stroke-width: 1.8;
+}
+
+.graph-node.is-current .node-glyph {
+  fill: var(--sc-thread);
+  font-size: 34px;
+}
+
+.graph-node.is-current .node-count {
+  font-size: 14px;
+}
+
+body[data-active-view="atlas"] .atlas-inspector {
+  position: relative;
+  z-index: 3;
+  min-width: 0;
+  padding: 2rem 1.55rem 1.4rem;
+  overflow: hidden auto;
+  border-left: 1px solid var(--sc-thread-24);
+  background:
+    linear-gradient(135deg, var(--sc-thread-04), transparent 24%),
+    linear-gradient(180deg, var(--sc-instrument), var(--sc-base) 82%);
+  box-shadow:
+    inset 1px 0 var(--sc-thread-03),
+    inset 0 0 80px var(--sc-black-34);
+}
+
+body[data-active-view="atlas"] .atlas-inspector::before,
+body[data-active-view="atlas"] .atlas-inspector::after {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--sc-metal-mid);
+  border-radius: 50%;
+  background: var(--sc-metal-dark);
+  box-shadow: inset 0 0 0 2px var(--sc-void);
+  content: "";
+}
+
+body[data-active-view="atlas"] .atlas-inspector::before {
+  top: 10px;
+  left: 10px;
+}
+
+body[data-active-view="atlas"] .atlas-inspector::after {
+  right: 10px;
+  bottom: 10px;
+}
+
+.inspector-status {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  color: var(--sc-metal-soft);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+}
+
+.inspector-status i {
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--acid);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px var(--sc-raised);
+}
+
+.inspector-code {
+  margin: 2.4rem 0 0.45rem;
+  color: var(--acid);
+  font-family: var(--mono);
+  font-size: clamp(1.55rem, 2.4vw, 2.4rem);
+  letter-spacing: 0.04em;
+}
+
+body[data-active-view="atlas"] .atlas-inspector h2 {
+  margin: 0;
+  color: var(--cl-silver-350);
+  font-family: var(--mono);
+  font-size: clamp(0.8rem, 1.1vw, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.inspector-dial {
+  position: relative;
+  width: min(84%, 245px);
+  aspect-ratio: 1;
+  margin: 1.6rem auto 1.3rem;
+}
+
+.inspector-dial img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: contrast(1.06) saturate(0.88);
+}
+
+.inspector-dial span {
+  position: absolute;
+  inset: 33%;
+  display: grid;
+  place-items: center;
+  color: var(--sc-metal-bright);
+  font-family: var(--mono);
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  text-shadow: 0 0 18px var(--sc-acid-30);
+}
+
+body[data-active-view="atlas"] .inspector-purpose {
+  margin: 0;
+  color: var(--sc-metal-soft);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.inspector-contract {
+  margin: 1.25rem 0 0;
+}
+
+.inspector-contract div {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 0.7rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--sc-thread-16);
+}
+
+.inspector-contract dt {
+  color: var(--sc-metal-mid);
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.inspector-contract dd {
+  margin: 0;
+  color: var(--cl-silver-350);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+body[data-active-view="atlas"] .resource-panel,
+body[data-active-view="atlas"] .technical-details {
+  margin-top: 0.8rem;
+  border-color: var(--sc-thread-18);
+  background: var(--sc-black-42);
+}
+
+body[data-active-view="atlas"] .resource-panel {
+  padding: 0;
+}
+
+body[data-active-view="atlas"] .resource-panel > summary,
+body[data-active-view="atlas"] .technical-details > summary {
+  min-height: 44px;
+  padding: 0.85rem;
+  color: var(--sc-metal-soft);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  cursor: pointer;
+}
+
+body[data-active-view="atlas"] .resource-panel > dl,
+body[data-active-view="atlas"] .resource-panel > p {
+  padding-inline: 0.85rem;
+}
+
+body[data-active-view="atlas"] .inner-grammar {
+  margin-top: 1rem;
+}
+
+body[data-active-view="atlas"] .inner-grammar ol {
+  gap: 0.2rem;
+}
+
+body[data-active-view="atlas"] .inner-grammar span {
+  width: 28px;
+  height: 28px;
+  font-size: 0.55rem;
+}
+
+body[data-active-view="atlas"] .atlas-back {
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--sc-thread-24);
+  color: var(--sc-metal-bright);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+}
+
+/* The home surface uses the same physical scene instead of poster text over
+   a decorative image. */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(310px, 390px);
+  min-height: calc(100dvh - var(--cl-header-h));
+  padding: clamp(2rem, 4vw, 4.5rem);
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, var(--sc-black-18) 0 58%, var(--cl-base-a88) 76%),
+    url("assets/signal-constellation-stage.png") 45% 50% / cover no-repeat;
+  isolation: isolate;
+}
+
+.hero-machine {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 45% 50%, var(--sc-acid-06), transparent 19%),
+    linear-gradient(90deg, transparent 0 61%, var(--sc-black-74) 72%);
+}
+
+.hero-machine-core,
+.hero-machine-signal {
+  display: none;
+}
+
+.hero-copy {
+  grid-column: 2;
+  align-self: stretch;
+  width: 100%;
+  max-width: none;
+  padding: clamp(2rem, 4vw, 4rem) clamp(1.4rem, 2.5vw, 2.4rem);
+  border: 1px solid var(--sc-thread-24);
+  background:
+    linear-gradient(135deg, var(--sc-thread-04), transparent 28%),
+    var(--cl-base-a92);
+  box-shadow:
+    inset 0 0 80px var(--sc-black-48),
+    0 22px 80px var(--sc-black-45);
+}
+
+.hero-copy h1 {
+  max-width: 9ch;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: clamp(2.5rem, 4.7vw, 4.7rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+  text-transform: uppercase;
+}
+
+.hero-copy h1 em {
+  display: block;
+  margin-top: 0.2em;
+  color: var(--acid);
+  font-style: normal;
+}
+
+.hero-bottom {
+  display: grid;
+  gap: 1.7rem;
+  margin-top: clamp(3rem, 8vh, 7rem);
+}
+
+.hero-bottom p {
+  max-width: 32ch;
+  margin: 0;
+  color: var(--sc-metal-soft);
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.hero .primary-cta {
+  min-height: 54px;
+  border: 1px solid var(--acid);
+  background: var(--acid);
+  color: var(--sc-base);
+}
+
+.hero-readout {
+  position: absolute;
+  right: calc(clamp(2rem, 4vw, 4.5rem) + min(390px, 27vw) + 1.5rem);
+  bottom: clamp(2rem, 4vw, 4.5rem);
+  left: clamp(2rem, 4vw, 4.5rem);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(110px, 1fr));
+  width: auto;
+  border: 1px solid var(--sc-thread-18);
+  background: var(--sc-black-74);
+  backdrop-filter: blur(8px);
+}
+
+.hero-readout p {
+  min-width: 0;
+  margin: 0;
+  padding: 0.85rem 1rem;
+}
+
+.evolution-word {
+  max-width: 100%;
+  overflow: hidden;
+  opacity: 0.055;
+  font-size: clamp(7rem, 20vw, 22rem);
+  line-height: 0.72;
+  pointer-events: none;
+}
+
+@media (max-width: 1180px) {
+  body[data-active-view="atlas"] .atlas-console {
+    grid-template-columns: min(9vw, 126px) minmax(0, 1fr) minmax(272px, 23vw);
+  }
+
+  body[data-active-view="atlas"] .atlas-stage {
+    min-height: 680px;
+  }
+
+  body[data-active-view="atlas"] .atlas-graph {
+    min-height: 630px;
+  }
+
+  .inspector-dial {
+    width: min(76%, 205px);
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 52vh 1rem 1rem;
+    background-position: 53% top;
+    background-size: auto 58vh;
+  }
+
+  .hero-copy {
+    grid-column: 1;
+  }
+
+  .hero-readout {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    grid-column: 1;
+    grid-template-columns: 1fr;
+    margin-top: 1rem;
+  }
+
+  body[data-active-view="atlas"] .atlas-console {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-active-view="atlas"] .atlas-history {
+    display: block;
+    min-height: 86px;
+    padding: 0.8rem 1rem;
+    overflow-x: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--sc-thread-20);
+  }
+
+  body[data-active-view="atlas"] .atlas-history::before,
+  body[data-active-view="atlas"] .atlas-history > .instrument-label {
+    display: none;
+  }
+
+  body[data-active-view="atlas"] .atlas-history ol {
+    display: flex;
+    width: max-content;
+    margin: 0;
+  }
+
+  body[data-active-view="atlas"] .atlas-history li {
+    min-width: 220px;
+  }
+
+  body[data-active-view="atlas"] .atlas-stage {
+    min-height: min(92vw, 760px);
+    background-position: 56% center;
+  }
+
+  body[data-active-view="atlas"] .atlas-graph {
+    min-height: 0;
+  }
+
+  body[data-active-view="atlas"] .atlas-inspector {
+    min-height: 0;
+    max-height: none;
+    padding: 2rem clamp(1rem, 5vw, 2.5rem);
+    border-top: 1px solid var(--sc-thread-24);
+    border-left: 0;
+  }
+
+  .inspector-dial {
+    width: min(56vw, 250px);
+  }
+}
+
+@media (max-width: 560px) {
+  body[data-active-view="atlas"] .atlas-commandbar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  body[data-active-view="atlas"] .atlas-commandbar > :nth-child(3),
+  body[data-active-view="atlas"] .atlas-commandbar > :nth-child(5) {
+    display: none;
+  }
+
+  body[data-active-view="atlas"] .atlas-breadcrumbs {
+    padding-inline: 1rem;
+  }
+
+  body[data-active-view="atlas"] .atlas-stage {
+    min-height: 110vw;
+    max-height: 640px;
+    background-size: auto 118%;
+  }
+
+  body[data-active-view="atlas"] .atlas-map-head > :last-child {
+    display: none;
+  }
+
+  body[data-active-view="atlas"] .atlas-graph {
+    inset: 28px -2% 0;
+    width: 104%;
+    height: calc(100% - 28px);
+  }
+
+  .graph-node .node-label {
+    font-size: 15px;
+  }
+
+  .hero {
+    padding-top: 44vh;
+    background-size: auto 50vh;
+  }
+
+  .hero-copy {
+    padding: 1.5rem 1.15rem 1.25rem;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(2.3rem, 12vw, 3.5rem);
+  }
+
+  .hero-bottom {
+    margin-top: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atlas-stage[data-motion] .atlas-graph {
+    animation: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -2415,12 +3231,12 @@ body[data-active-view="atlas"] .site-footer {
 }
 
 body[data-active-view="atlas"] .atlas-commandbar {
-  height: 38px;
-  min-height: 38px;
+  height: 37px;
+  min-height: 37px;
 }
 
 body[data-active-view="atlas"] .atlas-workbench {
-  height: calc(100% - 38px);
+  height: calc(100% - 37px);
   grid-template-rows: 44px minmax(0, 1fr);
 }
 

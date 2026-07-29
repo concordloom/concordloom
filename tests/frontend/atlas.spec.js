@@ -40,12 +40,11 @@ for (const language of ["en", "ru"]) {
   });
 }
 
-test("Atlas labels do not collide or escape the mechanical stage", async ({ page }) => {
+test("Atlas assemblies stay inside the mechanical stage", async ({ page }) => {
   await openView(page, "atlas", "ru");
-  await expectNoPairwiseOverlap(page.locator(".node-label"), 4);
   await expectNoPairwiseOverlap(page.locator(".atlas-history li"), 4);
   await expectContained(
-    page.locator(".node-label"),
+    page.locator(".node-assembly"),
     page.locator(".atlas-stage"),
   );
 });

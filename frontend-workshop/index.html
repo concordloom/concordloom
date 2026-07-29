@@ -47,25 +47,29 @@
 
       <section class="workshop-panel" aria-labelledby="atlas-title">
         <div class="workshop-title">
-          <p class="instrument-label" data-en="STRESS FIXTURE" data-ru="ПРОВЕРКА ПРЕДЕЛОВ">STRESS FIXTURE</p>
-          <h2 id="atlas-title" data-en="Atlas labels" data-ru="Подписи Атласа">Atlas labels</h2>
+          <p class="instrument-label" data-en="MATERIAL FIXTURE" data-ru="ПРОВЕРКА МАТЕРИАЛА">MATERIAL FIXTURE</p>
+          <h2 id="atlas-title" data-en="Mechanical node states" data-ru="Состояния механических узлов">Mechanical node states</h2>
         </div>
         <div class="workshop-atlas">
-          <article class="workshop-node is-current">
-            <strong>10</strong>
-            <span class="workshop-node-label" data-en="Steward Concord Loom" data-ru="Развивать Concord Loom">Steward Concord Loom</span>
+          <article class="workshop-node" data-node-state="default">
+            <div class="workshop-node-dial"><span>⌬</span></div>
+            <strong data-en="Default" data-ru="Обычное">Default</strong>
+            <span class="workshop-node-label" data-en="Visible structure" data-ru="Видимая структура">Visible structure</span>
           </article>
-          <article class="workshop-node">
-            <strong>4</strong>
-            <span class="workshop-node-label" data-en="Product Direction" data-ru="Направление продукта">Product Direction</span>
+          <article class="workshop-node" data-node-state="hover">
+            <div class="workshop-node-dial"><span>⊕</span></div>
+            <strong data-en="Hover" data-ru="Наведение">Hover</strong>
+            <span class="workshop-node-label" data-en="Available route" data-ru="Доступный переход">Available route</span>
           </article>
-          <article class="workshop-node">
-            <strong>8</strong>
-            <span class="workshop-node-label" data-en="Adoption and Feedback" data-ru="Применение и обратная связь">Adoption and Feedback</span>
+          <article class="workshop-node" data-node-state="focus">
+            <div class="workshop-node-dial"><span>◇</span></div>
+            <strong data-en="Focus" data-ru="Фокус">Focus</strong>
+            <span class="workshop-node-label" data-en="Keyboard target" data-ru="Цель клавиатуры">Keyboard target</span>
           </article>
-          <article class="workshop-node">
-            <strong>4</strong>
-            <span class="workshop-node-label" data-en="Bindings and Adapters" data-ru="Привязки и адаптеры">Bindings and Adapters</span>
+          <article class="workshop-node is-current" data-node-state="selected">
+            <div class="workshop-node-dial"><span>⧉</span></div>
+            <strong data-en="Selected" data-ru="Выбрано">Selected</strong>
+            <span class="workshop-node-label" data-en="Active signal" data-ru="Активный сигнал">Active signal</span>
           </article>
         </div>
       </section>

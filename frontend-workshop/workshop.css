@@ -87,25 +87,69 @@
 
 .workshop-node {
   align-items: center;
-  aspect-ratio: 1;
-  background: var(--atlas-node-background);
-  border: 2px solid var(--cl-steel-600);
-  border-radius: 50%;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.025), transparent),
+    #080908;
+  border: 1px solid var(--cl-steel-700);
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-width: 0;
-  padding: 1rem;
+  padding: 1.25rem;
   text-align: center;
 }
 
 .workshop-node.is-current {
   border-color: var(--atlas-node-active);
-  box-shadow: 0 0 2rem color-mix(in srgb, var(--atlas-node-active) 24%, transparent);
+}
+
+.workshop-node-dial {
+  align-items: center;
+  aspect-ratio: 1;
+  background: url("/assets/signal-dial-core.png") center / contain no-repeat;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+  max-width: 14rem;
+  position: relative;
+  width: 100%;
+}
+
+.workshop-node-dial span {
+  color: var(--text-primary);
+  font-family: var(--type-code);
+  font-size: clamp(1.4rem, 4vw, 2.4rem);
+  text-shadow: 0 0 1.2rem color-mix(in srgb, var(--signal) 30%, transparent);
+}
+
+.workshop-node[data-node-state="hover"] .workshop-node-dial,
+.workshop-node[data-node-state="focus"] .workshop-node-dial,
+.workshop-node.is-current .workshop-node-dial {
+  filter: brightness(1.12) contrast(1.04);
+}
+
+.workshop-node[data-node-state="focus"] .workshop-node-dial {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+.workshop-node.is-current .workshop-node-dial {
+  filter: brightness(1.18) saturate(1.12);
+}
+
+.workshop-node > strong {
+  color: var(--signal);
+  font-family: var(--type-code);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .workshop-node-label {
-  max-width: 12ch;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  margin-top: 0.35rem;
+  max-width: 18ch;
   overflow-wrap: anywhere;
 }
 
