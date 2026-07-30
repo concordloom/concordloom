@@ -179,14 +179,17 @@ def main() -> int:
         'href="design-system.css"',
         'href="design-tokens.css"',
         'data-design-system="patch-panel"',
-        'class="system-rail"',
+        'class="view-tabs"',
         'class="atlas-commandbar"',
         "data-atlas-graph",
         "data-atlas-history",
+        "data-atlas-up",
         'class="atlas-inspector"',
     ):
         if marker not in index.read_text(encoding="utf-8"):
             errors.append(f"Patch Panel surface is missing {marker}")
+    if 'class="system-rail"' in index.read_text(encoding="utf-8"):
+        errors.append("public header contains a decorative progress rail instead of navigation")
     for marker in (
         "--cl-navy-1000",
         "--cl-mint-500",

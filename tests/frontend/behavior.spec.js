@@ -50,17 +50,10 @@ test("navigation exposes one current page and preserves URL state", async ({ pag
   }
 });
 
-test("lifecycle rail is semantic and changes with site state", async ({ page }) => {
-  const activeByView = [];
-  for (const view of ["concept", "quickstart", "atlas", "docs"]) {
+test("public header contains no simulated lifecycle progress", async ({ page }) => {
+  for (const view of routes) {
     await openView(page, view, "en");
-    const active = page.locator(".system-rail li.is-active");
-    await expect(active).toHaveCount(1);
-    await expect(active).toHaveAttribute("aria-current", "step");
-    activeByView.push((await active.innerText()).trim());
+    await expect(page.locator(".site-header .system-rail")).toHaveCount(0);
+    await expect(page.locator(".view-tabs a")).toHaveCount(routes.length);
   }
-  expect(
-    new Set(activeByView).size,
-    `lifecycle is hard-coded instead of reflecting site state: ${activeByView.join(", ")}`,
-  ).toBeGreaterThan(1);
 });

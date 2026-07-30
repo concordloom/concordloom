@@ -132,10 +132,11 @@ class DesignSystemAuthorityTests(unittest.TestCase):
         )
         for marker in (
             'data-design-system="patch-panel"',
-            "system-rail",
+            "view-tabs",
             "atlas-commandbar",
         ):
             self.assertIn(marker, index)
+        self.assertNotIn('class="system-rail"', index)
         for marker in ("graph-node", 'motion = "forward"'):
             self.assertIn(marker, script)
         for marker in (

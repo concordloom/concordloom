@@ -3,9 +3,9 @@ const copy = {
     switchLanguage: "Switch to Russian",
     loading: "Loading accepted data…",
     loadError: "The accepted projection could not be loaded. Reload the page or inspect the source repository.",
-    current: "Current cycle",
+    current: "Selected cycle",
     children: "Contained cycles",
-    leaf: "This cycle has no smaller responsibility cycles. Open its shared run grammar and resources in the inspector.",
+    leaf: "No inner cycles. Select this cycle to see its input, result and run plan.",
     purpose: "Purpose",
     responsibility: "Responsible role",
     contract: "Outcome contract",
@@ -46,16 +46,16 @@ const copy = {
     produces: "Produces",
     resourcesOptional: "Models, skills and tools",
     closeInspector: "Close cycle details",
-    openLoop: "Open loop",
-    terminalLoop: "Terminal loop",
+    openLoop: "Has inner cycles",
+    terminalLoop: "No inner cycles",
   },
   ru: {
     switchLanguage: "Переключить на английский",
     loading: "Загружаются принятые данные…",
     loadError: "Не удалось загрузить принятую проекцию. Перезагрузите страницу или откройте исходные данные в репозитории.",
-    current: "Текущий цикл",
+    current: "Выбранный цикл",
     children: "Вложенные циклы",
-    leaf: "У этого цикла нет более мелких циклов ответственности. Общая схема запуска и ресурсы показаны справа.",
+    leaf: "Внутри нет других циклов. Выберите этот цикл, чтобы увидеть вход, результат и план выполнения.",
     purpose: "Задача",
     responsibility: "Ответственный",
     contract: "Результат цикла",
@@ -96,19 +96,61 @@ const copy = {
     produces: "Что получится",
     resourcesOptional: "Модели, инструкции и инструменты",
     closeInspector: "Закрыть сведения о цикле",
-    openLoop: "Цикл с вложенными шагами",
-    terminalLoop: "Конечный цикл",
+    openLoop: "Есть вложенные циклы",
+    terminalLoop: "Без вложенных циклов",
   },
 };
 
 const phaseCopy = {
-  observe: { code: "O", ru: "Собрать факты с указанием источника." },
-  negotiate: { code: "N", ru: "Превратить неоднозначность в принятое решение." },
-  bind: { code: "B", ru: "Зафиксировать точные границы и полномочия." },
-  execute: { code: "X", ru: "Создать один результат в разрешённых границах." },
-  verify: { code: "V", ru: "Независимо проверить этот результат." },
-  publish: { code: "P", ru: "Выполнить только явно разрешённое внешнее изменение." },
-  evolve: { code: "E", ru: "Подготовить новую версию без её включения." },
+  observe: {
+    code: "O",
+    en: "Gather facts",
+    ru: "Собрать факты",
+    enPurpose: "Record what is known and where it came from.",
+    ruPurpose: "Зафиксировать, что известно и откуда это взято.",
+  },
+  negotiate: {
+    code: "N",
+    en: "Clarify intent",
+    ru: "Уточнить намерение",
+    enPurpose: "Resolve questions that can change the project map.",
+    ruPurpose: "Разобрать вопросы, которые могут изменить карту проекта.",
+  },
+  bind: {
+    code: "B",
+    en: "Set the rules",
+    ru: "Зафиксировать правила",
+    enPurpose: "Turn accepted decisions into exact boundaries and permissions.",
+    ruPurpose: "Превратить принятые решения в точные границы и разрешения.",
+  },
+  execute: {
+    code: "X",
+    en: "Do the work",
+    ru: "Выполнить работу",
+    enPurpose: "Create one result within the accepted boundaries.",
+    ruPurpose: "Создать один результат в принятых границах.",
+  },
+  verify: {
+    code: "V",
+    en: "Check the result",
+    ru: "Проверить результат",
+    enPurpose: "Check the exact result against the agreed requirements.",
+    ruPurpose: "Проверить точный результат по согласованным требованиям.",
+  },
+  publish: {
+    code: "P",
+    en: "Apply the result",
+    ru: "Применить результат",
+    enPurpose: "Perform only the separately authorized external action.",
+    ruPurpose: "Выполнить только отдельно разрешённое внешнее действие.",
+  },
+  evolve: {
+    code: "E",
+    en: "Propose an improvement",
+    ru: "Предложить улучшение",
+    enPurpose: "Prepare a new version without activating it.",
+    ruPurpose: "Подготовить новую версию, не включая её автоматически.",
+  },
 };
 
 const storedLanguage = localStorage.getItem("concordloom-language");
@@ -162,35 +204,6 @@ function setView(viewName) {
   document.querySelector(".menu-switch").setAttribute("aria-expanded", "false");
 }
 
-function hasAtlasAncestor(loopId, ancestorId) {
-  if (!atlasData || !loopId) return false;
-  let current = atlasLoop(loopId);
-  while (current) {
-    if (current.id === ancestorId) return true;
-    current = current.parentId ? atlasLoop(current.parentId) : null;
-  }
-  return false;
-}
-
-function renderSystemRail(routeState) {
-  let active = "map";
-  if (routeState.view === "quickstart") active = "build";
-  if (routeState.view === "theory" || routeState.view === "docs") active = "verify";
-  if (routeState.view === "atlas" && atlasData) {
-    const loopId = routeState.detail || atlasData.binding.rootLoopIds[0];
-    if (hasAtlasAncestor(loopId, "system-evolution")) active = "evolve";
-    else if (hasAtlasAncestor(loopId, "release-distribution")) active = "publish";
-    else if (hasAtlasAncestor(loopId, "trust-assurance")) active = "verify";
-    else if (hasAtlasAncestor(loopId, "runtime-tooling")) active = "build";
-  }
-  document.querySelectorAll("[data-system-stage]").forEach((item) => {
-    const selected = item.dataset.systemStage === active;
-    item.classList.toggle("is-active", selected);
-    if (selected) item.setAttribute("aria-current", "step");
-    else item.removeAttribute("aria-current");
-  });
-}
-
 function applyLanguage(nextLanguage) {
   language = nextLanguage;
   document.documentElement.lang = language;
@@ -225,29 +238,63 @@ function persistLanguageInUrl() {
 function renderGrammar() {
   if (!atlasData) return;
   const list = document.querySelector("[data-run-grammar]");
+  const selectedStage =
+    list.querySelector("button[aria-pressed='true']")?.dataset.stage
+    || atlasData.sharedRunGrammar[0].id;
   list.innerHTML = "";
+  list.setAttribute(
+    "aria-label",
+    language === "en" ? "Shared run stages" : "Общие этапы выполнения",
+  );
+  const buttons = [];
+
+  function selectStage(index, focus = false) {
+    const phase = atlasData.sharedRunGrammar[index];
+    const button = buttons[index];
+    buttons.forEach((entry, entryIndex) => {
+      const selected = entryIndex === index;
+      entry.setAttribute("aria-pressed", String(selected));
+      entry.tabIndex = selected ? 0 : -1;
+    });
+    document.querySelector("[data-stage-code]").textContent = phaseCopy[phase.id].code;
+    document.querySelector("[data-stage-copy]").textContent =
+      phaseCopy[phase.id][`${language}Purpose`];
+    if (focus) button.focus();
+  }
+
   atlasData.sharedRunGrammar.forEach((phase, index) => {
     const item = document.createElement("li");
     const button = document.createElement("button");
-    const localized = phase.copy[language];
     button.type = "button";
     button.dataset.stage = phase.id;
-    button.setAttribute("aria-pressed", index === 0 ? "true" : "false");
-    button.innerHTML = `<b>${phaseCopy[phase.id].code}</b><span>${localized.label}</span>`;
-    button.addEventListener("click", () => {
-      list.querySelectorAll("button").forEach((entry) => entry.setAttribute("aria-pressed", "false"));
-      button.setAttribute("aria-pressed", "true");
-      document.querySelector("[data-stage-code]").textContent = phaseCopy[phase.id].code;
-      document.querySelector("[data-stage-copy]").textContent =
-        language === "ru" ? phaseCopy[phase.id].ru : localized.purpose;
+    button.setAttribute("aria-controls", "stage-readout");
+    button.innerHTML = `
+      <b aria-hidden="true">${phaseCopy[phase.id].code}</b>
+      <span>${phaseCopy[phase.id][language]}</span>
+    `;
+    button.addEventListener("click", () => selectStage(index));
+    button.addEventListener("keydown", (event) => {
+      const keyTargets = {
+        ArrowLeft: (index - 1 + buttons.length) % buttons.length,
+        ArrowUp: (index - 1 + buttons.length) % buttons.length,
+        ArrowRight: (index + 1) % buttons.length,
+        ArrowDown: (index + 1) % buttons.length,
+        Home: 0,
+        End: buttons.length - 1,
+      };
+      if (!(event.key in keyTargets)) return;
+      event.preventDefault();
+      selectStage(keyTargets[event.key], true);
     });
+    buttons.push(button);
     item.append(button);
     list.append(item);
   });
-  const first = atlasData.sharedRunGrammar[0];
-  document.querySelector("[data-stage-code]").textContent = phaseCopy[first.id].code;
-  document.querySelector("[data-stage-copy]").textContent =
-    language === "ru" ? phaseCopy[first.id].ru : first.copy.en.purpose;
+  const selectedIndex = Math.max(
+    atlasData.sharedRunGrammar.findIndex((phase) => phase.id === selectedStage),
+    0,
+  );
+  selectStage(selectedIndex);
 }
 
 function renderReading() {
@@ -320,6 +367,7 @@ function renderBreadcrumbs(loop) {
   }
   const breadcrumbs = document.querySelector("[data-atlas-breadcrumbs]");
   const history = document.querySelector("[data-atlas-history]");
+  const upLink = document.querySelector("[data-atlas-up]");
   breadcrumbs.innerHTML = "";
   history.innerHTML = "";
   path.forEach((entry, index) => {
@@ -346,6 +394,19 @@ function renderBreadcrumbs(loop) {
     item.append(historyLink);
     history.append(item);
   });
+  const parent = loop.parentId ? atlasLoop(loop.parentId) : null;
+  upLink.hidden = !parent;
+  if (parent) {
+    upLink.href = `#atlas/${encodeURIComponent(parent.id)}`;
+    upLink.querySelector("span:last-child").textContent = text("back");
+    upLink.setAttribute(
+      "aria-label",
+      `${text("back")}: ${loopCopy(parent).label}`,
+    );
+  } else {
+    upLink.removeAttribute("href");
+    upLink.removeAttribute("aria-label");
+  }
 }
 
 function renderInspector(loop) {
@@ -587,47 +648,6 @@ function appendGraphNode(
   svg.append(group);
 }
 
-function appendContextConstellation(svg, loop, selected, x, y) {
-  const constellation = svgElement("g", { class: "parent-constellation" });
-  const context = loop.parentId ? atlasLoop(loop.parentId) : loop;
-  const items = context.children.map(atlasLoop);
-
-  items.forEach((item, index) => {
-    const count = Math.max(items.length, 1);
-    const radius = items.length > 8 && index % 2 ? 190 : 148;
-    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
-    const nodeX = x + Math.cos(angle) * radius;
-    const nodeY = y + Math.sin(angle) * radius * 0.88;
-    constellation.append(svgElement("line", {
-      class: item.id === selected.id ? "context-thread is-active" : "context-thread",
-      x1: x,
-      y1: y,
-      x2: nodeX,
-      y2: nodeY,
-    }));
-    appendGraphNode(
-      constellation,
-      item,
-      nodeX,
-      nodeY,
-      item.id === selected.id ? 26 : 20,
-      false,
-      0,
-      0,
-      "context",
-    );
-  });
-  appendGraphNode(
-    constellation,
-    context,
-    x,
-    y,
-    50,
-    Boolean(loop.parentId && context.id === selected.id),
-  );
-  svg.append(constellation);
-}
-
 function renderGraph(loop) {
   const svg = document.querySelector("[data-atlas-graph]");
   const stage = document.querySelector("[data-atlas-stage]");
@@ -650,6 +670,7 @@ function renderGraph(loop) {
     stage.style.removeProperty("--atlas-compact-height");
   }
   appendGraphDefs(svg);
+  const level = svgElement("g", { class: "level-constellation" });
 
   const previous = previousLoopId ? atlasLoop(previousLoopId) : null;
   let motion = "none";
@@ -664,31 +685,8 @@ function renderGraph(loop) {
     });
   }
 
-  const centerX = compact ? 195 : 1060;
+  const centerX = compact ? 195 : 720;
   const centerY = compact ? 155 : 450;
-  if (!compact) {
-    appendContextConstellation(svg, loop, loop, 260, centerY);
-    svg.append(svgElement("path", {
-      class: "level-thread",
-      d: `M 480 ${centerY} C 610 ${centerY}, 760 ${centerY}, ${centerX - 112} ${centerY}`,
-    }));
-    [0.18, 0.36, 0.56, 0.76].forEach((progress) => {
-      svg.append(svgElement("circle", {
-        class: "level-thread-marker",
-        cx: 480 + (centerX - 112 - 480) * progress,
-        cy: centerY,
-        r: progress === 0.56 ? 7 : 3,
-      }));
-    });
-    const arrow = svgElement("text", {
-      class: "level-thread-arrow",
-      x: 745,
-      y: centerY + 7,
-      "text-anchor": "middle",
-    });
-    arrow.textContent = "▶";
-    svg.append(arrow);
-  }
 
   const positions = children.map((child, index) => {
     if (compact) {
@@ -700,30 +698,36 @@ function renderGraph(loop) {
       };
     }
     const count = Math.max(children.length, 1);
-    const ring = children.length > 8 && index % 2 ? 272 : 218;
+    const ringX = children.length > 8 ? 470 : 370;
+    const ringY = children.length > 8 ? 300 : 270;
     const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
     return {
       child,
       index,
-      x: centerX + Math.cos(angle) * ring,
-      y: centerY + Math.sin(angle) * ring * 0.9,
+      x: centerX + Math.cos(angle) * ringX,
+      y: centerY + Math.sin(angle) * ringY,
     };
   });
 
   positions.forEach(({ x, y }) => {
     const startY = compact ? centerY + 63 : centerY;
     const endY = compact ? y - 46 : y;
-    svg.append(svgElement("path", {
+    level.append(svgElement("path", {
       class: "graph-link",
       d: `M ${centerX} ${startY} C ${centerX} ${(startY + endY) / 2}, ${x} ${(startY + endY) / 2}, ${x} ${endY}`,
     }));
     const dotX = centerX + (x - centerX) * 0.56;
     const dotY = startY + (endY - startY) * 0.56;
-    svg.append(svgElement("circle", { class: "graph-link-dot", cx: dotX, cy: dotY, r: 3 }));
+    level.append(svgElement("circle", {
+      class: "graph-link-dot",
+      cx: dotX,
+      cy: dotY,
+      r: 3,
+    }));
   });
 
   positions.forEach(({ child, index, x, y }) => appendGraphNode(
-    svg,
+    level,
     child,
     x,
     y,
@@ -734,7 +738,7 @@ function renderGraph(loop) {
     compact ? "compact" : "default",
   ));
   appendGraphNode(
-    svg,
+    level,
     loop,
     centerX,
     centerY,
@@ -744,6 +748,7 @@ function renderGraph(loop) {
     0,
     compact ? "compact-current" : "default",
   );
+  svg.append(level);
   previousLoopId = loop.id;
 }
 
@@ -850,14 +855,24 @@ let lastRoutedView = null;
 function route() {
   const next = currentRoute();
   const atlasNavigationHadFocus = document.activeElement?.matches(
-    ".graph-node, .atlas-back, .atlas-history a, .atlas-breadcrumbs a",
+    ".graph-node, .atlas-up, .atlas-history a, .atlas-breadcrumbs a",
   );
+  if (next.view === "atlas" && !next.detail && atlasData) {
+    next.detail = atlasData.binding.rootLoopIds[0];
+    const url = new URL(location.href);
+    url.hash = `atlas/${encodeURIComponent(next.detail)}`;
+    history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+  }
   const restoreAtlasFocus =
     next.view === "atlas" &&
     lastRoutedView === "atlas" &&
     atlasNavigationHadFocus;
   setView(next.view);
   if (next.view === "atlas") {
+    const requestedLoopId = next.detail || atlasData?.binding.rootLoopIds[0];
+    if (requestedLoopId && requestedLoopId !== selectedLoopId) {
+      inspectorRequested = false;
+    }
     selectedLoopId = next.detail;
     renderAtlas();
     if (restoreAtlasFocus) {
@@ -875,7 +890,6 @@ function route() {
   } else {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }
-  renderSystemRail(next);
   lastRoutedView = next.view;
   requestAnimationFrame(observeReveals);
 }
@@ -896,8 +910,14 @@ document.querySelector("[data-atlas-graph]").addEventListener("click", (event) =
   const node = event.target.closest(".graph-node");
   if (!node) return;
   inspectorTrigger = node;
-  inspectorRequested = true;
-  requestAnimationFrame(() => setInspectorOpen(true));
+  if (node.classList.contains("is-current")) {
+    event.preventDefault();
+    inspectorRequested = true;
+    requestAnimationFrame(() => setInspectorOpen(true));
+  } else {
+    inspectorRequested = false;
+    setInspectorOpen(false);
+  }
 });
 
 document.querySelector("[data-atlas-inspector-scrim]").addEventListener("click", () => {
