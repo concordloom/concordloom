@@ -23,7 +23,7 @@ body[data-design-system="patch-panel"] {
   top: 0;
   z-index: 100;
   display: grid;
-  grid-template-columns: minmax(190px, 0.7fr) minmax(390px, 1.35fr) minmax(360px, 1fr) 64px;
+  grid-template-columns: minmax(210px, 0.7fr) minmax(390px, 1.6fr) 64px;
   min-height: var(--cl-header);
   padding-top: env(safe-area-inset-top);
   border-bottom: 1px solid var(--line-quiet);
@@ -497,16 +497,23 @@ html[lang="ru"] .hero-machine::before {
 .grammar-stage > ol {
   display: grid;
   grid-template-columns: repeat(4, minmax(120px, 1fr));
+  grid-auto-rows: 96px;
   gap: var(--cl-space-3);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+.grammar-stage > ol > li {
+  display: flex;
+  min-width: 0;
+}
+
 .grammar-stage button {
   display: grid;
   width: 100%;
-  min-height: 88px;
+  height: 100%;
+  min-height: 0;
   padding: var(--cl-space-3);
   gap: var(--cl-space-2);
   align-content: space-between;
@@ -543,7 +550,7 @@ html[lang="ru"] .hero-machine::before {
 
 .stage-readout {
   display: grid;
-  min-height: 188px;
+  min-height: 13.75rem;
   padding: var(--cl-space-5);
   border: 1px solid var(--line-strong);
   border-radius: var(--cl-radius-md);
@@ -1032,7 +1039,37 @@ html[lang="ru"] .hero-machine::before {
   display: flex;
   justify-content: space-between;
   gap: var(--cl-space-4);
-  pointer-events: none;
+}
+
+.atlas-map-head > div {
+  display: grid;
+  gap: var(--cl-space-2);
+}
+
+.atlas-map-head p {
+  margin: 0;
+}
+
+.atlas-up {
+  display: inline-flex;
+  width: fit-content;
+  min-height: var(--control-min-size);
+  padding: 0 var(--cl-space-3);
+  gap: var(--cl-space-2);
+  align-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--cl-radius-sm);
+  background: var(--surface-panel);
+  color: var(--text-secondary);
+  font-size: var(--cl-type-xs);
+  font-weight: var(--cl-weight-semibold);
+  text-decoration: none;
+}
+
+.atlas-up:hover,
+.atlas-up:focus-visible {
+  border-color: var(--signal);
+  color: var(--text-primary);
 }
 
 .atlas-map-head > p:last-child {
@@ -1052,9 +1089,12 @@ html[lang="ru"] .hero-machine::before {
   min-height: 680px;
 }
 
-.graph-link,
-.context-thread,
-.level-thread {
+.level-constellation {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.graph-link {
   fill: none;
   stroke: var(--atlas-thread-rest);
   stroke-linecap: round;
@@ -1065,26 +1105,8 @@ html[lang="ru"] .hero-machine::before {
   stroke-width: 1.5;
 }
 
-.context-thread {
-  stroke-width: 1;
-  opacity: 0.55;
-}
-
-.context-thread.is-active,
-.level-thread {
-  stroke: var(--atlas-thread-active);
-  stroke-width: 2;
-  opacity: 1;
-}
-
-.graph-link-dot,
-.level-thread-marker {
+.graph-link-dot {
   fill: var(--line-strong);
-}
-
-.level-thread-marker,
-.level-thread-arrow {
-  fill: var(--signal);
 }
 
 .node-shadow,
@@ -1563,38 +1585,36 @@ html[lang="ru"] .hero-machine::before {
 /* Level change */
 
 @media (prefers-reduced-motion: no-preference) {
-  .atlas-stage[data-motion="forward"] .parent-constellation {
-    animation: patch-context-forward var(--cl-duration-level) var(--cl-ease-move);
+  .atlas-stage[data-motion="forward"] .level-constellation {
+    animation: patch-level-forward var(--cl-duration-level) var(--cl-ease-move);
   }
 
-  .atlas-stage[data-motion="forward"] .graph-node.is-current,
-  .atlas-stage[data-motion="side"] .graph-node.is-current {
-    animation: patch-module-in var(--cl-duration-level) var(--cl-ease-enter);
+  .atlas-stage[data-motion="back"] .level-constellation {
+    animation: patch-level-back var(--cl-duration-level) var(--cl-ease-move);
   }
 
-  .atlas-stage[data-motion="back"] .parent-constellation {
-    animation: patch-context-back var(--cl-duration-level) var(--cl-ease-move);
+  .atlas-stage[data-motion="side"] .level-constellation {
+    animation: patch-level-side var(--cl-duration-ui) var(--cl-ease-enter);
   }
 }
 
-@keyframes patch-context-forward {
+@keyframes patch-level-forward {
   from {
     opacity: 0.25;
-    transform: translateX(-28px);
+    transform: translateX(28px) scale(0.985);
   }
 }
 
-@keyframes patch-context-back {
+@keyframes patch-level-back {
   from {
     opacity: 0.25;
-    transform: translateX(28px);
+    transform: translateX(-28px) scale(0.985);
   }
 }
 
-@keyframes patch-module-in {
+@keyframes patch-level-side {
   from {
-    opacity: 0.2;
-    transform: scale(0.94);
+    opacity: 0.25;
   }
 }
 
@@ -1602,19 +1622,11 @@ html[lang="ru"] .hero-machine::before {
 
 @media (max-width: 1260px) {
   .site-header {
-    grid-template-columns: 190px minmax(350px, 1fr) minmax(300px, 0.95fr) 60px;
+    grid-template-columns: 190px minmax(350px, 1fr) 60px;
   }
 
   .brand {
     padding-inline: var(--cl-space-4);
-  }
-
-  .system-rail {
-    padding-inline: var(--cl-space-2);
-  }
-
-  .system-rail li {
-    font-size: 0.61rem;
   }
 
   .hero {
@@ -1643,10 +1655,6 @@ html[lang="ru"] .hero-machine::before {
 
   .view-tabs {
     border-right: 0;
-  }
-
-  .system-rail {
-    display: none;
   }
 
   .hero {
@@ -1821,7 +1829,18 @@ html[lang="ru"] .hero-machine::before {
   }
 
   .grammar-stage > ol {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: none;
+    grid-auto-columns: minmax(168px, 72vw);
+    grid-auto-flow: column;
+    grid-auto-rows: 96px;
+    padding-bottom: var(--cl-space-2);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+  }
+
+  .grammar-stage > ol > li {
+    scroll-snap-align: start;
   }
 
   .evolution {
@@ -1986,10 +2005,6 @@ html[lang="ru"] .hero-machine::before {
       52px 0 0 -3px var(--signal),
       156px 0 0 -3px var(--signal),
       208px 0 0 -3px var(--signal);
-  }
-
-  .grammar-stage button {
-    min-height: 76px;
   }
 
   .atlas-commandbar p {

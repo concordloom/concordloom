@@ -21,12 +21,13 @@ for (const language of ["en", "ru"]) {
     await child.click();
     await expect(page).toHaveURL(new RegExp(`#atlas/${childId}$`));
     await expect(page.locator(".graph-node.is-current")).toBeFocused();
-    await expect(page.locator("[data-atlas-inspector]")).toBeVisible();
-    await expect(page.locator(".atlas-history li")).toHaveCount(2);
-    await page.keyboard.press("Escape");
     await expect(page.locator("[data-atlas-inspector]")).toBeHidden();
-    await expect(page.locator(".graph-node.is-current")).toBeFocused();
-    await page.locator(".atlas-breadcrumbs a").first().click();
+    await expect(page.locator(".atlas-history li")).toHaveCount(2);
+    await expect(page.locator("[data-atlas-up]")).toBeVisible();
+    await page.locator(".graph-node.is-current").click();
+    await expect(page.locator("[data-atlas-inspector]")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await page.locator("[data-atlas-up]").click();
     await expect(page).toHaveURL(new RegExp(`#atlas/${rootId}$`));
     await expect(page.locator(".graph-node.is-current")).toBeFocused();
   });
@@ -39,6 +40,9 @@ for (const language of ["en", "ru"]) {
     await expect(child).toBeFocused();
     await page.keyboard.press("Enter");
     await expect(page).toHaveURL(new RegExp(`#atlas/${childId}$`));
+    await expect(page.locator("[data-atlas-inspector]")).toBeHidden();
+    await expect(page.locator(".graph-node.is-current")).toBeFocused();
+    await page.keyboard.press("Enter");
     await expect(page.locator("[data-atlas-inspector]")).toBeVisible();
     await expect(page.locator("[data-atlas-inspector]")).toContainText(
       language === "ru" ? /[А-Яа-яЁё]/ : /[A-Za-z]/,
@@ -74,4 +78,42 @@ test("Atlas exposes selected state and a useful accessible name", async ({ page 
   await expect(current).toHaveAttribute("aria-label", /.+/);
   const child = page.locator(".graph-node:not(.is-current)").first();
   await expect(child).toHaveAttribute("aria-label", /Contained cycles|No contained cycles/);
+});
+
+test("Atlas renders one unique graph for the selected level", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await openView(page, "atlas", "ru");
+  for (let depth = 0; depth < 2; depth += 1) {
+    const graph = await page.locator("[data-atlas-graph]").evaluate((element) => {
+      const ids = [...element.querySelectorAll("[data-loop-id]")]
+        .map((node) => node.getAttribute("data-loop-id"));
+      return {
+        ids,
+        levels: element.querySelectorAll(".level-constellation").length,
+        legacyContext: element.querySelectorAll(
+          ".parent-constellation, .level-thread, .level-thread-arrow",
+        ).length,
+      };
+    });
+    expect(new Set(graph.ids).size).toBe(graph.ids.length);
+    expect(graph.levels).toBe(1);
+    expect(graph.legacyContext).toBe(0);
+    if (depth === 0) {
+      await page.locator(".graph-node:not(.is-current)").first().click();
+      await expect(page.locator("[data-atlas-inspector]")).toBeHidden();
+    }
+  }
+});
+
+test("browser Back restores the parent graph without opening details", async ({ page }) => {
+  await openView(page, "atlas", "en");
+  const rootId = await page.locator(".graph-node.is-current").getAttribute("data-loop-id");
+  await page.locator(".graph-node:not(.is-current)").first().click();
+  await page.goBack();
+  await expect(page).toHaveURL(new RegExp(`#atlas/${rootId}$`));
+  await expect(page.locator(".graph-node.is-current")).toHaveAttribute(
+    "data-loop-id",
+    rootId,
+  );
+  await expect(page.locator("[data-atlas-inspector]")).toBeHidden();
 });

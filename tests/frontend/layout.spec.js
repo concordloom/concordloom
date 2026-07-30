@@ -21,7 +21,7 @@ test("header regions never overlap", async ({ page }, testInfo) => {
   const mobile = testInfo.project.name.includes("mobile");
   const selector = mobile
     ? ".site-header > .brand, .site-header > .menu-switch, .site-header > .header-actions"
-    : ".site-header > .brand, .site-header > .view-tabs, .site-header > .system-rail, .site-header > .header-actions";
+    : ".site-header > .brand, .site-header > .view-tabs, .site-header > .header-actions";
   await expectNoPairwiseOverlap(page.locator(selector), 2);
 });
 
@@ -122,4 +122,37 @@ test("mobile Atlas labels retain a readable rendered scale", async ({ page }) =>
     ).toEqual([]);
     await expectNoHorizontalOverflow(page);
   }
+});
+
+test("all seven run-stage controls keep equal geometry", async ({ page }) => {
+  for (const language of ["en", "ru"]) {
+    for (const width of [360, 390, 1440, 1920]) {
+      await page.setViewportSize({ width, height: width < 800 ? 844 : 1000 });
+      await openView(page, "concept", language);
+      const heights = await page.locator("[data-run-grammar] button").evaluateAll(
+        (elements) => elements.map((element) => element.getBoundingClientRect().height),
+      );
+      expect(heights).toHaveLength(7);
+      expect(
+        Math.max(...heights) - Math.min(...heights),
+        `${language} stage controls differ at ${width}px: ${heights.join(", ")}`,
+      ).toBeLessThanOrEqual(1);
+    }
+  }
+});
+
+test("run-stage keyboard selection does not resize the explanation", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await openView(page, "concept", "ru");
+  const controls = page.locator("[data-run-grammar] button");
+  await controls.first().focus();
+  const heights = [];
+  for (let index = 0; index < 7; index += 1) {
+    heights.push(await page.locator(".stage-readout").evaluate(
+      (element) => element.getBoundingClientRect().height,
+    ));
+    if (index < 6) await page.keyboard.press("ArrowRight");
+  }
+  await expect(controls.last()).toHaveAttribute("aria-pressed", "true");
+  expect(Math.max(...heights) - Math.min(...heights)).toBeLessThanOrEqual(1);
 });

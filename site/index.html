@@ -60,14 +60,6 @@
         <a class="view-tab" data-view-link="atlas" href="#atlas" data-en="Atlas" data-ru="Атлас">Atlas</a>
         <a class="view-tab" data-view-link="docs" href="#docs" data-en="Docs" data-ru="Документы">Docs</a>
       </nav>
-      <ol class="system-rail" aria-label="Change lifecycle"
-        data-en-aria-label="Change lifecycle" data-ru-aria-label="Цикл изменений">
-        <li data-system-stage="map"><span data-en="Map" data-ru="Карта">Map</span></li>
-        <li data-system-stage="build"><span data-en="Build" data-ru="Сборка">Build</span></li>
-        <li data-system-stage="verify"><span data-en="Verify" data-ru="Проверка">Verify</span></li>
-        <li data-system-stage="publish"><span data-en="Publish" data-ru="Публикация">Publish</span></li>
-        <li data-system-stage="evolve"><span data-en="Evolve" data-ru="Эволюция">Evolve</span></li>
-      </ol>
       <div class="header-actions">
         <button class="language-switch" type="button" aria-label="Switch language">
           <span data-lang-label>RU</span>
@@ -139,7 +131,7 @@
             <h2 data-en="Seven steps take work from evidence to improvement." data-ru="Семь шагов ведут от фактов к улучшению.">Seven steps take work from evidence to improvement.</h2>
             <div class="grammar-stage">
               <ol data-run-grammar></ol>
-              <div class="stage-readout" aria-live="polite">
+              <div class="stage-readout" id="stage-readout" aria-live="polite">
                 <span data-stage-code>O</span>
                 <p data-stage-copy>Collect attributable facts.</p>
               </div>
@@ -509,27 +501,34 @@ concordloom questions \
 
       <div class="view atlas-view" id="atlas" data-view="atlas">
         <h1 class="visually-hidden" data-en="Concord Loom Atlas" data-ru="Атлас Concord Loom">Concord Loom Atlas</h1>
-        <section class="atlas-commandbar" aria-label="Active development system"
-          data-en-aria-label="Active development system" data-ru-aria-label="Действующая система разработки">
+        <section class="atlas-commandbar" aria-label="Accepted development system"
+          data-en-aria-label="Accepted development system" data-ru-aria-label="Принятая система разработки">
           <p><span data-en="PRODUCT" data-ru="ПРОДУКТ">PRODUCT</span><strong data-product-release>0.1.0</strong></p>
           <p><span data-en="RULES" data-ru="ПРАВИЛА">RULES</span><strong data-atlas-binding data-en="Loading…" data-ru="Загрузка…">Loading…</strong></p>
-          <p><span data-en="ROOT" data-ru="КОРЕНЬ">ROOT</span><strong data-atlas-root data-en="Loading…" data-ru="Загрузка…">Loading…</strong></p>
+          <p><span data-en="MAIN CYCLE" data-ru="ГЛАВНЫЙ ЦИКЛ">MAIN CYCLE</span><strong data-atlas-root data-en="Loading…" data-ru="Загрузка…">Loading…</strong></p>
           <p><span data-en="CYCLES" data-ru="ЦИКЛЫ">CYCLES</span><strong data-atlas-count>0</strong></p>
-          <p class="atlas-live-state"><i aria-hidden="true"></i><strong data-en="LIVE PROJECTION" data-ru="ЖИВАЯ ПРОЕКЦИЯ">LIVE PROJECTION</strong></p>
+          <p class="atlas-live-state"><i aria-hidden="true"></i><strong data-en="ACCEPTED MAP" data-ru="ПРИНЯТАЯ КАРТА">ACCEPTED MAP</strong></p>
         </section>
 
         <section class="atlas-workbench">
           <nav class="atlas-breadcrumbs" data-atlas-breadcrumbs aria-label="Cycle path"
             data-en-aria-label="Cycle path" data-ru-aria-label="Путь по циклам"></nav>
           <div class="atlas-console">
-            <aside class="atlas-history" aria-label="Navigation history"
-              data-en-aria-label="Navigation history" data-ru-aria-label="История переходов">
+            <aside class="atlas-history" aria-label="Path to selected cycle"
+              data-en-aria-label="Path to selected cycle" data-ru-aria-label="Путь к выбранному циклу">
               <p class="instrument-label" data-en="PATH" data-ru="ПУТЬ">PATH</p>
               <ol data-atlas-history></ol>
             </aside>
             <div class="atlas-stage" data-atlas-stage>
               <div class="atlas-map-head">
-                <p class="instrument-label" data-en="ACTIVE LEVEL" data-ru="ТЕКУЩИЙ УРОВЕНЬ">ACTIVE LEVEL</p>
+                <div>
+                  <p class="instrument-label" data-en="INSIDE SELECTED CYCLE"
+                    data-ru="ЧТО ВХОДИТ В ВЫБРАННЫЙ ЦИКЛ">INSIDE SELECTED CYCLE</p>
+                  <a class="atlas-up" data-atlas-up href="#atlas" hidden>
+                    <span aria-hidden="true">←</span>
+                    <span data-en="Up one level" data-ru="На уровень выше">Up one level</span>
+                  </a>
+                </div>
                 <p data-atlas-provenance></p>
               </div>
               <svg class="atlas-graph" data-atlas-graph viewBox="0 0 1440 900"
