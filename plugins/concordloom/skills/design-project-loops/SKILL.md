@@ -46,6 +46,30 @@ policy explicitly defines a default presentation language. If the requested
 language is not supported by the Atlas renderer, explain that limitation and
 ask the operator to choose `en` or `ru` for generated Atlas output.
 
+### Russian editorial dependency
+
+When `communication_locale=ru`, load the companion `ru-text` skill before the
+first Russian operator-facing message. Use the pinned upstream release
+`talkstream/ru-text@v1.10.1`.
+
+- Apply its typography rules to every Russian message.
+- Apply `ux-writing.md`, `anti-patterns.md`, and `addenda.md` to onboarding,
+  Atlas copy, errors, hints, buttons, and generated summaries.
+- Apply `info-style.md`, `anti-patterns.md`, and `addenda.md` to documentation
+  and long explanations.
+- Use `scoring.md` for the final contextual review of public Russian prose.
+- Keep exact commands, paths, JSON keys, schema values, loop IDs, model IDs,
+  digests, and evidence spellings in code formatting.
+
+If `ru-text` is unavailable, explain that Russian editorial quality depends on
+an external skill and ask before installing the exact pinned release. Never
+download or install it silently. Until it is available, do not claim that the
+Russian editorial gate passed.
+
+For governed model-assisted work, declare `ru-text@v1.10.1` in the planned and
+effective skill route whenever Russian human-facing text is produced or
+reviewed. A surface linter does not replace the contextual editorial review.
+
 ## Speak plainly and keep the conversation moving
 
 Write for an operator who has never seen Concord Loom. Lead with the practical
@@ -83,6 +107,8 @@ Before sending any operator-facing message, apply the comprehension gate in
 [Russian peer](references/operator-conversation.ru.md), according to the
 chosen language. This gate applies to installation, discovery, negotiation,
 design, activation, Atlas, execution, failures, completion, and evolution.
+For Russian, apply the `ru-text` register rules after this comprehension gate
+and before sending the message.
 Do not paste CLI JSON or technical reference prose into the conversation.
 Translate its meaning, then offer technical details only on request.
 

@@ -8,7 +8,7 @@ const {
 } = require("./support/site");
 
 for (const language of ["en", "ru"]) {
-  for (const view of ["concept", "quickstart", "atlas", "docs"]) {
+  for (const view of ["concept", "theory", "quickstart", "atlas", "docs"]) {
     test(`${language} ${view} has no horizontal overflow`, async ({ page }) => {
       await openView(page, view, language);
       await expectNoHorizontalOverflow(page);
@@ -55,51 +55,26 @@ test("primary touch controls meet the minimum target size", async ({ page }, tes
   expect(undersized, "mobile controls must be at least 44 × 44 CSS pixels").toEqual([]);
 });
 
-test("accepted desktop Atlas geometry is enforced at 1440 × 900", async ({ page }) => {
+test("accepted desktop Atlas remains a graph-first Patch Panel", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await openView(page, "atlas", "ru", "system-evolution");
   const geometry = await page.evaluate(() => {
     const rect = (selector) => document.querySelector(selector).getBoundingClientRect();
     const graph = rect(".atlas-stage");
-    const inspector = document.querySelector(".atlas-inspector");
-    const path = rect(".atlas-history");
     return {
-      chromeBottom: graph.top,
-      documentHeight: document.documentElement.scrollHeight,
-      graphHeightRatio: graph.height / (innerHeight - graph.top),
+      graphHeightRatio: graph.height / innerHeight,
       graphRatio: graph.width / innerWidth,
-      historyVisible: getComputedStyle(document.querySelector(".atlas-history")).display !== "none",
-      inspectorVisible: getComputedStyle(inspector).visibility !== "hidden",
-      inspectorRatio: inspector.getBoundingClientRect().width / innerWidth,
-      inspectorOverflow: inspector.scrollWidth - inspector.clientWidth,
       stageBackgroundImage: getComputedStyle(document.querySelector(".atlas-stage")).backgroundImage,
-      pathRatio: path.width / innerWidth,
-      pathWidth: path.width,
-      constellationCount:
-        Number(document.querySelectorAll(".parent-constellation").length > 0)
-        + Number(document.querySelectorAll(".graph-node.is-current").length > 0),
+      currentCount: document.querySelectorAll(".graph-node.is-current").length,
       nodeCount: document.querySelectorAll(".node-assembly").length,
-      bridge: Boolean(document.querySelector(".level-thread")),
-      inspectorDial: Boolean(document.querySelector(".inspector-dial img")),
     };
   });
-  expect(geometry.chromeBottom / 900).toBeLessThanOrEqual(0.14);
-  expect(geometry.documentHeight).toBeLessThanOrEqual(902);
-  expect(geometry.graphHeightRatio).toBeGreaterThanOrEqual(0.98);
-  expect(geometry.graphRatio).toBeGreaterThanOrEqual(0.99);
-  expect(geometry.historyVisible).toBe(false);
-  expect(geometry.inspectorVisible).toBe(false);
-  expect(geometry.inspectorRatio).toBeGreaterThanOrEqual(0.18);
-  expect(geometry.inspectorRatio).toBeLessThanOrEqual(0.24);
-  expect(geometry.inspectorOverflow).toBeLessThanOrEqual(1);
-  expect(geometry.pathRatio).toBeLessThanOrEqual(0.1);
-  expect(geometry.pathWidth).toBeLessThanOrEqual(160);
-  expect(geometry.stageBackgroundImage).not.toContain("url(");
-  expect(geometry.constellationCount).toBe(2);
+  expect(geometry.graphHeightRatio).toBeGreaterThanOrEqual(0.6);
+  expect(geometry.graphRatio).toBeGreaterThanOrEqual(0.62);
+  expect(geometry.stageBackgroundImage).toBe("none");
+  expect(geometry.currentCount).toBe(1);
   await expect(page.locator(".context-ring, .graph-ring")).toHaveCount(0);
-  expect(geometry.nodeCount).toBeGreaterThanOrEqual(14);
-  expect(geometry.bridge).toBe(true);
-  expect(geometry.inspectorDial).toBe(true);
+  expect(geometry.nodeCount).toBeGreaterThanOrEqual(5);
   await page.locator(".graph-node.is-current").click();
   await expect(page.locator("[data-atlas-inspector]")).toBeVisible();
   await expect(page.locator(".atlas-back")).toBeVisible();
@@ -123,11 +98,28 @@ test("Atlas remains graph-first at the 200 percent reflow equivalent", async ({ 
   expect(visibleRatio).toBeGreaterThanOrEqual(0.55);
 });
 
-test("mobile graph glyphs meet the readable-size contract", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await openView(page, "atlas", "ru", "system-evolution");
-  const heights = await page.locator(".node-glyph").evaluateAll((glyphs) =>
-    glyphs.map((glyph) => glyph.getBoundingClientRect().height),
-  );
-  expect(Math.min(...heights)).toBeGreaterThanOrEqual(12);
+test("mobile Atlas labels retain a readable rendered scale", async ({ page }) => {
+  for (const width of [360, 390]) {
+    await page.setViewportSize({ width, height: 844 });
+    await openView(page, "atlas", "ru", "system-evolution");
+    const labels = await page.locator(".graph-node:not(.is-current) .node-label").evaluateAll(
+      (elements) => elements.flatMap((element) => {
+        const matrix = element.getScreenCTM();
+        const scale = matrix ? Math.hypot(matrix.a, matrix.b) : 0;
+        const fontSize = Number.parseFloat(getComputedStyle(element).fontSize);
+        return [...element.querySelectorAll("tspan")].map((line) => ({
+          renderedFontSize: fontSize * scale,
+          renderedHeight: line.getBoundingClientRect().height,
+          text: line.textContent,
+        }));
+      }),
+    );
+    expect(labels.length).toBeGreaterThan(0);
+    expect(
+      labels.filter(({ renderedFontSize, renderedHeight }) =>
+        renderedFontSize < 12 || renderedHeight < 12),
+      `${width}px Atlas labels are visually undersized`,
+    ).toEqual([]);
+    await expectNoHorizontalOverflow(page);
+  }
 });

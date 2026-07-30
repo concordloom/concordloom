@@ -42,8 +42,8 @@ class SiteParser(HTMLParser):
                         f"{tag} has incomplete {en_key}/{ru_key} copy"
                     )
         if tag == "img":
-            if not values.get("alt"):
-                self.errors.append("img is missing non-empty alt text")
+            if "alt" not in values:
+                self.errors.append("img is missing alt text")
             if not values.get("width") or not values.get("height"):
                 self.errors.append("img is missing intrinsic width/height")
         for key in ("src", "href"):
@@ -61,6 +61,26 @@ def png_dimensions(path: Path) -> tuple[int, int]:
     if payload[:8] != b"\x89PNG\r\n\x1a\n":
         raise ValueError(f"{path} is not a PNG")
     return struct.unpack(">II", payload[16:24])
+
+
+def has_raw_font_stack(authored_css: str) -> bool:
+    return any(
+        "var(--" not in match.group(1)
+        for match in re.finditer(r"font-family:\s*([^;]+)", authored_css)
+    )
+
+
+def has_forbidden_patch_panel_background(authored_css: str) -> bool:
+    return (
+        "linear-gradient(" in authored_css
+        or "radial-gradient(" in authored_css
+        or re.search(
+            r"background(?:-image)?\s*:[^;{}]*url\(",
+            authored_css,
+            flags=re.IGNORECASE,
+        )
+        is not None
+    )
 
 
 def main() -> int:
@@ -88,22 +108,6 @@ def main() -> int:
         errors.append("site lacks reduced-motion handling")
     if "focus-visible" not in all_styles:
         errors.append("site lacks visible keyboard focus")
-    compact_styles = "".join(styles.split())
-    if (
-        "grid-template-columns:minmax(190px,1fr)minmax(0,760px)"
-        "minmax(190px,1fr)" not in compact_styles
-    ):
-        errors.append(
-            "wide reading layout must balance equal margins around the prose"
-        )
-    if 'html[lang="en"].heroh1em{margin-top:0.22em;}' not in compact_styles:
-        errors.append("English hero lines must clear descenders")
-    if (
-        ".stage-readout{display:grid;grid-template-rows:3.5remminmax(0,1fr);"
-        "gap:1.25rem;height:200px;" not in compact_styles
-        or ".stage-readoutp{max-width:26ch;margin:0;" not in compact_styles
-    ):
-        errors.append("phase readout must keep its code and copy on stable rows")
     if "localStorage" not in script or "document.documentElement.lang" not in script:
         errors.append("language preference or document language is not maintained")
     if '|| "en";' not in script or "navigator.languages" in script:
@@ -174,6 +178,7 @@ def main() -> int:
     for marker in (
         'href="design-system.css"',
         'href="design-tokens.css"',
+        'data-design-system="patch-panel"',
         'class="system-rail"',
         'class="atlas-commandbar"',
         "data-atlas-graph",
@@ -181,14 +186,18 @@ def main() -> int:
         'class="atlas-inspector"',
     ):
         if marker not in index.read_text(encoding="utf-8"):
-            errors.append(f"Signal Constellation surface is missing {marker}")
+            errors.append(f"Patch Panel surface is missing {marker}")
     for marker in (
-        "--cl-acid-500",
+        "--cl-navy-1000",
+        "--cl-mint-500",
         "--cl-font-display",
         "--cl-font-mono",
-        "--cl-type-display",
+        "--cl-type-title",
         "--cl-leading-reading",
         "--cl-measure-reading",
+        "--surface-page",
+        "--surface-panel",
+        "--surface-module",
         "--surface-void",
         "--type-display",
         "--panel-background",
@@ -198,8 +207,6 @@ def main() -> int:
         ".atlas-graph",
         ".atlas-history",
         ".atlas-inspector",
-        "signal-constellation-stage.png",
-        ".parent-constellation",
         '.atlas-stage[data-motion="forward"]',
         '.atlas-stage[data-motion="back"]',
         "prefers-reduced-motion",
@@ -216,10 +223,8 @@ def main() -> int:
     authored_css = styles + "\n" + design_styles
     if re.search(r"#[0-9a-fA-F]{3,8}\b|rgba?\(", authored_css):
         errors.append("authored CSS contains a raw color outside design-tokens.json")
-    for match in re.finditer(r"font-family:\\s*([^;]+)", authored_css):
-        if "var(--" not in match.group(1):
-            errors.append("authored CSS contains a raw font stack outside design tokens")
-            break
+    if has_raw_font_stack(authored_css):
+        errors.append("authored CSS contains a raw font stack outside design tokens")
     token_source = json.loads(
         (SITE / "design-tokens.json").read_text(encoding="utf-8")
     )
@@ -232,8 +237,10 @@ def main() -> int:
         errors.append("design token source lacks the four-level authority chain")
     if set(token_source.get("modes", {})) != {"compact", "high-contrast"}:
         errors.append("design token source lacks compact and high-contrast modes")
-    if token_source.get("version") != "2.0.0":
-        errors.append("Signal Constellation requires design-token contract 2.0.0")
+    if token_source.get("version") != "3.0.0":
+        errors.append("Patch Panel requires design-token contract 3.0.0")
+    if has_forbidden_patch_panel_background(authored_css):
+        errors.append("Patch Panel authored CSS contains forbidden background art or gradient")
     if 'window.addEventListener("scroll"' in script:
         errors.append("site must not run continuous JavaScript on scroll")
     if "offsetWidth" in script or "getBoundingClientRect" in script:
@@ -253,7 +260,17 @@ def main() -> int:
             encoding="utf-8"
         )
     )
-    active_entry = catalog["entries"][-1]
+    active_entry = next(
+        (
+            entry
+            for entry in catalog["entries"]
+            if entry["binding_digest"] == catalog["active_binding_digest"]
+        ),
+        None,
+    )
+    if active_entry is None:
+        errors.append("active binding digest has no catalog entry")
+        active_entry = catalog["entries"][-1]
     active_binding = json.loads(
         (ROOT / active_entry["path"]).read_text(encoding="utf-8")
     )
@@ -270,37 +287,43 @@ def main() -> int:
         for edge in active_registry["containment_graph"]["edges"]
         if edge["parent_loop_id"] == "design-site-experience"
     }
-    design_contract = (
-        (ROOT / "docs" / "DESIGN_SYSTEM.md").read_text(encoding="utf-8")
-        + (ROOT / "docs" / "ru" / "DESIGN_SYSTEM.md").read_text(encoding="utf-8")
-    )
-    for loop_id in {"design-site-experience", *frontend_cycle_ids}:
-        if design_contract.count(f"`{loop_id}`") != 2:
-            errors.append(
-                f"design-system cycle ownership is not bilingual for {loop_id}"
-            )
+    design_contracts = {
+        "en": (ROOT / "docs" / "DESIGN_SYSTEM.md").read_text(encoding="utf-8"),
+        "ru": (ROOT / "docs" / "ru" / "DESIGN_SYSTEM.md").read_text(
+            encoding="utf-8"
+        ),
+    }
+    for locale, design_contract in design_contracts.items():
+        for loop_id in {"design-site-experience", *frontend_cycle_ids}:
+            if design_contract.count(f"`{loop_id}`") != 1:
+                errors.append(
+                    "design-system cycle ownership must appear exactly once "
+                    f"in {locale} for {loop_id}"
+                )
 
     social = SITE / "assets" / "concordloom-social-preview.png"
     if png_dimensions(social) != (1280, 640):
         errors.append("social preview must be exactly 1280x640")
     if social.stat().st_size >= 1_000_000:
         errors.append("social preview must stay below GitHub's 1 MB upload limit")
-    reference = (
-        ROOT
-        / "design"
-        / "frontend"
-        / "reference"
-        / "signal-constellation-concept.png"
+    visual_contract = json.loads(
+        (ROOT / "design" / "frontend" / "visual-contract.json").read_text(
+            encoding="utf-8"
+        )
     )
-    if png_dimensions(reference) != (2410, 1334):
-        errors.append("accepted Signal Constellation concept must remain 2410x1334")
-    if hashlib.sha256(reference.read_bytes()).hexdigest() != (
-        "4226c0ac5a181d5f26f9e2270b8973c153e80949fc5de5537f223502df22a619"
+    if (
+        visual_contract.get("id") != "patch-panel-v1"
+        or visual_contract.get("status") != "accepted"
+        or visual_contract.get("reference", {}).get("variant") != 4
     ):
-        errors.append("accepted Signal Constellation concept bytes changed")
-    stage = SITE / "assets" / "signal-constellation-stage.png"
-    if png_dimensions(stage) != (1672, 941):
-        errors.append("Signal Constellation material stage must remain exactly 1672x941")
+        errors.append("Patch Panel visual contract is not the accepted variant 4")
+    for reference in visual_contract.get("reference", {}).get("files", []):
+        reference_path = ROOT / reference["path"]
+        if not reference_path.is_file():
+            errors.append(f"missing Patch Panel reference: {reference['path']}")
+            continue
+        if hashlib.sha256(reference_path.read_bytes()).hexdigest() != reference["sha256"]:
+            errors.append(f"Patch Panel reference bytes changed: {reference['path']}")
 
     atlas = json.loads((SITE / "data" / "atlas.json").read_text(encoding="utf-8"))
     loop_ids = {loop["id"] for loop in atlas["loops"]}

@@ -3,71 +3,112 @@
     "accessibility": {
       "axe_max_critical": 0,
       "axe_max_serious": 0,
-      "minimum_target_css_px": 44
+      "minimum_target_css_px": 44,
+      "reduced_motion_required": true,
+      "zoom_percent": 200
     },
-    "atlas_desktop": {
-      "atlas_canvas_mode": "fullscreen-instrument",
-      "background_image_allowed": false,
-      "desktop_history_column_visible": false,
+    "atlas": {
+      "child_nodes_remain_data_driven": true,
+      "current_cycle_is_unambiguous": true,
+      "details_open_on_demand": true,
       "graph_is_primary_surface": true,
-      "graph_min_viewport_width_ratio": 0.99,
-      "inspector_default_open": false,
-      "inspector_max_viewport_width_ratio": 0.24,
-      "inspector_min_viewport_width_ratio": 0.18,
-      "inspector_overlays_graph": true,
-      "maximum_orbit_rings_per_constellation": 0,
-      "minimum_constellations": 2,
-      "minimum_root_node_assemblies": 18,
-      "parent_min_graph_height_ratio": 0.32,
-      "path_max_css_px": 160,
-      "path_max_viewport_width_ratio": 0.1,
-      "requires_mechanical_inspector_dial": true,
-      "requires_signal_bridge": true,
-      "single_radial_chart_is_forbidden": true,
-      "top_chrome_max_viewport_height_ratio": 0.14
+      "history_survives_drilldown": true,
+      "no_background_art": true,
+      "one_selected_path": true,
+      "reloadable_deep_links": true
     },
     "layout": {
       "document_overflow_tolerance_css_px": 1,
       "maximum_unrequested_route_scroll_delta_css_px": 2,
-      "mobile_graph_first_viewport_min_ratio": 0.55,
-      "stack_breakpoint_css_px": 880
+      "reading_measure_max_ch": 75,
+      "reading_measure_min_ch": 65,
+      "stack_breakpoint_css_px": 820
     },
+    "routes": [
+      "concept",
+      "theory",
+      "quickstart",
+      "atlas",
+      "docs"
+    ],
     "viewports": [
       "360x800",
       "390x844",
       "768x1024",
       "1024x768",
       "1440x900",
-      "1920x1080",
-      "2048x1152"
+      "1920x1080"
     ]
   },
   "baseline_policy": {
-    "allowed_masks": [
-      "provenance-digest",
-      "live-led-halo-16px"
-    ],
     "ci_may_update": false,
     "owner": "accepted-visual-contract",
-    "path": "design/frontend/baselines"
+    "path": "design/frontend/baselines",
+    "visual_review_required": true
   },
-  "id": "signal-constellation-v1",
+  "design_direction": {
+    "accent": "friendly mint",
+    "forbidden": [
+      "background illustration behind content",
+      "decorative gradient",
+      "fantasy or RPG ornament",
+      "glowing neon interface",
+      "one-off Atlas styling",
+      "raw color outside token source",
+      "stone or blackened-metal simulation"
+    ],
+    "name": "Patch Panel",
+    "personality": [
+      "serious",
+      "friendly",
+      "modular",
+      "playful in interaction",
+      "startup devtool"
+    ],
+    "scope": "entire public site"
+  },
+  "id": "patch-panel-v1",
   "kind": "concordloom.visual-contract",
   "locales": [
     "en",
     "ru"
   ],
   "motion": {
-    "maximum_duration_ms": 650,
-    "minimum_duration_ms": 180,
+    "maximum_duration_ms": 420,
+    "minimum_duration_ms": 120,
+    "purpose": [
+      "show selection",
+      "preserve spatial context",
+      "confirm state changes"
+    ],
     "reduced_motion_is_immediate": true
   },
   "reference": {
-    "height": 1334,
-    "path": "design/frontend/reference/signal-constellation-concept.png",
-    "sha256": "4226c0ac5a181d5f26f9e2270b8973c153e80949fc5de5537f223502df22a619",
-    "width": 2410
+    "files": [
+      {
+        "path": "design/frontend/startup-atlas-concepts/playful/04-patch-panel/index.html",
+        "sha256": "235a83b39f9cbc5c20c666f8ff7b8908af5beaa9b537271f1dfe59d0cb4c1086"
+      },
+      {
+        "path": "design/frontend/startup-atlas-concepts/playful/04-patch-panel/style.css",
+        "sha256": "19ca1647ba369cede43ea2f25c4f75667748b017ba1e2ac415cc05aea9e9e621"
+      },
+      {
+        "path": "design/frontend/startup-atlas-concepts/shared/base.css",
+        "sha256": "d7d904a6b199c77ce612d65d991dc7b6ecb3b32eb4b4ed7464ff79658b214d83"
+      },
+      {
+        "path": "design/frontend/startup-atlas-concepts/shared/engine.js",
+        "sha256": "5fe309061a5383f74124c4a37086e9226dfb348e50b75b5370b4f4f1ca6344b3"
+      },
+      {
+        "path": "design/frontend/startup-atlas-concepts/shared/data.js",
+        "sha256": "86efc61145d7181f5277258d58e9eadc7cdc1af30c486a45d4c08c62cd4a6f0b"
+      }
+    ],
+    "type": "interactive-html-concept",
+    "variant": 4
   },
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "status": "accepted"
 }

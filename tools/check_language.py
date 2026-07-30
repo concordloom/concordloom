@@ -121,12 +121,11 @@ def main() -> int:
         )
     else:
         revision = revision_match.group(1)
+        # The Atlas reference documents its active rules revision. The
+        # beginner journey deliberately does not expose or pin that internal
+        # implementation detail.
         version_markers = {
-            ROOT / "docs" / "QUICKSTART.md": f"Development rules: revision {revision}",
             ROOT / "docs" / "ATLAS.md": f"Development rules: revision {revision}",
-            ROOT / "docs" / "ru" / "QUICKSTART.md": (
-                f"Правила разработки: редакция {revision}"
-            ),
             ROOT / "docs" / "ru" / "ATLAS.md": (
                 f"Правила разработки: редакция {revision}"
             ),

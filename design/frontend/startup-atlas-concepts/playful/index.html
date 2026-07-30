@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta
+      name="description"
+      content="Пять живых продуктовых направлений для Concord Loom Atlas."
+    >
+    <meta name="theme-color" content="#eef1ff">
+    <title>Atlas: живой раунд | Concord Loom</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="gallery.css">
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="hero-nav" aria-label="Навигация">
+        <a class="brand" href="../../../../site/">CONCORD LOOM</a>
+        <a class="previous" href="../">Строгий раунд</a>
+      </nav>
+
+      <div class="hero-copy">
+        <p class="issue">АТЛАС / РАУНД 02</p>
+        <h1>Ещё пять.<br>Теперь живее.</h1>
+        <p class="lead">
+          Ни фэнтези, ни корпоративного реестра. Пять рабочих карт с характером.
+        </p>
+      </div>
+
+      <aside class="note" aria-label="Как сравнивать варианты">
+        <span class="note-dot" aria-hidden="true"></span>
+        <strong>Данные настоящие.</strong>
+        <span>Открывайте циклы, меняйте версии, уменьшайте окно.</span>
+      </aside>
+    </header>
+
+    <main class="directions" aria-label="Пять вариантов Atlas">
+      <a class="direction signal" href="01-signal-cards/">
+        <span class="number">01</span>
+        <span class="marker" aria-hidden="true"></span>
+        <strong>Signal Cards</strong>
+        <span class="thesis">Прямые карточки. Быстрый фокус. Ничего лишнего.</span>
+        <span class="open">Посмотреть</span>
+      </a>
+
+      <a class="direction paper" href="02-paper-trail/">
+        <span class="number">02</span>
+        <span class="marker" aria-hidden="true"></span>
+        <strong>Paper Trail</strong>
+        <span class="thesis">Тёплая лента, по которой легко идти вглубь.</span>
+        <span class="open">Посмотреть</span>
+      </a>
+
+      <a class="direction orbit" href="03-soft-orbit/">
+        <span class="number">03</span>
+        <span class="marker" aria-hidden="true"></span>
+        <strong>Soft Orbit</strong>
+        <span class="thesis">Мягкая геометрия вокруг того, что важно сейчас.</span>
+        <span class="open">Посмотреть</span>
+      </a>
+
+      <a class="direction patch" href="04-patch-panel/">
+        <span class="number">04</span>
+        <span class="marker" aria-hidden="true"></span>
+        <strong>Patch Panel</strong>
+        <span class="thesis">Тёмное рабочее поле с дружелюбным ритмом.</span>
+        <span class="open">Посмотреть</span>
+      </a>
+
+      <a class="direction odd" href="05-odd-grid/">
+        <span class="number">05</span>
+        <span class="marker" aria-hidden="true"></span>
+        <strong>Odd Grid</strong>
+        <span class="thesis">Строгая структура без строгого лица.</span>
+        <span class="open">Посмотреть</span>
+      </a>
+    </main>
+
+    <footer>
+      <p>Клавиши от 1 до 5 открывают варианты.</p>
+      <p>Все пять используют один движок и одну принятую структуру.</p>
+    </footer>
+
+    <script>
+      const routes = [
+        "01-signal-cards/",
+        "02-paper-trail/",
+        "03-soft-orbit/",
+        "04-patch-panel/",
+        "05-odd-grid/"
+      ];
+      window.addEventListener("keydown", (event) => {
+        if (/^[1-5]$/.test(event.key)) {
+          window.location.href = routes[Number(event.key) - 1];
+        }
+      });
+    </script>
+  </body>
+</html>

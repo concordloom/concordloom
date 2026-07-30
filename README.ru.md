@@ -6,7 +6,7 @@
   <img
     src="docs/assets/concordloom-hero.webp"
     width="1774"
-    alt="Рекурсивный механический станок превращает сырые наблюдения в проверенное полотно через ограниченные вложенные пути."
+    alt="Тёмная круговая карта связывает циклы, из которых состоит проект."
   >
 </p>
 
@@ -72,40 +72,31 @@ Concord Loom разделяет две структуры:
 Достаточно Python 3.11+ и Git. Переносимое ядро использует только стандартную
 библиотеку.
 
-Если вы работаете в Codex, установите навык и передайте ему первичную
-настройку:
+Если вы работаете в Codex, установите один навык:
 
 ```text
 Use $skill-installer to install
 https://github.com/concordloom/concordloom/tree/v0.1.5/plugins/concordloom/skills/design-project-loops
 ```
 
-Откройте новый диалог, затем попросите:
+Откройте новый диалог в нужном репозитории, затем попросите:
 
 ```text
-Use $design-project-loops to onboard this repository safely, inspect it
-read-only, and show me the highest-impact unresolved loop decision.
+Используй $design-project-loops: исследуй этот репозиторий и построй первый
+Атлас. Не меняй репозиторий, пока я не одобрю карту.
 ```
 
-Навык проверит CLI, при необходимости предложит безопасную установку
-закреплённой версии и спросит разрешение перед изменением окружения. До
-принятия изменений графа он не меняет репозиторий.
+Навык спросит, на каком языке вести разговор и как к вам обращаться. Затем он
+исследует репозиторий без изменений и покажет черновой Атлас. Карту можно
+исправлять обычными словами. Установку команды, запись первой принятой
+конфигурации и включение будущих улучшений навык согласует отдельно.
 
-Для ручного запуска через CLI:
+Чтобы установить команду вручную:
 
 ```bash
-pipx install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5"
-mkdir -p .concord/discovery
-concordloom inspect . \
-  --output .concord/discovery/observed-project-graph.json
-concordloom questions \
-  --graph .concord/discovery/observed-project-graph.json \
-  --output .concord/discovery/questions.json
+pipx install "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5"
+concordloom --version
 ```
-
-Эти команды создают наблюдения и вопросы — **не принятое намерение**.
-Значимые решения должен принять оператор.
 
 Продолжите по [руководству быстрого старта](docs/ru/QUICKSTART.md) или откройте
 [интерактивный сайт Concord Loom](https://concordloom.github.io/concordloom/).

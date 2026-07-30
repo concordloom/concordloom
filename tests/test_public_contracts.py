@@ -44,17 +44,33 @@ class PublicContractTests(unittest.TestCase):
             schema_id = payload.get("$id", "")
             self.assertTrue(schema_id.startswith("https://concordloom.dev/"))
 
-    def test_quickstart_actor_kinds_match_the_public_schema(self) -> None:
+    def test_onboarding_adapter_actor_kinds_match_the_public_schema(self) -> None:
         common = load(ROOT / "schemas/common.schema.json")
         allowed = set(
             common["$defs"]["actor"]["properties"]["kind"]["enum"]
         )
-        quickstart = (ROOT / "docs/QUICKSTART.md").read_text(encoding="utf-8")
+        adapter = (
+            ROOT
+            / "plugins"
+            / "concordloom"
+            / "skills"
+            / "design-project-loops"
+            / "scripts"
+            / "record_answer.py"
+        ).read_text(encoding="utf-8")
         documented = set(
-            re.findall(r"--actor-kind\s+([a-z][a-z0-9_-]*)", quickstart)
+            re.findall(
+                r'"--actor-kind",\s*"([a-z][a-z0-9_-]*)"',
+                adapter,
+                flags=re.DOTALL,
+            )
         )
         self.assertTrue(documented)
         self.assertLessEqual(documented, allowed)
+
+    def test_quickstart_keeps_actor_kinds_out_of_the_beginner_path(self) -> None:
+        quickstart = (ROOT / "docs/QUICKSTART.md").read_text(encoding="utf-8")
+        self.assertNotIn("--actor-kind", quickstart)
 
     def test_generic_example_has_a_real_unmodified_digest_chain(self) -> None:
         example = ROOT / "framework" / "generic-sdlc"
