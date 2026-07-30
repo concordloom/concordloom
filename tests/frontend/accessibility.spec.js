@@ -3,7 +3,7 @@ const { test, expect } = require("./support/test");
 const { openView } = require("./support/site");
 
 for (const language of ["en", "ru"]) {
-  for (const view of ["concept", "quickstart", "atlas", "docs"]) {
+  for (const view of ["concept", "theory", "quickstart", "atlas", "docs"]) {
     test(`${language} ${view} has no automatic WCAG A/AA violations`, async ({ page }) => {
       await openView(page, view, language);
       const result = await new AxeBuilder({ page })

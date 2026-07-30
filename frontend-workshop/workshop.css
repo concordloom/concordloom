@@ -1,37 +1,31 @@
 .workshop {
   display: grid;
-  gap: 2rem;
-  margin: 0 auto;
-  max-width: 90rem;
+  gap: var(--cl-space-6);
+  width: min(100%, 92rem);
   min-height: 100vh;
-  padding: 3rem;
+  margin: 0 auto;
+  padding: var(--cl-space-8);
 }
 
 .workshop-header,
 .workshop-panel {
+  border: 1px solid var(--panel-border);
+  border-radius: var(--panel-radius);
   background: var(--panel-background);
-  border: 1px solid var(--cl-steel-700);
-  padding: 2rem;
+  box-shadow: var(--panel-shadow);
+}
+
+.workshop-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cl-space-6);
+  padding: var(--cl-space-8);
 }
 
 .workshop-panel {
-  min-height: 0;
-  position: relative;
-}
-
-.workshop-panel:first-of-type {
-  min-height: 22rem;
-  z-index: 2;
-}
-
-.workshop-header,
-.workshop-title,
-.workshop-language,
-.workshop-controls {
-  align-items: center;
-  display: flex;
-  gap: 1rem;
-  justify-content: space-between;
+  min-width: 0;
+  padding: var(--cl-space-6);
 }
 
 .workshop h1,
@@ -40,122 +34,200 @@
   margin: 0;
 }
 
+.workshop h1 {
+  margin-top: var(--cl-space-2);
+  font: var(--cl-weight-bold) var(--cl-type-title) / var(--cl-leading-title)
+    var(--type-display);
+  letter-spacing: var(--cl-tracking-title);
+}
+
+.workshop h2 {
+  font: var(--cl-weight-semibold) var(--cl-type-lead) / 1.25
+    var(--type-display);
+}
+
+.workshop-deck {
+  max-width: 62ch;
+  margin-top: var(--cl-space-3) !important;
+  color: var(--text-secondary);
+}
+
+.instrument-label {
+  color: var(--signal);
+  font-family: var(--type-code);
+  font-size: var(--cl-type-2xs);
+  font-weight: var(--cl-weight-bold);
+  letter-spacing: var(--cl-tracking-label);
+}
+
+.workshop-title,
+.workshop-language,
+.workshop-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--cl-space-3);
+}
+
+.workshop-title {
+  justify-content: space-between;
+}
+
 .workshop-language button,
 .workshop-controls button {
-  appearance: none;
-  background: var(--surface-instrument);
-  border: 1px solid var(--line-strong);
+  min-width: var(--control-min-size);
+  min-height: var(--control-min-size);
+  padding: var(--cl-space-3) var(--cl-space-4);
+  border: 1px solid var(--control-border);
+  border-radius: var(--cl-radius-sm);
+  background: var(--surface-strong);
   color: var(--text-primary);
   font-family: var(--type-code);
-  min-height: 44px;
-  min-width: 44px;
-  padding: 0.75rem 1rem;
+  font-weight: var(--cl-weight-semibold);
+}
+
+.workshop-language button:hover,
+.workshop-controls button:hover {
+  border-color: var(--signal);
+  background: var(--surface-active);
 }
 
 .workshop-language button[aria-pressed="true"],
 .workshop-controls button[aria-pressed="true"] {
-  background: var(--signal);
   border-color: var(--signal);
-  color: var(--surface-void);
-  box-shadow: 0 0 1rem var(--cl-acid-a28);
+  background: var(--signal);
+  color: var(--signal-ink);
 }
 
 .workshop-controls {
   flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-top: 2rem;
-  position: relative;
-  z-index: 3;
+  margin-top: var(--cl-space-5);
 }
 
 .workshop .system-rail {
   display: grid;
-  height: auto;
-  min-height: 72px;
-  margin-top: 3rem;
-  overflow: visible;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  min-height: 76px;
+  margin: var(--cl-space-8) 0 0;
   padding: 0;
 }
 
 .workshop-atlas {
-  align-items: center;
   display: grid;
-  gap: 2rem;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin-top: 2rem;
+  gap: var(--cl-space-4);
+  margin-top: var(--cl-space-6);
 }
 
 .workshop-node {
-  align-items: center;
-  background:
-    linear-gradient(180deg, rgb(255 255 255 / 0.025), transparent),
-    #080908;
-  border: 1px solid var(--cl-steel-700);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 0;
-  padding: 1.25rem;
-  text-align: center;
-}
-
-.workshop-node.is-current {
-  border-color: var(--atlas-node-active);
-}
-
-.workshop-node-dial {
-  align-items: center;
-  aspect-ratio: 1;
-  background: url("/assets/signal-dial-core.png") center / contain no-repeat;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 0.8rem;
-  max-width: 14rem;
   position: relative;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  grid-template-areas:
+    "port title"
+    "port copy";
+  gap: var(--cl-space-1) var(--cl-space-3);
+  min-width: 0;
+  min-height: 112px;
+  align-content: center;
+  padding: var(--cl-space-4);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--cl-radius-md);
+  background: var(--surface-strong);
+  box-shadow: 0 10px 22px var(--shadow-color);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
 }
 
-.workshop-node-dial span {
-  color: var(--text-primary);
-  font-family: var(--type-code);
-  font-size: clamp(1.4rem, 4vw, 2.4rem);
-  text-shadow: 0 0 1.2rem color-mix(in srgb, var(--signal) 30%, transparent);
+.workshop-node::after {
+  position: absolute;
+  top: 50%;
+  right: -7px;
+  width: 12px;
+  height: 26px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--cl-radius-xs);
+  background: var(--surface-page);
+  content: "";
+  transform: translateY(-50%);
 }
 
-.workshop-node[data-node-state="hover"] .workshop-node-dial,
-.workshop-node[data-node-state="focus"] .workshop-node-dial,
-.workshop-node.is-current .workshop-node-dial {
-  filter: brightness(1.12) contrast(1.04);
+.workshop-node[data-node-state="hover"] {
+  border-color: var(--signal);
+  background: var(--surface-active);
+  transform: translateY(-2px);
 }
 
-.workshop-node[data-node-state="focus"] .workshop-node-dial {
-  outline: 2px solid var(--text-primary);
+.workshop-node:focus-visible {
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
 }
 
-.workshop-node.is-current .workshop-node-dial {
-  filter: brightness(1.18) saturate(1.12);
+.workshop-node.is-current {
+  border-color: var(--signal);
+  background: var(--signal-soft);
+}
+
+.workshop-node[data-node-state="loading"] {
+  border-style: dashed;
+}
+
+.workshop-node:disabled {
+  cursor: not-allowed;
+}
+
+.workshop-node[data-node-state="error"] {
+  border-color: var(--danger);
+}
+
+.workshop-node-port {
+  display: grid;
+  grid-area: port;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  align-self: center;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--cl-radius-sm);
+  background: var(--surface-page);
+  color: var(--signal);
+  font: var(--cl-weight-bold) var(--cl-type-xs) / 1 var(--type-code);
+}
+
+.workshop-node[data-node-state="error"] .workshop-node-port {
+  color: var(--danger);
 }
 
 .workshop-node > strong {
-  color: var(--signal);
+  grid-area: title;
+  align-self: end;
+  color: var(--text-primary);
   font-family: var(--type-code);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
+  font-size: var(--cl-type-xs);
+  letter-spacing: var(--cl-tracking-label);
   text-transform: uppercase;
 }
 
 .workshop-node-label {
+  grid-area: copy;
+  align-self: start;
+  min-width: 0;
   color: var(--text-secondary);
-  font-size: 0.78rem;
-  margin-top: 0.35rem;
-  max-width: 18ch;
+  font-size: var(--cl-type-xs);
+  line-height: 1.35;
   overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+  .workshop-atlas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 700px) {
   .workshop {
-    padding: 1rem;
+    padding: var(--cl-space-3);
   }
 
   .workshop-header,
@@ -164,21 +236,9 @@
     flex-direction: column;
   }
 
-  .workshop-atlas {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .workshop-panel:first-of-type {
-    min-height: 0;
-  }
-
-  .workshop .system-rail {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    margin-top: 2rem;
-  }
-
-  .workshop .system-rail li {
-    font-size: 9px;
+  .workshop-header,
+  .workshop-panel {
+    padding: var(--cl-space-4);
   }
 
   .workshop .system-rail li span {
@@ -187,8 +247,20 @@
 
   .workshop .system-rail li span::after {
     content: attr(data-short);
-    font-size: 9px;
+    font-size: var(--cl-type-2xs);
     letter-spacing: 0;
     white-space: nowrap;
+  }
+}
+
+@media (max-width: 460px) {
+  .workshop-atlas {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workshop-node {
+    transition: none;
   }
 }

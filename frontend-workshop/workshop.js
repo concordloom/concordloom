@@ -33,12 +33,14 @@ function selectPhase(phase) {
 function selectLanguage(language) {
   document.documentElement.lang = language;
   document.title = language === "ru"
-    ? "Стенд «Созвездие сигналов»"
-    : "Signal Constellation Workshop";
+    ? "Стенд Patch Panel"
+    : "Patch Panel Workshop";
   document.querySelector(".workshop-language").setAttribute(
     "aria-label",
     language === "ru" ? "Язык стенда" : "Fixture language",
   );
+  const rail = document.querySelector(".system-rail");
+  rail.setAttribute("aria-label", rail.dataset[`${language}AriaLabel`]);
   document.querySelectorAll("[data-language]").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.language === language));
   });

@@ -4,344 +4,306 @@ Language: **English** | [Русский](ru/DESIGN_SYSTEM.md)
 
 Status: **normative**
 
-Version: **3.0.0**
+Version: **4.0.0**
 
-Machine contract:
+Product truth: [`PRODUCT.md`](PRODUCT.md)
+
+Approved direction:
+[`Patch Panel`](../design/frontend/startup-atlas-concepts/playful/04-patch-panel/)
+
+Accepted machine contract:
 [`design/frontend/visual-contract.json`](../design/frontend/visual-contract.json)
 
-Accepted reference:
-[`signal-constellation-concept.png`](../design/frontend/reference/signal-constellation-concept.png)
+Machine values: [`site/design-tokens.json`](../site/design-tokens.json)
 
-The interface should feel like a precise machine that exposes how work is
-connected. It must remain understandable when every decorative effect is
-removed.
+Component rules: [`site/design-system.css`](../site/design-system.css)
+
+Patch Panel is the visual language for the whole public site, including
+Concept, Theory, Quickstart, Atlas, Docs, navigation, loading, empty, error,
+and mobile states. An Atlas-only reskin does not satisfy this contract.
 
 ## Product principle
 
-Concord Loom keeps its formal machinery behind a simple public path:
+The public path stays simple:
 
 1. inspect a project;
 2. see its Atlas;
 3. correct or approve the map;
 4. keep the Atlas current as the project changes.
 
-The interface names what a person controls and recognizes. Protocol terms,
-digests, model routes, skills, and MCP resources remain available as supporting
-details. They do not lead the experience.
+The interface leads with recognizable project language. Protocol terms,
+digests, model routes, skills, and MCP resources remain available as optional
+details.
 
 ## Visual thesis
 
-Concord Loom is a machine you can enter.
+Concord Loom is a connected development workspace.
 
-The visual system combines blackened metal, graphite, ceramic, warm-white
-tension lines, and one acid signal. Circular gates represent cycles. Sharp
-instrument panels hold navigation and explanation. The design avoids fantasy
-ornament, generic dashboard cards, glass effects, and decorative gradients.
+Deep navy surfaces organize work into readable modules. Cables, ports, rails,
+and connection points show real relationships. One muted mint signal marks the
+current route, focus, or primary action. Rounded geometry makes the tool
+approachable; disciplined spacing and restrained motion keep it credible.
 
-The complete system should still be recognizable with every label removed:
-dark concentric mechanisms, taut paths, and one active acid route.
+The system is serious without feeling corporate, and informal without looking
+like a game.
 
-### Signal Constellation reference lock
+### Patch Panel lock
 
-[`signal-constellation-concept.png`](../design/frontend/reference/signal-constellation-concept.png)
-is the normative visual benchmark for the 3.0 system. It is not mood-board
-material. Implementations must preserve its visual logic:
+Patch Panel v1 is the accepted machine contract. It establishes these
+non-negotiable characteristics:
 
-- blackened metal and stone have visible depth, wear, rims, fasteners, and
-  concentric construction;
-- the Atlas is a dense working mechanism, not a sparse chart placed on a dark
-  page;
-- a drilled view keeps the parent system on the left, expands the current
-  system in the center, and uses the right side as an instrument inspector;
-- warm structural threads show real relationships, while acid chartreuse
-  marks one active route;
-- labels, controls, navigation, reading surfaces, and the homepage belong to
-  the same machine.
+- dark navy, not pure black, is the page field;
+- modules have visible boundaries and modest depth;
+- connectors describe real project relationships;
+- mint is the only primary signal color;
+- text remains readable without glow, texture, or illustration;
+- rounded corners are measured and consistent, not applied as pills to every
+  element;
+- technical identifiers are secondary to plain-language names;
+- the same module grammar appears on every public route.
 
-[`signal-constellation-stage.png`](assets/signal-constellation-stage.png) is the
-clean material stage derived from that benchmark. Live nodes and paths remain
-data-driven projections over the stage; they must never be baked into the
-image.
+Do not introduce fantasy ornament, simulated stone or metal, neon halos,
+decorative noise, glass effects, dashboard-card grids, or background artwork
+behind the Atlas. Do not use disconnected visual styles for long-form pages.
 
-A token-only reskin, flat circles, a generic dashboard grid, a sparse radial
-diagram, or an Atlas that alone uses this style does not satisfy the reference
-lock.
+The concept files record provenance. This document defines intent;
+`design-tokens.json` defines reusable values; `design-system.css` defines
+reusable components. Page CSS may place components, but it may not invent a
+parallel visual system.
+
+## Authority order
+
+1. [`PRODUCT.md`](PRODUCT.md) defines product truth and brand commitments.
+2. This document defines visual intent, component grammar, and acceptance.
+3. `site/design-tokens.json` defines reusable visual values.
+4. generated `site/design-tokens.css` exposes those values to the browser;
+5. `site/design-system.css` composes components from tokens;
+6. page markup and behavior consume components.
+
+Generated CSS must not be edited by hand. A lower layer cannot redefine the
+meaning of a higher layer.
 
 ## Token architecture
 
-Tokens follow four layers:
+Tokens have four layers:
 
-1. **Primitive tokens** store raw color, space, type, line, and timing values.
-2. **Semantic tokens** name purpose, such as `surface-void`, `text-primary`,
-   `line-quiet`, and `signal`.
-3. **Component tokens** define reusable component roles without binding them
-   to one page.
-4. **Compatibility tokens** preserve supported legacy names during migration.
+1. **Primitive**: raw color, type, spacing, radius, line, shadow, and timing.
+2. **Semantic**: purpose such as page, panel, text, border, connection, signal,
+   focus, error, and success.
+3. **Component**: module, port, rail, control, reader, Atlas node, and inspector
+   roles.
+4. **Compatibility**: temporary aliases for supported names during migration.
 
-Component rules apply those layers to navigation, reading surfaces,
-   the Atlas, controls, and status.
+Exact values belong in `site/design-tokens.json`. This document records their
+meaning and constraints.
 
-Canonical machine values live in
-[`site/design-tokens.json`](../site/design-tokens.json).
-[`site/design-tokens.css`](../site/design-tokens.css) is generated
-deterministically, while
-[`site/design-system.css`](../site/design-system.css) composes components from
-those values. Token changes are API changes. A removed token requires a
-documented replacement. Generated CSS must never be edited directly.
+### Required token coverage
 
-### Authority order
+| Domain | Required roles |
+|---|---|
+| Color | page, panel, raised panel, text, muted text, border, connection, signal, error |
+| Type | display, body, data, labels, reading measure and line height |
+| Space | page gutters, section rhythm, module padding, control gaps |
+| Shape | module, control, port, node and disclosure radii |
+| Depth | rest, hover, selected and overlay shadows |
+| Motion | control, overlay, graph enter, graph exit and reduced motion |
+| Size | header, control target, reading column, inspector and graph bounds |
 
-1. The accepted reference fixes the visual world and composition.
-2. `design/frontend/visual-contract.json` makes its measurable constraints
-   executable.
-3. This document defines intent, permitted patterns, and acceptance.
-4. `design-tokens.json` defines every reusable visual value.
-5. Generated `design-tokens.css` exposes those values to the browser.
-6. `design-system.css` composes components from the tokens.
-7. Page markup and behavior consume components.
+Raw values outside primitive tokens are allowed only for local, data-derived
+geometry with no reusable meaning.
 
-A lower layer cannot override the meaning of a higher layer. Local geometry,
-such as an SVG node coordinate or a grid column count, may remain in a
-component when it has no reusable meaning. Color, type, spacing rhythm,
-controls, reading measure, layers, and motion timing may not.
+## Color and depth
 
-### Coverage registry
+- Deep navy separates the page from modules without relying on pure black.
+- Slightly lighter surfaces establish hierarchy through contrast and borders.
+- Text uses a high-contrast cool white; secondary text remains readable.
+- Muted mint marks one current route, focus, or primary action.
+- Red appears only for an actual error.
+- Shadows express a small vertical lift. They do not create theatrical glow.
 
-| Domain | Source of truth | Required verification |
-|---|---|---|
-| Color and contrast | primitive and semantic tokens | dark/high-contrast states, non-color cues |
-| Typography | font, scale, weight, leading, tracking, measure tokens | EN/RU hierarchy, 200% zoom, no runtime fonts |
-| Spacing and sizing | spacing, control, header and measure tokens | 44 px targets and responsive reflow |
-| Shape and material | component rules and panel tokens | no decorative card language or synthetic noise |
-| Layout | component rules | desktop, tablet, mobile and long-content states |
-| Motion | duration and easing tokens | forward, reverse, interruption and reduced motion |
-| Interaction | component states | rest, hover, focus, active, disabled, loading, empty, error |
-| Accessibility | semantic markup and component rules | keyboard, names, focus, zoom, contrast |
-| Localization | EN/RU content contract | first paint, dynamic copy, ARIA and error paths |
-| Atlas | active binding projection and Atlas grammar | full reachability, deep links, stale-data failure |
-| Content | writing and comprehension contracts | clear next action and progressive disclosure |
-| Governance | cycle ownership and evolution rules | pinned candidate, evidence and separate authority |
-
-## Color
-
-The surface uses one accent:
-
-- off-black and graphite establish depth;
-- warm white carries readable text and structural thread;
-- silver marks supporting information;
-- acid chartreuse marks the selected path, focus, and actions;
-- red appears only for an actual error.
-
-Acid chartreuse never categorizes unrelated information. If everything glows,
-nothing is selected.
-
-## Shape and material
-
-- Cycles are circular because they contain bounded repeated work.
-- Panels and controls use sharp corners because they are instruments.
-- Hairlines separate real regions or connect real nodes.
-- Shadows express physical depth; outer neon halos do not decorate containers.
-- Texture must come from an authored material asset. Synthetic noise filters
-  are not part of the system.
+Selection, status, and focus never rely on color alone.
 
 ## Typography
 
-Display type explains hierarchy. Body type explains meaning. Monospace is
-reserved for identifiers, code, measurements, and machine values.
-
-- The display stack is `Arial Narrow`, `Helvetica Neue`, Helvetica, Arial,
-  then the system sans-serif fallback. No runtime font request is allowed.
-- The technical stack is `IBM Plex Mono`, `SFMono-Regular`, Consolas, then the
-  system monospace fallback.
-- The scale is `2xs` 10 px, `xs` 12 px, `sm` 14 px, body 16 px, responsive
-  lead, title, and display sizes.
-- Body text uses 1.6 line height. Long-form reading uses 1.72.
-- Display text uses weights 650 or 800 and tracking no tighter than -0.04 em.
-  Labels use uppercase mono at 0.12 em.
-- Body copy remains at a 72-character measure, within the accepted 65-75
-  character range.
-- Russian and English use the same hierarchy, not identical line breaks.
-- A translated interface never mixes ordinary English prose into Russian.
-
-All type values are primitive tokens. Semantic roles such as `type-display`,
-`type-code`, and `reading-leading` consume them. Components must not introduce
-a new font family, weight, or reading measure directly.
+- The display and body stacks use local system sans-serif fonts.
+- Monospace is reserved for identifiers, commands, measurements, and machine
+  values.
+- Display headings use confident weight, compact leading, and restrained
+  negative tracking.
+- Body copy starts at 16 CSS pixels and uses a calm reading rhythm.
+- Long-form text stays within 65–75 characters per line.
+- Labels may use compact uppercase text only when the same information appears
+  in a readable name.
+- English and Russian share hierarchy, not forced line breaks.
+- A Russian interface does not mix ordinary English prose into its controls or
+  explanations.
 
 ## Component language
 
-The public surface uses a small component vocabulary:
+The public surface uses this vocabulary:
 
-- **gate** - a cycle node with rest, selected, focus, and unavailable states;
-- **thread** - a real containment or navigation relationship;
-- **instrument panel** - bounded controls or explanation;
-- **path rail** - preserved navigation history;
-- **reading surface** - calm long-form content inside the same material system;
-- **signal control** - the one primary action or current selection.
+- **module**: a bounded responsibility, content group, or navigation region;
+- **port**: a visible point where a real connection enters or leaves;
+- **cable**: a real containment, dependency, or navigation relationship;
+- **rail**: version, progress, path, or section navigation;
+- **control**: a direct action with a named result;
+- **reader**: a calm long-form surface;
+- **inspector**: contextual details opened on demand;
+- **signal**: the single current selection or primary action.
 
-Every component consumes semantic or component tokens. Raw color values are
-limited to primitive definitions. Controls have a minimum 44 px target, visible
-focus, localized accessible names, and non-color state cues.
+Every component defines rest, hover where available, focus, pressed, disabled
+when applicable, loading, empty, error, and long-copy states. Controls have a
+minimum 44 by 44 CSS pixel target and a visible keyboard focus.
+
+## Page composition
+
+### Concept
+
+The first viewport states what Concord Loom does and offers one route to the
+live Atlas plus one route to Quickstart. Supporting ideas appear as connected
+modules, not marketing cards.
+
+### Theory
+
+The article uses one quiet reader with a stable table of contents, underlined
+prose links, deep-linked headings, code overflow, responsive figures, and
+previous/next navigation. Decorative modules stay outside the reading column.
+
+### Quickstart
+
+Quickstart presents one main path: install, inspect, open Atlas, review, and
+continue. Each step names the expected result. Troubleshooting and advanced
+governance remain secondary.
+
+### Atlas
+
+The graph receives the largest available area. Path and revision controls stay
+compact. Details open in an overlay or drawer only when requested, so the graph
+does not lose permanent width to an inspector.
+
+### Docs
+
+Documents are grouped by reader task. Search and filters show their active
+state, empty state, and result count without becoming a generic dashboard.
 
 ## Atlas grammar
 
-Atlas projects the accepted loop map. It never becomes an independent source
-of truth.
+Atlas projects accepted loop data. At every level:
 
-At every level:
+- the current cycle is visually dominant;
+- direct children and real connections remain readable;
+- the path back to the root remains visible;
+- clicking a child replaces the active graph while preserving navigation
+  context;
+- details identify what the cycle does, needs, and produces in plain language;
+- models, skills, tools, and MCP resources stay in optional technical details;
+- the version rail shows history as a line and opens the latest version by
+  default;
+- evolution remains reachable without being shown as permanently active.
 
-- the selected cycle occupies the center;
-- its direct children occupy the active ring;
-- size distinguishes current, parent, and child responsibilities;
-- the path remains visible on the left;
-- the plain-language contract remains visible on the right;
-- models, skills, tools, and MCP resources appear only in optional details;
-- evolution remains findable from every Atlas journey.
-
-Clicking a child preserves the selected gate, moves the previous level left,
-and settles the child graph in the center. Moving to a parent reverses that
-direction. The transition explains containment; it does not imply unbounded
-runtime recursion.
+Forward and back transitions explain movement through containment. They must
+not imply infinite recursion. The graph must remain legible with animation
+disabled.
 
 ## Motion
 
-Motion serves feedback, orientation, and continuity.
+- Frequent feedback finishes quickly and does not delay input.
+- Graph traversal uses one consistent forward and reverse movement.
+- Overlays enter from their spatial source and return on close.
+- Layout movement uses transforms; visibility uses opacity.
+- Interrupted animation settles safely at the current state.
+- `prefers-reduced-motion: reduce` removes spatial travel and preserves state.
 
-- Pointer-driven level changes use a 360 ms move curve:
-  `cubic-bezier(0.25, 1, 0.5, 1)`.
-- Frequent controls stay below 220 ms.
-- Keyboard navigation changes levels immediately.
-- Layout movement uses `transform`; visibility uses `opacity`.
-- `prefers-reduced-motion: reduce` removes spatial travel and preserves the
-  final state.
-- Every opening state has a matching closing or reverse state.
+Motion must explain a state change. Ambient animation, parallax, and decorative
+pulses are not part of the core system.
 
-## Interaction states
+## Russian text
 
-Every interactive component defines:
+Russian human-facing copy follows
+[`docs/ru/TEXT_STYLE.md`](ru/TEXT_STYLE.md). The pinned `ru-text` skill guides
+editorial review. The repository linter catches only objective mistakes and
+known onboarding jargon; it does not replace a human or model-assisted edit.
 
-- rest;
-- hover where hover exists;
-- visible keyboard focus;
-- pressed;
-- disabled when applicable;
-- loading;
-- empty;
-- error.
+## Accessibility and localization
 
-Focus and selection cannot rely on color alone. Atlas exposes labels, current
-location, child counts, and accessible names.
-
-## Reading surfaces
-
-Theory and documentation inherit the same material system but optimize for
-reading:
-
-- stable table of contents;
-- one main reading column;
-- underlined prose links;
-- readable code overflow;
-- headings with stable deep links;
-- no essential conclusion hidden in a disclosure.
-
-The interface may be dramatic around the article. The article itself must be
-calm.
-
-## Responsive behavior
-
-Desktop uses the three-part Atlas instrument: path, graph, explanation.
-
-On narrow screens:
-
-- navigation becomes a controlled menu;
-- the path becomes a horizontal history strip;
-- the graph remains the primary surface;
-- the explanation follows the graph;
-- targets remain at least 44 by 44 CSS pixels;
-- the page reflows at 200 percent zoom without hiding information.
+- Navigation exposes the current page.
+- Menus and drawers support keyboard open, close, focus containment, and focus
+  restoration.
+- Graph selection has a programmatic current state.
+- Loading, empty, stale-data, and error states are visible and localized.
+- Dynamic labels, live regions, and accessible names use the current language.
+- English is the first-visit default. An explicit saved language choice wins
+  afterward.
+- Language switching preserves the page and logical location.
+- The site reflows at 200% zoom and at widths from 360 CSS pixels.
+- No runtime request is required for fonts, icons, code, or other core assets.
 
 ## Content gate
 
-Before any new public text ships, a reviewer should be able to answer:
+Before public copy ships, review it in context:
 
 1. Can a newcomer say what happens next?
-2. Does the copy use project language before framework language?
-3. Are implementation details optional?
+2. Does it use project language before framework language?
+3. Are optional implementation details secondary?
 4. Does every action name its result?
 5. Are English and Russian semantically equivalent?
+6. Does the Russian version pass the editorial contract?
 
-If any answer is no, the interface is unfinished.
+A negative answer blocks publication.
+
+## Verification
+
+Browser evidence covers:
+
+- 360×800, 390×844, 768×1024, 1024×768, 1440×900, 1920×1080, and
+  2048×1152;
+- Chromium, Firefox, and WebKit where the repository harness supports them;
+- English and Russian first paint, success, loading, empty, and error states;
+- keyboard, visible focus, reduced motion, and 200% zoom;
+- graph traversal, direct entry, reload, back/forward navigation, and language
+  switching;
+- overflow, clipped text, overlapping regions, unreachable controls, and
+  untranslated accessible names.
+
+Automated geometry checks do not approve visual quality by themselves. An
+independent critic compares fresh screenshots with this direction and rejects
+drift toward game decoration, corporate dashboard patterns, or a one-page-only
+reskin.
 
 ## Cycle ownership
 
-The design system is enforced by the accepted frontend development system.
-No implementation can skip directly from a mockup to publication.
+The accepted frontend development system assigns these exact responsibilities:
 
-| Cycle | Mandatory responsibility |
+| Cycle | Responsibility |
 |---|---|
-| `define-frontend-concept` | Pin the reference, visual contract, content hierarchy, responsive behavior, and acceptance matrix. |
-| `accept-frontend-concept` | Record the operator's decision for the exact concept bytes. |
-| `maintain-component-workshop` | Expose real production components in normal, long-copy, loading, empty, error, and reduced-motion states. |
-| `implement-frontend-surface` | Build only from the accepted concept and design-system sources. |
-| `maintain-frontend-verification` | Maintain the deterministic browser harness, accessibility rules, breakpoints, and CI contract. |
-| `verify-frontend-candidate` | Run the pinned candidate through Chromium, Firefox, WebKit, EN/RU, mobile, desktop, 200% zoom, keyboard, and reduced-motion checks. |
-| `critique-frontend-experience` | Compare fresh screenshots with the accepted reference in an independent context and reject visual drift that geometry tests cannot detect. |
+| `design-site-experience` | Coordinate the complete frontend experience without replacing the evidence or authority of its child cycles. |
+| `define-frontend-concept` | Pin the direction, content hierarchy, responsive behavior, and acceptance matrix. |
+| `accept-frontend-concept` | Record the operator decision for the exact concept and machine-contract bytes. |
+| `maintain-component-workshop` | Show production components in every required state and both languages. |
+| `implement-frontend-surface` | Build every public route from the accepted design-system sources. |
+| `maintain-frontend-verification` | Maintain deterministic browser, accessibility, breakpoint, and CI checks. |
+| `verify-frontend-candidate` | Verify the exact candidate across browsers, languages, input modes, and sizes. |
+| `critique-frontend-experience` | Independently compare fresh evidence with the approved Patch Panel direction. |
 
-`design-site-experience` contains those seven cycles. Publication requires both
-browser-verification evidence and the independent visual verdict. Playwright
-Test is the deterministic oracle. Playwright MCP may help a critic inspect the
-candidate, but it does not replace the reproducible test gate.
+This design-system revision changes no cycle topology or authority rule.
 
-The dependency-free workshop uses the same HTML, CSS, JavaScript, assets, and
-fixtures as production. It is not a second frontend runtime. Accepted visual
-baselines live under `design/frontend/baselines/` and may be updated only after
-the critic passes the exact candidate.
-
-Repository checks treat this document, the authored tokens, the interactive
-Atlas structure, reduced-motion behavior, and the generated documentation index
-as one contract. A change that breaks any part of it does not pass.
-
-Reference acceptance also requires:
-
-- the 2410 by 1334 accepted concept and all material assets remain exact,
-  local, and free
-  of runtime dependencies;
-- desktop evidence shows the parent, current system, and inspector together;
-- 390 px evidence keeps the active graph legible and the inspector reachable;
-- forward and back traversal communicate direction, while reduced motion
-  removes travel;
-- English and Russian preserve the same layout, meaning, controls, and
-  accessible names;
-- a reviewer compares the implementation with the reference image, not merely
-  with token and component checklists.
-
-The browser matrix covers 360x800, 390x844, 768x1024, 1024x768, 1440x900,
-1920x1080, and 2048x1152. It rejects page overflow, clipped text, overlapping
-regions, false lifecycle state, unreachable controls, graph/inspector
-collisions, missing focus, inaccessible scrolling, and untranslated accessible
-names. A green unit test or a locally attractive screenshot is not sufficient.
+Publication requires browser evidence and an independent visual verdict for
+the exact candidate.
 
 ## Evolution
 
-The design system evolves through evidence:
+Design changes respond to repeated comprehension failures, visual defects,
+accessibility regressions, or a new surface the current grammar cannot express.
+A proposal names the observed problem, the smallest token or component change,
+migration impact, verification, and rollback. It cannot approve or activate
+itself.
 
-- repeated comprehension failures;
-- recurring visual or interaction defects;
-- accessibility regressions;
-- Atlas drift from accepted data;
-- a new product surface that the current system cannot express.
+Versioning follows these rules:
 
-One isolated preference does not justify a new rule. A successor proposal must
-name the observed problem, the smallest token or component change, migration
-impact, verification, and rollback. It cannot accept or activate itself.
-
-### Versioning and migration
-
-- Patch: clarification or implementation repair with no visual API change.
-- Minor: additive token, component, state, or documented pattern.
-- Major: removed or redefined token, component grammar, or accessibility
+- patch: clarification or implementation repair with no visual API change;
+- minor: additive token, component, state, or documented pattern;
+- major: removed or redefined token, component grammar, or accessibility
   contract.
-- A deprecated token remains as a compatibility alias for at least one minor
-  version and names its replacement.
-- Every change updates both languages, regenerates token CSS and site content,
-  passes the complete coverage registry, and records evidence in its governed
-  run.
+
+Every change updates both languages, generated token CSS, public projections,
+and verification evidence.

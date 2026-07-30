@@ -6,7 +6,7 @@
   <img
     src="docs/assets/concordloom-hero.webp"
     width="1774"
-    alt="A recursive mechanical loom turns raw observations into a verified weave through bounded nested paths."
+    alt="A dark circular map connects the cycles that make up a project."
   >
 </p>
 
@@ -75,39 +75,31 @@ means. A green child receipt never becomes parent authority by accident.
 Python 3.11+ and Git are enough. The portable core uses only the standard
 library.
 
-With Codex, install the skill and let it conduct onboarding:
+With Codex, install one skill:
 
 ```text
 Use $skill-installer to install
 https://github.com/concordloom/concordloom/tree/v0.1.5/plugins/concordloom/skills/design-project-loops
 ```
 
-Start a new thread, then ask:
+Start a new conversation in the repository, then ask:
 
 ```text
-Use $design-project-loops to onboard this repository safely, inspect it
-read-only, and show me the highest-impact unresolved loop decision.
+Use $design-project-loops to analyse this repository and build its first Atlas.
+Do not change the repository until I approve the map.
 ```
 
-The skill checks the CLI, proposes a safe pinned installation when needed, and
-asks before changing the user environment. It does not mutate the repository
-before the operator accepts the graph delta.
+The skill asks which language to use and what to call you. It then analyses the
+repository without changing it and shows a draft Atlas. Correct the map in
+ordinary language. The skill asks separately before installing the CLI,
+writing the first accepted configuration, or activating a later evolution.
 
-For a CLI-only start:
+For a CLI-only installation:
 
 ```bash
-pipx install \
-  "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5"
-mkdir -p .concord/discovery
-concordloom inspect . \
-  --output .concord/discovery/observed-project-graph.json
-concordloom questions \
-  --graph .concord/discovery/observed-project-graph.json \
-  --output .concord/discovery/questions.json
+pipx install "concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5"
+concordloom --version
 ```
-
-These commands produce observations and questions — **not accepted intent**.
-An operator must make the consequential decisions.
 
 Continue with the [quickstart](docs/QUICKSTART.md), or open the
 [interactive Concord Loom site](https://concordloom.github.io/concordloom/).

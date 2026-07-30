@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import re
+import hashlib
 import unittest
 
 
@@ -17,12 +18,13 @@ class DesignSystemAuthorityTests(unittest.TestCase):
             encoding="utf-8"
         )
         for text in (english, russian):
-            self.assertIn("3.0.0", text)
+            self.assertIn("4.0.0", text)
+            self.assertIn("Patch Panel", text)
+            self.assertIn("PRODUCT.md", text)
             self.assertIn("design-tokens.json", text)
             self.assertIn("design-tokens.css", text)
             self.assertIn("design-system.css", text)
             self.assertIn("visual-contract.json", text)
-            self.assertIn("signal-constellation-concept.png", text)
         self.assertIn("Status: **normative**", english)
         self.assertIn("Статус: **нормативный документ**", russian)
 
@@ -31,7 +33,7 @@ class DesignSystemAuthorityTests(unittest.TestCase):
             (SITE / "design-tokens.json").read_text(encoding="utf-8")
         )
         self.assertEqual("concordloom.design-tokens", tokens["kind"])
-        self.assertEqual("2.0.0", tokens["version"])
+        self.assertEqual("3.0.0", tokens["version"])
         self.assertEqual(
             ["primitive", "semantic", "component", "compatibility"],
             list(tokens["layers"]),
@@ -41,12 +43,17 @@ class DesignSystemAuthorityTests(unittest.TestCase):
             name for layer in tokens["layers"].values() for name in layer
         }
         for required in (
-            "cl-acid-500",
+            "cl-navy-1000",
+            "cl-mint-500",
             "cl-font-display",
-            "cl-type-display",
+            "cl-type-title",
             "cl-space-4",
+            "cl-radius-md",
             "cl-control",
             "cl-duration-level",
+            "surface-page",
+            "surface-panel",
+            "surface-module",
             "surface-void",
             "type-reading",
             "panel-background",
@@ -94,43 +101,56 @@ class DesignSystemAuthorityTests(unittest.TestCase):
             <= cycle_ids
         )
 
-    def test_signal_constellation_reference_lock_is_enforced(self) -> None:
-        reference = (
-            ROOT
-            / "design"
-            / "frontend"
-            / "reference"
-            / "signal-constellation-concept.png"
-        )
+    def test_patch_panel_reference_lock_is_enforced(self) -> None:
         contract = json.loads(
             (ROOT / "design" / "frontend" / "visual-contract.json").read_text(
                 encoding="utf-8"
             )
         )
-        self.assertTrue(reference.is_file())
-        self.assertGreater(reference.stat().st_size, 100_000)
-        self.assertEqual(
-            "signal-constellation-concept.png",
-            Path(contract["reference"]["path"]).name,
+        self.assertEqual("patch-panel-v1", contract["id"])
+        self.assertEqual("accepted", contract["status"])
+        self.assertEqual(4, contract["reference"]["variant"])
+        self.assertEqual("entire public site", contract["design_direction"]["scope"])
+        self.assertTrue(contract["acceptance"]["atlas"]["no_background_art"])
+        self.assertIn(
+            "decorative gradient",
+            contract["design_direction"]["forbidden"],
         )
-        self.assertEqual(2410, contract["reference"]["width"])
-        self.assertEqual(1334, contract["reference"]["height"])
+        for reference in contract["reference"]["files"]:
+            path = ROOT / reference["path"]
+            self.assertTrue(path.is_file(), reference["path"])
+            self.assertEqual(
+                reference["sha256"],
+                hashlib.sha256(path.read_bytes()).hexdigest(),
+            )
+
         index = (SITE / "index.html").read_text(encoding="utf-8")
         script = (SITE / "app.js").read_text(encoding="utf-8")
-        styles = (SITE / "design-system.css").read_text(encoding="utf-8")
-        for marker in ("system-rail", "atlas-commandbar"):
+        styles = "\n".join(
+            (SITE / name).read_text(encoding="utf-8")
+            for name in ("styles.css", "design-system.css")
+        )
+        for marker in (
+            'data-design-system="patch-panel"',
+            "system-rail",
+            "atlas-commandbar",
+        ):
             self.assertIn(marker, index)
-        for marker in ("parent-constellation", 'motion = "forward"'):
+        for marker in ("graph-node", 'motion = "forward"'):
             self.assertIn(marker, script)
         for marker in (
-            "signal-constellation-stage.png",
-            ".parent-constellation",
             '.atlas-stage[data-motion="forward"]',
             '.atlas-stage[data-motion="back"]',
             ".view:target",
             ".node-label",
         ):
             self.assertIn(marker, styles)
+        for forbidden in (
+            "signal-constellation-stage.png",
+            "linear-gradient(",
+            "radial-gradient(",
+        ):
+            self.assertNotIn(forbidden, styles)
         self.assertIn("<noscript>", index)
         self.assertNotIn('data-view="theory" hidden', index)
         self.assertNotIn('data-view="quickstart" hidden', index)

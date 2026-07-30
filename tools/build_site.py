@@ -144,9 +144,10 @@ def markdown_fragment(
     source_path: Path | None = None,
     anchor_prefix: str = "",
 ) -> tuple[str, list[dict[str, str]]]:
-    # The public reader uses a plain hyphen. Long typographic dashes made the
-    # already abstract prose harder to scan and read like generated filler.
-    lines = source.replace("\u2014", "-").replace("\u2013", "-").splitlines()
+    # Keep author-approved typography intact. In particular, Russian prose
+    # uses the em dash as punctuation; replacing it with a hyphen makes the
+    # generated public copy both incorrect and harder to read.
+    lines = source.splitlines()
     output: list[str] = []
     toc: list[dict[str, str]] = []
     paragraph: list[str] = []

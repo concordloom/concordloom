@@ -19,6 +19,7 @@ PYTHONPATH=src python3 tools/build_site.py --check
 PYTHONPATH=src python3 tools/check_site.py
 PYTHONPATH=src python3 tools/check_docs.py
 PYTHONPATH=src python3 tools/check_language.py
+PYTHONPATH=src python3 tools/check_ru_text.py
 PYTHONPATH=src python3 -m concordloom validate \
   --input framework/concordloom/cycle-registry.json \
   --graph framework/concordloom/accepted-project-graph.json \

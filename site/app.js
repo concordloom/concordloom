@@ -46,6 +46,8 @@ const copy = {
     produces: "Produces",
     resourcesOptional: "Models, skills and tools",
     closeInspector: "Close cycle details",
+    openLoop: "Open loop",
+    terminalLoop: "Terminal loop",
   },
   ru: {
     switchLanguage: "Переключить на английский",
@@ -94,6 +96,8 @@ const copy = {
     produces: "Что получится",
     resourcesOptional: "Модели, инструкции и инструменты",
     closeInspector: "Закрыть сведения о цикле",
+    openLoop: "Цикл с вложенными шагами",
+    terminalLoop: "Конечный цикл",
   },
 };
 
@@ -144,6 +148,9 @@ function setView(viewName) {
     const active = view.dataset.view === viewName;
     view.hidden = !active;
     view.classList.toggle("is-active", active);
+    view.querySelectorAll("[data-content-body]").forEach((body) => {
+      body.classList.toggle("prose", active);
+    });
   });
   document.querySelectorAll("[data-view-link]").forEach((link) => {
     const active = link.dataset.viewLink === viewName;
@@ -380,12 +387,11 @@ function renderInspector(loop) {
       aria-label="${text("closeInspector")}">×</button>
     <div class="inspector-status">
       <i aria-hidden="true"></i>
-      <span>${loop.children.length ? (language === "ru" ? "Открытый цикл" : "Open loop") : (language === "ru" ? "Конечный цикл" : "Terminal loop")}</span>
+      <span>${loop.children.length ? text("openLoop") : text("terminalLoop")}</span>
     </div>
     <p class="inspector-code" translate="no">${loopCode}</p>
     <h2>${loopCopy(loop).label}</h2>
     <div class="inspector-dial" aria-hidden="true">
-      <img src="assets/signal-dial-core.png" width="1254" height="1254" alt="">
       <span>${glyph}</span>
     </div>
     <p class="inspector-purpose">${loopCopy(loop).purpose}</p>
@@ -455,7 +461,7 @@ function graphLabel(textValue) {
   return second ? [first, second] : [first];
 }
 
-const LOOP_GLYPHS = ["◉", "⌬", "⊕", "◇", "⧉", "⌁", "⊙", "✣", "⟲", "◌", "⌘", "⦿"];
+const LOOP_GLYPHS = ["↗", "○", "◇", "□", "⌁", "↻"];
 
 function loopGlyph(loop) {
   let hash = 0;
@@ -465,53 +471,6 @@ function loopGlyph(loop) {
 
 function appendGraphDefs(svg) {
   const defs = svgElement("defs");
-  const metal = svgElement("radialGradient", { id: "node-metal", cx: "42%", cy: "34%" });
-  [
-    ["0%", "#5b5d58"],
-    ["18%", "#242622"],
-    ["62%", "#0c0e0c"],
-    ["84%", "#2d302b"],
-    ["100%", "#050605"],
-  ].forEach(([offset, color]) => metal.append(svgElement("stop", { offset, "stop-color": color })));
-  defs.append(metal);
-
-  const core = svgElement("radialGradient", { id: "node-core", cx: "50%", cy: "40%" });
-  [
-    ["0%", "#1e211c"],
-    ["65%", "#0b0d0b"],
-    ["100%", "#030403"],
-  ].forEach(([offset, color]) => core.append(svgElement("stop", { offset, "stop-color": color })));
-  defs.append(core);
-
-  const signal = svgElement("filter", {
-    id: "signal-glow",
-    x: "-80%",
-    y: "-80%",
-    width: "260%",
-    height: "260%",
-  });
-  signal.append(svgElement("feGaussianBlur", { stdDeviation: "4", result: "blur" }));
-  const merge = svgElement("feMerge");
-  merge.append(svgElement("feMergeNode", { in: "blur" }));
-  merge.append(svgElement("feMergeNode", { in: "SourceGraphic" }));
-  signal.append(merge);
-  defs.append(signal);
-
-  const shadow = svgElement("filter", {
-    id: "node-shadow",
-    x: "-60%",
-    y: "-60%",
-    width: "220%",
-    height: "220%",
-  });
-  shadow.append(svgElement("feDropShadow", {
-    dx: "4",
-    dy: "9",
-    stdDeviation: "8",
-    "flood-color": "#000000",
-    "flood-opacity": ".9",
-  }));
-  defs.append(shadow);
   svg.append(defs);
 }
 
@@ -524,14 +483,18 @@ function appendGraphNode(
   current = false,
   labelOffset = 0,
   labelYOffset = 0,
+  variant = "default",
 ) {
+  const contextual = variant === "context";
+  const compact = variant === "compact" || variant === "compact-current";
+  const compactCurrent = variant === "compact-current";
   const group = svgElement("g", {
-    class: `node-assembly${current ? " is-current" : ""}`,
+    class: `node-assembly${current ? " is-current" : ""}${contextual ? " is-context" : ""}${compact ? " is-compact" : ""}`,
     transform: `translate(${x} ${y})`,
   });
   const link = svgElement("a", {
     href: `#atlas/${encodeURIComponent(loop.id)}`,
-    class: `graph-node${current ? " is-current" : ""}`,
+    class: `graph-node${current ? " is-current" : ""}${contextual ? " is-context" : ""}${compact ? " is-compact" : ""}`,
     "data-loop-id": loop.id,
     "aria-label": `${loopCopy(loop).label}. ${
       loop.children.length ? `${text("childCount")}: ${loop.children.length}` : text("noChildCount")
@@ -540,52 +503,85 @@ function appendGraphNode(
   const title = svgElement("title");
   title.textContent = `${loopCopy(loop).label}. ${loopCopy(loop).purpose}`;
   link.append(title);
-  link.append(svgElement("circle", { class: "node-shadow", cx: 0, cy: 0, r: radius + 14 }));
-  link.append(svgElement("circle", { class: "node-outer", cx: 0, cy: 0, r: radius + 12 }));
-  link.append(svgElement("circle", { class: "node-case", cx: 0, cy: 0, r: radius + 7 }));
-  link.append(svgElement("circle", { class: "node-inner", cx: 0, cy: 0, r: radius }));
-  link.append(svgElement("circle", {
-    class: "node-bezel",
-    cx: 0,
-    cy: 0,
-    r: Math.max(radius - 8, 12),
+  const nodeWidth = current
+    ? (compactCurrent ? 300 : 214)
+    : (contextual ? 96 : (compact ? 164 : Math.max(128, radius * 3.8)));
+  const nodeHeight = current ? 126 : (contextual ? 62 : (compact ? 92 : 76));
+  const corner = current ? 18 : 14;
+  link.append(svgElement("rect", {
+    class: "node-hit",
+    x: -(Math.max(nodeWidth, 128) / 2),
+    y: -(Math.max(nodeHeight, 100) / 2),
+    width: Math.max(nodeWidth, 128),
+    height: Math.max(nodeHeight, 100),
+    rx: corner,
   }));
-  link.append(svgElement("circle", {
-    class: "node-etch",
-    cx: 0,
-    cy: 0,
-    r: Math.max(radius - 15, 8),
+  link.append(svgElement("rect", {
+    class: "node-shadow",
+    x: -(nodeWidth / 2) + 5,
+    y: -(nodeHeight / 2) + 8,
+    width: nodeWidth,
+    height: nodeHeight,
+    rx: corner,
   }));
-
-  const boltRadius = radius + 8;
-  const boltCount = current ? 12 : 6;
-  for (let index = 0; index < boltCount; index += 1) {
-    const angle = (Math.PI * 2 * index) / boltCount;
-    link.append(svgElement("circle", {
-      class: "node-bolt",
-      cx: Math.cos(angle) * boltRadius,
-      cy: Math.sin(angle) * boltRadius,
-      r: current ? 2.4 : 1.7,
-    }));
-  }
+  link.append(svgElement("rect", {
+    class: "node-case",
+    x: -(nodeWidth / 2),
+    y: -(nodeHeight / 2),
+    width: nodeWidth,
+    height: nodeHeight,
+    rx: corner,
+  }));
+  link.append(svgElement("rect", {
+    class: "node-inner",
+    x: -(nodeWidth / 2) + 8,
+    y: -(nodeHeight / 2) + 8,
+    width: nodeWidth - 16,
+    height: nodeHeight - 16,
+    rx: Math.max(corner - 5, 6),
+  }));
+  link.append(svgElement("rect", {
+    class: "node-port",
+    x: -(nodeWidth / 2) - 6,
+    y: current ? -19 : -13,
+    width: 12,
+    height: current ? 38 : 26,
+    rx: 6,
+  }));
 
   const count = svgElement("text", {
     class: "node-count",
-    x: 0,
-    y: current ? -31 : -radius - 19,
-    "text-anchor": "middle",
+    x: -(nodeWidth / 2) + 21,
+    y: -(nodeHeight / 2) + 25,
+    "text-anchor": "start",
   });
   count.textContent = String(loop.children.length).padStart(current ? 2 : 1, "0");
   link.append(count);
 
   const glyph = svgElement("text", {
     class: "node-glyph",
-    x: 0,
-    y: current ? 13 : 8,
-    "text-anchor": "middle",
+    x: (nodeWidth / 2) - 21,
+    y: -(nodeHeight / 2) + 25,
+    "text-anchor": "end",
   });
   glyph.textContent = loopGlyph(loop);
   link.append(glyph);
+
+  const label = svgElement("text", {
+    class: "node-label",
+    x: labelOffset,
+    y: current ? 4 + labelYOffset : (contextual ? 6 : (compact ? 9 : 8)) + labelYOffset,
+    "text-anchor": "middle",
+  });
+  graphLabel(loopCopy(loop).label).slice(0, 2).forEach((line, index) => {
+    const part = svgElement("tspan", {
+      x: labelOffset,
+      dy: index === 0 ? 0 : (current ? 20 : (contextual ? 13 : (compact ? 18 : 16))),
+    });
+    part.textContent = line;
+    label.append(part);
+  });
+  link.append(label);
 
   group.append(link);
   svg.append(group);
@@ -609,7 +605,17 @@ function appendContextConstellation(svg, loop, selected, x, y) {
       x2: nodeX,
       y2: nodeY,
     }));
-    appendGraphNode(constellation, item, nodeX, nodeY, item.id === selected.id ? 26 : 20);
+    appendGraphNode(
+      constellation,
+      item,
+      nodeX,
+      nodeY,
+      item.id === selected.id ? 26 : 20,
+      false,
+      0,
+      0,
+      "context",
+    );
   });
   appendGraphNode(
     constellation,
@@ -627,7 +633,22 @@ function renderGraph(loop) {
   const stage = document.querySelector("[data-atlas-stage]");
   svg.innerHTML = "";
   const compact = window.matchMedia("(max-width: 560px)").matches;
-  svg.setAttribute("viewBox", compact ? "0 0 760 760" : "0 0 1440 900");
+  const children = loop.children.map(atlasLoop);
+  const compactRows = Math.ceil(children.length / 2);
+  const compactStartY = 345;
+  const compactRowGap = 126;
+  const compactViewHeight = Math.max(
+    620,
+    compactStartY + Math.max(compactRows - 1, 0) * compactRowGap + 72,
+  );
+  svg.setAttribute("viewBox", compact ? `0 0 390 ${compactViewHeight}` : "0 0 1440 900");
+  svg.setAttribute("preserveAspectRatio", compact ? "xMidYMin meet" : "xMidYMid meet");
+  if (compact) {
+    const renderedHeight = Math.ceil(compactViewHeight * (stage.clientWidth / 390));
+    stage.style.setProperty("--atlas-compact-height", `${Math.max(600, renderedHeight)}px`);
+  } else {
+    stage.style.removeProperty("--atlas-compact-height");
+  }
   appendGraphDefs(svg);
 
   const previous = previousLoopId ? atlasLoop(previousLoopId) : null;
@@ -643,8 +664,8 @@ function renderGraph(loop) {
     });
   }
 
-  const centerX = compact ? 380 : 1060;
-  const centerY = compact ? 370 : 450;
+  const centerX = compact ? 195 : 1060;
+  const centerY = compact ? 155 : 450;
   if (!compact) {
     appendContextConstellation(svg, loop, loop, 260, centerY);
     svg.append(svgElement("path", {
@@ -669,15 +690,17 @@ function renderGraph(loop) {
     svg.append(arrow);
   }
 
-  const children = loop.children.map(atlasLoop);
-  const compactLabelOffsets = children.length > 8
-    ? [0, 24, -24, -20, 0, 0, 0, 24, 0, -24]
-    : [];
   const positions = children.map((child, index) => {
+    if (compact) {
+      return {
+        child,
+        index,
+        x: index % 2 === 0 ? 101 : 289,
+        y: compactStartY + Math.floor(index / 2) * compactRowGap,
+      };
+    }
     const count = Math.max(children.length, 1);
-    const ring = compact
-      ? (children.length > 8 && index % 2 ? 272 : 220)
-      : (children.length > 8 && index % 2 ? 272 : 218);
+    const ring = children.length > 8 && index % 2 ? 272 : 218;
     const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
     return {
       child,
@@ -688,12 +711,14 @@ function renderGraph(loop) {
   });
 
   positions.forEach(({ x, y }) => {
+    const startY = compact ? centerY + 63 : centerY;
+    const endY = compact ? y - 46 : y;
     svg.append(svgElement("path", {
       class: "graph-link",
-      d: `M ${centerX} ${centerY} C ${centerX} ${(centerY + y) / 2}, ${x} ${(centerY + y) / 2}, ${x} ${y}`,
+      d: `M ${centerX} ${startY} C ${centerX} ${(startY + endY) / 2}, ${x} ${(startY + endY) / 2}, ${x} ${endY}`,
     }));
     const dotX = centerX + (x - centerX) * 0.56;
-    const dotY = centerY + (y - centerY) * 0.56;
+    const dotY = startY + (endY - startY) * 0.56;
     svg.append(svgElement("circle", { class: "graph-link-dot", cx: dotX, cy: dotY, r: 3 }));
   });
 
@@ -704,10 +729,21 @@ function renderGraph(loop) {
     y,
     compact ? 28 : 30,
     false,
-    compact ? (compactLabelOffsets[index] || 0) : 0,
-    compact && index === 0 ? -28 : 0,
+    0,
+    0,
+    compact ? "compact" : "default",
   ));
-  appendGraphNode(svg, loop, centerX, centerY, compact ? 76 : 82, true);
+  appendGraphNode(
+    svg,
+    loop,
+    centerX,
+    centerY,
+    compact ? 76 : 82,
+    true,
+    0,
+    0,
+    compact ? "compact-current" : "default",
+  );
   previousLoopId = loop.id;
 }
 
