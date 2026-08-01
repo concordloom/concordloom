@@ -10,7 +10,7 @@
     "workshop": "node tests/frontend/server.mjs",
     "test:frontend": "playwright test",
     "test:frontend:chromium": "playwright test --project=desktop-chromium --project=mobile-chromium",
-    "test:frontend:evidence": "playwright test --project=visual-desktop --project=visual-mobile"
+    "test:frontend:evidence": "playwright test --project=visual-small-mobile --project=visual-mobile --project=visual-phone-landscape --project=visual-tablet-portrait --project=visual-tablet-landscape --project=visual-desktop --project=visual-wide"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.12.1",

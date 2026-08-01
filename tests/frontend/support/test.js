@@ -1,19 +1,33 @@
 const { test: base, expect } = require("@playwright/test");
 
 const test = base.extend({
+  expectedConsoleErrors: [[], { option: true }],
+  expectedRequestFailures: [[], { option: true }],
   diagnostics: [
-    async ({ page }, use, testInfo) => {
+    async ({
+      page,
+      expectedConsoleErrors,
+      expectedRequestFailures,
+    }, use, testInfo) => {
       const consoleErrors = [];
       const pageErrors = [];
       const requestFailures = [];
       const externalRequests = [];
 
       page.on("console", (message) => {
-        if (message.type() === "error") consoleErrors.push(message.text());
+        const expected = expectedConsoleErrors.some((fragment) =>
+          message.text().includes(fragment),
+        );
+        if (message.type() === "error" && !expected) {
+          consoleErrors.push(message.text());
+        }
       });
       page.on("pageerror", (error) => pageErrors.push(error.message));
       page.on("requestfailed", (request) => {
-        if (!request.failure()?.errorText.includes("ERR_ABORTED")) {
+        const expected = expectedRequestFailures.some((fragment) =>
+          request.url().includes(fragment),
+        );
+        if (!expected && !request.failure()?.errorText.includes("ERR_ABORTED")) {
           requestFailures.push(`${request.method()} ${request.url()}: ${request.failure()?.errorText}`);
         }
       });

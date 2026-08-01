@@ -64,13 +64,19 @@ def png_dimensions(path: Path) -> tuple[int, int]:
 
 
 def has_raw_font_stack(authored_css: str) -> bool:
+    authored_rules = re.sub(
+        r"@font-face\s*\{.*?\}",
+        "",
+        authored_css,
+        flags=re.DOTALL,
+    )
     return any(
         "var(--" not in match.group(1)
-        for match in re.finditer(r"font-family:\s*([^;]+)", authored_css)
+        for match in re.finditer(r"font-family:\s*([^;]+)", authored_rules)
     )
 
 
-def has_forbidden_patch_panel_background(authored_css: str) -> bool:
+def has_forbidden_signal_canvas_background(authored_css: str) -> bool:
     return (
         "linear-gradient(" in authored_css
         or "radial-gradient(" in authored_css
@@ -127,7 +133,9 @@ def main() -> int:
         'text("childCount")',
         'text("noChildCount")',
         'aria-hidden="true"',
-        'text("loadError")',
+        '"loadErrorMap"',
+        '"loadErrorDocs"',
+        'text("loadErrorContent")',
     ):
         if marker not in script:
             errors.append(f"dynamic Atlas localization contract is missing {marker}")
@@ -178,7 +186,7 @@ def main() -> int:
     for marker in (
         'href="design-system.css"',
         'href="design-tokens.css"',
-        'data-design-system="patch-panel"',
+        'data-design-system="signal-canvas"',
         'class="view-tabs"',
         'class="atlas-commandbar"',
         "data-atlas-graph",
@@ -187,12 +195,15 @@ def main() -> int:
         'class="atlas-inspector"',
     ):
         if marker not in index.read_text(encoding="utf-8"):
-            errors.append(f"Patch Panel surface is missing {marker}")
+            errors.append(f"Signal Canvas surface is missing {marker}")
     if 'class="system-rail"' in index.read_text(encoding="utf-8"):
         errors.append("public header contains a decorative progress rail instead of navigation")
     for marker in (
-        "--cl-navy-1000",
-        "--cl-mint-500",
+        "--cl-canvas",
+        "--cl-mint",
+        "--cl-blue",
+        "--cl-coral",
+        "--cl-yellow",
         "--cl-font-display",
         "--cl-font-mono",
         "--cl-type-title",
@@ -208,10 +219,9 @@ def main() -> int:
         "--reading-measure",
         "--cl-duration-level",
         ".atlas-graph",
-        ".atlas-history",
         ".atlas-inspector",
-        '.atlas-stage[data-motion="forward"]',
-        '.atlas-stage[data-motion="back"]',
+        '[data-motion="forward"] .level-constellation',
+        '[data-motion="back"] .level-constellation',
         "prefers-reduced-motion",
     ):
         if marker not in token_styles + design_styles:
@@ -240,10 +250,12 @@ def main() -> int:
         errors.append("design token source lacks the four-level authority chain")
     if set(token_source.get("modes", {})) != {"compact", "high-contrast"}:
         errors.append("design token source lacks compact and high-contrast modes")
-    if token_source.get("version") != "3.0.0":
-        errors.append("Patch Panel requires design-token contract 3.0.0")
-    if has_forbidden_patch_panel_background(authored_css):
-        errors.append("Patch Panel authored CSS contains forbidden background art or gradient")
+    if token_source.get("version") != "4.0.0":
+        errors.append("Signal Canvas requires design-token contract 4.0.0")
+    if has_forbidden_signal_canvas_background(authored_css):
+        errors.append(
+            "Signal Canvas CSS contains forbidden background art or gradient"
+        )
     if 'window.addEventListener("scroll"' in script:
         errors.append("site must not run continuous JavaScript on scroll")
     if "offsetWidth" in script or "getBoundingClientRect" in script:
@@ -315,18 +327,19 @@ def main() -> int:
         )
     )
     if (
-        visual_contract.get("id") != "patch-panel-v1"
-        or visual_contract.get("status") != "accepted"
-        or visual_contract.get("reference", {}).get("variant") != 4
+        visual_contract.get("id") != "signal-canvas-v1"
+        or visual_contract.get("status") != "implementation-candidate"
+        or visual_contract.get("reference", {}).get("type")
+        != "interactive-html-concept"
     ):
-        errors.append("Patch Panel visual contract is not the accepted variant 4")
+        errors.append("Signal Canvas visual contract has an unexpected identity")
     for reference in visual_contract.get("reference", {}).get("files", []):
         reference_path = ROOT / reference["path"]
         if not reference_path.is_file():
-            errors.append(f"missing Patch Panel reference: {reference['path']}")
+            errors.append(f"missing Signal Canvas reference: {reference['path']}")
             continue
         if hashlib.sha256(reference_path.read_bytes()).hexdigest() != reference["sha256"]:
-            errors.append(f"Patch Panel reference bytes changed: {reference['path']}")
+            errors.append(f"Signal Canvas reference bytes changed: {reference['path']}")
 
     atlas = json.loads((SITE / "data" / "atlas.json").read_text(encoding="utf-8"))
     loop_ids = {loop["id"] for loop in atlas["loops"]}
@@ -497,8 +510,8 @@ def main() -> int:
                 )
 
     content = json.loads((SITE / "data" / "content.json").read_text(encoding="utf-8"))
-    if len(content.get("documents", [])) != 13:
-        errors.append("Docs hub must expose all 13 bilingual document pairs")
+    if len(content.get("documents", [])) != 14:
+        errors.append("Docs hub must expose all 14 bilingual document pairs")
     for section in ("article", "quickstart"):
         for locale in ("en", "ru"):
             rendered = content.get(section, {}).get(locale, {})

@@ -65,7 +65,7 @@ FRONTEND_LOOPS = [
             "An accepted visual contract and production component boundaries.",
             "A local workshop covering normal, long-copy, loading, empty, error and stale states.",
             "Принятый визуальный контракт и границы компонентов продукта.",
-            "Локальная мастерская с обычным, длинным, загружаемым, пустым, ошибочным и устаревшим состояниями.",
+            "Локальная мастерская с компонентами в обычном состоянии, с длинным текстом, при загрузке, без данных, с ошибкой и с устаревшими данными.",
         ),
         "artifacts": ["frontend-workshop", "state-fixtures"],
         "role": ("frontend implementer", "разработчик интерфейса"),

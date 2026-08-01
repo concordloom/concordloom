@@ -8,21 +8,58 @@
       "zoom_percent": 200
     },
     "atlas": {
+      "child_node_interaction": "select-then-explicitly-open",
       "child_nodes_remain_data_driven": true,
       "current_cycle_is_unambiguous": true,
+      "desktop_minimum_rendered_label_css_px": 14,
       "details_open_on_demand": true,
+      "details_role": "modal-dialog",
       "graph_is_primary_surface": true,
-      "history_survives_drilldown": true,
+      "landscape_layout": "complete-two-row-constellation",
+      "mobile_layout": "single-column-tree",
+      "mobile_minimum_rendered_label_css_px": 16,
       "no_background_art": true,
-      "one_selected_path": true,
-      "reloadable_deep_links": true
+      "no_duplicate_graph_panels": true,
+      "no_permanent_history_panel": true,
+      "node_geometry_consistent_by_layout": true,
+      "one_active_level_per_view": true,
+      "one_breadcrumb_path": true,
+      "reloadable_deep_links": true,
+      "tablet_layout": "two-column-tree"
+    },
+    "interaction": {
+      "browser_back_reverses_spatial_motion": true,
+      "drawer_focus_is_trapped": true,
+      "drawer_focus_is_restored": true,
+      "empty_error_loading_states_required": true,
+      "hover_focus_pressed_selected_states_required": true,
+      "language_switch_preserves_location": true,
+      "no_js_navigation_excludes_interactive_only_destinations": true,
+      "no_js_status_message_fully_visible_on_direct_entry": true,
+      "navigation_represents_destinations_not_decorative_progress": true,
+      "stale_data_state_required": true
     },
     "layout": {
       "document_overflow_tolerance_css_px": 1,
+      "first_useful_content_above_fold_routes": [
+        "concept",
+        "theory",
+        "quickstart",
+        "docs"
+      ],
+      "landscape_inspector_primary_action_above_fold": true,
       "maximum_unrequested_route_scroll_delta_css_px": 2,
       "reading_measure_max_ch": 75,
       "reading_measure_min_ch": 65,
       "stack_breakpoint_css_px": 820
+    },
+    "localization": {
+      "direct_locale_first_paint_matches_request": true,
+      "localized_loop_titles_preserve_whole_words": true,
+      "machine_identifiers_are_secondary": true,
+      "no_wrong_language_fallback_content": true,
+      "primary_russian_copy_has_no_unexplained_english_jargon": true,
+      "technical_digest_is_disclosed_on_demand": true
     },
     "routes": [
       "concept",
@@ -31,9 +68,15 @@
       "atlas",
       "docs"
     ],
+    "workshop": {
+      "consumes_production_tokens": true,
+      "covers_long_copy_and_locale_states": true,
+      "language_control_matches_public_site": true
+    },
     "viewports": [
       "360x800",
       "390x844",
+      "844x390",
       "768x1024",
       "1024x768",
       "1440x900",
@@ -42,43 +85,55 @@
   },
   "baseline_policy": {
     "ci_may_update": false,
+    "manifest_required": true,
     "owner": "accepted-visual-contract",
     "path": "design/frontend/baselines",
     "visual_review_required": true
   },
   "design_direction": {
-    "accent": "friendly mint",
+    "color_roles": {
+      "boundary": "coral",
+      "information": "cobalt",
+      "pending": "yellow",
+      "primary": "mint"
+    },
     "forbidden": [
-      "background illustration behind content",
+      "background illustration behind the Atlas",
       "decorative gradient",
+      "duplicated path navigation",
       "fantasy or RPG ornament",
-      "glowing neon interface",
+      "generic dark SaaS dashboard",
+      "horizontal mobile graph",
       "one-off Atlas styling",
+      "random decorative node glyph",
       "raw color outside token source",
-      "stone or blackened-metal simulation"
+      "tiny scaled desktop labels"
     ],
-    "name": "Patch Panel",
+    "material": "warm canvas with tactile paper modules and black ink boundaries",
+    "name": "Signal Canvas",
     "personality": [
       "serious",
-      "friendly",
-      "modular",
-      "playful in interaction",
+      "informal",
+      "tactile",
+      "confident",
       "startup devtool"
     ],
     "scope": "entire public site"
   },
-  "id": "patch-panel-v1",
+  "id": "signal-canvas-v1",
   "kind": "concordloom.visual-contract",
   "locales": [
     "en",
     "ru"
   ],
   "motion": {
-    "maximum_duration_ms": 420,
+    "compact_landscape_transition": "no-spatial-travel",
+    "interrupted_overlay_policy": "cancel-pending-open-and-focus",
+    "maximum_duration_ms": 340,
     "minimum_duration_ms": 120,
     "purpose": [
       "show selection",
-      "preserve spatial context",
+      "preserve containment context",
       "confirm state changes"
     ],
     "reduced_motion_is_immediate": true
@@ -86,29 +141,34 @@
   "reference": {
     "files": [
       {
-        "path": "design/frontend/startup-atlas-concepts/playful/04-patch-panel/index.html",
-        "sha256": "235a83b39f9cbc5c20c666f8ff7b8908af5beaa9b537271f1dfe59d0cb4c1086"
+        "path": "design/frontend/signal-canvas/CONCEPT.md",
+        "sha256": "77db0baf9b1adce9b79d18f304a4262bfbda7fe77af44ea9868fc34d13e89ee2"
       },
       {
-        "path": "design/frontend/startup-atlas-concepts/playful/04-patch-panel/style.css",
-        "sha256": "19ca1647ba369cede43ea2f25c4f75667748b017ba1e2ac415cc05aea9e9e621"
+        "path": "design/frontend/signal-canvas/index.html",
+        "sha256": "a6ad855b3ac583ba4590360a635059b6f69ab72e554e523922b54acb0b5ae170"
       },
       {
-        "path": "design/frontend/startup-atlas-concepts/shared/base.css",
-        "sha256": "d7d904a6b199c77ce612d65d991dc7b6ecb3b32eb4b4ed7464ff79658b214d83"
-      },
-      {
-        "path": "design/frontend/startup-atlas-concepts/shared/engine.js",
-        "sha256": "5fe309061a5383f74124c4a37086e9226dfb348e50b75b5370b4f4f1ca6344b3"
-      },
-      {
-        "path": "design/frontend/startup-atlas-concepts/shared/data.js",
-        "sha256": "86efc61145d7181f5277258d58e9eadc7cdc1af30c486a45d4c08c62cd4a6f0b"
+        "path": "design/frontend/signal-canvas/style.css",
+        "sha256": "e8f16bca7f47beaca09784976e58445e2a5464dd32fa88ab37dadbd624e35c07"
       }
     ],
-    "type": "interactive-html-concept",
-    "variant": 4
+    "type": "interactive-html-concept"
   },
-  "schema_version": "0.2",
-  "status": "accepted"
+  "schema_version": "0.3",
+  "status": "implementation-candidate",
+  "truth_source": {
+    "normative_file": "design/frontend/visual-contract.json",
+    "production_tokens": "site/design-tokens.json",
+    "projection_rule": "Markdown, workshop, CSS and screenshots must cite this exact contract and may not redefine it."
+  },
+  "verification": {
+    "all_localized_titles_all_viewports_required": true,
+    "critic_must_be_independent": true,
+    "critic_verdict_required": "PASS",
+    "exact_candidate_required": true,
+    "geometry_checks_required": true,
+    "pixel_baselines_required": true,
+    "reference_composition_review_required": true
+  }
 }

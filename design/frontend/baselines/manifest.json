@@ -1,0 +1,798 @@
+{
+  "baseline_set_sha256": "sha256:dd1958c6966f0381b2a1074a18da3709b9659ad7a934cca503086b9bccef9bc3",
+  "contract": {
+    "id": "signal-canvas-v1",
+    "path": "design/frontend/visual-contract.json",
+    "sha256": "sha256:745bdb5b8b8f7a3ffe49f13857cedf1d0e2612b412e121771f7b06f05a66fcc2"
+  },
+  "count": 112,
+  "files": [
+    {
+      "bytes": 34840,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-atlas-details.png",
+      "sha256": "sha256:a22cb8eb0b7616365ad97777bd1f685e43cebf6a69a6373705414c12f2415b2d",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 36299,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-atlas-nested.png",
+      "sha256": "sha256:a7f2647e6bb2dc9c44cf514ebb30ea204383baadd8cd58ab106d7be4729b3967",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 35925,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-atlas.png",
+      "sha256": "sha256:05cea178b20018a32ed47a37a748c250caa4f16c8c98acae5532b131f72d769c",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 48006,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-concept.png",
+      "sha256": "sha256:294b096c51e8fdea1ae5b0d41cd3e3c38fa6f9cf93da8147e53fe2b04a983704",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 33963,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-docs.png",
+      "sha256": "sha256:0db2b26db78db55144f9e88ee5380f912f1527dfd56e5bf36e3b53c537021595",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 40845,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-quickstart.png",
+      "sha256": "sha256:4526a6891e2fbd332e20f6cdf3ecf89079f79cc2f7f6aa888605ff70929fadb6",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 36980,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-theory.png",
+      "sha256": "sha256:080228ac70df2c1c54e912d174912b8ae76eae099cdc0cc11a3e19e7f632e721",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 38643,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-workshop.png",
+      "sha256": "sha256:fc701b49f36284f69228ea752ba06318b6b4d49b124916bf1248aaefb2faa332",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 36192,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-atlas-details.png",
+      "sha256": "sha256:7f5903c99569127fb88e18ed0ff1880dc670e876b079837bfaccf095b9f4811d",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 38970,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-atlas-nested.png",
+      "sha256": "sha256:c8724dcd902ceef763060d81ede7d852063f5d2b540c6559ae61fdcbc7a39a65",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 37434,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-atlas.png",
+      "sha256": "sha256:534bd00e2d62059f89c398f1370daa05aac2fd185db3e10d7fd4cf1c1a7a2537",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 47855,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-concept.png",
+      "sha256": "sha256:3233a2cbdcbb24e3869d84a754ae9154f453910f39f4c70a1e1998a9825a244b",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 32846,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-docs.png",
+      "sha256": "sha256:50903c0a7ab5a2f3158dad573f1ede4a6341583bdb01457cf4be34626be27d67",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 44505,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-quickstart.png",
+      "sha256": "sha256:be5dbe5d2bf1d8dd5ba8893229e0e5477a8a2ae973d2eb43433d55dec07e5696",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 36186,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-theory.png",
+      "sha256": "sha256:5e4da17c43f7f962394fc51af715e80f30734754d06038dec7d0faab9f3ad7a6",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 41720,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-workshop.png",
+      "sha256": "sha256:f0716c88a9a682731bdf4374ee7ae99625c0935f0472e2f3a47833aab712196e",
+      "viewport": "360x800"
+    },
+    {
+      "bytes": 38508,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-atlas-details.png",
+      "sha256": "sha256:2820edb5ba56208c53de3285fdb7ae6fbd2b575346fcf1a355ca67c5b14fb26b",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 39406,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-atlas-nested.png",
+      "sha256": "sha256:525f1ca82956f89f6c56373eadeba668570f0b093b35e01bc8ff61c422764a50",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 39290,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-atlas.png",
+      "sha256": "sha256:1d29ab61e216828c23bde4205aa9619f0d2c21cd19cf05e774db89a4dadec187",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 51697,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-concept.png",
+      "sha256": "sha256:03f60661c21be1e3f4f9a6254128c34de8fd2cbb51b2226558ee5dee7bbe91e3",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 38506,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-docs.png",
+      "sha256": "sha256:f8b8ffae12ca67b3573ce8b8d4c8120b2e729a66f574a5df676983c414abdaf9",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 45738,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-quickstart.png",
+      "sha256": "sha256:3f2c302eabd5db52ae3f39babbf81bf2faddf951b0b9932c264a8f9693a4a3f2",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 41905,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-theory.png",
+      "sha256": "sha256:e6349f6b991aa65c3cefb18d53f709ce867cb645ba83c0a096d5bb14313ab669",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 41059,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-workshop.png",
+      "sha256": "sha256:3f3b0882fb47f0d6d4a3dd14842bb9dc86ecaed42b39021e7da8b88183cc5a64",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 37492,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-atlas-details.png",
+      "sha256": "sha256:83bdfa2aadf6224a988fa8eae6d364384cc65f428d59e8f94f691123cfb60665",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 42050,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-atlas-nested.png",
+      "sha256": "sha256:643caec80e66ebf8a94c4ed4afb93aecaa057d6afb4131de651f973ec8e40f9a",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 40601,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-atlas.png",
+      "sha256": "sha256:fac0862c18f36292e62fcf8472bb2647479595b9656597eabe3c7567e894d24e",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 50212,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-concept.png",
+      "sha256": "sha256:8422a6fbe08587b2db4658a1552a9ad56f717aed481c7cff915596db074337a1",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 35695,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-docs.png",
+      "sha256": "sha256:6f7d15e1e2ab410d5738b6d652f8fdc664a6b062f8548a62f3709d5bad5152ea",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 52304,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-quickstart.png",
+      "sha256": "sha256:6bf1159afa907a87070271e5b3db4ccad626992f71f0c36aa9c504e598746198",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 43197,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-theory.png",
+      "sha256": "sha256:4077a2f50ffcf043df467886a0b9c56062d262ea41d59d5fd77c3ce81d614922",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 44038,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-workshop.png",
+      "sha256": "sha256:1d738c0f5d20c04c1ee3deb6deac2b2183bbaa96179f02a9642dfca644e4af57",
+      "viewport": "390x844"
+    },
+    {
+      "bytes": 34651,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-atlas-details.png",
+      "sha256": "sha256:88d427acd9320651c3068dfff7ead762f45403347aad621aab855015408a750c",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 36260,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-atlas-nested.png",
+      "sha256": "sha256:28a6852d1f3d3f9b6fb7cf7bf733bb01d1d36e32017a78c12fb0c8cec6d969c9",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 43582,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-atlas.png",
+      "sha256": "sha256:4ec1d0772051024a9fbf82ffbe834c524910d2d230627f1ba35fb7f2446abb3f",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 48580,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-concept.png",
+      "sha256": "sha256:094261456bc08ae152872ba14f4711d46fb96dfb1d6a9370a00e7e95be894543",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 33024,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-docs.png",
+      "sha256": "sha256:45d345e97d4e6de55345f3fe9214ef98ca290dd1bd6b991b615922620f8ff5a0",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 45717,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-quickstart.png",
+      "sha256": "sha256:954f91bea437654e2454fed6aa68b5f85fdb0f72d4d1d5ac2e334bfb57e35e90",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 34671,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-theory.png",
+      "sha256": "sha256:c91b46313b7dc99fb4fe02f7d3dd420aa0d48b0c521fc3a9e898903bb8714105",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 33173,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-workshop.png",
+      "sha256": "sha256:4ed2eadb73b406ceafa7b93ff3abdd68426c37586516fcf1c64ef2fd8c672dd0",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 37802,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/ru-atlas-details.png",
+      "sha256": "sha256:6eddf5c735c48def62e6752c54d1580253803df5fcc97a91c489ba17f868d506",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 37774,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/ru-atlas-nested.png",
+      "sha256": "sha256:130b16ffbd0353d7be6af88603cc524c3f34ff3c40cfbbdb56038ab1bc66064d",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 42974,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/ru-atlas.png",
+      "sha256": "sha256:ce7ebbd41f1de6b5e4a37397f5ab9c66eac76a68efd0d380c3ce67cc2835bb4b",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 50776,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/ru-concept.png",
+      "sha256": "sha256:1e78ddcb62b3468e232616a657ce58581406181eb8db83cfb2599bd2bd5ec4cf",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 33648,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/ru-docs.png",
+      "sha256": "sha256:ee728f80d4083c464093bd6bc9607f25c497d17c71811abd0faec9602e14766c",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 43373,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/ru-quickstart.png",
+      "sha256": "sha256:ec1069c3bf15874862971b9597ac4eb76982c2f59cd06c7a3e2a35e87eb19b47",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 38248,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/ru-theory.png",
+      "sha256": "sha256:8bb02d4270d24a7850fafe5b2a2e002e9a91ef9e03167c95fa80c5aa0730b2f3",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 36034,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/ru-workshop.png",
+      "sha256": "sha256:64ba26e06d384af2294c8c7eb94e9030ad9526379c26f97d90d8630722091a43",
+      "viewport": "844x390"
+    },
+    {
+      "bytes": 78176,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-atlas-details.png",
+      "sha256": "sha256:6773d53d08945876f7e9e4acd13005603015fb59513b48ae3262b57196e1434d",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 48730,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-atlas-nested.png",
+      "sha256": "sha256:6d46fa751d5cfa9397c75b5a053c34f4e83c17e8902452e189ea3c88535598fc",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 63205,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-atlas.png",
+      "sha256": "sha256:facf8fc389e2ed4b8f550ee69cf3d63806057b14e5585632da565b2de02fcf8a",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 70002,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-concept.png",
+      "sha256": "sha256:10288f1e373d1fbfee20f9eeba9c4be389b5f34f8fedb9b06172ed345fee8fbd",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 62723,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-docs.png",
+      "sha256": "sha256:bd70181e551f3e49b177716339c261387bf0e3f4be0d6aa2f378df503a5435b1",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 77756,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-quickstart.png",
+      "sha256": "sha256:1a10e528eace27241161588fc7cd677392e97879fc3b635e9bcb57d13e2e189f",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 89798,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-theory.png",
+      "sha256": "sha256:89508a4ba6b87c5c674700cb8621bb0e04db2f9fb6bce7049a001b526edf1636",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 73377,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-workshop.png",
+      "sha256": "sha256:c962bb162ddce15bdb7711bb4e87d090025469bb35ae7d2ec299f016069da258",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 84242,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-atlas-details.png",
+      "sha256": "sha256:a380d6fac5f76cd624124dbab4895a70d7bdb627fd617a30b0becca8b49dc90f",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 54617,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-atlas-nested.png",
+      "sha256": "sha256:79f56d9b719bb22c3ab08598515b875b983418b86614c505bfcf60d1f515662c",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 65778,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-atlas.png",
+      "sha256": "sha256:87921a25d48d27caabaf678295aea77611c9820a4202a4c7e4026f2268817644",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 72198,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-concept.png",
+      "sha256": "sha256:2332c4198305573c4284e7c89ea8ee77693ec5a614fc557c85ccade36572644e",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 65190,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-docs.png",
+      "sha256": "sha256:1c5410749c5cabed11522264819335e3fa2f005d4463ef00f5620944edb6344d",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 79970,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-quickstart.png",
+      "sha256": "sha256:cd557308e78d6b759a710a68b14125361f75537354eca72ba1c34e7d4bb6f8fa",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 95903,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-theory.png",
+      "sha256": "sha256:6e8ddcb51b7646342ad224c01dfe2c60e37a5aca03f1732aefea755bbc0704dc",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 81913,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-workshop.png",
+      "sha256": "sha256:bb34852bade61e061a5382fdcab9c047cc05af6bba143008a0ed8c7cbb7a35ea",
+      "viewport": "768x1024"
+    },
+    {
+      "bytes": 87697,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-atlas-details.png",
+      "sha256": "sha256:2b76bf03f61863365a6b90d0daf45409c8ed5d3a620713a61154c69a38128dca",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 61625,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-atlas-nested.png",
+      "sha256": "sha256:4611cf5b4a2eba1524d61368514bb818c0dd4862c93e34914840f8f83151d091",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 62207,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-atlas.png",
+      "sha256": "sha256:967794b9650c06705d8c444a1d33efd1b7abd69052b9d637bf6dc377d56b8244",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 78653,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-concept.png",
+      "sha256": "sha256:d5e98bcaf20fbd63cc666f09b7b11f7c74c0920231a579da136cdaec4ef18a02",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 58810,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-docs.png",
+      "sha256": "sha256:2edf39fd0673620635aa85c61a6bc7115309df6de8019c0a8dcbe85c33469102",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 79155,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-quickstart.png",
+      "sha256": "sha256:29888294c9a346b870272cd9d5492847976b156d1e0c598fa840772ea2e3b7f4",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 89892,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-theory.png",
+      "sha256": "sha256:7e7bc8584d5742a7e4e736c27fcbf9e93ceff88555eaeeaaad33407a6f061fc4",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 54613,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-workshop.png",
+      "sha256": "sha256:b935836b7b72bbaa517664844a3aba89f5743e77857c1052d7f2c0345f196651",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 91211,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-atlas-details.png",
+      "sha256": "sha256:45fbf7b16218d4e9264ab102f0252710ab2bc2a2e56533c7c4343fe84fe25dc6",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 66080,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-atlas-nested.png",
+      "sha256": "sha256:b9f7262bda691a4deccd2c70c4efa0a37407968663043ad55f1ff5e2f20332fd",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 63683,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-atlas.png",
+      "sha256": "sha256:4b5274e226e64d19ceedc4e9da67197a93e370f2cb4472e225b526d4a5dba3ce",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 79551,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-concept.png",
+      "sha256": "sha256:eab948c9a06e770e5028e1e530d3fe286b4760930ad519962d279e28b73d21ee",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 61677,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-docs.png",
+      "sha256": "sha256:5d439c0d6e5593a06599bd273d27be3cc195ae3991c16569d0fc3809dfef9fd9",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 84861,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-quickstart.png",
+      "sha256": "sha256:a0d33a10cd65719880319441411ddd1d4e3ee68da5d43f296089c7d4bc6bddcc",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 97041,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-theory.png",
+      "sha256": "sha256:dd5671828449eec353dcf97082a250b337a398bea587b9ab52658170f62f5884",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 58978,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-workshop.png",
+      "sha256": "sha256:84632b17734cd3f8b46ea18681c33c2bc8419302c769f848a8ce618207c34b48",
+      "viewport": "1024x768"
+    },
+    {
+      "bytes": 114199,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-atlas-details.png",
+      "sha256": "sha256:e1ef9ec2aa1e1261aa17fee3188ba7291f227020b79313dd7ac62ff11371b414",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 68140,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-atlas-nested.png",
+      "sha256": "sha256:2461fa16c7a637d94c643776f7d6dafc94b7cf7f175e70aefd46999cd3d34d9d",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 100088,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-atlas.png",
+      "sha256": "sha256:aac2d6875ed69a18ed917cb2a5d2fc7b381d3a13f24f9091143e6df971bf0465",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 98055,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-concept.png",
+      "sha256": "sha256:d493fb822e66ccdca141aa6b9865d175d60bce20e8274e4a86b5bc316d5d975d",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 72492,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-docs.png",
+      "sha256": "sha256:43190a7693297b829c36f3faa5acb80f8037dc16e9478b955b6695b730e490bb",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 92679,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-quickstart.png",
+      "sha256": "sha256:e456ba9ce08d2b3edcc2ce86422e4ccaa79308f38893f0f024f8c8646eee4314",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 107717,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-theory.png",
+      "sha256": "sha256:f43f601ed60c71c8ac6158782fbe24181c9dac0de079f270bb7ebaf1cb7ca987",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 105432,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-workshop.png",
+      "sha256": "sha256:9737069f11eaf7149f51c693e67c19eb47d0540a8020b2629727966e6db99592",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 117618,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-atlas-details.png",
+      "sha256": "sha256:a86ca7ed36664d1f726c4b72ed44aeb0b134ae2464af77824928e9045be5786a",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 75223,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-atlas-nested.png",
+      "sha256": "sha256:f1f953957cb7fcb6241411195581b853ac3436de9695768fa7e92612a08a6ad7",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 100872,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-atlas.png",
+      "sha256": "sha256:f1721bd19b616504d590f2c46385f268409d0f83930aee10c10b73066255d3bd",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 97731,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-concept.png",
+      "sha256": "sha256:0ee46259ea73a6a2a0aea2377a5f6bbbe89de785634f94dcedec286513274a18",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 77005,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-docs.png",
+      "sha256": "sha256:16eebda9bc1861188a074ab6da1dc52825b955ba28106a7bf2fd7df0389cd818",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 96582,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-quickstart.png",
+      "sha256": "sha256:7d0a7c5f269680a5ec2f635bde41e910fd2920f87aa229beec63d353e5da2b67",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 116121,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-theory.png",
+      "sha256": "sha256:57b2daa53560231e3641abe4baa977c32c7a7e1df860060319c722d3048981aa",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 105953,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-workshop.png",
+      "sha256": "sha256:d9ead54d2513224d9512ef41cd62e965ba3d6edc03c52b4939c9a23f9785cf6e",
+      "viewport": "1440x900"
+    },
+    {
+      "bytes": 149725,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-atlas-details.png",
+      "sha256": "sha256:4223d60c61d7242a898aaaf86a59458fd18e7a88435494646dfa09bb2289e560",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 82756,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-atlas-nested.png",
+      "sha256": "sha256:41f43f554d6e49c586f911172d87dadb5719bab28269f0abcbe8db7abd2519a1",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 129839,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-atlas.png",
+      "sha256": "sha256:679f4ee706fb383c8bfc00bc4a4319436cbc629e97750d570dd449e2ea78a4fb",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 110746,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-concept.png",
+      "sha256": "sha256:b3592120d262fe4c41eeb5f5c860420c59ef6dac020ff3d7afd2a76d69d5ddff",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 88218,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-docs.png",
+      "sha256": "sha256:98562eaa9606c5e5e8361bd730e41c32c1395e90e7a9fc51d2b34a432b05d4be",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 110492,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-quickstart.png",
+      "sha256": "sha256:cf5dcfd4974e68cb6987e5f7ebe6183511ada7dd541bd87a9eb3f9c1db7901b9",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 137024,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-theory.png",
+      "sha256": "sha256:96a9a63b4ebbd2fb1cde94486ae19a2d42a960287e955436a74d3574270ff8fe",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 119326,
+      "language": "en",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-workshop.png",
+      "sha256": "sha256:b96c4408328e3b8f71244f658546b1c9966c6e1ab6035e536772c79c1e5e0ded",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 155474,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-atlas-details.png",
+      "sha256": "sha256:966884887a7370b3f5bd6b3e3c16811bb4340cec7153916d64e3e29ff3dc2e77",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 91454,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-atlas-nested.png",
+      "sha256": "sha256:ad3e11948b8b769c0d6e0c68f30a6d9801ef04603ff0dfe6d88017fb86cc6aba",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 131134,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-atlas.png",
+      "sha256": "sha256:07ea3847f265b911abd48f57662ec906bcb991723528e0a9c27ac1507cd03c77",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 113728,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-concept.png",
+      "sha256": "sha256:a35a3525f7d15da0cf6ce3da1b49563c5f4e4a816c44557dc93d3a2053315aa0",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 91521,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-docs.png",
+      "sha256": "sha256:b2e8da6d14d3e31ce162bc82cfb5789b2a16a76aaf67a4998134346aba92f576",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 114971,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-quickstart.png",
+      "sha256": "sha256:170447a774b0cd03c633c68652b16f728c05215d752176f61a00a9c04cd82d39",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 152186,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-theory.png",
+      "sha256": "sha256:b6b6b3b5a6d01f0950771c79df64a8ddbed16405f725afc2a195e11c4ac786b7",
+      "viewport": "1920x1080"
+    },
+    {
+      "bytes": 135181,
+      "language": "ru",
+      "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-workshop.png",
+      "sha256": "sha256:82d229129ee5f44d4a1f8de36d2b1f0fbbda290fff82d2e1d9f0084ef1d6d130",
+      "viewport": "1920x1080"
+    }
+  ],
+  "kind": "concordloom.visual-baseline-manifest",
+  "schema_version": "0.1",
+  "status": "candidate-evidence"
+}

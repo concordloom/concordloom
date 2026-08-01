@@ -1,9 +1,30 @@
 <!doctype html>
-<html lang="en" style="color-scheme: dark" data-design-system="patch-panel">
+<html lang="en" class="no-js" style="color-scheme: light" data-design-system="signal-canvas">
   <head>
     <meta charset="utf-8">
+    <script>
+      (() => {
+        document.documentElement.classList.replace("no-js", "js");
+        const requested = new URLSearchParams(location.search).get("lang");
+        let stored = null;
+        try {
+          stored = localStorage.getItem("concordloom-language");
+        } catch {
+          stored = null;
+        }
+        const language =
+          (requested === "en" || requested === "ru" ? requested : null)
+          || (stored === "en" || stored === "ru" ? stored : null)
+          || "en";
+        document.documentElement.lang = language;
+        document.documentElement.dataset.initialLanguage = language;
+        if (language === "ru") {
+          document.documentElement.dataset.languagePending = "ru";
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0b1218">
+    <meta name="theme-color" content="#f3f0e8">
     <meta name="description" content="Concord Loom shows how a project changes, one connected cycle at a time."
       data-en-content="Concord Loom shows how a project changes, one connected cycle at a time."
       data-ru-content="Concord Loom показывает, из каких связанных циклов состоит работа над проектом.">
@@ -23,13 +44,13 @@
     <link rel="stylesheet" href="design-system.css">
     <script src="app.js" defer></script>
   </head>
-  <body tabindex="-1" data-design-system="patch-panel">
+  <body tabindex="-1" data-design-system="signal-canvas">
     <!--
       THESIS: Concord Loom makes the accepted system readable as connected work, not as decorative machinery or a documentation dashboard.
-      OWN-WORLD: Deep navy panels, rounded modules, visible ports, plain system type and one friendly mint signal; no background art, gradients or fantasy chrome.
+      OWN-WORLD: Warm canvas, black ink boundaries, tactile paper modules, friendly mint signal, cobalt information, coral boundaries and yellow pending choices.
       STORY: Understand the product, learn the grammar, start safely, open the Atlas and inspect any cycle without losing the path.
       FIRST VIEWPORT: A clear product promise and primary Atlas action sit beside a live patch module; accepted system facts remain visible below.
-      FORM: User-approved Patch Panel across every route; seed key patch-panel-user-lock-2026-07-29.
+      FORM: Signal Canvas implementation candidate across every route.
       FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
     -->
     <noscript>
@@ -45,8 +66,7 @@
     <header class="site-header">
       <a class="brand" href="#concept" data-view-link="concept" aria-label="Concord Loom home" translate="no"
         data-en-aria-label="Concord Loom home" data-ru-aria-label="Главная Concord Loom">
-        <img src="assets/concordloom-mark-192.png" width="40" height="40" alt="Concord Loom mark"
-          data-en-alt="Concord Loom mark" data-ru-alt="Знак Concord Loom">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
         <span>CONCORD LOOM</span>
       </a>
       <button class="menu-switch" type="button" aria-expanded="false" aria-controls="primary-nav">
@@ -70,31 +90,50 @@
     <main id="main">
       <div class="view is-active" id="concept" data-view="concept">
         <section class="hero">
-          <div class="hero-machine" aria-hidden="true">
-            <div class="hero-machine-core"></div>
-            <div class="hero-machine-signal"></div>
-          </div>
           <div class="hero-copy reveal">
+            <p class="hero-kicker">
+              <i aria-hidden="true"></i>
+              <span data-en="YOUR PROJECT, MADE NAVIGABLE" data-ru="ПРОЕКТ, В КОТОРОМ ЛЕГКО ОРИЕНТИРОВАТЬСЯ">YOUR PROJECT, MADE NAVIGABLE</span>
+            </p>
             <h1>
-              <span data-en="See how the work connects." data-ru="Посмотрите, как связана работа.">See how the work connects.</span>
-              <em data-en="Open every cycle." data-ru="Откройте любой цикл.">Open every cycle.</em>
+              <span data-en="Map the work." data-ru="Увидьте работу.">Map the work.</span>
+              <em data-en="Change it on purpose." data-ru="Меняйте её осознанно.">Change it on purpose.</em>
             </h1>
             <div class="hero-bottom">
               <p
-                data-en="The Atlas shows which cycles make up the project, what each one produces, and where to go next."
-                data-ru="Атлас показывает, из каких циклов состоит проект, что даёт каждый цикл и куда перейти дальше."
-              >The Atlas shows which cycles make up the project, what each one produces, and where to go next.</p>
-              <a class="primary-cta" href="#atlas">
-                <span data-en="Open the Atlas" data-ru="Открыть Атлас">Open the Atlas</span>
-                <span aria-hidden="true">→</span>
-              </a>
+                data-en="Concord Loom turns a project into a map you can open, correct and improve—without learning the machinery behind it."
+                data-ru="Concord Loom превращает проект в карту, которую можно открыть, исправить и улучшить — без изучения внутреннего устройства."
+              >Concord Loom turns a project into a map you can open, correct and improve—without learning the machinery behind it.</p>
+              <div class="hero-actions">
+                <a class="primary-cta" href="#atlas" data-atlas-entry aria-disabled="true">
+                  <span data-en="Open the Atlas" data-ru="Открыть Атлас">Open the Atlas</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+                <a class="secondary-cta" href="#quickstart" data-en="Get your first map" data-ru="Получить первую карту">Get your first map</a>
+              </div>
             </div>
           </div>
-          <div class="hero-readout" aria-label="Atlas capabilities"
-            data-en-aria-label="Atlas capabilities" data-ru-aria-label="Возможности Атласа">
-            <p><span data-loop-count>0</span><b data-en="cycles in the accepted map" data-ru="циклов в утверждённой карте">cycles in the accepted map</b></p>
-            <p><span>↳</span><b data-en="clear path through every level" data-ru="понятный путь по всем уровням">clear path through every level</b></p>
-            <p><span>1</span><b data-en="active version of the rules" data-ru="действующая версия правил">active version of the rules</b></p>
+          <div class="hero-map reveal" aria-label="Interactive Atlas preview"
+            data-en-aria-label="Interactive Atlas preview" data-ru-aria-label="Интерактивный фрагмент Атласа">
+            <div class="hero-map-head">
+              <strong data-en="LIVE PROJECT MAP" data-ru="ЖИВАЯ КАРТА ПРОЕКТА">LIVE PROJECT MAP</strong>
+              <span><b data-loop-count>…</b> <i data-en="cycles" data-ru="циклов">cycles</i></span>
+            </div>
+            <svg data-hero-atlas viewBox="0 0 620 500" role="group"
+              aria-label="Project cycle preview"
+              data-en-aria-label="Project cycle preview"
+              data-ru-aria-label="Фрагмент карты циклов проекта"></svg>
+            <div class="hero-load-state" data-hero-status role="status" aria-live="polite">
+              <p data-hero-status-copy
+                data-en="Loading the project map…"
+                data-ru="Загружаем карту проекта…">Loading the project map…</p>
+              <button type="button" data-reload-site hidden
+                data-en="Reload the page" data-ru="Обновить страницу">Reload the page</button>
+            </div>
+            <p class="hero-map-note">
+              <b>01</b>
+              <span data-en="Select a cycle to open the full Atlas." data-ru="Выберите цикл, чтобы открыть полный Атлас.">Select a cycle to open the full Atlas.</span>
+            </p>
           </div>
         </section>
 
@@ -133,7 +172,10 @@
               <ol data-run-grammar></ol>
               <div class="stage-readout" id="stage-readout" aria-live="polite">
                 <span data-stage-code>O</span>
-                <p data-stage-copy>Collect attributable facts.</p>
+                <p data-stage-copy
+                  data-en="Record what is known and where it came from."
+                  data-ru="Зафиксировать, что известно и откуда это взято."
+                >Record what is known and where it came from.</p>
               </div>
             </div>
           </div>
@@ -163,7 +205,19 @@
           <p data-en="The complete argument, formal model and research agenda." data-ru="Полное обоснование, формальная модель и программа исследований.">The complete argument, formal model and research agenda.</p>
         </header>
         <div class="reading-shell">
-          <aside class="reading-toc" data-content-toc="article"></aside>
+          <aside class="reading-toc">
+            <button class="reading-toc-toggle" type="button" aria-expanded="false">
+              <span data-en="On this page" data-ru="На этой странице">On this page</span>
+              <i aria-hidden="true">＋</i>
+            </button>
+            <nav data-content-toc="article"></nav>
+          </aside>
+          <div class="route-load-state reading-load-state" data-content-status="article"
+            role="status" aria-live="polite" hidden>
+            <p data-en="Loading this page…" data-ru="Загружаем страницу…">Loading this page…</p>
+            <button type="button" data-reload-site hidden
+              data-en="Reload the page" data-ru="Обновить страницу">Reload the page</button>
+          </div>
           <article class="prose" data-content-body="article" aria-live="polite">
             <!-- GENERATED:article:start -->
 <h1 id="article-document-title">Cycles of Cycles: A General Grammar for Governed Change</h1>
@@ -404,7 +458,19 @@ program                               prepare → act → evaluate → ACCEPT
           >Four steps: install the skill, map the project, review the result, then connect the repository.</p>
         </header>
         <div class="reading-shell">
-          <aside class="reading-toc" data-content-toc="quickstart"></aside>
+          <aside class="reading-toc">
+            <button class="reading-toc-toggle" type="button" aria-expanded="false">
+              <span data-en="On this page" data-ru="На этой странице">On this page</span>
+              <i aria-hidden="true">＋</i>
+            </button>
+            <nav data-content-toc="quickstart"></nav>
+          </aside>
+          <div class="route-load-state reading-load-state" data-content-status="quickstart"
+            role="status" aria-live="polite" hidden>
+            <p data-en="Loading this page…" data-ru="Загружаем страницу…">Loading this page…</p>
+            <button type="button" data-reload-site hidden
+              data-en="Reload the page" data-ru="Обновить страницу">Reload the page</button>
+          </div>
           <article class="prose" data-content-body="quickstart" aria-live="polite">
             <!-- GENERATED:quickstart:start -->
 <h1 id="quickstart-document-title">Concord Loom quickstart</h1>
@@ -503,44 +569,50 @@ concordloom questions \
         <h1 class="visually-hidden" data-en="Concord Loom Atlas" data-ru="Атлас Concord Loom">Concord Loom Atlas</h1>
         <section class="atlas-commandbar" aria-label="Accepted development system"
           data-en-aria-label="Accepted development system" data-ru-aria-label="Принятая система разработки">
-          <p><span data-en="PRODUCT" data-ru="ПРОДУКТ">PRODUCT</span><strong data-product-release>0.1.0</strong></p>
-          <p><span data-en="RULES" data-ru="ПРАВИЛА">RULES</span><strong data-atlas-binding data-en="Loading…" data-ru="Загрузка…">Loading…</strong></p>
-          <p><span data-en="MAIN CYCLE" data-ru="ГЛАВНЫЙ ЦИКЛ">MAIN CYCLE</span><strong data-atlas-root data-en="Loading…" data-ru="Загрузка…">Loading…</strong></p>
-          <p><span data-en="CYCLES" data-ru="ЦИКЛЫ">CYCLES</span><strong data-atlas-count>0</strong></p>
           <p class="atlas-live-state"><i aria-hidden="true"></i><strong data-en="ACCEPTED MAP" data-ru="ПРИНЯТАЯ КАРТА">ACCEPTED MAP</strong></p>
+          <p><span data-en="VERSION" data-ru="ВЕРСИЯ">VERSION</span><strong data-product-release>0.1.0</strong></p>
+          <p><span data-en="RULES" data-ru="ПРАВИЛА">RULES</span><strong data-atlas-binding data-en="Loading…" data-ru="Загрузка…">Loading…</strong></p>
+          <p><span data-en="CYCLES" data-ru="ЦИКЛЫ">CYCLES</span><strong data-atlas-count>…</strong></p>
+          <p class="visually-hidden"><span data-en="MAIN CYCLE" data-ru="ГЛАВНЫЙ ЦИКЛ">MAIN CYCLE</span><strong data-atlas-root data-en="Loading…" data-ru="Загрузка…">Loading…</strong></p>
         </section>
 
         <section class="atlas-workbench">
-          <nav class="atlas-breadcrumbs" data-atlas-breadcrumbs aria-label="Cycle path"
-            data-en-aria-label="Cycle path" data-ru-aria-label="Путь по циклам"></nav>
+          <header class="atlas-navigation">
+            <a class="atlas-up" data-atlas-up href="#atlas" hidden>
+              <span aria-hidden="true">←</span>
+              <span data-en="Up one level" data-ru="На уровень выше">Up one level</span>
+            </a>
+            <nav class="atlas-breadcrumbs" data-atlas-breadcrumbs aria-label="Cycle path"
+              data-en-aria-label="Cycle path" data-ru-aria-label="Путь по циклам"></nav>
+            <p data-atlas-provenance></p>
+          </header>
+          <ol class="visually-hidden" data-atlas-history></ol>
           <div class="atlas-console">
-            <aside class="atlas-history" aria-label="Path to selected cycle"
-              data-en-aria-label="Path to selected cycle" data-ru-aria-label="Путь к выбранному циклу">
-              <p class="instrument-label" data-en="PATH" data-ru="ПУТЬ">PATH</p>
-              <ol data-atlas-history></ol>
-            </aside>
             <div class="atlas-stage" data-atlas-stage>
               <div class="atlas-map-head">
                 <div>
                   <p class="instrument-label" data-en="INSIDE SELECTED CYCLE"
                     data-ru="ЧТО ВХОДИТ В ВЫБРАННЫЙ ЦИКЛ">INSIDE SELECTED CYCLE</p>
-                  <a class="atlas-up" data-atlas-up href="#atlas" hidden>
-                    <span aria-hidden="true">←</span>
-                    <span data-en="Up one level" data-ru="На уровень выше">Up one level</span>
-                  </a>
                 </div>
-                <p data-atlas-provenance></p>
+                <p data-en="Choose a card to see details. Open it from the sheet to move deeper."
+                  data-ru="Выберите карточку, чтобы увидеть детали. Переход внутрь — отдельная кнопка в панели.">Choose a card to see details. Open it from the sheet to move deeper.</p>
               </div>
-              <svg class="atlas-graph" data-atlas-graph viewBox="0 0 1440 900"
+              <svg class="atlas-graph" data-atlas-graph viewBox="0 0 1440 820"
                 role="group" aria-label="Contained cycle map"
                 data-en-aria-label="Contained cycle map" data-ru-aria-label="Карта вложенных циклов"></svg>
+              <div class="route-load-state atlas-load-state" data-atlas-status role="status" aria-live="polite">
+                <p data-en="Loading the accepted project map…"
+                  data-ru="Загружаем принятую карту проекта…">Loading the accepted project map…</p>
+                <button type="button" data-reload-site hidden
+                  data-en="Reload the page" data-ru="Обновить страницу">Reload the page</button>
+              </div>
               <p class="atlas-empty" data-atlas-empty hidden></p>
             </div>
-            <button class="atlas-inspector-scrim" data-atlas-inspector-scrim type="button"
-              data-en-aria-label="Close cycle details" data-ru-aria-label="Закрыть сведения о цикле"
-              aria-label="Close cycle details" hidden></button>
-            <aside class="atlas-inspector" data-atlas-inspector aria-live="polite"
-              aria-hidden="true" inert></aside>
+            <div class="atlas-inspector-scrim" data-atlas-inspector-scrim
+              aria-hidden="true" hidden></div>
+            <aside class="atlas-inspector" data-atlas-inspector role="dialog" aria-modal="true"
+              aria-labelledby="atlas-inspector-title" aria-live="polite"
+              aria-hidden="true" tabindex="-1" inert></aside>
           </div>
         </section>
 
@@ -562,8 +634,26 @@ concordloom questions \
         <header class="reading-hero">
           <p class="kicker" data-en="DOCUMENTATION" data-ru="ДОКУМЕНТАЦИЯ">DOCUMENTATION</p>
           <h1 data-en="Find the answer at the right depth." data-ru="Найдите ответ без лишних деталей.">Find the answer at the right depth.</h1>
+          <p
+            data-en="Start with a task, then open the theory, governance or reference material only when you need it."
+            data-ru="Начните с задачи, а к теории, правилам и справочным материалам переходите по мере необходимости."
+          >Start with a task, then open the theory, governance or reference material only when you need it.</p>
         </header>
-        <section class="docs-grid" data-docs-grid aria-live="polite"></section>
+        <section class="docs-grid" data-docs-grid aria-live="polite">
+          <div class="route-load-state docs-load-state" data-docs-status role="status">
+            <p data-en="Loading the documentation index…"
+              data-ru="Загружаем список документов…">Loading the documentation index…</p>
+            <button type="button" data-reload-site hidden
+              data-en="Reload the page" data-ru="Обновить страницу">Reload the page</button>
+          </div>
+          <noscript>
+            <p class="load-error">
+              JavaScript is off. Open the
+              <a href="https://github.com/concordloom/concordloom/tree/main/docs">English documentation</a>
+              or <a href="https://github.com/concordloom/concordloom/tree/main/docs/ru">русскую документацию</a>.
+            </p>
+          </noscript>
+        </section>
       </div>
     </main>
 

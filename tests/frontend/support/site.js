@@ -130,13 +130,54 @@ async function expectContained(children, container) {
   expect(escaped, "visible children escape their container").toEqual([]);
 }
 
+async function visibleInteractiveTargetFailures(page, minimum = 44) {
+  return page.evaluate((targetMinimum) => {
+    const proseInline = ".prose p a, .prose li a, .prose td a, .prose dd a";
+    return [...document.querySelectorAll(
+      "a[href], button:not([disabled]), summary, [role='button'], "
+        + "[tabindex]:not([tabindex='-1'])",
+    )]
+      .filter((element) => {
+        if (element.matches(proseInline)) return false;
+        if (element.closest("[inert], [aria-hidden='true']")) return false;
+        const style = getComputedStyle(element);
+        const box = element.getBoundingClientRect();
+        return style.display !== "none" && style.visibility !== "hidden"
+          && box.width > 0 && box.height > 0;
+      })
+      .map((element) => {
+        const box = element.getBoundingClientRect();
+        return {
+          height: box.height,
+          label:
+            element.getAttribute("aria-label")
+            || element.textContent?.trim().replace(/\s+/g, " ").slice(0, 80)
+            || element.tagName,
+          tagName: element.tagName,
+          width: box.width,
+        };
+      })
+      .filter(({ height, width }) => height < targetMinimum || width < targetMinimum);
+  }, minimum);
+}
+
+async function expectAllVisibleInteractiveTargets(page, minimum = 44) {
+  const undersized = await visibleInteractiveTargetFailures(page, minimum);
+  expect(
+    undersized,
+    `visible interface targets must be at least ${minimum} × ${minimum} CSS pixels`,
+  ).toEqual([]);
+}
+
 module.exports = {
   activeView,
+  expectAllVisibleInteractiveTargets,
   expectContained,
   expectNoHorizontalOverflow,
   expectNoPairwiseOverlap,
   openView,
   siteUrl,
+  visibleInteractiveTargetFailures,
   visibleBoxes,
   waitForSite,
 };

@@ -31,6 +31,22 @@ test("skip link reaches the main content", async ({ page }) => {
   await expect(page).toHaveURL(/#main$/);
 });
 
+test("Atlas exposes a complete keyboard-readable tree alternative", async ({ page }) => {
+  await openView(page, "atlas", "en");
+  const expectedCount = Number(
+    await page.locator("[data-atlas-count]").textContent(),
+  );
+  const summary = page.locator(".full-outline > summary");
+  await summary.focus();
+  await expect(summary).toBeFocused();
+  await page.keyboard.press("Enter");
+  const links = page.locator("[data-atlas-outline] a");
+  await expect(links).toHaveCount(expectedCount);
+  for (const link of await links.all()) {
+    await expect(link).toHaveAccessibleName(/\S/);
+  }
+});
+
 test("mobile menu exposes, closes and restores focus", async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.includes("mobile"), "mobile contract");
   await openView(page, "concept", "ru");
@@ -54,7 +70,8 @@ test.describe("reduced motion", () => {
         page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches),
       )
       .toBe(true);
-    await page.locator(".graph-node:not(.is-current)").first().click();
+    await page.locator('[data-loop-id="system-evolution"]').click();
+    await page.locator(".inspector-open-cycle").click();
     await page.waitForTimeout(100);
     const running = await page.evaluate(() =>
       document

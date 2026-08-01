@@ -127,5 +127,7 @@ if [[ -n "$SKILL_VALIDATOR" && -f "$SKILL_VALIDATOR" ]]; then
   python3 "$SKILL_VALIDATOR" plugins/concordloom/skills/design-project-loops
 fi
 
+python3 tools/build_visual_baseline_manifest.py --check
+
 git diff --check
 printf '%s\n' 'CHECK_OK'

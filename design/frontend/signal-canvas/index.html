@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Concord Loom / Signal Canvas</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Concord Loom home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <strong>CONCORD LOOM</strong>
+      </a>
+      <nav aria-label="Concept sections">
+        <a class="is-current" href="#home">Concept</a>
+        <a href="#atlas">Atlas</a>
+        <a href="#rules">How it works</a>
+      </nav>
+      <button type="button">RU</button>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> YOUR PROJECT, MADE NAVIGABLE</p>
+          <h1>See the work.<br><em>Follow the loops.</em></h1>
+          <p class="lede">Concord Loom turns a project into a map you can open,
+            check and improve without learning its internal machinery.</p>
+          <div class="actions">
+            <a class="button button-primary" href="#atlas">Open the Atlas <b>→</b></a>
+            <a class="button button-quiet" href="#rules">How it works</a>
+          </div>
+        </div>
+        <div class="mini-map" aria-label="Interactive Atlas preview">
+          <p class="map-label">LIVE PREVIEW <span>04 CYCLES</span></p>
+          <svg viewBox="0 0 620 470" role="img" aria-label="Project cycle map">
+            <path d="M310 235C240 210 210 140 152 110M310 235C380 205 415 140 470 105M310 235C390 265 430 340 495 365"/>
+            <path d="M310 235C235 280 205 350 140 368"/>
+            <g class="node child" transform="translate(152 110)">
+              <rect x="-76" y="-38" width="152" height="76" rx="16"/>
+              <text y="5">Research</text>
+            </g>
+            <g class="node child" transform="translate(470 105)">
+              <rect x="-76" y="-38" width="152" height="76" rx="16"/>
+              <text y="5">Build</text>
+            </g>
+            <g class="node child" transform="translate(495 365)">
+              <rect x="-76" y="-38" width="152" height="76" rx="16"/>
+              <text y="5">Verify</text>
+            </g>
+            <g class="node child" transform="translate(140 368)">
+              <rect x="-76" y="-38" width="152" height="76" rx="16"/>
+              <text y="5">Release</text>
+            </g>
+            <g class="node root" transform="translate(310 235)">
+              <rect x="-104" y="-58" width="208" height="116" rx="22"/>
+              <text y="-5">Your project</text>
+              <text class="sub" y="24">open any cycle</text>
+            </g>
+          </svg>
+          <p class="map-note"><span>01</span> Select a cycle to move one level deeper.</p>
+        </div>
+      </section>
+
+      <section class="atlas" id="atlas">
+        <header>
+          <div>
+            <p class="eyebrow"><span></span> ACCEPTED MAP / REVISION 9</p>
+            <h2>Steward Concord Loom</h2>
+          </div>
+          <div class="crumbs"><a href="#atlas">All cycles</a><b>/</b><span>Steward Concord Loom</span></div>
+        </header>
+        <div class="atlas-canvas">
+          <svg viewBox="0 0 1280 650" role="img" aria-label="Full Atlas concept">
+            <g class="threads">
+              <path d="M640 325C520 235 430 145 295 105"/>
+              <path d="M640 325C600 220 610 120 640 84"/>
+              <path d="M640 325C770 230 860 145 990 110"/>
+              <path d="M640 325C795 320 930 290 1060 300"/>
+              <path d="M640 325C770 430 845 520 970 555"/>
+              <path d="M640 325C610 455 620 535 640 575"/>
+              <path d="M640 325C500 430 430 520 300 555"/>
+              <path d="M640 325C490 330 360 305 220 300"/>
+            </g>
+            <g class="atlas-node small" transform="translate(295 105)"><rect x="-92" y="-43" width="184" height="86" rx="17"/><text y="-3">System evolution</text><text class="sub" y="22">5 inner cycles</text></g>
+            <g class="atlas-node small" transform="translate(640 84)"><rect x="-92" y="-43" width="184" height="86" rx="17"/><text y="-3">Product direction</text><text class="sub" y="22">4 inner cycles</text></g>
+            <g class="atlas-node small" transform="translate(990 110)"><rect x="-92" y="-43" width="184" height="86" rx="17"/><text y="-3">Research</text><text class="sub" y="22">4 inner cycles</text></g>
+            <g class="atlas-node small" transform="translate(1060 300)"><rect x="-92" y="-43" width="184" height="86" rx="17"/><text y="-3">Protocol design</text><text class="sub" y="22">4 inner cycles</text></g>
+            <g class="atlas-node small" transform="translate(970 555)"><rect x="-92" y="-43" width="184" height="86" rx="17"/><text y="-3">Runtime &amp; tools</text><text class="sub" y="22">4 inner cycles</text></g>
+            <g class="atlas-node small" transform="translate(640 575)"><rect x="-92" y="-43" width="184" height="86" rx="17"/><text y="-3">Trust &amp; assurance</text><text class="sub" y="22">4 inner cycles</text></g>
+            <g class="atlas-node small" transform="translate(300 555)"><rect x="-92" y="-43" width="184" height="86" rx="17"/><text y="-3">Release</text><text class="sub" y="22">8 inner cycles</text></g>
+            <g class="atlas-node small" transform="translate(220 300)"><rect x="-92" y="-43" width="184" height="86" rx="17"/><text y="-3">Knowledge</text><text class="sub" y="22">6 inner cycles</text></g>
+            <g class="atlas-node active" transform="translate(640 325)">
+              <rect x="-138" y="-78" width="276" height="156" rx="24"/>
+              <text y="-10">Steward</text><text y="20">Concord Loom</text>
+              <text class="sub" y="52">10 inner cycles · open</text>
+            </g>
+          </svg>
+          <button class="details" type="button"><span>Selected cycle</span><strong>What it needs and produces</strong><b>↗</b></button>
+        </div>
+      </section>
+
+      <section class="rules" id="rules">
+        <p class="eyebrow"><span></span> ONE SIMPLE PATH</p>
+        <h2>Install. Map. Review. Improve.</h2>
+        <ol>
+          <li><span>01</span><strong>Install one skill</strong><p>No framework vocabulary required.</p></li>
+          <li><span>02</span><strong>Get a draft Atlas</strong><p>The repository stays unchanged.</p></li>
+          <li><span>03</span><strong>Correct the map</strong><p>Answer in ordinary language.</p></li>
+          <li><span>04</span><strong>Keep it current</strong><p>Evolution proposes; a person decides.</p></li>
+        </ol>
+      </section>
+    </main>
+  </body>
+</html>
