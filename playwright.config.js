@@ -2,7 +2,7 @@ const { defineConfig, devices } = require("@playwright/test");
 
 const shared = {
   baseURL: "http://127.0.0.1:4173",
-  colorScheme: "dark",
+  colorScheme: "light",
   locale: "en-US",
   reducedMotion: "no-preference",
   serviceWorkers: "block",
@@ -15,12 +15,13 @@ const shared = {
 module.exports = defineConfig({
   testDir: "./tests/frontend",
   testMatch: "**/*.spec.js",
-  outputDir: ".artifacts/playwright/results",
+  outputDir: ".artifacts/playwright/signal-canvas-results",
   snapshotPathTemplate:
-    "tests/frontend/__screenshots__/{projectName}/{testFilePath}/{arg}{ext}",
+    "design/frontend/baselines/{projectName}/{testFilePath}/{arg}{ext}",
   fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
   retries: 0,
+  updateSnapshots: "none",
   workers: process.env.CI ? 1 : undefined,
   timeout: 30_000,
   expect: {
@@ -38,7 +39,7 @@ module.exports = defineConfig({
       "html",
       {
         open: "never",
-        outputFolder: ".artifacts/playwright/report",
+        outputFolder: ".artifacts/playwright/signal-canvas-report",
         title: "Concord Loom frontend verification",
       },
     ],
@@ -101,7 +102,18 @@ module.exports = defineConfig({
         ...shared,
         deviceScaleFactor: 1,
         reducedMotion: "reduce",
-        viewport: { width: 2048, height: 1152 },
+        viewport: { width: 1440, height: 900 },
+      },
+    },
+    {
+      name: "visual-wide",
+      testMatch: /visual-evidence\.spec\.js/,
+      use: {
+        ...devices["Desktop Chrome"],
+        ...shared,
+        deviceScaleFactor: 1,
+        reducedMotion: "reduce",
+        viewport: { width: 1920, height: 1080 },
       },
     },
     {
@@ -113,6 +125,51 @@ module.exports = defineConfig({
         deviceScaleFactor: 1,
         reducedMotion: "reduce",
         viewport: { width: 390, height: 844 },
+      },
+    },
+    {
+      name: "visual-phone-landscape",
+      testMatch: /visual-evidence\.spec\.js/,
+      use: {
+        ...devices["Pixel 5"],
+        ...shared,
+        deviceScaleFactor: 1,
+        reducedMotion: "reduce",
+        viewport: { width: 844, height: 390 },
+      },
+    },
+    {
+      name: "visual-small-mobile",
+      testMatch: /visual-evidence\.spec\.js/,
+      use: {
+        ...devices["Pixel 5"],
+        ...shared,
+        deviceScaleFactor: 1,
+        reducedMotion: "reduce",
+        viewport: { width: 360, height: 800 },
+      },
+    },
+    {
+      name: "visual-tablet-portrait",
+      testMatch: /visual-evidence\.spec\.js/,
+      use: {
+        ...devices["Desktop Chrome"],
+        ...shared,
+        deviceScaleFactor: 1,
+        hasTouch: true,
+        reducedMotion: "reduce",
+        viewport: { width: 768, height: 1024 },
+      },
+    },
+    {
+      name: "visual-tablet-landscape",
+      testMatch: /visual-evidence\.spec\.js/,
+      use: {
+        ...devices["Desktop Chrome"],
+        ...shared,
+        deviceScaleFactor: 1,
+        reducedMotion: "reduce",
+        viewport: { width: 1024, height: 768 },
       },
     },
   ],

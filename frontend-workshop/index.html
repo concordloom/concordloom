@@ -3,105 +3,415 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0b1218">
-    <title>Patch Panel Workshop</title>
-    <link rel="stylesheet" href="/styles.css">
-    <link rel="stylesheet" href="/design-tokens.css">
-    <link rel="stylesheet" href="/design-system.css">
-    <link rel="stylesheet" href="/workshop/workshop.css">
-    <script src="/workshop/workshop.js" defer></script>
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="color-scheme" content="light">
+    <title>Signal Canvas workshop</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../design-tokens.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <link rel="stylesheet" href="./workshop.css">
+    <script src="./workshop.js" defer></script>
   </head>
-  <body data-design-system="patch-panel">
-    <main class="workshop">
-      <header class="workshop-header">
-        <div>
-          <p class="instrument-label" data-en="COMPONENT WORKSHOP" data-ru="СТЕНД КОМПОНЕНТОВ">COMPONENT WORKSHOP</p>
-          <h1 data-en="Patch Panel Workshop" data-ru="Стенд Patch Panel">Patch Panel Workshop</h1>
-          <p class="workshop-deck"
-            data-en="Production components in the states that can change layout, meaning or accessibility."
-            data-ru="Компоненты продукта в состояниях, которые меняют вёрстку, смысл или доступность."
-          >Production components in the states that can change layout, meaning or accessibility.</p>
-        </div>
-        <div class="workshop-language" aria-label="Fixture language">
-          <button type="button" data-language="en" aria-pressed="true">EN</button>
-          <button type="button" data-language="ru" aria-pressed="false">RU</button>
-        </div>
-      </header>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#workshop-main"
+      data-en="Skip to components"
+      data-ru="Перейти к компонентам">Skip to components</a>
 
-      <section class="workshop-panel" aria-labelledby="rail-title">
-        <div class="workshop-title">
-          <p class="instrument-label" data-en="PROGRESS RAIL" data-ru="ЛИНИЯ ЭТАПОВ">PROGRESS RAIL</p>
-          <h2 id="rail-title" data-en="Lifecycle rail" data-ru="Цикл изменений">Lifecycle rail</h2>
+    <header class="site-header workshop-site-header">
+      <a class="brand" href="#overview" aria-label="Signal Canvas workshop home"
+        data-en-aria-label="Signal Canvas workshop home"
+        data-ru-aria-label="Главная мастерской Signal Canvas">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>CONCORD LOOM</span>
+      </a>
+      <button class="menu-switch" type="button" aria-expanded="false"
+        aria-controls="workshop-nav">
+        <span data-en="Menu" data-ru="Меню">Menu</span>
+      </button>
+      <nav class="view-tabs workshop-nav" id="workshop-nav"
+        aria-label="Workshop sections"
+        data-en-aria-label="Workshop sections"
+        data-ru-aria-label="Разделы мастерской">
+        <a class="view-tab is-active" href="#overview"
+          data-en="Overview" data-ru="Обзор">Overview</a>
+        <a class="view-tab" href="#foundations"
+          data-en="Foundations" data-ru="Основа">Foundations</a>
+        <a class="view-tab" href="#atlas-states"
+          data-en="Atlas states" data-ru="Состояния Атласа">Atlas states</a>
+        <a class="view-tab" href="#drawer"
+          data-en="Drawer" data-ru="Панель">Drawer</a>
+      </nav>
+      <div class="header-actions workshop-language">
+        <button class="language-switch" type="button"
+          data-workshop-language-switch aria-label="Switch to Russian">
+          <span data-lang-label>RU</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="workshop" id="workshop-main">
+      <section class="workshop-intro" id="overview" aria-labelledby="workshop-title">
+        <div>
+          <p class="instrument-label"
+            data-en="PRODUCTION COMPONENT WORKSHOP"
+            data-ru="МАСТЕРСКАЯ КОМПОНЕНТОВ">PRODUCTION COMPONENT WORKSHOP</p>
+          <h1 id="workshop-title"
+            data-en="Signal Canvas, under pressure."
+            data-ru="Signal Canvas под нагрузкой">Signal Canvas, under pressure.</h1>
+          <p class="workshop-deck"
+            data-en="One place to inspect real components, every critical state and the copy that usually breaks a layout."
+            data-ru="Здесь собраны рабочие компоненты, важные состояния и тексты, на которых обычно ломается вёрстка."
+          >One place to inspect real components, every critical state and the copy that usually breaks a layout.</p>
         </div>
-        <ol class="system-rail" aria-label="Change lifecycle"
-          data-en-aria-label="Change lifecycle"
-          data-ru-aria-label="Цикл изменений">
-          <li class="is-active" data-phase="map" aria-current="step"><span>Map</span></li>
-          <li data-phase="build"><span>Build</span></li>
-          <li data-phase="verify"><span>Verify</span></li>
-          <li data-phase="publish"><span>Publish</span></li>
-          <li data-phase="evolve"><span>Evolve</span></li>
-        </ol>
-        <div class="workshop-controls">
-          <button type="button" data-phase-control="map" data-en="Map" data-ru="Карта" aria-pressed="true">Map</button>
-          <button type="button" data-phase-control="build" data-en="Build" data-ru="Сборка" aria-pressed="false">Build</button>
-          <button type="button" data-phase-control="verify" data-en="Verify" data-ru="Проверка" aria-pressed="false">Verify</button>
-          <button type="button" data-phase-control="publish" data-en="Publish" data-ru="Публикация" aria-pressed="false">Publish</button>
-          <button type="button" data-phase-control="evolve" data-en="Evolve" data-ru="Эволюция" aria-pressed="false">Evolve</button>
+        <div class="workshop-stress">
+          <span data-en="Copy stress" data-ru="Проверка текста">Copy stress</span>
+          <button class="secondary-cta" type="button" data-copy-expansion
+            aria-pressed="false"
+            data-en="Add 30% text"
+            data-ru="Увеличить текст на 30%">Add 30% text</button>
         </div>
       </section>
 
-      <section class="workshop-panel" aria-labelledby="atlas-title">
-        <div class="workshop-title">
-          <p class="instrument-label" data-en="MODULE STATES" data-ru="СОСТОЯНИЯ МОДУЛЯ">MODULE STATES</p>
-          <h2 id="atlas-title" data-en="Cycle module states" data-ru="Состояния модуля цикла">Cycle module states</h2>
+      <section class="workshop-showcase" id="foundations" aria-labelledby="foundation-title">
+        <div class="workshop-section-head">
+          <div>
+            <p class="instrument-label"
+              data-en="FOUNDATIONS"
+              data-ru="ОСНОВА">FOUNDATIONS</p>
+            <h2 id="foundation-title"
+              data-en="The system before the surface"
+              data-ru="Система до интерфейса">The system before the surface</h2>
+          </div>
+          <p data-en="Every sample below inherits the production token files."
+            data-ru="Все образцы ниже используют рабочие файлы токенов."
+          >Every sample below inherits the production token files.</p>
         </div>
-        <div class="workshop-atlas">
-          <button type="button" class="workshop-node" data-node-state="default" aria-pressed="false">
-            <div class="workshop-node-port"><span>01</span></div>
+
+        <div class="foundation-grid">
+          <article class="type-specimen">
+            <p class="instrument-label"
+              data-en="TYPOGRAPHY"
+              data-ru="ТИПОГРАФИКА">TYPOGRAPHY</p>
+            <p class="display-sample" data-en="Map the work."
+              data-ru="Увидьте работу">Map the work.</p>
+            <h3 data-en="Change it on purpose."
+              data-ru="Меняйте её осознанно">Change it on purpose.</h3>
+            <p class="body-sample"
+              data-en="Readable copy explains the next decision without exposing internal machinery."
+              data-ru="Понятный текст объясняет следующее решение и не выставляет внутреннее устройство наружу."
+            >Readable copy explains the next decision without exposing internal machinery.</p>
+            <code>sha256:1940a57c…</code>
+          </article>
+
+          <article class="color-specimen" aria-labelledby="color-title">
+            <p class="instrument-label"
+              data-en="SEMANTIC COLOR"
+              data-ru="СМЫСЛОВЫЕ ЦВЕТА">SEMANTIC COLOR</p>
+            <h3 id="color-title" data-en="Color names a role"
+              data-ru="У каждого цвета своя роль">Color names a role</h3>
+            <ul>
+              <li class="swatch swatch-signal"><span></span>
+                <b data-en="Current" data-ru="Текущий">Current</b></li>
+              <li class="swatch swatch-info"><span></span>
+                <b data-en="Information" data-ru="Информация">Information</b></li>
+              <li class="swatch swatch-warning"><span></span>
+                <b data-en="Attention" data-ru="Внимание">Attention</b></li>
+              <li class="swatch swatch-danger"><span></span>
+                <b data-en="Problem" data-ru="Проблема">Problem</b></li>
+            </ul>
+          </article>
+
+          <article class="button-specimen">
+            <p class="instrument-label"
+              data-en="ACTIONS"
+              data-ru="ДЕЙСТВИЯ">ACTIONS</p>
+            <h3 data-en="One action leads"
+              data-ru="Одно главное действие">One action leads</h3>
+            <div class="button-row">
+              <button class="primary-cta" type="button">
+                <span data-en="Open Atlas" data-ru="Открыть Атлас">Open Atlas</span>
+                <span aria-hidden="true">→</span>
+              </button>
+              <button class="secondary-cta" type="button"
+                data-en="Read the guide"
+                data-ru="Открыть инструкцию">Read the guide</button>
+              <button class="secondary-cta" type="button" disabled
+                data-en="Not available"
+                data-ru="Пока недоступно">Not available</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="workshop-panel" aria-labelledby="rail-title">
+        <div class="workshop-section-head">
+          <div>
+            <p class="instrument-label"
+              data-en="NAVIGATION STATE"
+              data-ru="СОСТОЯНИЕ НАВИГАЦИИ">NAVIGATION STATE</p>
+            <h2 id="rail-title"
+              data-en="Change lifecycle"
+              data-ru="Цикл изменений">Change lifecycle</h2>
+          </div>
+          <p data-en="Choose a step. The rail must show exactly one current position."
+            data-ru="Выберите этап. На линии должен быть только один текущий шаг."
+          >Choose a step. The rail must show exactly one current position.</p>
+        </div>
+        <ol class="system-rail workshop-rail" aria-label="Change lifecycle"
+          data-en-aria-label="Change lifecycle"
+          data-ru-aria-label="Цикл изменений">
+          <li class="is-active" data-phase="map" aria-current="step">
+            <small class="workshop-progress-count"
+              data-en="Step 1 of 5" data-ru="Шаг 1 из 5">Step 1 of 5</small>
+            <span>Map</span>
+          </li>
+          <li data-phase="build">
+            <small class="workshop-progress-count"
+              data-en="Step 2 of 5" data-ru="Шаг 2 из 5">Step 2 of 5</small>
+            <span>Build</span>
+          </li>
+          <li data-phase="verify">
+            <small class="workshop-progress-count"
+              data-en="Step 3 of 5" data-ru="Шаг 3 из 5">Step 3 of 5</small>
+            <span>Verify</span>
+          </li>
+          <li data-phase="publish">
+            <small class="workshop-progress-count"
+              data-en="Step 4 of 5" data-ru="Шаг 4 из 5">Step 4 of 5</small>
+            <span>Publish</span>
+          </li>
+          <li data-phase="evolve">
+            <small class="workshop-progress-count"
+              data-en="Step 5 of 5" data-ru="Шаг 5 из 5">Step 5 of 5</small>
+            <span>Evolve</span>
+          </li>
+        </ol>
+        <div class="workshop-controls" role="group" aria-label="Choose lifecycle step"
+          data-en-aria-label="Choose lifecycle step"
+          data-ru-aria-label="Выберите этап цикла">
+          <button type="button" data-phase-control="map"
+            data-en="Map" data-ru="Карта" aria-pressed="true">Map</button>
+          <button type="button" data-phase-control="build"
+            data-en="Build" data-ru="Сборка" aria-pressed="false">Build</button>
+          <button type="button" data-phase-control="verify"
+            data-en="Verify" data-ru="Проверка" aria-pressed="false">Verify</button>
+          <button type="button" data-phase-control="publish"
+            data-en="Publish" data-ru="Публикация" aria-pressed="false">Publish</button>
+          <button type="button" data-phase-control="evolve"
+            data-en="Evolve" data-ru="Эволюция" aria-pressed="false">Evolve</button>
+        </div>
+      </section>
+
+      <section class="workshop-panel atlas-state-panel" id="atlas-states"
+        aria-labelledby="atlas-title">
+        <div class="workshop-section-head">
+          <div>
+            <p class="instrument-label"
+              data-en="ATLAS NODE STATES"
+              data-ru="СОСТОЯНИЯ УЗЛОВ АТЛАСА">ATLAS NODE STATES</p>
+            <h2 id="atlas-title"
+              data-en="Cycle module states"
+              data-ru="Состояния модуля цикла">Cycle module states</h2>
+          </div>
+          <p data-en="Hover, focus and selection are real interactions. Loading, empty, stale and error states explain what happens next."
+            data-ru="Наведение, фокус и выбор работают по-настоящему. Загрузка, пустое состояние, устаревшие данные и ошибка объясняют следующий шаг."
+          >Hover, focus and selection are real interactions. Loading, empty, stale and error states explain what happens next.</p>
+        </div>
+
+        <div class="workshop-atlas" aria-label="Atlas node state examples"
+          data-en-aria-label="Atlas node state examples"
+          data-ru-aria-label="Примеры состояний узла Атласа">
+          <button type="button" class="workshop-node" data-node-state="default"
+            aria-pressed="false">
+            <span class="workshop-node-code">01</span>
             <strong data-en="Default" data-ru="Обычное">Default</strong>
-            <span class="workshop-node-label" data-en="Ready to open" data-ru="Можно открыть">Ready to open</span>
-          </button>
-          <button type="button" class="workshop-node" data-node-state="hover" aria-pressed="false">
-            <div class="workshop-node-port"><span>02</span></div>
-            <strong data-en="Hover" data-ru="Наведение">Hover</strong>
-            <span class="workshop-node-label" data-en="Available connection" data-ru="Доступная связь">Available connection</span>
-          </button>
-          <button type="button" class="workshop-node" data-node-state="focus" aria-pressed="false">
-            <div class="workshop-node-port"><span>03</span></div>
-            <strong data-en="Focus" data-ru="Фокус">Focus</strong>
-            <span class="workshop-node-label" data-en="Keyboard position" data-ru="Положение клавиатурного фокуса">Keyboard position</span>
-          </button>
-          <button type="button" class="workshop-node is-current" data-node-state="selected" aria-pressed="true">
-            <div class="workshop-node-port"><span>04</span></div>
-            <strong data-en="Selected" data-ru="Выбрано">Selected</strong>
-            <span class="workshop-node-label" data-en="Current cycle" data-ru="Текущий цикл">Current cycle</span>
-          </button>
-          <div class="workshop-node" data-node-state="loading" role="status" aria-live="polite" aria-busy="true">
-            <div class="workshop-node-port"><span>···</span></div>
-            <strong data-en="Loading" data-ru="Загрузка">Loading</strong>
-            <span class="workshop-node-label" data-en="Accepted data is loading" data-ru="Загружаются принятые данные">Accepted data is loading</span>
-          </div>
-          <button type="button" class="workshop-node" data-node-state="empty" disabled>
-            <div class="workshop-node-port"><span>00</span></div>
-            <strong data-en="Empty" data-ru="Пусто">Empty</strong>
-            <span class="workshop-node-label" data-en="No contained cycles" data-ru="Нет вложенных циклов">No contained cycles</span>
-          </button>
-          <div class="workshop-node" data-node-state="error" role="alert">
-            <div class="workshop-node-port"><span>!</span></div>
-            <strong data-en="Error" data-ru="Ошибка">Error</strong>
-            <span class="workshop-node-label" data-en="Accepted data is unavailable" data-ru="Принятые данные недоступны">Accepted data is unavailable</span>
-          </div>
-          <button type="button" class="workshop-node" data-node-state="long-copy" aria-pressed="false">
-            <div class="workshop-node-port"><span>08</span></div>
-            <strong data-en="Long copy" data-ru="Длинный текст">Long copy</strong>
             <span class="workshop-node-label"
-              data-en="A responsibility name may wrap without covering its port or connection."
-              data-ru="Длинное название ответственности переносится и не закрывает порт или связь."
-            >A responsibility name may wrap without covering its port or connection.</span>
+              data-en="Ready to open"
+              data-ru="Цикл можно открыть"
+              data-long-en="Ready to open and inspect without changing the project"
+              data-long-ru="Цикл можно открыть и изучить, не меняя проект"
+            >Ready to open</span>
+            <span class="workshop-node-port" aria-hidden="true"></span>
+          </button>
+
+          <button type="button" class="workshop-node is-hover-demo"
+            data-node-state="hover" aria-pressed="false">
+            <span class="workshop-node-code">02</span>
+            <strong data-en="Hover" data-ru="Наведение">Hover</strong>
+            <span class="workshop-node-label"
+              data-en="Available connection"
+              data-ru="Доступный переход"
+              data-long-en="The pointer reveals an available connection"
+              data-long-ru="Наведение показывает доступный переход к следующему циклу"
+            >Available connection</span>
+            <span class="workshop-node-port" aria-hidden="true"></span>
+          </button>
+
+          <button type="button" class="workshop-node is-focus-demo"
+            data-node-state="focus" aria-pressed="false">
+            <span class="workshop-node-code">03</span>
+            <strong data-en="Focus" data-ru="Фокус">Focus</strong>
+            <span class="workshop-node-label"
+              data-en="Keyboard position"
+              data-ru="Положение фокуса"
+              data-long-en="The visible ring marks the keyboard position"
+              data-long-ru="Заметная рамка показывает положение клавиатурного фокуса"
+            >Keyboard position</span>
+            <span class="workshop-node-port" aria-hidden="true"></span>
+          </button>
+
+          <button type="button" class="workshop-node is-current"
+            data-node-state="selected" aria-pressed="true">
+            <span class="workshop-node-code">04</span>
+            <strong data-en="Selected" data-ru="Выбрано">Selected</strong>
+            <span class="workshop-node-label"
+              data-en="Current cycle"
+              data-ru="Текущий цикл"
+              data-long-en="This is the cycle currently open in the Atlas"
+              data-long-ru="Этот цикл сейчас открыт в Атласе"
+            >Current cycle</span>
+            <span class="workshop-node-port" aria-hidden="true"></span>
+          </button>
+
+          <div class="workshop-node is-loading" data-node-state="loading"
+            role="status" aria-live="polite" aria-busy="true">
+            <span class="workshop-node-code" aria-hidden="true">05</span>
+            <strong data-en="Loading" data-ru="Загрузка">Loading</strong>
+            <span class="workshop-node-label"
+              data-en="Loading accepted project data…"
+              data-ru="Загружаем принятую карту проекта…"
+              data-long-en="Loading the accepted project map and its verified connections…"
+              data-long-ru="Загружаем принятую карту проекта и её проверенные связи…"
+            >Loading accepted project data…</span>
+            <span class="workshop-node-port" aria-hidden="true"></span>
+          </div>
+
+          <button type="button" class="workshop-node is-empty"
+            data-node-state="empty" disabled>
+            <span class="workshop-node-code">06</span>
+            <strong data-en="Empty" data-ru="Пусто">Empty</strong>
+            <span class="workshop-node-label"
+              data-en="No child cycles yet"
+              data-ru="Вложенных циклов пока нет"
+              data-long-en="No child cycles yet. Return after the next accepted map update"
+              data-long-ru="Вложенных циклов пока нет. Они появятся после принятого обновления карты"
+            >No child cycles yet</span>
+            <span class="workshop-node-port" aria-hidden="true"></span>
+          </button>
+
+          <div class="workshop-node is-stale" data-node-state="stale"
+            role="status" aria-live="polite" aria-atomic="true">
+            <span class="workshop-node-code" aria-hidden="true">07</span>
+            <strong data-en="Data may be out of date"
+              data-ru="Данные могли устареть">Data may be out of date</strong>
+            <span class="workshop-node-label"
+              data-en="This is the saved map. Reload the page to check for a newer version"
+              data-ru="Показана сохранённая карта. Обновите страницу, чтобы проверить новую версию"
+              data-long-en="This is the last saved project map. Reload the page to check whether a newer accepted version is available"
+              data-long-ru="Показана последняя сохранённая карта проекта. Обновите страницу, чтобы проверить, появилась ли новая принятая версия"
+            >This is the saved map. Reload the page to check for a newer version</span>
+            <span class="workshop-node-port" aria-hidden="true"></span>
+          </div>
+
+          <div class="workshop-node is-error" data-node-state="error"
+            role="alert">
+            <span class="workshop-node-code" aria-hidden="true">08</span>
+            <strong data-en="Map unavailable" data-ru="Карта недоступна">Map unavailable</strong>
+            <span class="workshop-node-label"
+              data-en="Accepted data is unavailable. Reload the page"
+              data-ru="Принятые данные недоступны. Обновите страницу"
+              data-long-en="Accepted project data is unavailable. Reload the page to try reading it again"
+              data-long-ru="Принятые данные недоступны. Обновите страницу, чтобы загрузить их ещё раз"
+            >Accepted data is unavailable. Reload the page</span>
+            <span class="workshop-node-port" aria-hidden="true"></span>
+          </div>
+
+          <button type="button" class="workshop-node is-long-copy"
+            data-node-state="long-copy" aria-pressed="false">
+            <span class="workshop-node-code">09</span>
+            <strong data-en="Long responsibility"
+              data-ru="Длинное название">Long responsibility</strong>
+            <span class="workshop-node-label"
+              data-en="Maintain the component workshop and its responsive state fixtures"
+              data-ru="Поддерживать мастерскую компонентов и примеры адаптивных состояний"
+              data-long-en="Maintain the production component workshop, responsive state fixtures and both complete language versions"
+              data-long-ru="Поддерживать рабочую мастерскую компонентов, примеры адаптивных состояний и обе полные языковые версии"
+            >Maintain the component workshop and its responsive state fixtures</span>
+            <span class="workshop-node-port" aria-hidden="true"></span>
+          </button>
+        </div>
+      </section>
+
+      <section class="workshop-showcase" id="drawer" aria-labelledby="drawer-title">
+        <div class="workshop-section-head">
+          <div>
+            <p class="instrument-label"
+              data-en="DETAILS DRAWER"
+              data-ru="ПАНЕЛЬ СВЕДЕНИЙ">DETAILS DRAWER</p>
+            <h2 id="drawer-title"
+              data-en="Closed until it is useful"
+              data-ru="Закрыта, пока не понадобится">Closed until it is useful</h2>
+          </div>
+          <p data-en="The map keeps the whole screen. Details open on demand and return focus to the trigger."
+            data-ru="Карта занимает весь экран. Сведения открываются по запросу, а фокус возвращается к кнопке."
+          >The map keeps the whole screen. Details open on demand and return focus to the trigger.</p>
+        </div>
+        <div class="drawer-state-row">
+          <div class="drawer-state">
+            <span class="state-dot" aria-hidden="true"></span>
+            <div>
+              <strong data-en="Closed" data-ru="Закрыта">Closed</strong>
+              <small data-en="Map remains primary" data-ru="Главное — карта">Map remains primary</small>
+            </div>
+          </div>
+          <button class="primary-cta" type="button" data-drawer-open
+            aria-haspopup="dialog" aria-controls="workshop-drawer">
+            <span data-en="Open cycle details" data-ru="Открыть сведения о цикле">Open cycle details</span>
+            <span aria-hidden="true">→</span>
           </button>
         </div>
       </section>
     </main>
+
+    <button class="atlas-inspector-scrim" type="button" data-drawer-scrim
+      hidden tabindex="-1" aria-label="Close cycle details"
+      data-en-aria-label="Close cycle details"
+      data-ru-aria-label="Закрыть сведения о цикле"></button>
+    <aside class="atlas-inspector" id="workshop-drawer" role="dialog"
+      aria-modal="true" aria-labelledby="drawer-dialog-title"
+      aria-hidden="true" tabindex="-1">
+      <button class="inspector-close" type="button" data-drawer-close
+        aria-label="Close cycle details"
+        data-en-aria-label="Close cycle details"
+        data-ru-aria-label="Закрыть сведения о цикле">×</button>
+      <p class="inspector-status"><i aria-hidden="true"></i>
+        <span data-en="Accepted cycle" data-ru="Принятый цикл">Accepted cycle</span>
+      </p>
+      <p class="inspector-code">LOOP 08.A</p>
+      <h2 id="drawer-dialog-title"
+        data-en="Maintain the component workshop"
+        data-ru="Поддерживать мастерскую компонентов">Maintain the component workshop</h2>
+      <div class="inspector-dial" aria-hidden="true"><span>⌘</span></div>
+      <p class="inspector-purpose"
+        data-en="Show production components in the states that change layout, meaning or accessibility."
+        data-ru="Показывать рабочие компоненты в состояниях, которые меняют вёрстку, смысл или доступность."
+      >Show production components in the states that change layout, meaning or accessibility.</p>
+      <dl class="inspector-contract">
+        <div>
+          <dt data-en="Needs" data-ru="Нужно">Needs</dt>
+          <dd data-en="Production tokens, components and accepted copy."
+            data-ru="Рабочие токены, компоненты и принятый текст."
+          >Production tokens, components and accepted copy.</dd>
+        </div>
+        <div>
+          <dt data-en="Produces" data-ru="Результат">Produces</dt>
+          <dd data-en="A responsive, bilingual state fixture."
+            data-ru="Адаптивный двуязычный набор состояний."
+          >A responsive, bilingual state fixture.</dd>
+        </div>
+      </dl>
+    </aside>
+
+    <p class="workshop-announcer visually-hidden" aria-live="polite"></p>
   </body>
 </html>

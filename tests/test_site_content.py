@@ -4,7 +4,7 @@ import unittest
 
 from tools.build_site import markdown_fragment
 from tools.check_site import (
-    has_forbidden_patch_panel_background,
+    has_forbidden_signal_canvas_background,
     has_raw_font_stack,
 )
 
@@ -19,21 +19,21 @@ class SiteContentProjectionTests(unittest.TestCase):
         self.assertIn("2025–2026", fragment)
         self.assertNotIn("Проверка - отдельное решение.", fragment)
 
-    def test_patch_panel_css_rejects_raw_fonts_and_background_art(self) -> None:
+    def test_signal_canvas_css_rejects_raw_fonts_and_background_art(self) -> None:
         self.assertTrue(has_raw_font_stack("main { font-family: Arial, sans-serif; }"))
         self.assertFalse(has_raw_font_stack("main { font-family: var(--type-reading); }"))
         self.assertTrue(
-            has_forbidden_patch_panel_background(
+            has_forbidden_signal_canvas_background(
                 ".atlas { background-image: url(assets/fantasy-map.png); }"
             )
         )
         self.assertTrue(
-            has_forbidden_patch_panel_background(
+            has_forbidden_signal_canvas_background(
                 ".atlas { background: linear-gradient(red, blue); }"
             )
         )
         self.assertFalse(
-            has_forbidden_patch_panel_background(
+            has_forbidden_signal_canvas_background(
                 ".atlas { background: var(--surface-page); }"
             )
         )

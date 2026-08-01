@@ -38,7 +38,7 @@ jobs:
         with:
           name: frontend-evidence-${{ github.run_attempt }}
           path: |
-            .artifacts/playwright/report
-            .artifacts/playwright/results
+            .artifacts/playwright/signal-canvas-report
+            .artifacts/playwright/signal-canvas-results
           if-no-files-found: error
           retention-days: 14

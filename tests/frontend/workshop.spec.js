@@ -6,12 +6,12 @@ const {
   visibleBoxes,
 } = require("./support/site");
 
-test("dependency-free workshop exposes every lifecycle state", async ({ page }) => {
+test("dependency-free workshop exposes every Signal Canvas lifecycle state", async ({ page }) => {
   await page.goto("/workshop/");
-  await expect(page.locator("h1")).toHaveText("Patch Panel Workshop");
+  await expect(page.locator("h1")).toContainText("Signal Canvas");
   await expect(page.locator("body")).toHaveAttribute(
     "data-design-system",
-    "patch-panel",
+    "signal-canvas",
   );
   const controls = page.locator("[data-phase-control]");
   await expect(controls).toHaveCount(5);
@@ -30,12 +30,13 @@ test("dependency-free workshop exposes every lifecycle state", async ({ page }) 
 
 test("workshop stress states do not overlap or overflow", async ({ page }) => {
   await page.goto("/workshop/");
-  await page.locator("[data-language=ru]").click();
+  await page.locator("[data-workshop-language-switch]").click();
   await expectNoHorizontalOverflow(page);
   await expectNoPairwiseOverlap(page.locator(".workshop-node-label"), 2);
   await expectNoPairwiseOverlap(page.locator(".system-rail li"), 2);
   await expect(page.locator(".system-rail")).toBeVisible();
-  await expect(page.locator("h1")).toHaveText("Стенд Patch Panel");
+  await expect(page.locator("h1")).toContainText("Signal Canvas");
+  await expect(page.locator("h1")).toContainText(/[А-Яа-яЁё]/);
   await expect(page.locator("#rail-title")).toHaveText("Цикл изменений");
   await expect(page.locator("#atlas-title")).toHaveText("Состояния модуля цикла");
   await expect(page.locator(".system-rail")).toHaveAttribute(
@@ -43,13 +44,20 @@ test("workshop stress states do not overlap or overflow", async ({ page }) => {
     "Цикл изменений",
   );
   await expect(page.locator("[data-phase-control=publish]")).toHaveText("Публикация");
-  await expect(page.locator(".workshop-node")).toHaveCount(8);
+  await expect(page.locator(".workshop-node")).toHaveCount(9);
   await expect(page.locator('[data-node-state="loading"]')).toHaveAttribute(
     "aria-busy",
     "true",
   );
   await expect(page.locator('[data-node-state="error"]')).toContainText(
     "Принятые данные недоступны",
+  );
+  await expect(page.locator('[data-node-state="stale"]')).toContainText(
+    "Показана сохранённая карта",
+  );
+  await expect(page.locator('[data-node-state="stale"]')).toHaveAttribute(
+    "role",
+    "status",
   );
 
   const railTextIsContained = await page.locator(".system-rail li span").evaluateAll(
@@ -92,7 +100,9 @@ test("workshop stress states do not overlap or overflow", async ({ page }) => {
 for (const language of ["en", "ru"]) {
   test(`workshop ${language} states are accessible and keyboard-real`, async ({ page }) => {
     await page.goto("/workshop/");
-    if (language === "ru") await page.locator("[data-language=ru]").click();
+    if (language === "ru") {
+      await page.locator("[data-workshop-language-switch]").click();
+    }
 
     const result = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa"])
@@ -117,13 +127,18 @@ for (const language of ["en", "ru"]) {
       "role",
       "alert",
     );
+    const stale = page.locator('[data-node-state="stale"]');
+    await expect(stale).toHaveAttribute("role", "status");
+    await expect(stale).toContainText(
+      language === "en" ? "This is the saved map" : "Показана сохранённая карта",
+    );
   });
 }
 
 test("workshop reflows and keeps controls touchable", async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto("/workshop/");
-  await page.locator("[data-language=ru]").click();
+  await page.locator("[data-workshop-language-switch]").click();
   await expectNoHorizontalOverflow(page);
   const boxes = await visibleBoxes(
     page.locator(
@@ -135,4 +150,41 @@ test("workshop reflows and keeps controls touchable", async ({ page }) => {
     boxes.filter((box) => box.width < 44 || box.height < 44),
     "workshop controls must be at least 44 × 44 CSS pixels",
   ).toEqual([]);
+});
+
+test("mobile lifecycle readout shows one complete step without label collisions", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/workshop/");
+  await page.locator("[data-workshop-language-switch]").click();
+
+  const rail = page.locator(".workshop-rail");
+  const visibleSteps = rail.locator("li:visible");
+  await expect(visibleSteps).toHaveCount(1);
+  await expect(visibleSteps).toHaveAttribute("data-phase", "map");
+  await expect(visibleSteps.locator(".workshop-progress-count"))
+    .toHaveText("Шаг 1 из 5");
+  await expect(visibleSteps.locator("span")).toHaveText("Карта");
+
+  const readable = await visibleSteps.evaluate((step) => {
+    const stepBox = step.getBoundingClientRect();
+    const countBox = step.querySelector("small").getBoundingClientRect();
+    const labelBox = step.querySelector("span").getBoundingClientRect();
+    const contained = [countBox, labelBox].every(
+      (box) => box.left >= stepBox.left && box.right <= stepBox.right,
+    );
+    const separated = countBox.right + 8 <= labelBox.left;
+    return contained && separated;
+  });
+  expect(readable, "count and label must be contained and visibly separated")
+    .toBe(true);
+
+  await page.locator("[data-phase-control=publish]").click();
+  await expect(visibleSteps).toHaveCount(1);
+  await expect(visibleSteps).toHaveAttribute("data-phase", "publish");
+  await expect(visibleSteps.locator(".workshop-progress-count"))
+    .toHaveText("Шаг 4 из 5");
+  await expect(visibleSteps.locator("span")).toHaveText("Релиз");
+  await expectNoHorizontalOverflow(page);
 });

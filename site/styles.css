@@ -10,6 +10,10 @@ html {
   scroll-behavior: smooth;
 }
 
+html[data-language-pending] body {
+  visibility: hidden;
+}
+
 body {
   min-width: 320px;
   margin: 0;
@@ -149,7 +153,7 @@ body:has(.view:target) .view.is-active:not(:target) {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .reveal {
+  .js .reveal {
     opacity: 0;
     transform: translateY(18px);
     transition:
@@ -157,7 +161,7 @@ body:has(.view:target) .view.is-active:not(:target) {
       transform var(--cl-duration-level) var(--cl-ease-enter);
   }
 
-  .reveal.is-visible {
+  .js .reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
   }
@@ -171,6 +175,19 @@ body:has(.view:target) .view.is-active:not(:target) {
   background: var(--surface-module);
   color: var(--text-primary);
   font-size: var(--cl-type-sm);
+}
+
+.no-js noscript {
+  display: contents;
+}
+
+.no-js .noscript-banner {
+  position: sticky;
+  top: 0;
+}
+
+.no-js [id] {
+  scroll-margin-top: 112px;
 }
 
 .noscript-banner a {

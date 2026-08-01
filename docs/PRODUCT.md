@@ -44,11 +44,12 @@ projection of accepted data, never an independent source of truth.
 
 ## Brand commitments
 
-The approved visual direction is **Patch Panel**: a serious but informal
-developer tool built from calm dark modules, legible connections, and one
-friendly mint signal. The same system covers the whole site. It avoids
-fantasy, role-playing-game decoration, corporate dashboard clichés, and
-decorative effects that compete with the project map.
+The approved visual direction is **Signal Canvas**: a serious but informal
+developer tool built from warm canvas, tactile paper modules, black ink
+boundaries, and one mint primary signal. Cobalt explains, coral warns, and
+yellow marks pending attention. The same system covers the whole site. It
+avoids fantasy, role-playing-game decoration, generic dark dashboards,
+decorative gradients, and effects that compete with the project map.
 
 Claims must be supported by repository evidence, shipped behavior, or an
 explicitly labeled proposal. Concord Loom has no approved testimonials,

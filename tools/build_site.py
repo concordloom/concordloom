@@ -41,6 +41,11 @@ PUBLIC_DOCS = [
     ("RELEASE", "Release", "Релиз"),
     ("WRITING", "Writing for humans", "Как писать для людей"),
     ("DESIGN_SYSTEM", "Design system", "Дизайн-система"),
+    (
+        "FRONTEND_CYCLE_PROPOSAL",
+        "Frontend cycle proposal",
+        "Предложение по фронтенд-циклу",
+    ),
 ]
 TOKEN_SOURCE = SITE / "design-tokens.json"
 TOKEN_OUTPUT = SITE / "design-tokens.css"

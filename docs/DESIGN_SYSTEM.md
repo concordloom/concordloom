@@ -4,23 +4,27 @@ Language: **English** | [Русский](ru/DESIGN_SYSTEM.md)
 
 Status: **normative**
 
-Version: **4.0.0**
+Version: **4.0.1**
 
 Product truth: [`PRODUCT.md`](PRODUCT.md)
 
 Approved direction:
-[`Patch Panel`](../design/frontend/startup-atlas-concepts/playful/04-patch-panel/)
+[`Signal Canvas`](../design/frontend/signal-canvas/)
 
-Accepted machine contract:
+Normative machine contract:
 [`design/frontend/visual-contract.json`](../design/frontend/visual-contract.json)
 
 Machine values: [`site/design-tokens.json`](../site/design-tokens.json)
 
 Component rules: [`site/design-system.css`](../site/design-system.css)
 
-Patch Panel is the visual language for the whole public site, including
+Signal Canvas is the visual language for the whole public site, including
 Concept, Theory, Quickstart, Atlas, Docs, navigation, loading, empty, error,
 and mobile states. An Atlas-only reskin does not satisfy this contract.
+
+The direction is normative. The exact implementation remains a candidate until
+the browser matrix, visual baselines, and independent critic all pass for the
+same candidate digest.
 
 ## Product principle
 
@@ -37,34 +41,38 @@ details.
 
 ## Visual thesis
 
-Concord Loom is a connected development workspace.
+Concord Loom is a map spread across a working table.
 
-Deep navy surfaces organize work into readable modules. Cables, ports, rails,
-and connection points show real relationships. One muted mint signal marks the
-current route, focus, or primary action. Rounded geometry makes the tool
-approachable; disciplined spacing and restrained motion keep it credible.
+Warm canvas separates the page from tactile paper modules. Black ink provides
+structure. Mint marks the primary route, cobalt explains, coral warns, and
+yellow holds pending attention. Nodes and connector lines show real project
+relationships. Hard offset shadows and measured rounded corners make the
+interface informal without making it childish.
 
 The system is serious without feeling corporate, and informal without looking
 like a game.
 
-### Patch Panel lock
+### Signal Canvas lock
 
-Patch Panel v1 is the accepted machine contract. It establishes these
+Signal Canvas v1 establishes these
 non-negotiable characteristics:
 
-- dark navy, not pure black, is the page field;
-- modules have visible boundaries and modest depth;
+- warm off-white canvas is the page field;
+- paper modules use black ink boundaries and hard offset shadows;
+- mint is the only primary action and selection color;
+- cobalt carries information, coral carries errors or hard boundaries, and
+  yellow carries pending attention;
 - connectors describe real project relationships;
-- mint is the only primary signal color;
-- text remains readable without glow, texture, or illustration;
+- text remains readable without glow, texture, gradients, or background art;
 - rounded corners are measured and consistent, not applied as pills to every
   element;
 - technical identifiers are secondary to plain-language names;
 - the same module grammar appears on every public route.
 
 Do not introduce fantasy ornament, simulated stone or metal, neon halos,
-decorative noise, glass effects, dashboard-card grids, or background artwork
-behind the Atlas. Do not use disconnected visual styles for long-form pages.
+decorative gradients, glass effects, generic dark dashboards, random node
+glyphs, or background artwork behind the Atlas. Do not use disconnected visual
+styles for long-form pages.
 
 The concept files record provenance. This document defines intent;
 `design-tokens.json` defines reusable values; `design-system.css` defines
@@ -114,18 +122,18 @@ geometry with no reusable meaning.
 
 ## Color and depth
 
-- Deep navy separates the page from modules without relying on pure black.
-- Slightly lighter surfaces establish hierarchy through contrast and borders.
-- Text uses a high-contrast cool white; secondary text remains readable.
-- Muted mint marks one current route, focus, or primary action.
-- Red appears only for an actual error.
-- Shadows express a small vertical lift. They do not create theatrical glow.
+- Warm canvas separates the page from paper modules.
+- Black ink establishes hierarchy through borders and typography.
+- Mint marks one current route, focus, or primary action.
+- Cobalt explains, coral marks a real error or boundary, and yellow marks
+  pending attention.
+- Shadows are hard, short, and directional. They do not create glow.
 
 Selection, status, and focus never rely on color alone.
 
 ## Typography
 
-- The display and body stacks use local system sans-serif fonts.
+- The display and body stacks use the locally bundled Manrope family.
 - Monospace is reserved for identifiers, commands, measurements, and machine
   values.
 - Display headings use confident weight, compact leading, and restrained
@@ -135,6 +143,8 @@ Selection, status, and focus never rely on color alone.
 - Labels may use compact uppercase text only when the same information appears
   in a readable name.
 - English and Russian share hierarchy, not forced line breaks.
+- Inspector titles wrap only between complete words. The gate checks every
+  accepted cycle title at every accepted viewport.
 - A Russian interface does not mix ordinary English prose into its controls or
   explanations.
 
@@ -142,18 +152,20 @@ Selection, status, and focus never rely on color alone.
 
 The public surface uses this vocabulary:
 
-- **module**: a bounded responsibility, content group, or navigation region;
-- **port**: a visible point where a real connection enters or leaves;
-- **cable**: a real containment, dependency, or navigation relationship;
-- **rail**: version, progress, path, or section navigation;
+- **paper module**: a bounded responsibility, content group, or navigation
+  region;
+- **node**: a cycle or step that can be selected;
+- **connector**: a real containment, dependency, or navigation relationship;
+- **path**: the current location through the Atlas;
 - **control**: a direct action with a named result;
 - **reader**: a calm long-form surface;
-- **inspector**: contextual details opened on demand;
+- **drawer**: contextual details opened on demand;
 - **signal**: the single current selection or primary action.
 
 Every component defines rest, hover where available, focus, pressed, disabled
-when applicable, loading, empty, error, and long-copy states. Controls have a
-minimum 44 by 44 CSS pixel target and a visible keyboard focus.
+when applicable, loading, empty, stale-data, error, and long-copy states.
+Controls have a minimum 44 by 44 CSS pixel target and a visible keyboard
+focus.
 
 ## Page composition
 
@@ -179,12 +191,18 @@ governance remain secondary.
 
 The graph receives the largest available area. Path and revision controls stay
 compact. Details open in an overlay or drawer only when requested, so the graph
-does not lose permanent width to an inspector.
+does not lose permanent width to an inspector. One view shows one active level:
+the interface never duplicates the parent and child graphs merely to explain
+navigation. Cards in the same layout class share one geometry. At 844×390 the
+complete current level becomes a compact two-row constellation; no cycle is
+hidden beyond the viewport, and the detail overlay keeps its primary action
+above the fold.
 
 ### Docs
 
 Documents are grouped by reader task. Search and filters show their active
-state, empty state, and result count without becoming a generic dashboard.
+state, empty state, and result count without becoming a generic dashboard. On
+mobile, the first useful group appears above the fold.
 
 ## Atlas grammar
 
@@ -209,13 +227,22 @@ disabled.
 
 - Frequent feedback finishes quickly and does not delay input.
 - Graph traversal uses one consistent forward and reverse movement.
+- Compact landscape keeps the whole graph still: changing levels replaces the
+  graph without spatial travel, so edge nodes never leave the viewport.
 - Overlays enter from their spatial source and return on close.
+- Closing an overlay cancels any pending open or focus request. The overlay
+  remains visible while it returns, then becomes hidden and inert.
 - Layout movement uses transforms; visibility uses opacity.
 - Interrupted animation settles safely at the current state.
 - `prefers-reduced-motion: reduce` removes spatial travel and preserves state.
 
 Motion must explain a state change. Ambient animation, parallax, and decorative
 pulses are not part of the core system.
+
+Without JavaScript, navigation exposes only destinations that remain visible
+and useful in the reading fallback. It must not link to the hidden interactive
+Atlas. The reading-mode status message remains fully visible after direct
+navigation.
 
 ## Russian text
 
@@ -231,7 +258,12 @@ known onboarding jargon; it does not replace a human or model-assisted edit.
   restoration.
 - Graph selection has a programmatic current state.
 - Loading, empty, stale-data, and error states are visible and localized.
+- A delayed or failed Russian content request never reveals English fallback
+  prose.
 - Dynamic labels, live regions, and accessible names use the current language.
+- Human-facing Russian labels and contracts do not expose unexplained English
+  implementation jargon. Digests and exact machine identifiers appear only in
+  disclosed technical details.
 - English is the first-visit default. An explicit saved language choice wins
   afterward.
 - Language switching preserves the page and logical location.
@@ -255,8 +287,8 @@ A negative answer blocks publication.
 
 Browser evidence covers:
 
-- 360×800, 390×844, 768×1024, 1024×768, 1440×900, 1920×1080, and
-  2048×1152;
+- 360×800, 390×844, 844×390, 768×1024, 1024×768, 1440×900, and
+  1920×1080;
 - Chromium, Firefox, and WebKit where the repository harness supports them;
 - English and Russian first paint, success, loading, empty, and error states;
 - keyboard, visible focus, reduced motion, and 200% zoom;
@@ -264,6 +296,12 @@ Browser evidence covers:
   switching;
 - overflow, clipped text, overlapping regions, unreachable controls, and
   untranslated accessible names.
+- the first useful content above the fold on Concept, Theory, Quickstart, and
+  Docs;
+- consistent node geometry, a single active Atlas level, and a usable
+  landscape detail action;
+- the component workshop with the same language control, tokens, and long-copy
+  states as the public site.
 
 Automated geometry checks do not approve visual quality by themselves. An
 independent critic compares fresh screenshots with this direction and rejects
@@ -283,7 +321,7 @@ The accepted frontend development system assigns these exact responsibilities:
 | `implement-frontend-surface` | Build every public route from the accepted design-system sources. |
 | `maintain-frontend-verification` | Maintain deterministic browser, accessibility, breakpoint, and CI checks. |
 | `verify-frontend-candidate` | Verify the exact candidate across browsers, languages, input modes, and sizes. |
-| `critique-frontend-experience` | Independently compare fresh evidence with the approved Patch Panel direction. |
+| `critique-frontend-experience` | Independently compare fresh evidence with the approved Signal Canvas direction. |
 
 This design-system revision changes no cycle topology or authority rule.
 
