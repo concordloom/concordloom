@@ -31,6 +31,131 @@ body.is-inspector-open {
   overflow: hidden;
 }
 
+/* Font-independent interface marks. Decorative controls must never rely on
+   host fallback fonts: the same CSS geometry renders locally and in CI. */
+.ui-icon {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 1em;
+  width: 1em;
+  height: 1em;
+  color: currentcolor;
+  vertical-align: -0.12em;
+}
+
+.ui-icon::before,
+.ui-icon::after {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  content: "";
+}
+
+.ui-icon-arrow-right::before {
+  top: calc(50% - 1px);
+  right: 0.16em;
+  left: 0.08em;
+  height: 2px;
+  border-radius: var(--cl-radius-pill);
+  background: currentcolor;
+}
+
+.ui-icon-arrow-right::after {
+  top: calc(50% - 0.22em);
+  right: 0.08em;
+  width: 0.44em;
+  height: 0.44em;
+  border-top: 2px solid currentcolor;
+  border-right: 2px solid currentcolor;
+  transform: rotate(45deg);
+}
+
+.ui-icon-arrow-left::before {
+  top: calc(50% - 1px);
+  right: 0.08em;
+  left: 0.16em;
+  height: 2px;
+  border-radius: var(--cl-radius-pill);
+  background: currentcolor;
+}
+
+.ui-icon-arrow-left::after {
+  top: calc(50% - 0.22em);
+  left: 0.08em;
+  width: 0.44em;
+  height: 0.44em;
+  border-bottom: 2px solid currentcolor;
+  border-left: 2px solid currentcolor;
+  transform: rotate(45deg);
+}
+
+.ui-icon-arrow-down::before {
+  top: 0.08em;
+  bottom: 0.16em;
+  left: calc(50% - 1px);
+  width: 2px;
+  border-radius: var(--cl-radius-pill);
+  background: currentcolor;
+}
+
+.ui-icon-arrow-down::after {
+  bottom: 0.08em;
+  left: calc(50% - 0.22em);
+  width: 0.44em;
+  height: 0.44em;
+  border-right: 2px solid currentcolor;
+  border-bottom: 2px solid currentcolor;
+  transform: rotate(45deg);
+}
+
+.ui-icon-external::before {
+  top: calc(50% - 1px);
+  right: 0.12em;
+  left: 0.1em;
+  height: 2px;
+  border-radius: var(--cl-radius-pill);
+  background: currentcolor;
+  transform: rotate(-45deg);
+}
+
+.ui-icon-external::after {
+  top: 0.08em;
+  right: 0.08em;
+  width: 0.46em;
+  height: 0.46em;
+  border-top: 2px solid currentcolor;
+  border-right: 2px solid currentcolor;
+}
+
+.ui-icon-plus::before,
+.ui-icon-minus::before {
+  top: calc(50% - 1px);
+  right: 0.12em;
+  left: 0.12em;
+  height: 2px;
+  border-radius: var(--cl-radius-pill);
+  background: currentcolor;
+}
+
+.ui-icon-plus::after {
+  top: 0.12em;
+  bottom: 0.12em;
+  left: calc(50% - 1px);
+  width: 2px;
+  border-radius: var(--cl-radius-pill);
+  background: currentcolor;
+}
+
+.ui-icon-dot::before {
+  top: 50%;
+  left: 50%;
+  width: 0.24em;
+  height: 0.24em;
+  border-radius: 50%;
+  background: currentcolor;
+  transform: translate(-50%, -50%);
+}
+
 .view:target {
   display: block;
 }
@@ -441,6 +566,14 @@ html[lang="ru"] .hero h1 {
   fill: var(--ink);
   font: 800 10px var(--type-code);
   letter-spacing: 0.05em;
+}
+
+.preview-node-hint-icon {
+  fill: none;
+  stroke: var(--ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
 }
 
 .hero-map-note {
@@ -1329,7 +1462,7 @@ html[lang="ru"] .hero h1 {
   place-items: center;
 }
 
-.inspector-dial span {
+.inspector-dial .ui-icon {
   font-size: 2.8rem;
 }
 

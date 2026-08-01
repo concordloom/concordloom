@@ -1,9 +1,37 @@
+const { createHash } = require("node:crypto");
+const { spawnSync } = require("node:child_process");
 const { readFileSync } = require("node:fs");
 const { test, expect } = require("./support/test");
 const {
   openView,
   visibleInteractiveTargetFailures,
 } = require("./support/site");
+
+test("the canonical baseline updater works from a clean read-only clone", () => {
+  const updater = readFileSync(
+    "tests/frontend/update-visual-baselines.mjs",
+    "utf8",
+  );
+
+  expect(updater).toContain('"/work:rw,exec,mode=1777"');
+  expect(updater).toContain("dst=/source,readonly");
+  expect(updater).toContain("dst=/baselines");
+  expect(updater).toContain('"set -euo pipefail"');
+  expect(updater).toContain("lstatSync(baselineCursor)");
+  expect(updater).toContain("realpathSync(baselineCursor)");
+  expect(updater).toContain("relative(repository, baselines)");
+  expect(updater).toContain("baselinesRelative.startsWith(`..${sep}`)");
+  expect(updater).toContain(
+    "find . -mindepth 1 -maxdepth 1",
+  );
+  expect(updater).toContain("! -name node_modules");
+  expect(updater).toContain("! -name .artifacts");
+  expect(updater).toContain("tar --null -T - -cf - | tar -C /work -xf -");
+  expect(updater).toContain('"--update-snapshots=changed"');
+  expect(updater).not.toContain('"--update-snapshots=all"');
+  expect(updater).not.toContain("/work/node_modules:rw");
+  expect(updater).not.toContain("/work/.artifacts:rw");
+});
 
 for (const view of ["concept", "theory", "quickstart", "atlas", "docs"]) {
   test(`direct Russian ${view} entry cannot paint English before localization`, async ({
@@ -448,11 +476,25 @@ for (const language of ["en", "ru"]) {
     expect(density.heroHeight).toBeLessThanOrEqual(340);
     expect(density.emptyHeroSpace).toBeLessThanOrEqual(160);
     expect(density.firstDocumentTop).toBeLessThan(844);
+    await expect(
+      page.locator(".docs-list a .ui-icon-external").first(),
+    ).toBeVisible();
   });
 }
 
-test("design-system.css contains no raw color literals", async () => {
+test("design-system.css contains no raw color literals", async ({ browser }) => {
   const css = readFileSync("site/design-system.css", "utf8");
+  const app = readFileSync("site/app.js", "utf8");
+  const contract = JSON.parse(
+    readFileSync("design/frontend/visual-contract.json", "utf8"),
+  );
+  const packageData = JSON.parse(readFileSync("package.json", "utf8"));
+  const packageLock = JSON.parse(readFileSync("package-lock.json", "utf8"));
+  const manifest = JSON.parse(
+    readFileSync("design/frontend/baselines/manifest.json", "utf8"),
+  );
+  const playwrightConfig = readFileSync("playwright.config.js", "utf8");
+  const workflow = readFileSync(".github/workflows/frontend.yml", "utf8");
   const offenders = css.split("\n").flatMap((line, index) => {
     const literals = [
       ...line.matchAll(/#[0-9a-f]{3,8}\b/gi),
@@ -465,6 +507,65 @@ test("design-system.css contains no raw color literals", async () => {
     }));
   });
   expect(offenders).toEqual([]);
+  expect(app).not.toMatch(/[↗→＋]/u);
+  expect(contract.baseline_policy.ci_may_update).toBe(false);
+  expect(contract.baseline_policy.font_fallback_icons_forbidden).toBe(true);
+  expect(contract.baseline_policy.canonical_renderer).toMatchObject({
+    browser: "chromium",
+    browser_revision: "1234",
+    browser_version: "151.0.7922.34",
+    generation_command: "npm run test:frontend:evidence:update",
+    playwright_version: "1.62.0",
+  });
+  expect(
+    contract.baseline_policy.canonical_renderer.container_image,
+  ).toContain("@sha256:");
+  expect(
+    packageLock.packages["node_modules/@playwright/test"].version,
+  ).toBe(contract.baseline_policy.canonical_renderer.playwright_version);
+  expect(browser.version()).toBe(
+    contract.baseline_policy.canonical_renderer.browser_version,
+  );
+  expect(packageData.scripts["test:frontend:evidence:update"]).toBe(
+    "node tests/frontend/update-visual-baselines.mjs",
+  );
+  expect(playwrightConfig).toContain('updateSnapshots: "none"');
+  expect(playwrightConfig).toContain("maxDiffPixelRatio: 0.0001");
+  expect(workflow).toContain(
+    ".artifacts/playwright/signal-canvas-report",
+  );
+  expect(workflow).toContain(
+    ".artifacts/playwright/signal-canvas-results",
+  );
+  expect(workflow).toContain(
+    `image: ${contract.baseline_policy.canonical_renderer.container_image}`,
+  );
+  expect(workflow).not.toMatch(/\.artifacts\/playwright\/(?:report|results)\n/);
+  expect(workflow).not.toContain("test:frontend:evidence:update");
+  expect(manifest.renderer.container_image).toBe(
+    contract.baseline_policy.canonical_renderer.container_image,
+  );
+  expect(manifest.renderer.source_files).toHaveLength(
+    contract.baseline_policy.canonical_renderer.source_files.length,
+  );
+  for (const source of manifest.renderer.source_files) {
+    const actual = `sha256:${createHash("sha256")
+      .update(readFileSync(source.path))
+      .digest("hex")}`;
+    expect(source.sha256, source.path).toBe(actual);
+  }
+  const refusal = spawnSync(
+    process.execPath,
+    ["tests/frontend/update-visual-baselines.mjs"],
+    {
+      encoding: "utf8",
+      env: { ...process.env, CI: "1" },
+    },
+  );
+  expect(refusal.status).toBe(2);
+  expect(`${refusal.stdout}${refusal.stderr}`).toContain(
+    "Refusing to update accepted visual baselines in CI",
+  );
 });
 
 test("Russian Atlas keeps human copy in the primary interface", async ({ page }) => {
@@ -621,6 +722,8 @@ test("phone landscape details expose the primary action before the fold", async 
   await page.locator('[data-loop-id="system-evolution"]').click();
   const action = page.locator(".inspector-open-cycle");
   await expect(action).toBeVisible();
+  await expect(action.locator(".ui-icon-arrow-right")).toHaveCount(1);
+  await expect(page.locator(".inspector-dial .ui-icon-plus")).toHaveCount(1);
   const box = await action.boundingBox();
   expect(box.y + box.height).toBeLessThanOrEqual(390);
   await expect(page.locator(".inspector-more-cue")).toBeVisible();

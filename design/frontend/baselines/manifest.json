@@ -1,24 +1,24 @@
 {
-  "baseline_set_sha256": "sha256:dd1958c6966f0381b2a1074a18da3709b9659ad7a934cca503086b9bccef9bc3",
+  "baseline_set_sha256": "sha256:762e6e2dccf06751a5ebc4766ff2146d49d3b2ec6eeae8258274876f72163db4",
   "contract": {
     "id": "signal-canvas-v1",
     "path": "design/frontend/visual-contract.json",
-    "sha256": "sha256:745bdb5b8b8f7a3ffe49f13857cedf1d0e2612b412e121771f7b06f05a66fcc2"
+    "sha256": "sha256:eab09d92a8e64e13ccea2d45c822e8f66fa74d44e3a21605dd92240a3259d786"
   },
   "count": 112,
   "files": [
     {
-      "bytes": 34840,
+      "bytes": 34814,
       "language": "en",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-atlas-details.png",
-      "sha256": "sha256:a22cb8eb0b7616365ad97777bd1f685e43cebf6a69a6373705414c12f2415b2d",
+      "sha256": "sha256:5fa6dce7d1aef5b14f248a363edc6cb852f895dd9a486826d5d887be1f271cff",
       "viewport": "360x800"
     },
     {
-      "bytes": 36299,
+      "bytes": 36404,
       "language": "en",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-atlas-nested.png",
-      "sha256": "sha256:a7f2647e6bb2dc9c44cf514ebb30ea204383baadd8cd58ab106d7be4729b3967",
+      "sha256": "sha256:c22c1334029c0f908ea8cafd55c89820aa431be1692f3302974b33888a1e88d6",
       "viewport": "360x800"
     },
     {
@@ -29,31 +29,31 @@
       "viewport": "360x800"
     },
     {
-      "bytes": 48006,
+      "bytes": 48144,
       "language": "en",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-concept.png",
-      "sha256": "sha256:294b096c51e8fdea1ae5b0d41cd3e3c38fa6f9cf93da8147e53fe2b04a983704",
+      "sha256": "sha256:7e36402075422db0616a2c03f48c477bd5a6775ed34532386d4f27fd214313fc",
       "viewport": "360x800"
     },
     {
-      "bytes": 33963,
+      "bytes": 33940,
       "language": "en",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:0db2b26db78db55144f9e88ee5380f912f1527dfd56e5bf36e3b53c537021595",
+      "sha256": "sha256:cb3d3b0ec3c800a43ba1d7f8b8a97cd72c5ed9822f88506c9cda263545fa1d0e",
       "viewport": "360x800"
     },
     {
-      "bytes": 40845,
+      "bytes": 40689,
       "language": "en",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-quickstart.png",
-      "sha256": "sha256:4526a6891e2fbd332e20f6cdf3ecf89079f79cc2f7f6aa888605ff70929fadb6",
+      "sha256": "sha256:ff7190925225a19cf2fbb5afbcbc1fbc6aad8dd45a1f7d2d8df81655ac856dde",
       "viewport": "360x800"
     },
     {
-      "bytes": 36980,
+      "bytes": 36826,
       "language": "en",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-theory.png",
-      "sha256": "sha256:080228ac70df2c1c54e912d174912b8ae76eae099cdc0cc11a3e19e7f632e721",
+      "sha256": "sha256:ede5a8bedd1540aa7a825b243e2d89865db72fae1ddc26a1377b27979ab7b5aa",
       "viewport": "360x800"
     },
     {
@@ -64,17 +64,17 @@
       "viewport": "360x800"
     },
     {
-      "bytes": 36192,
+      "bytes": 36166,
       "language": "ru",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-atlas-details.png",
-      "sha256": "sha256:7f5903c99569127fb88e18ed0ff1880dc670e876b079837bfaccf095b9f4811d",
+      "sha256": "sha256:b834a03b37211c390b7685d9caf66938893c6a5a9938220b5a42b5db1fdb6d78",
       "viewport": "360x800"
     },
     {
-      "bytes": 38970,
+      "bytes": 39054,
       "language": "ru",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-atlas-nested.png",
-      "sha256": "sha256:c8724dcd902ceef763060d81ede7d852063f5d2b540c6559ae61fdcbc7a39a65",
+      "sha256": "sha256:7abca9a9915702b4677bb25aff397e13695eda16e6e8137f414763d097977d5d",
       "viewport": "360x800"
     },
     {
@@ -85,31 +85,31 @@
       "viewport": "360x800"
     },
     {
-      "bytes": 47855,
+      "bytes": 48018,
       "language": "ru",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-concept.png",
-      "sha256": "sha256:3233a2cbdcbb24e3869d84a754ae9154f453910f39f4c70a1e1998a9825a244b",
+      "sha256": "sha256:44f8ef4215632ec05219d154547b8fb4c8e17acd4660cea168d52f1c12a17006",
       "viewport": "360x800"
     },
     {
-      "bytes": 32846,
+      "bytes": 32811,
       "language": "ru",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:50903c0a7ab5a2f3158dad573f1ede4a6341583bdb01457cf4be34626be27d67",
+      "sha256": "sha256:f3bbe3bb9c88ad1e18085f2be4b0e2bb3a487ac4516a7bf4212718a20a59513e",
       "viewport": "360x800"
     },
     {
-      "bytes": 44505,
+      "bytes": 44339,
       "language": "ru",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-quickstart.png",
-      "sha256": "sha256:be5dbe5d2bf1d8dd5ba8893229e0e5477a8a2ae973d2eb43433d55dec07e5696",
+      "sha256": "sha256:44885c308369cf64ea67637e0ed8dc91bc12037c5cb93a93b026f946b1e2bdd9",
       "viewport": "360x800"
     },
     {
-      "bytes": 36186,
+      "bytes": 36029,
       "language": "ru",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-theory.png",
-      "sha256": "sha256:5e4da17c43f7f962394fc51af715e80f30734754d06038dec7d0faab9f3ad7a6",
+      "sha256": "sha256:33bf0f16544cd7a46fca7efb268bf27d070880d505892807336de331e90d33fc",
       "viewport": "360x800"
     },
     {
@@ -120,17 +120,17 @@
       "viewport": "360x800"
     },
     {
-      "bytes": 38508,
+      "bytes": 38521,
       "language": "en",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-atlas-details.png",
-      "sha256": "sha256:2820edb5ba56208c53de3285fdb7ae6fbd2b575346fcf1a355ca67c5b14fb26b",
+      "sha256": "sha256:97496a182c4be5cc84b8a918fad8a8b15cfd22246a96898f362669e610c1a218",
       "viewport": "390x844"
     },
     {
-      "bytes": 39406,
+      "bytes": 39512,
       "language": "en",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-atlas-nested.png",
-      "sha256": "sha256:525f1ca82956f89f6c56373eadeba668570f0b093b35e01bc8ff61c422764a50",
+      "sha256": "sha256:cc7c9c742c65746f4b71cf0cb3add381e39e3d0163c389bfcb44df6b570703c8",
       "viewport": "390x844"
     },
     {
@@ -141,31 +141,31 @@
       "viewport": "390x844"
     },
     {
-      "bytes": 51697,
+      "bytes": 51824,
       "language": "en",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-concept.png",
-      "sha256": "sha256:03f60661c21be1e3f4f9a6254128c34de8fd2cbb51b2226558ee5dee7bbe91e3",
+      "sha256": "sha256:8db0855ff17c16a30a3fe7d510b37e430160db414bc0901b7ba3656ce13fca2c",
       "viewport": "390x844"
     },
     {
-      "bytes": 38506,
+      "bytes": 38445,
       "language": "en",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:f8b8ffae12ca67b3573ce8b8d4c8120b2e729a66f574a5df676983c414abdaf9",
+      "sha256": "sha256:23924bcec77a65319f1250ccef61884906198b613f1c4200fed5e388fdf0255a",
       "viewport": "390x844"
     },
     {
-      "bytes": 45738,
+      "bytes": 45576,
       "language": "en",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-quickstart.png",
-      "sha256": "sha256:3f2c302eabd5db52ae3f39babbf81bf2faddf951b0b9932c264a8f9693a4a3f2",
+      "sha256": "sha256:7fe32dd34a92b071a85b437c2a63701c1218eba60687e04e7c1d8559f4e6d5d3",
       "viewport": "390x844"
     },
     {
-      "bytes": 41905,
+      "bytes": 41747,
       "language": "en",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-theory.png",
-      "sha256": "sha256:e6349f6b991aa65c3cefb18d53f709ce867cb645ba83c0a096d5bb14313ab669",
+      "sha256": "sha256:3d694e4bf89e00f7ddd720cc856cfd9c28f63e962718dd0b932ab1383b349fca",
       "viewport": "390x844"
     },
     {
@@ -176,17 +176,17 @@
       "viewport": "390x844"
     },
     {
-      "bytes": 37492,
+      "bytes": 37467,
       "language": "ru",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-atlas-details.png",
-      "sha256": "sha256:83bdfa2aadf6224a988fa8eae6d364384cc65f428d59e8f94f691123cfb60665",
+      "sha256": "sha256:05604c53332fdf455cb03607bf113877176877930b5b7ce8c58818ef4aa77e66",
       "viewport": "390x844"
     },
     {
-      "bytes": 42050,
+      "bytes": 42137,
       "language": "ru",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-atlas-nested.png",
-      "sha256": "sha256:643caec80e66ebf8a94c4ed4afb93aecaa057d6afb4131de651f973ec8e40f9a",
+      "sha256": "sha256:298011c1eeb14265dbe8401950349e78d7cd80862c9c3e66bcf7a9c272d94d97",
       "viewport": "390x844"
     },
     {
@@ -197,31 +197,31 @@
       "viewport": "390x844"
     },
     {
-      "bytes": 50212,
+      "bytes": 50369,
       "language": "ru",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-concept.png",
-      "sha256": "sha256:8422a6fbe08587b2db4658a1552a9ad56f717aed481c7cff915596db074337a1",
+      "sha256": "sha256:d79d035983eac8393ce8256adcdbe0cd6c43c4257fc2552d1f029f7126107f0d",
       "viewport": "390x844"
     },
     {
-      "bytes": 35695,
+      "bytes": 35655,
       "language": "ru",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:6f7d15e1e2ab410d5738b6d652f8fdc664a6b062f8548a62f3709d5bad5152ea",
+      "sha256": "sha256:3f1ef4f207db1df595ccbb1b6f3da8ee315fc80681c2240bd27a8c8711930821",
       "viewport": "390x844"
     },
     {
-      "bytes": 52304,
+      "bytes": 52136,
       "language": "ru",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-quickstart.png",
-      "sha256": "sha256:6bf1159afa907a87070271e5b3db4ccad626992f71f0c36aa9c504e598746198",
+      "sha256": "sha256:41e19dc0c6acb5da8e6218a2b640cbbcd477041b2d7e6fc291ff9129412b0fe7",
       "viewport": "390x844"
     },
     {
-      "bytes": 43197,
+      "bytes": 43039,
       "language": "ru",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-theory.png",
-      "sha256": "sha256:4077a2f50ffcf043df467886a0b9c56062d262ea41d59d5fd77c3ce81d614922",
+      "sha256": "sha256:490996d2c02fdf711017a0c91fd8d9678fee612d41bdfb194765b9395408c805",
       "viewport": "390x844"
     },
     {
@@ -232,38 +232,38 @@
       "viewport": "390x844"
     },
     {
-      "bytes": 34651,
+      "bytes": 34677,
       "language": "en",
       "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-atlas-details.png",
-      "sha256": "sha256:88d427acd9320651c3068dfff7ead762f45403347aad621aab855015408a750c",
+      "sha256": "sha256:c9a126774caf4d9b09e99c504655cf89b10a2c89ec25ba5456c802d3845b28d7",
       "viewport": "844x390"
     },
     {
-      "bytes": 36260,
+      "bytes": 36364,
       "language": "en",
       "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-atlas-nested.png",
-      "sha256": "sha256:28a6852d1f3d3f9b6fb7cf7bf733bb01d1d36e32017a78c12fb0c8cec6d969c9",
+      "sha256": "sha256:586065b41c8d5fb6e21fe8848360cff5404d0ec17d49a638b7e2bf070ec63ff1",
       "viewport": "844x390"
     },
     {
-      "bytes": 43582,
+      "bytes": 43592,
       "language": "en",
       "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-atlas.png",
-      "sha256": "sha256:4ec1d0772051024a9fbf82ffbe834c524910d2d230627f1ba35fb7f2446abb3f",
+      "sha256": "sha256:c759303534038c22c7dfcaa238a3b1c3ba8bf2280ae2bde04967cb09ffa8b4f5",
       "viewport": "844x390"
     },
     {
-      "bytes": 48580,
+      "bytes": 48730,
       "language": "en",
       "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-concept.png",
-      "sha256": "sha256:094261456bc08ae152872ba14f4711d46fb96dfb1d6a9370a00e7e95be894543",
+      "sha256": "sha256:7cf7c05ea10f2820b61b09173fec2b30a821a45d931f4a2518039c7d03b30040",
       "viewport": "844x390"
     },
     {
-      "bytes": 33024,
+      "bytes": 33044,
       "language": "en",
       "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:45d345e97d4e6de55345f3fe9214ef98ca290dd1bd6b991b615922620f8ff5a0",
+      "sha256": "sha256:102c6810dadf63d11ab5b83b48c44f51a9a615491c105aa3f49fe2ed66783bae",
       "viewport": "844x390"
     },
     {
@@ -288,17 +288,17 @@
       "viewport": "844x390"
     },
     {
-      "bytes": 37802,
+      "bytes": 37862,
       "language": "ru",
       "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/ru-atlas-details.png",
-      "sha256": "sha256:6eddf5c735c48def62e6752c54d1580253803df5fcc97a91c489ba17f868d506",
+      "sha256": "sha256:b190af6c487f01a9d1a919d7a7f6850b9e0f52cc9d93c8912b985cd2c87fc6d8",
       "viewport": "844x390"
     },
     {
-      "bytes": 37774,
+      "bytes": 37886,
       "language": "ru",
       "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/ru-atlas-nested.png",
-      "sha256": "sha256:130b16ffbd0353d7be6af88603cc524c3f34ff3c40cfbbdb56038ab1bc66064d",
+      "sha256": "sha256:055693b0ed0e0a4e3be5cab78fb8c403475d324b26de2d797d5821da4e695b68",
       "viewport": "844x390"
     },
     {
@@ -309,17 +309,17 @@
       "viewport": "844x390"
     },
     {
-      "bytes": 50776,
+      "bytes": 50949,
       "language": "ru",
       "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/ru-concept.png",
-      "sha256": "sha256:1e78ddcb62b3468e232616a657ce58581406181eb8db83cfb2599bd2bd5ec4cf",
+      "sha256": "sha256:9a4dad63db8761d7a7090c5b8c314b32d29b86fc25498232bc88ce9d567a6c7d",
       "viewport": "844x390"
     },
     {
-      "bytes": 33648,
+      "bytes": 33650,
       "language": "ru",
       "path": "design/frontend/baselines/visual-phone-landscape/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:ee728f80d4083c464093bd6bc9607f25c497d17c71811abd0faec9602e14766c",
+      "sha256": "sha256:90a543f8f1da69ff3cbd2f72f38e823dad34fecfa35d8d62d93a50bf74679ff2",
       "viewport": "844x390"
     },
     {
@@ -344,17 +344,17 @@
       "viewport": "844x390"
     },
     {
-      "bytes": 78176,
+      "bytes": 78261,
       "language": "en",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-atlas-details.png",
-      "sha256": "sha256:6773d53d08945876f7e9e4acd13005603015fb59513b48ae3262b57196e1434d",
+      "sha256": "sha256:5449bc15cce959974be71dde8419e552e0db461d4d0c14d968494ef0239dcec7",
       "viewport": "768x1024"
     },
     {
-      "bytes": 48730,
+      "bytes": 48835,
       "language": "en",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-atlas-nested.png",
-      "sha256": "sha256:6d46fa751d5cfa9397c75b5a053c34f4e83c17e8902452e189ea3c88535598fc",
+      "sha256": "sha256:7fb995623317a8edcbbf105de09469445d1bf8dbb8b67c148b52d654313c63d1",
       "viewport": "768x1024"
     },
     {
@@ -365,31 +365,31 @@
       "viewport": "768x1024"
     },
     {
-      "bytes": 70002,
+      "bytes": 70232,
       "language": "en",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-concept.png",
-      "sha256": "sha256:10288f1e373d1fbfee20f9eeba9c4be389b5f34f8fedb9b06172ed345fee8fbd",
+      "sha256": "sha256:dca8ad33a441ec4ca77426db2abbf7f5f165d98d985ac664e59170ac83fb6744",
       "viewport": "768x1024"
     },
     {
-      "bytes": 62723,
+      "bytes": 62629,
       "language": "en",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:bd70181e551f3e49b177716339c261387bf0e3f4be0d6aa2f378df503a5435b1",
+      "sha256": "sha256:9c46c951abea386ba6a66f1b4344a7ac86af89eee1e5ba872fe3a4a2ee6a1234",
       "viewport": "768x1024"
     },
     {
-      "bytes": 77756,
+      "bytes": 77600,
       "language": "en",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-quickstart.png",
-      "sha256": "sha256:1a10e528eace27241161588fc7cd677392e97879fc3b635e9bcb57d13e2e189f",
+      "sha256": "sha256:e035821f826b1896ff7d1baeffcef5d5a56f74403e752d416a874675f5e53e5c",
       "viewport": "768x1024"
     },
     {
-      "bytes": 89798,
+      "bytes": 89626,
       "language": "en",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-theory.png",
-      "sha256": "sha256:89508a4ba6b87c5c674700cb8621bb0e04db2f9fb6bce7049a001b526edf1636",
+      "sha256": "sha256:99856d7a3ed05a51d0c2afba07fcbabcce70acd64b80d6bef3c46957f97ea582",
       "viewport": "768x1024"
     },
     {
@@ -400,17 +400,17 @@
       "viewport": "768x1024"
     },
     {
-      "bytes": 84242,
+      "bytes": 84330,
       "language": "ru",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-atlas-details.png",
-      "sha256": "sha256:a380d6fac5f76cd624124dbab4895a70d7bdb627fd617a30b0becca8b49dc90f",
+      "sha256": "sha256:45e6d6b8fd588c35ac9eb705eb865df49085600769cbce0c7a6378090ec4ac10",
       "viewport": "768x1024"
     },
     {
-      "bytes": 54617,
+      "bytes": 54736,
       "language": "ru",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-atlas-nested.png",
-      "sha256": "sha256:79f56d9b719bb22c3ab08598515b875b983418b86614c505bfcf60d1f515662c",
+      "sha256": "sha256:2b3426d423f612f96fe228594123e9300aef824b8c86599bbbf5a8b8973077a0",
       "viewport": "768x1024"
     },
     {
@@ -421,31 +421,31 @@
       "viewport": "768x1024"
     },
     {
-      "bytes": 72198,
+      "bytes": 72413,
       "language": "ru",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-concept.png",
-      "sha256": "sha256:2332c4198305573c4284e7c89ea8ee77693ec5a614fc557c85ccade36572644e",
+      "sha256": "sha256:ddb7fdcd7abef3944d98fece54284e501ae1e06e716612bb932f508c3e534552",
       "viewport": "768x1024"
     },
     {
-      "bytes": 65190,
+      "bytes": 65122,
       "language": "ru",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:1c5410749c5cabed11522264819335e3fa2f005d4463ef00f5620944edb6344d",
+      "sha256": "sha256:371ed863f0a3d288d09424229c6a0b23510db2426ce1a56e430339aee9d6e6be",
       "viewport": "768x1024"
     },
     {
-      "bytes": 79970,
+      "bytes": 79802,
       "language": "ru",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-quickstart.png",
-      "sha256": "sha256:cd557308e78d6b759a710a68b14125361f75537354eca72ba1c34e7d4bb6f8fa",
+      "sha256": "sha256:640fbd5e7c6ddd1f396a30e50452649364c7d8c522b9f8e2f10dfb97a90bf06a",
       "viewport": "768x1024"
     },
     {
-      "bytes": 95903,
+      "bytes": 95747,
       "language": "ru",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-theory.png",
-      "sha256": "sha256:6e8ddcb51b7646342ad224c01dfe2c60e37a5aca03f1732aefea755bbc0704dc",
+      "sha256": "sha256:d7060a61abc0f53ee0ae5fcfe280098af1366c4aee494cc873f7ecf128126016",
       "viewport": "768x1024"
     },
     {
@@ -456,17 +456,17 @@
       "viewport": "768x1024"
     },
     {
-      "bytes": 87697,
+      "bytes": 87733,
       "language": "en",
       "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-atlas-details.png",
-      "sha256": "sha256:2b76bf03f61863365a6b90d0daf45409c8ed5d3a620713a61154c69a38128dca",
+      "sha256": "sha256:a0188ab8b379d9f513a846c48088219117c80b93ffecdd4b5466e815d49575eb",
       "viewport": "1024x768"
     },
     {
-      "bytes": 61625,
+      "bytes": 61723,
       "language": "en",
       "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-atlas-nested.png",
-      "sha256": "sha256:4611cf5b4a2eba1524d61368514bb818c0dd4862c93e34914840f8f83151d091",
+      "sha256": "sha256:84a90131e43257185e7ecaf6db637053cde5cf423fdf52200b6f16cd03dd6833",
       "viewport": "1024x768"
     },
     {
@@ -477,17 +477,17 @@
       "viewport": "1024x768"
     },
     {
-      "bytes": 78653,
+      "bytes": 78843,
       "language": "en",
       "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-concept.png",
-      "sha256": "sha256:d5e98bcaf20fbd63cc666f09b7b11f7c74c0920231a579da136cdaec4ef18a02",
+      "sha256": "sha256:1bde702cb80f90c52fb376c988158ad8fa5e37e3063bc91d1120cbf7ed74147c",
       "viewport": "1024x768"
     },
     {
-      "bytes": 58810,
+      "bytes": 58737,
       "language": "en",
       "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:2edf39fd0673620635aa85c61a6bc7115309df6de8019c0a8dcbe85c33469102",
+      "sha256": "sha256:f3e7d85625aefb019dfb27489f3b3a28bb13dbbc0938f5c8753fe8d0df9297fa",
       "viewport": "1024x768"
     },
     {
@@ -512,17 +512,17 @@
       "viewport": "1024x768"
     },
     {
-      "bytes": 91211,
+      "bytes": 91261,
       "language": "ru",
       "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-atlas-details.png",
-      "sha256": "sha256:45fbf7b16218d4e9264ab102f0252710ab2bc2a2e56533c7c4343fe84fe25dc6",
+      "sha256": "sha256:3fad168d7710ddc496413cc1fa831728765732d69d255950b6ff84b6856a44dd",
       "viewport": "1024x768"
     },
     {
-      "bytes": 66080,
+      "bytes": 66190,
       "language": "ru",
       "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-atlas-nested.png",
-      "sha256": "sha256:b9f7262bda691a4deccd2c70c4efa0a37407968663043ad55f1ff5e2f20332fd",
+      "sha256": "sha256:1584d8c10dde0b5b956c09dfb522c01cff3075be86e9bd64a21d0e63bf9e89ab",
       "viewport": "1024x768"
     },
     {
@@ -533,17 +533,17 @@
       "viewport": "1024x768"
     },
     {
-      "bytes": 79551,
+      "bytes": 79730,
       "language": "ru",
       "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-concept.png",
-      "sha256": "sha256:eab948c9a06e770e5028e1e530d3fe286b4760930ad519962d279e28b73d21ee",
+      "sha256": "sha256:83825c97585cbf45964fa55e6005ba015f649679ef20bcc8712c0ae45b099cd8",
       "viewport": "1024x768"
     },
     {
-      "bytes": 61677,
+      "bytes": 61628,
       "language": "ru",
       "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:5d439c0d6e5593a06599bd273d27be3cc195ae3991c16569d0fc3809dfef9fd9",
+      "sha256": "sha256:0366af5bf6d2ce73687df6e6d8dea5d5801cf3215de275b24f4524f51e0dae53",
       "viewport": "1024x768"
     },
     {
@@ -568,17 +568,17 @@
       "viewport": "1024x768"
     },
     {
-      "bytes": 114199,
+      "bytes": 114230,
       "language": "en",
       "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-atlas-details.png",
-      "sha256": "sha256:e1ef9ec2aa1e1261aa17fee3188ba7291f227020b79313dd7ac62ff11371b414",
+      "sha256": "sha256:66f583f71930ed24d7e1a3feb48ca40ea637344409233aaa9fd49a8db36d6fd2",
       "viewport": "1440x900"
     },
     {
-      "bytes": 68140,
+      "bytes": 68266,
       "language": "en",
       "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-atlas-nested.png",
-      "sha256": "sha256:2461fa16c7a637d94c643776f7d6dafc94b7cf7f175e70aefd46999cd3d34d9d",
+      "sha256": "sha256:d6c8413ff6aaad154b2d0d465f31ef9a4be45a9c3b19792c6f9ef80c2c3e7088",
       "viewport": "1440x900"
     },
     {
@@ -589,17 +589,17 @@
       "viewport": "1440x900"
     },
     {
-      "bytes": 98055,
+      "bytes": 98353,
       "language": "en",
       "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-concept.png",
-      "sha256": "sha256:d493fb822e66ccdca141aa6b9865d175d60bce20e8274e4a86b5bc316d5d975d",
+      "sha256": "sha256:2cc069bb5e03438c8c9ef0981163f52275a24a7718b32abed9b16a6ee601e1bc",
       "viewport": "1440x900"
     },
     {
-      "bytes": 72492,
+      "bytes": 72471,
       "language": "en",
       "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:43190a7693297b829c36f3faa5acb80f8037dc16e9478b955b6695b730e490bb",
+      "sha256": "sha256:7bfde8e1446200502a3738a304301da5dec3cc66ca6c80d9311a56011bc9a51f",
       "viewport": "1440x900"
     },
     {
@@ -624,17 +624,17 @@
       "viewport": "1440x900"
     },
     {
-      "bytes": 117618,
+      "bytes": 117643,
       "language": "ru",
       "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-atlas-details.png",
-      "sha256": "sha256:a86ca7ed36664d1f726c4b72ed44aeb0b134ae2464af77824928e9045be5786a",
+      "sha256": "sha256:a3324d466766f55e8696eeb54065df43cb01b38af8c19e240f2bc8530dd56bba",
       "viewport": "1440x900"
     },
     {
-      "bytes": 75223,
+      "bytes": 75336,
       "language": "ru",
       "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-atlas-nested.png",
-      "sha256": "sha256:f1f953957cb7fcb6241411195581b853ac3436de9695768fa7e92612a08a6ad7",
+      "sha256": "sha256:4ab4dad0dfccbe3548d242f87b5c692f748278b1cda737c51e180a50fc0104ea",
       "viewport": "1440x900"
     },
     {
@@ -645,17 +645,17 @@
       "viewport": "1440x900"
     },
     {
-      "bytes": 97731,
+      "bytes": 98069,
       "language": "ru",
       "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-concept.png",
-      "sha256": "sha256:0ee46259ea73a6a2a0aea2377a5f6bbbe89de785634f94dcedec286513274a18",
+      "sha256": "sha256:328b51088f210c1ced373e5c0c09e0ef4c62d0f0969de1cff75e07a0177fbe8a",
       "viewport": "1440x900"
     },
     {
-      "bytes": 77005,
+      "bytes": 77021,
       "language": "ru",
       "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:16eebda9bc1861188a074ab6da1dc52825b955ba28106a7bf2fd7df0389cd818",
+      "sha256": "sha256:2b415ba5a8d976529d3a6b970ecd7fd3b52bbb937376c251ca75410fc8b09c32",
       "viewport": "1440x900"
     },
     {
@@ -680,17 +680,17 @@
       "viewport": "1440x900"
     },
     {
-      "bytes": 149725,
+      "bytes": 149872,
       "language": "en",
       "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-atlas-details.png",
-      "sha256": "sha256:4223d60c61d7242a898aaaf86a59458fd18e7a88435494646dfa09bb2289e560",
+      "sha256": "sha256:ea62d03876b94890c3057257d8562d2c91da607279d60e2994f9a89577f94e85",
       "viewport": "1920x1080"
     },
     {
-      "bytes": 82756,
+      "bytes": 82888,
       "language": "en",
       "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-atlas-nested.png",
-      "sha256": "sha256:41f43f554d6e49c586f911172d87dadb5719bab28269f0abcbe8db7abd2519a1",
+      "sha256": "sha256:ae3af628e6141be33a133e7c7d4bd5a514742dc6e6e9cce039112eaae391149a",
       "viewport": "1920x1080"
     },
     {
@@ -701,17 +701,17 @@
       "viewport": "1920x1080"
     },
     {
-      "bytes": 110746,
+      "bytes": 111224,
       "language": "en",
       "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-concept.png",
-      "sha256": "sha256:b3592120d262fe4c41eeb5f5c860420c59ef6dac020ff3d7afd2a76d69d5ddff",
+      "sha256": "sha256:a19fe41ef82d13f2c087a8bc19053a7ff373a225c924949efbbb5cac38ccef03",
       "viewport": "1920x1080"
     },
     {
-      "bytes": 88218,
+      "bytes": 88176,
       "language": "en",
       "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:98562eaa9606c5e5e8361bd730e41c32c1395e90e7a9fc51d2b34a432b05d4be",
+      "sha256": "sha256:38bb34e977fbf27084434a2431339d8de13a1a8a0c4d570ac02db7ee1ff73a35",
       "viewport": "1920x1080"
     },
     {
@@ -736,17 +736,17 @@
       "viewport": "1920x1080"
     },
     {
-      "bytes": 155474,
+      "bytes": 155613,
       "language": "ru",
       "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-atlas-details.png",
-      "sha256": "sha256:966884887a7370b3f5bd6b3e3c16811bb4340cec7153916d64e3e29ff3dc2e77",
+      "sha256": "sha256:2da92bb28713cfcd1ccef24f6525319d4e69f72b258fbbe0136ee0a4a55b73c3",
       "viewport": "1920x1080"
     },
     {
-      "bytes": 91454,
+      "bytes": 91576,
       "language": "ru",
       "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-atlas-nested.png",
-      "sha256": "sha256:ad3e11948b8b769c0d6e0c68f30a6d9801ef04603ff0dfe6d88017fb86cc6aba",
+      "sha256": "sha256:9426e25a16af20050ada09c76160399183abe6932bb24091e34a744180f353d8",
       "viewport": "1920x1080"
     },
     {
@@ -757,17 +757,17 @@
       "viewport": "1920x1080"
     },
     {
-      "bytes": 113728,
+      "bytes": 114064,
       "language": "ru",
       "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-concept.png",
-      "sha256": "sha256:a35a3525f7d15da0cf6ce3da1b49563c5f4e4a816c44557dc93d3a2053315aa0",
+      "sha256": "sha256:0f13393e7c21568887259460c86d7064780f821bdea1f90c72a3021c7c759bab",
       "viewport": "1920x1080"
     },
     {
-      "bytes": 91521,
+      "bytes": 91533,
       "language": "ru",
       "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:b2e8da6d14d3e31ce162bc82cfb5789b2a16a76aaf67a4998134346aba92f576",
+      "sha256": "sha256:f44aea6e28e74209bb019bd01e80f96acd25ace74da6a963cd4c01c06ba9e50b",
       "viewport": "1920x1080"
     },
     {
@@ -793,6 +793,140 @@
     }
   ],
   "kind": "concordloom.visual-baseline-manifest",
-  "schema_version": "0.1",
+  "renderer": {
+    "browser": "chromium",
+    "browser_revision": "1234",
+    "browser_version": "151.0.7922.34",
+    "container_image": "mcr.microsoft.com/playwright:v1.62.0-noble@sha256:baed2032d533817f3dbe6425de795788430ba345e819a1201337009ba17c9d07",
+    "generation_command": "npm run test:frontend:evidence:update",
+    "playwright_version": "1.62.0",
+    "source_files": [
+      {
+        "path": "frontend-workshop/index.html",
+        "sha256": "sha256:e0a17d1b0f0b0468b6900c072528e85d8cffc0c40f8ece625e0315e98426c12f"
+      },
+      {
+        "path": "frontend-workshop/workshop.css",
+        "sha256": "sha256:734a98cdb99487a929c64cf1007f683f29652b8741b4fd8ca9748401474a86b8"
+      },
+      {
+        "path": "frontend-workshop/workshop.js",
+        "sha256": "sha256:eb79a409cdf6f5006fd98c8823f78f9e99c69a034990512156221b6c503f3e6b"
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "sha256:c37736154f2e6e4c458e5fbd097815623ab582a0e43eaa7300a1f42c9b125487"
+      },
+      {
+        "path": "package.json",
+        "sha256": "sha256:ed6cba4b5c083d36f67e91eae89dfd529a7d95aa6025384f09b8136009a663ef"
+      },
+      {
+        "path": "playwright.config.js",
+        "sha256": "sha256:7212192d9e4477c516c9bd70d36f67ff884d75fe76418b6749ad9bf550807932"
+      },
+      {
+        "path": "site/app.js",
+        "sha256": "sha256:999618bfadd95109101f425e587ba640c763c3a0ed8f55e37bbd351ab9e5c31f"
+      },
+      {
+        "path": "site/assets/concordloom-hero.webp",
+        "sha256": "sha256:dde0216c3e3ab5165cfe1cf785eb21590582cb7715c48063bbb90a1a8f87d8fe"
+      },
+      {
+        "path": "site/assets/concordloom-mark-192.png",
+        "sha256": "sha256:26b25fe2932a7f0e02c737c236eb04c7fa3b204b30543ea05b2f5c420f0873f5"
+      },
+      {
+        "path": "site/assets/concordloom-mark-512.png",
+        "sha256": "sha256:06771b74d403e371ddee6890e6c29a321c49b463e363b22cafb4a2822b38a6f9"
+      },
+      {
+        "path": "site/assets/concordloom-mark.png",
+        "sha256": "sha256:e520ea1584508121430b0ddc41a2fd0ec16cfbe08a68b86a77eb47bef4c61bc0"
+      },
+      {
+        "path": "site/assets/concordloom-social-preview.png",
+        "sha256": "sha256:332db4c4727778a129decc62f34527faef7caed994b302cbf3901ebca984ff62"
+      },
+      {
+        "path": "site/assets/favicon-32.png",
+        "sha256": "sha256:6d8bc9bc3a8d4bdbbc7d96be40de6bbdcebfe8217344abbc22b2570fbac173a7"
+      },
+      {
+        "path": "site/assets/fonts/Manrope-OFL.txt",
+        "sha256": "sha256:d826ab6583b12c26807d8716a545bdbbb672df04f48608a364ba9efdbe501c30"
+      },
+      {
+        "path": "site/assets/fonts/manrope-cyrillic-wght-normal.woff2",
+        "sha256": "sha256:c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914"
+      },
+      {
+        "path": "site/assets/fonts/manrope-latin-wght-normal.woff2",
+        "sha256": "sha256:a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972"
+      },
+      {
+        "path": "site/assets/signal-constellation-stage.png",
+        "sha256": "sha256:e0a8733daf8070d71b2b5327eb2342c3d4a7562d1e640675b35a46cf5f230b9f"
+      },
+      {
+        "path": "site/assets/signal-dial-core.png",
+        "sha256": "sha256:6c7d852ac2dfeade018c83ff35c3d17e00b9c3ebc97a6835adcbe4aeaefe9370"
+      },
+      {
+        "path": "site/data/atlas.json",
+        "sha256": "sha256:454ea7467c526c54b9081f0da085b1acba6140bf4d62239f93b87de37677c80d"
+      },
+      {
+        "path": "site/data/content.json",
+        "sha256": "sha256:04bcfaa27af12e8c60a94b01cecf7a7f0069d5f7ba50bd13aa6471fae06447ef"
+      },
+      {
+        "path": "site/design-system.css",
+        "sha256": "sha256:edfa269812d02d52a2a41f84b1b613f71d1f0e931f17cbb9e63c170a5371cef5"
+      },
+      {
+        "path": "site/design-tokens.css",
+        "sha256": "sha256:d0ad5c82cc0b3c2e68d2cb17d2f72837597532deb9422035f7fed64a5357b453"
+      },
+      {
+        "path": "site/design-tokens.json",
+        "sha256": "sha256:4c65bc9d169731a9db1077474d359a47a9eb3216dd7093ee7655cdc6e1f2a528"
+      },
+      {
+        "path": "site/index.html",
+        "sha256": "sha256:2ff830d72e85af1c3a3011d5385e5e1e9d19079829c363a3e99f8632c4e96ef5"
+      },
+      {
+        "path": "site/styles.css",
+        "sha256": "sha256:b96d905c1d016de0b7cc45fd6d996218fa11d652fbf86ef289e9c72324b333b2"
+      },
+      {
+        "path": "tests/frontend/server.mjs",
+        "sha256": "sha256:e44b074aecdf38d18a33f1342940b2cac51d49a6726ef18d2b48cef1aa04dcac"
+      },
+      {
+        "path": "tests/frontend/support/site.js",
+        "sha256": "sha256:027fc23e76a1a6a0e63b44aa0f8d5e022166d3f9f82f4ff99d1d837cab868b08"
+      },
+      {
+        "path": "tests/frontend/support/test.js",
+        "sha256": "sha256:6afe209d45bb2098d46936fc49af8374ee00adb1aa4fe97541ace63ad8da9091"
+      },
+      {
+        "path": "tests/frontend/update-visual-baselines.mjs",
+        "sha256": "sha256:df02ab84889ce535c7f02d6e4701f97d37e097b6229f76798327dee79ea3f037"
+      },
+      {
+        "path": "tests/frontend/visual-evidence.spec.js",
+        "sha256": "sha256:67479612ed8d6125c58f127fb39181883e361fe53285570e141bf4afc874c040"
+      },
+      {
+        "path": "tools/build_visual_baseline_manifest.py",
+        "sha256": "sha256:395afc9b0c549281e8a1cde40512a515d06a31613385b081b639f4ef9ac33fb2"
+      }
+    ]
+  },
+  "schema_version": "0.2",
   "status": "candidate-evidence"
 }

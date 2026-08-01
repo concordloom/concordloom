@@ -518,7 +518,7 @@ function renderDocs() {
         <span class="doc-index" aria-hidden="true">${String(documentIndex).padStart(2, "0")}</span>
         <h3>${title}</h3>
         <a href="${url}" aria-label="${text("docs")}: ${title}">
-          <span>${text("docs")}</span><span aria-hidden="true">↗</span>
+          <span>${text("docs")}</span><span class="ui-icon ui-icon-external" aria-hidden="true"></span>
         </a>
       `;
       list.append(article);
@@ -609,7 +609,7 @@ function renderInspector(loop) {
   const inspector = document.querySelector("[data-atlas-inspector]");
   const loopIndex = atlasData.loops.findIndex((entry) => entry.id === loop.id) + 1;
   const loopCode = `LOOP ${String(loopIndex).padStart(2, "0")}.${loop.children.length ? "A" : "T"}`;
-  const glyph = loopGlyph(loop);
+  const iconClass = loopIconClass(loop);
   const boundSkills = route.skills.length
     ? route.skills
         .map((skill) => `<li><code translate="no">${skill.id}@${skill.version}</code></li>`)
@@ -642,7 +642,7 @@ function renderInspector(loop) {
     ? `
       <a class="inspector-open-cycle" href="#atlas/${encodeURIComponent(loop.id)}">
         <span>${text("openInside")}</span>
-        <span aria-hidden="true">→</span>
+        <span class="ui-icon ui-icon-arrow-right" aria-hidden="true"></span>
       </a>
     `
     : "";
@@ -656,7 +656,7 @@ function renderInspector(loop) {
     <p class="inspector-code" translate="no">${loopCode}</p>
     <h2 id="atlas-inspector-title" tabindex="-1">${loopCopy(loop).label}</h2>
     <div class="inspector-dial" aria-hidden="true">
-      <span>${glyph}</span>
+      <span class="ui-icon ${iconClass}"></span>
     </div>
     <p class="inspector-purpose">${loopCopy(loop).purpose}</p>
     <dl class="inspector-contract">
@@ -664,7 +664,7 @@ function renderInspector(loop) {
       <div><dt>${text("produces")}</dt><dd>${loopContractCopy(loop, "output")}</dd></div>
     </dl>
     ${openAction}
-    <p class="inspector-more-cue">${text("moreBelow")} <span aria-hidden="true">↓</span></p>
+    <p class="inspector-more-cue">${text("moreBelow")} <span class="ui-icon ui-icon-arrow-down" aria-hidden="true"></span></p>
     <details class="resource-panel">
       <summary>${text("resourcesOptional")}</summary>
       <dl>
@@ -683,7 +683,7 @@ function renderInspector(loop) {
       <p class="section-label">${language === "en" ? "SHARED INNER RUN" : "ОБЩАЯ СХЕМА ЗАПУСКА"}</p>
       <ol>${atlasData.sharedRunGrammar.map((phase) => `<li><span>${phaseCopy[phase.id].code}</span>${phase.copy[language].label}</li>`).join("")}</ol>
     </section>
-    ${loop.parentId ? `<a class="atlas-back" href="#atlas/${encodeURIComponent(loop.parentId)}">← ${text("back")}: ${loopCopy(atlasLoop(loop.parentId)).label}</a>` : ""}
+    ${loop.parentId ? `<a class="atlas-back" href="#atlas/${encodeURIComponent(loop.parentId)}"><span class="ui-icon ui-icon-arrow-left" aria-hidden="true"></span> ${text("back")}: ${loopCopy(atlasLoop(loop.parentId)).label}</a>` : ""}
   `;
   inspector.querySelector("[data-atlas-inspector-close]")
     .addEventListener("click", () => setInspectorOpen(false, true));
@@ -755,8 +755,8 @@ function graphLabel(textValue) {
   return second ? [first, second] : [first];
 }
 
-function loopGlyph(loop) {
-  return loop.children.length ? "＋" : "•";
+function loopIconClass(loop) {
+  return loop.children.length ? "ui-icon-plus" : "ui-icon-dot";
 }
 
 function renderHeroPreview() {
@@ -824,8 +824,13 @@ function renderHeroPreview() {
         y: 37,
         "text-anchor": "middle",
       });
-      hint.textContent = language === "en" ? "OPEN THE ATLAS →" : "ОТКРЫТЬ АТЛАС →";
+      hint.setAttribute("x", "-8");
+      hint.textContent = language === "en" ? "OPEN THE ATLAS" : "ОТКРЫТЬ АТЛАС";
       link.append(hint);
+      link.append(svgElement("path", {
+        class: "preview-node-hint-icon",
+        d: "M 68 37 H 84 M 79 32 L 84 37 L 79 42",
+      }));
     }
     const group = svgElement("g", { transform: `translate(${x} ${y})` });
     group.append(link);
@@ -1300,7 +1305,9 @@ document.querySelectorAll(".reading-toc-toggle").forEach((toggle) => {
     const toc = toggle.closest(".reading-toc");
     const open = toc.classList.toggle("is-open");
     toggle.setAttribute("aria-expanded", String(open));
-    toggle.querySelector("i").textContent = open ? "−" : "＋";
+    const icon = toggle.querySelector(".ui-icon");
+    icon.classList.toggle("ui-icon-plus", !open);
+    icon.classList.toggle("ui-icon-minus", open);
   });
 });
 

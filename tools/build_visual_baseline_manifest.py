@@ -44,7 +44,36 @@ def digest(data: bytes) -> str:
     return f"sha256:{hashlib.sha256(data).hexdigest()}"
 
 
+def renderer_source(relative_path: object) -> tuple[str, Path]:
+    if not isinstance(relative_path, str) or not relative_path:
+        raise SystemExit("renderer source path must be a non-empty string")
+    declared = Path(relative_path)
+    if declared.is_absolute() or ".." in declared.parts:
+        raise SystemExit(f"renderer source escapes repository: {relative_path}")
+    normalized = declared.as_posix()
+    if normalized != relative_path or normalized.startswith("./"):
+        raise SystemExit(f"renderer source path is not canonical: {relative_path}")
+    source = (ROOT / declared).resolve()
+    if not source.is_relative_to(ROOT.resolve()):
+        raise SystemExit(f"renderer source escapes repository: {relative_path}")
+    return normalized, source
+
+
 def build_manifest() -> dict[str, object]:
+    contract_data = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    renderer = contract_data["baseline_policy"]["canonical_renderer"]
+    rendering_sources: list[dict[str, str]] = []
+    for declared_path in renderer["source_files"]:
+        relative_path, source = renderer_source(declared_path)
+        if not source.is_file():
+            raise SystemExit(f"missing renderer source: {relative_path}")
+        rendering_sources.append(
+            {
+                "path": relative_path,
+                "sha256": digest(source.read_bytes()),
+            }
+        )
+
     files: list[dict[str, object]] = []
     for project, viewport in VIEWPORTS.items():
         directory = BASELINES / project / "visual-evidence.spec.js"
@@ -83,7 +112,16 @@ def build_manifest() -> dict[str, object]:
         "count": len(files),
         "files": files,
         "kind": "concordloom.visual-baseline-manifest",
-        "schema_version": "0.1",
+        "renderer": {
+            "browser": renderer["browser"],
+            "browser_revision": renderer["browser_revision"],
+            "browser_version": renderer["browser_version"],
+            "container_image": renderer["container_image"],
+            "generation_command": renderer["generation_command"],
+            "playwright_version": renderer["playwright_version"],
+            "source_files": rendering_sources,
+        },
+        "schema_version": "0.2",
         "status": "candidate-evidence",
     }
 
