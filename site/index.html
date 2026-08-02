@@ -391,7 +391,7 @@ program                               prepare → act → evaluate → ACCEPT
 ├── release-distribution
 ├── adoption-feedback
 └── system-evolution</code></pre>
-<p>Those areas contain 55 narrower cycles, for 65 cycles in total. They cover product decisions, theory, protocol, implementation, independent review, adapters, documentation, localization, the site, releases, adoption, and the full evolution circuit. The seven phases—observe, negotiate, bind, execute, verify, publish, and evolve—remain the grammar of a governed run. They are not the repository&#x27;s top-level department chart.</p>
+<p>Those areas contain 56 narrower cycles, for 66 cycles in total. They cover product decisions, theory, protocol, implementation, independent review, adapters, documentation, localization, the site, releases, adoption, and the full evolution circuit. The seven phases—observe, negotiate, bind, execute, verify, publish, and evolve—remain the grammar of a governed run. They are not the repository&#x27;s top-level department chart.</p>
 <p>This configuration was accepted by an operator; repository history did not promote itself into intent. Self-application also grants no special authority. The active configuration limits execution, keeps independent review separate, and reserves external effects for publisher or operator roles. Evolution produces a proposal with <code>activation_allowed: false</code>; a separate operator decision activates exact successor bytes.</p>
 <p>These self-governance rules are not mandatory for adopters. A laboratory, studio, operations team, public body, or software project defines its own policy, artifacts, identities, evidence, and loop topology.</p>
 <h2 id="article-section-11">Runtime and generated-view boundaries</h2>
@@ -536,10 +536,12 @@ Do not change the repository until I approve the map.</code></pre>
 </ul>
 <p>Approving the map and activating a future evolution are separate decisions. The framework may suggest a better version of its rules; it cannot install that version by itself.</p>
 <h2 id="quickstart-section-06">Everyday use</h2>
-<p>For normal work, describe the task and ask Codex to use the skill:</p>
-<pre tabindex="0"><code class="language-text">Use $design-project-loops for this change. Show me the relevant cycle and keep
-the Atlas current when the accepted project map changes.</code></pre>
-<p>The skill chooses a focused route, records what actually ran, and keeps technical evidence available on request. You should see the practical next step first, not an artifact transcript.</p>
+<blockquote><strong>Release status:</strong> Route Preview is available on unreleased <code>main</code>, not in the stable v0.1.5 package used above. Keep using v0.1.5 for onboarding and Atlas generation. Test the preview only after explicitly accepting an unreleased install; otherwise wait for the next tagged release.</blockquote>
+<p>For normal work, describe the task and ask Codex to show the route before it starts:</p>
+<pre tabindex="0"><code class="language-text">Use $design-project-loops for this change. Show me the route first. Do not start
+until I confirm it.</code></pre>
+<p>You will see a short sequence of relevant cycles and a plain explanation of why each one is needed. Nothing runs at this point. You can confirm the route or correct it in ordinary language.</p>
+<p>Confirmation creates an exact draft. A separate run authorization is still required before work can start. After authorization, the skill records what actually happened, and shows any difference between plan and fact. A change that should apply only to this task stays in this run. A change that should affect future work becomes a separate evolution proposal and does not activate itself.</p>
 <h2 id="quickstart-section-07">Manual CLI path</h2>
 <p>The skill is the recommended interface. Use the CLI directly when you are integrating Concord Loom into automation or developing the framework itself.</p>
 <p>Read-only inspection:</p>
@@ -588,6 +590,57 @@ concordloom questions \
           </header>
           <ol class="visually-hidden" data-atlas-history></ol>
           <div class="atlas-console">
+            <section class="route-preview" aria-labelledby="route-preview-title">
+              <form class="route-preview-form" data-route-preview-form>
+                <div class="route-preview-copy">
+                  <label id="route-preview-title" for="route-preview-request"
+                    data-en="What do you want to change?"
+                    data-ru="Что нужно изменить?">What do you want to change?</label>
+                  <p id="route-preview-hint"
+                    data-en="Describe the result. The Atlas will only propose a path — nothing runs."
+                    data-ru="Опишите результат. Атлас только предложит путь — ничего не запустится.">Describe the result. The Atlas will only propose a path — nothing runs.</p>
+                </div>
+                <div class="route-preview-controls">
+                  <textarea id="route-preview-request" data-route-preview-request rows="2"
+                    aria-describedby="route-preview-hint" autocomplete="off" spellcheck="true"
+                    data-en-placeholder="For example: fix the Russian Quickstart"
+                    data-ru-placeholder="Например: исправить документацию"
+                    placeholder="For example: fix the Russian Quickstart"></textarea>
+                  <button type="submit" data-route-preview-submit disabled
+                    data-en="Find a route" data-ru="Подобрать маршрут">Find a route</button>
+                </div>
+              </form>
+              <div class="route-preview-feedback" data-route-preview-feedback hidden>
+                <p data-route-preview-message role="status" aria-live="polite" aria-atomic="true"></p>
+                <div class="route-preview-choices" data-route-preview-choices></div>
+              </div>
+              <section class="route-preview-result" data-route-preview-result hidden
+                aria-labelledby="route-preview-result-title">
+                <div class="route-preview-result-head">
+                  <div>
+                    <p class="route-preview-state" data-en="PROPOSED — NOT RUNNING"
+                      data-ru="ПРЕДЛОЖЕНО — НЕ ЗАПУЩЕНО">PROPOSED — NOT RUNNING</p>
+                    <h2 id="route-preview-result-title" tabindex="-1" data-en="Suggested path"
+                      data-ru="Предлагаемый путь">Suggested path</h2>
+                  </div>
+                  <button type="button" class="route-preview-clear" data-route-preview-clear
+                    data-en="Clear route" data-ru="Сбросить маршрут">Clear route</button>
+                </div>
+                <p class="route-preview-area" data-route-preview-area></p>
+                <h3 class="route-preview-actions-title" data-en="What the work would actually do"
+                  data-ru="Что будет сделано">What the work would actually do</h3>
+                <ol class="route-preview-list" data-route-preview-list
+                  aria-label="Proposed work actions"
+                  data-en-aria-label="Proposed work actions"
+                  data-ru-aria-label="Предлагаемые действия"></ol>
+                <p class="route-preview-effects" data-route-preview-effects></p>
+                <p class="route-preview-notice"
+                  data-en="This public Atlas is read-only. Open a local Atlas to create an exact draft from this route. A separate authorization is required before anything starts."
+                  data-ru="Публичный Атлас работает только для просмотра. Откройте локальный Атлас, чтобы создать точный черновик по этому маршруту. Для запуска потребуется отдельная авторизация.">This public Atlas is read-only. Open a local Atlas to create an exact draft from this route. A separate authorization is required before anything starts.</p>
+                <a class="route-preview-local" href="#quickstart"
+                  data-en="Open the local quickstart" data-ru="Открыть локальный быстрый старт">Open the local quickstart</a>
+              </section>
+            </section>
             <div class="atlas-stage" data-atlas-stage>
               <div class="atlas-map-head">
                 <div>

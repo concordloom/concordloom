@@ -76,7 +76,7 @@ cryptographic reviewer identity.
 Validate the exact binding, registry, policy, predecessor link, and append-only
 catalog rather than relying on the label “current.” The accepted root is
 `steward-concordloom`; the active development model contains ten responsibility
-areas and 65 cycles. Observe, negotiate, bind, execute, verify, publish, and
+areas and 66 cycles. Observe, negotiate, bind, execute, verify, publish, and
 evolve are run phases, not the top-level containment graph.
 
 The binding was activated through a decision separate from the evolution

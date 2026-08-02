@@ -102,6 +102,16 @@ Say where to open the Atlas and what the operator can inspect there. Mention
 the chosen language. If no further decision remains, offer opening the Atlas as
 the next action; do not finish with its file digest.
 
+### Route preview
+
+Before starting a task, restate its outcome in one sentence and show the exact
+cycles Concord Loom proposes to use, in order. For each cycle, give one short
+reason. Clearly separate the proposed route from any active run and name any
+network or external effect that a later run could perform. Ask one question:
+“Use this route?” Do not expose digests, schema fields, internal role names, or
+route-construction diagnostics unless the person opens technical details. A
+correction creates a new preview; an outdated preview is never silently used.
+
 ### Governed task
 
 At task start, say what is in scope and what outcome will count as done. During

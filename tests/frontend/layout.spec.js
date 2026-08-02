@@ -44,6 +44,30 @@ test("hero headline, explanation and actions do not overlap", async ({ page }) =
   );
 });
 
+test("hero display lines keep safe leading in both languages", async ({ page }) => {
+  for (const language of ["en", "ru"]) {
+    for (const viewport of viewports) {
+      await page.setViewportSize(viewport);
+      await openView(page, "concept", language);
+      const metrics = await page.locator(".hero h1").evaluate((heading) => {
+        const style = getComputedStyle(heading);
+        const first = heading.querySelector(":scope > span").getBoundingClientRect();
+        const secondElement = heading.querySelector(":scope > em");
+        const second = secondElement.getBoundingClientRect();
+        return {
+          leading: Number.parseFloat(style.lineHeight) / Number.parseFloat(style.fontSize),
+          separation: second.top - first.bottom,
+          separationEm: Number.parseFloat(getComputedStyle(secondElement).marginTop)
+            / Number.parseFloat(style.fontSize),
+        };
+      });
+      expect(metrics.leading).toBeGreaterThanOrEqual(1.015);
+      expect(metrics.separation).toBeGreaterThanOrEqual(-0.5);
+      expect(metrics.separationEm).toBeGreaterThanOrEqual(0.075);
+    }
+  }
+});
+
 test("Atlas is a full-width primary surface with no persistent side panels", async ({ page }) => {
   for (const viewport of viewports) {
     await page.setViewportSize(viewport);
@@ -139,6 +163,25 @@ test("primary touch controls meet the minimum target size", async ({ page }) => 
       `${width}px controls must be at least 44 × 44 CSS pixels`,
     ).toEqual([]);
   }
+});
+
+test("mobile menu keeps keyboard focus inside the open header", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 800 });
+  await openView(page, "concept", "ru");
+  const menu = page.locator(".menu-switch");
+  const language = page.locator(".language-switch");
+  await menu.click();
+  await expect(menu).toHaveAttribute("aria-expanded", "true");
+
+  await language.focus();
+  await page.keyboard.press("Tab");
+  await expect(menu).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(language).toBeFocused();
+
+  await page.keyboard.press("Escape");
+  await expect(menu).toBeFocused();
+  await expect(menu).toHaveAttribute("aria-expanded", "false");
 });
 
 test("desktop primary action is visible without scrolling", async ({ page }) => {

@@ -10,6 +10,7 @@ import unittest
 
 from concordloom.canonical import digest, document_digest, load
 from concordloom.atlas import render_atlas
+from concordloom.route import create_route_preview
 from concordloom.run import (
     RunStateError,
     authorize_run,
@@ -428,6 +429,92 @@ class CandidateManifestSecurityTests(unittest.TestCase):
 
 
 class RunPolicySecurityTests(unittest.TestCase):
+    def test_v10_target_plans_remain_non_authorizing_until_exact_run_authorization(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repository = repository_at(Path(temporary))
+            source = ROOT / "framework" / "concordloom" / "v10"
+            binding = load(source / "binding.json")
+            registry = load(source / "cycle-registry.json")
+            policy = load(source / "policy.json")
+            model = load(source / "development-model.json")
+            candidate = build_candidate_manifest(repository, generated_at=NOW)
+            preview = create_route_preview(
+                binding,
+                registry,
+                policy,
+                candidate,
+                model,
+                preview_id="runtime-composite-preview",
+                request_digest=OID_DIGEST,
+                request_ref="request.user.1",
+                root_loop_id="steward-concordloom",
+                target_loop_ids=["runtime-tooling"],
+                created_at=NOW,
+            )
+            self.assertEqual("proposed", preview["status"])
+            self.assertFalse(preview["execution_allowed"])
+            self.assertNotIn("authorization", preview)
+
+            card = create_run_card(
+                binding,
+                registry,
+                policy,
+                candidate,
+                run_id="runtime-composite-run",
+                root_loop_id="steward-concordloom",
+                candidate_author_principal_ids=["example-executor"],
+                development_model=model,
+                route_preview=preview,
+            )
+            self.assertEqual("draft", card["status"])
+            self.assertNotIn("authorization", card)
+            self.assertEqual(
+                preview["preview_digest"], card["route_preview_digest"]
+            )
+            self.assertEqual(preview["proposed_route"], card["planned_route"])
+
+            authorized = authorize_run(
+                card,
+                binding,
+                registry,
+                policy,
+                candidate,
+                actor={"id": "example-operator", "kind": "operator"},
+                authority_ref="operator",
+                authorized_at=NOW,
+                repository=repository,
+                development_model=model,
+                route_preview=preview,
+            )
+            self.assertEqual("authorized", authorized["status"])
+            self.assertEqual(
+                preview["preview_digest"],
+                authorized["authorization"]["route_preview_digest"],
+            )
+
+            tampered = deepcopy(preview)
+            tampered["target_plans"][0]["action_loop_ids"] = [
+                "runtime-tooling"
+            ]
+            tampered["preview_digest"] = document_digest(
+                tampered,
+                excluded_fields=tampered["digest_contract"]["excluded_fields"],
+            )
+            with self.assertRaisesRegex(ValueError, "exact deterministic target plans"):
+                create_run_card(
+                    binding,
+                    registry,
+                    policy,
+                    candidate,
+                    run_id="tampered-runtime-composite-run",
+                    root_loop_id="steward-concordloom",
+                    candidate_author_principal_ids=["example-executor"],
+                    development_model=model,
+                    route_preview=tampered,
+                )
+
     def test_task_targeted_routes_use_only_exact_ancestor_closures(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             repository = repository_at(Path(temporary))

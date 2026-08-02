@@ -94,6 +94,16 @@ repository without changing it and shows a draft Atlas. Correct the map in
 ordinary language. The skill asks separately before installing the CLI,
 writing the first accepted configuration, or activating a later evolution.
 
+Once the map is active, describe a task in ordinary language and ask the skill
+to show its route first. Concord Loom highlights the cycles the task would use,
+explains why they are included, and waits. Nothing starts until you confirm the
+route; a correction produces a new preview instead of rewriting the old one.
+
+Route Preview is currently an unreleased `main` feature. The stable v0.1.5
+package supports onboarding and Atlas generation, but it does not contain
+`concordloom route preview`. Do not rely on that command until the next tagged
+release, or test `main` only after explicitly accepting an unreleased install.
+
 For a CLI-only installation:
 
 ```bash
@@ -116,6 +126,8 @@ operator decisions ──→ accepted graph
 loop-design proposal ──→ explicit design acceptance
   ↓
 registry + binding proposal ──→ explicit binding activation
+  ↓
+task request ──→ proposed route ──→ explicit confirmation
   ↓
 candidate + run + evidence ──→ generated Atlas
   ↓
@@ -153,6 +165,7 @@ them. Only a separately authorized operator can activate the successor.
 | `activate` | binding accepted by a separate decision |
 | `catalog` | append-only active-binding chain |
 | `candidate` | content-addressed candidate manifest |
+| `route` | non-executing preview of the cycles a task would use |
 | `run` | governed run lifecycle |
 | `atlas` | deterministic offline projection |
 | `evolve` | successor proposal — never activation |

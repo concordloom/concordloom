@@ -1,0 +1,33 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:1940a57ca917d6136c5742048dfccc68d0434c530da2ad3ef3b2ba486f866597",
+  "candidate_manifest_digest": "sha256:39b8033bd3d9d651c4a524efbbfb51e2a9f56f9f60376659f86c8b56bbc0a3ed",
+  "candidate_tree_digest": "sha256:7312efb5ad4dc095bbdf098336623ea6139cbb6daeb1bafb13be85a9ba07a6eb",
+  "decisions": [
+    {
+      "id": "accept-v10-task-route-evolution-r2",
+      "kind": "decide-evolution",
+      "receipt_digest": "sha256:12883b0cd7a53a47660ce01e5cf981bbc02eb5a874c75c5676065d94c157a56f"
+    },
+    {
+      "id": "accept-v10-task-route-design-r2",
+      "kind": "accept-loop-design",
+      "receipt_digest": "sha256:14af14a4a3eb9310fcf28586ca676c297ebe242af753324b796898ed457bdbc4"
+    }
+  ],
+  "evolution_proposal": {
+    "digest": "sha256:2b6baf9e3d8b917224c29c28ca753acd06f4617e9a11ad0a5b6c776c10914dbc",
+    "id": "add-task-route-preview-cycle"
+  },
+  "id": "task-route-v10-evolution-history",
+  "kind": "concordloom.evolution-history",
+  "loop_design_proposal": {
+    "digest": "sha256:c95d7f5eae7eb408c1a73bd309d92d5412471ceaeb8ee34b5f61b7f07f81a410",
+    "id": "concordloom-development-system-v10-proposal"
+  },
+  "publication_route": {
+    "digest": "sha256:009b4f1c87c3b61c9201fc992b48c1233969d22f281321ce238b312e13971f78",
+    "path": "framework/concordloom/v10/publication-route.json"
+  },
+  "schema_version": "0.1"
+}

@@ -51,6 +51,7 @@ accepts the exact first-binding writes.
 | Validate | `concordloom validate` | Schema and cross-artifact checks |
 | Identify | `concordloom candidate` | Canonical candidate manifest and digest |
 | Catalog | `concordloom catalog` | New append-only active-binding chain value |
+| Preview route | `concordloom route preview` | Exact proposed route with no execution authority |
 | Execute | `concordloom run` | Governed run-card lifecycle |
 | Visualize | `concordloom atlas` | Deterministic offline HTML projection |
 | Evolve | `concordloom evolve` | Proposed successor diff, never activation |
@@ -59,6 +60,51 @@ The Atlas renderer supports `--locale en` and `--locale ru`. Pass the
 operator's explicit onboarding choice on both generation and `--check`; do not
 rely on the default locale. This changes human-readable presentation, not
 canonical binding or run data.
+
+## Preview before execution
+
+Route Preview is an unreleased `main` feature and is not present in v0.1.5.
+First run `concordloom route preview --help`. If it fails, do not fabricate the
+artifact or silently install `main`; explain the version gap and ask separately
+before testing unreleased code.
+
+Keep the person's request in a temporary UTF-8 file. Select the smallest target
+loops that can establish the requested outcome, then create a preview:
+
+```bash
+python3 scripts/concordloom_cli.py route preview \
+  --binding "$BINDING" \
+  --registry "$REGISTRY" \
+  --policy "$POLICY" \
+  --candidate "$CANDIDATE" \
+  --repository "$REPOSITORY" \
+  --development-model "$DEVELOPMENT_MODEL" \
+  --preview-id "$PREVIEW_ID" \
+  --request-file "$REQUEST_FILE" \
+  --target-loop "$TARGET_LOOP" \
+  --created-at "$CREATED_AT" \
+  --output "$PREVIEW"
+```
+
+The artifact stores only the request digest and an opaque reference, never the
+request text. Show the area breadcrumb separately from the ordered executable
+and verification actions, then ask one plain-language question: whether to use
+this exact route. To correct it, create a successor preview with
+`--replaces-preview`; never edit the old preview. After confirmation, pass the
+exact artifact to `run new --route-preview`. Confirmation creates a draft; a
+separate authorization is still required before any work starts. If the confirmed preview is a
+correction, also pass its exact predecessor with `--replaced-route-preview`.
+A v0.1 preview can verify one correction hop. If that correction is still
+wrong, create a new base preview rather than attaching unchecked deeper history.
+A preview never runs code, writes the repository, contacts the network, or
+grants authority.
+
+The output is create-only: the command refuses to overwrite any existing file.
+Keep it outside the repository, or under `.concord/runs/` only when Git really
+ignores that exact path. For a preview-backed run, `run guard` must receive the
+exact binding, registry, candidate, repository, development model, preview, and
+its predecessor when the preview is a correction. The guard rechecks all of
+them before any task file may be read or changed.
 
 The `run` family covers `new`, `authorize`, `attempt`, `evidence`, `guard`, and
 `complete`. Always inspect the nested help before use. Run `guard` before

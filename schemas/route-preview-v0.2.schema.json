@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.2/route-preview.schema.json",
+  "title": "Concord Loom immutable composite-aware route preview",
+  "description": "A content-addressed, non-authorizing proposal with exact per-target expansions through accepted successful local control flow.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "status",
+    "created_at",
+    "preview_digest",
+    "digest_contract",
+    "request_digest",
+    "request_ref",
+    "binding_digest",
+    "registry_digest",
+    "policy_digest",
+    "development_model_digest",
+    "candidate_tree_digest",
+    "candidate_manifest_digest",
+    "root_loop_id",
+    "target_loop_ids",
+    "target_plans",
+    "proposed_route",
+    "preview_scope",
+    "confirmation_required",
+    "execution_allowed"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.route-preview"
+    },
+    "schema_version": {
+      "const": "0.2"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "status": {
+      "const": "proposed"
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "preview_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "digest_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "canonicalization",
+        "excluded_fields"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha256"
+        },
+        "canonicalization": {
+          "const": "rfc8785"
+        },
+        "excluded_fields": {
+          "const": [
+            "/preview_digest"
+          ]
+        }
+      }
+    },
+    "request_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "request_ref": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "binding_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "registry_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "policy_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "development_model_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "candidate_tree_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "candidate_manifest_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "root_loop_id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "target_loop_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "common.schema.json#/$defs/identifier"
+      },
+      "uniqueItems": true
+    },
+    "target_plans": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/targetPlan"
+      },
+      "uniqueItems": true
+    },
+    "proposed_route": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "run-card-v0.2.schema.json#/$defs/plannedNode"
+      }
+    },
+    "preview_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read_paths",
+        "write_paths",
+        "network",
+        "external_mutations"
+      ],
+      "properties": {
+        "read_paths": {
+          "const": []
+        },
+        "write_paths": {
+          "const": []
+        },
+        "network": {
+          "const": "none"
+        },
+        "external_mutations": {
+          "const": []
+        }
+      }
+    },
+    "confirmation_required": {
+      "const": true
+    },
+    "execution_allowed": {
+      "const": false
+    },
+    "replaces_preview_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    }
+  },
+  "$defs": {
+    "targetPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_loop_id",
+        "action_loop_ids",
+        "branch_choices",
+        "retry_choices"
+      ],
+      "properties": {
+        "target_loop_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "action_loop_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "branch_choices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/branchChoice"
+          },
+          "uniqueItems": true
+        },
+        "retry_choices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/retryChoice"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "branchChoice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "loop_id",
+        "state_id",
+        "transition_id"
+      ],
+      "properties": {
+        "loop_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "state_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "transition_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        }
+      }
+    },
+    "retryChoice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "loop_id",
+        "transition_id",
+        "traversals"
+      ],
+      "properties": {
+        "loop_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "transition_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "traversals": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

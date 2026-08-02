@@ -373,6 +373,10 @@ def atlas_projection(binding: dict, registry: dict, model: dict) -> dict:
         contract["id"]: contract for contract in registry["evidence_contracts"]
     }
     registry_loops = {loop["id"]: loop for loop in registry["loops"]}
+    child_scopes = {
+        edge["child_loop_id"]: edge["grant"]["scope"]
+        for edge in registry["containment_graph"]["edges"]
+    }
     loops = []
     for node in model["nodes"]:
         loop = registry_loops[node["id"]]
@@ -397,6 +401,20 @@ def atlas_projection(binding: dict, registry: dict, model: dict) -> dict:
                 "acceptedResults": contract["accepted_results"],
                 "requiredClaims": contract["required_claims"],
                 "independentReview": "reviewer_capability" in contract,
+                "prospectiveEffects": {
+                    "network": (
+                        "none"
+                        if node["children"]
+                        else child_scopes.get(loop["id"], {}).get("network", "none")
+                    ),
+                    "externalMutations": (
+                        []
+                        if node["children"]
+                        else child_scopes.get(loop["id"], {}).get(
+                            "external_mutations", []
+                        )
+                    ),
+                },
             }
         )
     package = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))

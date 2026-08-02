@@ -67,6 +67,7 @@ PUBLIC_SCHEMAS = {
     "concordloom.policy": "policy.schema.json",
     "concordloom.project-graph": "project-graph.schema.json",
     "concordloom.question-set": "question-set.schema.json",
+    "concordloom.route-preview": "route-preview.schema.json",
     "concordloom.run-card": "run-card.schema.json",
 }
 
@@ -485,6 +486,16 @@ class SchemaStore:
             raise ValidationError(
                 [ValidationIssue("/kind", "unknown public artifact kind")]
             ) from exc
+        if (
+            instance["kind"] == "concordloom.run-card"
+            and instance.get("schema_version") == "0.2"
+        ):
+            name = "run-card-v0.2.schema.json"
+        if (
+            instance["kind"] == "concordloom.route-preview"
+            and instance.get("schema_version") == "0.2"
+        ):
+            name = "route-preview-v0.2.schema.json"
         return self.validate(instance, name)
 
 

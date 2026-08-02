@@ -115,16 +115,29 @@ that version by itself.
 
 ## Everyday use
 
-For normal work, describe the task and ask Codex to use the skill:
+> **Release status:** Route Preview is available on unreleased `main`, not in
+> the stable v0.1.5 package used above. Keep using v0.1.5 for onboarding and
+> Atlas generation. Test the preview only after explicitly accepting an
+> unreleased install; otherwise wait for the next tagged release.
+
+For normal work, describe the task and ask Codex to show the route before it
+starts:
 
 ```text
-Use $design-project-loops for this change. Show me the relevant cycle and keep
-the Atlas current when the accepted project map changes.
+Use $design-project-loops for this change. Show me the route first. Do not start
+until I confirm it.
 ```
 
-The skill chooses a focused route, records what actually ran, and keeps
-technical evidence available on request. You should see the practical next
-step first, not an artifact transcript.
+You will see a short sequence of relevant cycles and a plain explanation of
+why each one is needed. Nothing runs at this point. You can confirm the route
+or correct it in ordinary language.
+
+Confirmation creates an exact draft. A separate run authorization is still
+required before work can start. After authorization, the skill records
+what actually happened, and shows any difference between plan and fact. A
+change that should apply only to this task stays in this run. A change that
+should affect future work becomes a separate evolution proposal and does not
+activate itself.
 
 ## Manual CLI path
 

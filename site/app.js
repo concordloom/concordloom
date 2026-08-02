@@ -59,6 +59,19 @@ const copy = {
     openLoop: "Has inner cycles",
     terminalLoop: "No inner cycles",
     moreBelow: "More details below",
+    routeRequired: "Describe the result you want first.",
+    routeNoMatch: "No clear path yet. Name the concrete result, for example: “fix the Russian Quickstart” or “publish the verified site”.",
+    routeAmbiguous: "This request may follow more than one path. Choose the closest result:",
+    routeReady: "Suggested path found. Nothing has started.",
+    routeTarget: "Result",
+    routeArea: "Task area",
+    routeActions: "What the work would actually do",
+    routeAction: "Action",
+    routeIncluded: "Included in the suggested path",
+    routeEffectsNone: "Confirming this route creates an exact draft. A separate authorization is required before it can start. If authorized, it will use no network access and make no changes outside the repository. Nothing is running.",
+    routeEffectsSome: "Confirming this route creates an exact draft. A separate authorization is required before it can start. If authorized, it may {network}. Possible changes outside the repository: {effects}. Nothing is running.",
+    routeNetworkRead: "receive data from the network",
+    routeNetworkWrite: "send data over the network",
   },
   ru: {
     switchLanguage: "Переключить на английский",
@@ -120,6 +133,19 @@ const copy = {
     openLoop: "Есть вложенные циклы",
     terminalLoop: "Без вложенных циклов",
     moreBelow: "Ниже — дополнительные сведения",
+    routeRequired: "Сначала опишите, какой результат хотите получить.",
+    routeNoMatch: "Пока не удалось подобрать точный путь. Назовите конкретный результат, например: «исправить русский быстрый старт» или «опубликовать проверенный сайт».",
+    routeAmbiguous: "Запрос подходит к нескольким путям. Выберите ближайший результат:",
+    routeReady: "Путь подобран. Ничего не запущено.",
+    routeTarget: "Результат",
+    routeArea: "Область задачи",
+    routeActions: "Что будет сделано",
+    routeAction: "Действие",
+    routeIncluded: "Входит в предлагаемый путь",
+    routeEffectsNone: "Подтверждение создаст точный черновик. Для запуска потребуется отдельная авторизация. После неё работа пройдёт без сети и изменений за пределами репозитория. Сейчас ничего не запущено.",
+    routeEffectsSome: "Подтверждение создаст точный черновик. Для запуска потребуется отдельная авторизация. После неё работа сможет {network}. За пределами репозитория может произойти следующее: {effects}. Сейчас ничего не запущено.",
+    routeNetworkRead: "получать данные из сети",
+    routeNetworkWrite: "передавать данные по сети",
   },
 };
 
@@ -233,6 +259,8 @@ let pendingInspectorFocusFrame = null;
 let pendingInspectorOpenFrame = null;
 let focusGraphAfterRoute = false;
 let dataLoadState = "loading";
+let routePreview = null;
+let routePreviewRequest = "";
 
 function text(key) {
   return copy[language][key];
@@ -241,6 +269,8 @@ function text(key) {
 function renderDataLoadState() {
   const ready = dataLoadState === "ready";
   const failed = dataLoadState === "error";
+  const routeSubmit = document.querySelector("[data-route-preview-submit]");
+  if (routeSubmit) routeSubmit.disabled = !ready;
   const statuses = [
     ["[data-hero-status]", "loadingMap", "loadErrorMap"],
     ["[data-atlas-status]", "loadingAtlas", "loadErrorMap"],
@@ -382,6 +412,9 @@ function applyLanguage(nextLanguage) {
   document.querySelectorAll("[data-en-alt][data-ru-alt]").forEach((element) => {
     element.setAttribute("alt", element.dataset[`${language}Alt`]);
   });
+  document.querySelectorAll("[data-en-placeholder][data-ru-placeholder]").forEach((element) => {
+    element.setAttribute("placeholder", element.dataset[`${language}Placeholder`]);
+  });
   const switcher = document.querySelector(".language-switch");
   switcher.querySelector("[data-lang-label]").textContent = language === "en" ? "RU" : "EN";
   switcher.setAttribute("aria-label", text("switchLanguage"));
@@ -393,6 +426,11 @@ function applyLanguage(nextLanguage) {
   renderReading();
   renderDocs();
   renderAtlas();
+  if (routePreviewRequest && !routePreview && atlasData) {
+    resolveRoutePreview(routePreviewRequest);
+  } else {
+    renderRoutePreview();
+  }
   renderDataLoadState();
 }
 
@@ -530,6 +568,435 @@ function renderDocs() {
 
 function atlasLoop(id) {
   return atlasData?.loops.find((loop) => loop.id === id);
+}
+
+const routeStopwords = new Set([
+  "about", "after", "again", "also", "and", "are", "change", "could", "for",
+  "from", "have", "into", "make", "need", "please", "that", "the", "this",
+  "want", "with", "would", "а", "бы", "в", "во", "для", "ещё", "из", "и",
+  "как", "мне", "мы", "на", "надо", "не", "но", "по", "с", "сделать", "то",
+  "у", "хочу", "чтобы", "это",
+]);
+
+const routeKeywordHints = {
+  "accept-source-change": ["merge", "pull request", "pr", "мерж", "пул реквест"],
+  "assure-compatibility": ["compatibility", "backward compatible", "совместимость"],
+  "author-documentation": ["documentation", "docs", "guide", "quickstart", "readme", "документация", "инструкция", "ридми", "быстрый старт"],
+  "collect-friction": ["friction", "confusing", "stuck", "problem report", "непонятно", "застрял", "проблема пользователя"],
+  "decide-product": ["product decision", "scope decision", "new feature", "продуктовое решение", "решить направление", "новая функция"],
+  "distribute-package": ["package", "pypi", "wheel", "installable", "пакет", "установочный"],
+  "evolve-schemas": ["schema", "json schema", "protocol field", "схема", "поле протокола"],
+  "formalize-theory": ["theory", "formal model", "definition", "теория", "формальная модель", "определение"],
+  "implement-frontend-surface": ["site", "website", "frontend", "interface", "layout", "typography", "mobile", "phone", "css", "html", "responsive", "сайт", "фронтенд", "интерфейс", "вёрстка", "верстка", "типографика", "мобильный", "телефон", "адаптив"],
+  "localize-content": ["translate", "translation", "localize", "localization", "russian", "english", "перевод", "локализация", "русский", "английский"],
+  "maintain-article": ["article", "paper", "research paper", "статья", "публикация"],
+  "maintain-automation": ["automation", "agent workflow", "ci automation", "автоматизация", "агент"],
+  "maintain-cli": ["cli", "command line", "terminal command", "командная строка", "терминал", "команда"],
+  "maintain-compiler-core": ["compiler", "compile binding", "компилятор", "компиляция"],
+  "maintain-evidence-adapters": ["inspect repository", "git history", "evidence adapter", "анализ репозитория", "история git", "адаптер наблюдения"],
+  "maintain-execution-adapters": ["execution adapter", "external tool", "адаптер исполнения", "внешний инструмент"],
+  "maintain-frontend-verification": ["playwright", "browser test", "visual regression", "accessibility", "браузерная проверка", "скриншот", "доступность"],
+  "maintain-product-boundary": ["product boundary", "universal kernel", "граница продукта", "универсальное ядро"],
+  "maintain-reference-bindings": ["example binding", "reference binding", "пример конфигурации", "эталонная конфигурация"],
+  "maintain-repository-presence": ["repository avatar", "about link", "social preview", "branch protection", "repository security settings", "аватар репозитория", "ссылка about", "превью репозитория", "защита ветки", "настройки безопасности репозитория"],
+  "model-threats": ["security", "threat", "attack", "secret", "безопасность", "угроза", "атака", "секрет"],
+  "observe-onboarding": ["onboarding", "first use", "installation journey", "онбординг", "первый запуск", "установка пользователем"],
+  "project-atlas": ["atlas", "project map", "cycle map", "атлас", "карта проекта", "карта циклов"],
+  "plan-release": ["new release", "ship release", "release plan", "новый релиз", "новый выпуск", "план выпуска"],
+  "propose-successor": ["propose evolution", "propose successor", "new binding", "предложить новую версию правил", "предложить преемника"],
+  "review-successor": ["review proposed rules", "review successor", "проверить предложенную версию правил", "проверить преемника"],
+  "activate-successor": ["activate reviewed rules", "activate successor", "включить проверенную версию правил", "активировать преемника"],
+  "publish-site": ["publish site", "deploy site", "github pages", "опубликовать сайт", "задеплоить сайт", "pages"],
+  "publish-source-change": ["open pull request", "push branch", "опубликовать ветку", "создать pull request"],
+  "review-candidate": ["code review", "review candidate", "проверить изменение", "ревью кода"],
+  "review-comprehension": ["clear text", "jargon", "copy review", "readable", "понятный текст", "жаргон", "нейрослоп", "вычитка"],
+  "validate-invariants": ["invariant", "unit test", "security test", "инвариант", "юнит тест", "проверка правил"],
+  "validate-use-cases": ["real repository", "use case", "field test", "реальный репозиторий", "сценарий применения", "полевой тест"],
+  "verify-frontend-candidate": ["verify frontend", "cross browser", "browser matrix", "проверить интерфейс", "разные браузеры"],
+  "verify-live-release": ["live site", "production check", "published release", "живой сайт", "проверка продакшена", "опубликованный выпуск"],
+};
+
+function routeTokens(value) {
+  return (value || "")
+    .normalize("NFKC")
+    .toLocaleLowerCase()
+    .match(/[\p{L}\p{N}]+/gu)
+    ?.filter((token) => token.length > 1 && !routeStopwords.has(token))
+    ?? [];
+}
+
+function routeTokenAffinity(requestToken, sourceToken) {
+  if (requestToken === sourceToken) return 1;
+  const shortest = Math.min(requestToken.length, sourceToken.length);
+  if (shortest < 4) return 0;
+  if (requestToken.startsWith(sourceToken) || sourceToken.startsWith(requestToken)) {
+    return shortest / Math.max(requestToken.length, sourceToken.length) >= 0.55 ? 0.68 : 0;
+  }
+  let sharedPrefix = 0;
+  while (
+    sharedPrefix < shortest
+    && requestToken[sharedPrefix] === sourceToken[sharedPrefix]
+  ) {
+    sharedPrefix += 1;
+  }
+  if (sharedPrefix >= 4 && sharedPrefix / shortest >= 0.65) return 0.58;
+  return 0;
+}
+
+function routeHasAny(requestTokens, terms) {
+  const termTokens = terms.flatMap((term) => routeTokens(term));
+  return requestTokens.some((requestToken) => termTokens.some(
+    (termToken) => routeTokenAffinity(requestToken, termToken) >= 0.58,
+  ));
+}
+
+function routeIntentOverride(requestTokens) {
+  const has = (terms) => routeHasAny(requestTokens, terms);
+  const site = has(["site", "website", "page", "pages", "сайт", "страница"]);
+  const publish = has(["publish", "deploy", "host", "опубликовать", "задеплоить", "развернуть"]);
+  const frontendAction = has([
+    "fix", "repair", "redesign", "design", "layout", "typography", "responsive",
+    "исправить", "починить", "переделать", "дизайн", "вёрстка", "верстка",
+    "типографика", "адаптивный",
+  ]);
+  const frontendObject = site || has([
+    "frontend", "interface", "mobile", "phone", "ui", "css", "html",
+    "фронтенд", "интерфейс", "мобильный", "телефон",
+  ]);
+  const branch = has(["main", "branch", "repository", "ветка", "репозиторий"]);
+  const protect = has(["protect", "secure", "security setting", "защитить", "безопасность", "настройка"]);
+  const release = has(["release", "version", "выпуск", "релиз", "версия"]);
+  const releaseAction = has(["ship", "create", "prepare", "make", "выпустить", "создать", "подготовить", "сделать"]);
+  const evolution = has([
+    "successor", "binding", "rules", "преемник", "привязка", "правила",
+  ]);
+  const activate = has(["activate", "enable", "apply", "включить", "активировать", "применить"]);
+  const review = has(["review", "verify", "assess", "проверить", "оценить", "ревью"]);
+  const propose = has(["propose", "evolve", "предложить", "эволюция"]);
+  const tokenCost = has(["token", "cost", "usage", "токен", "расход", "стоимость"])
+    && has(["model", "route", "модель", "маршрут"]);
+  const feature = has(["feature", "functionality", "функция", "фича"]);
+  const add = has(["add", "create", "implement", "добавить", "создать", "реализовать"]);
+
+  if (tokenCost) return { blocked: true };
+  if (branch && protect) return { targetId: "maintain-repository-presence" };
+  if (evolution && activate) return { targetId: "activate-successor" };
+  if (evolution && review) return { targetId: "review-successor" };
+  if (evolution && propose) return { targetId: "propose-successor" };
+  if (site && publish) return { targetId: "publish-site" };
+  if (frontendObject && frontendAction) {
+    return {
+      targetId: "implement-frontend-surface",
+      executionRootId: "design-site-experience",
+    };
+  }
+  if (release && (releaseAction || publish)) {
+    return { targetId: "plan-release", executionRootId: "release-distribution" };
+  }
+  if (feature && add) return { targetId: "decide-product" };
+  return null;
+}
+
+function routeTargetAllowed(loopId, requestTokens) {
+  const has = (terms) => routeHasAny(requestTokens, terms);
+  if (loopId === "publish-site") {
+    return has(["publish", "deploy", "host", "опубликовать", "задеплоить", "развернуть"]);
+  }
+  if (loopId === "publish-source-change") {
+    return has(["push", "pull request", "open pr", "опубликовать ветку", "создать pull request"]);
+  }
+  if (loopId === "activate-successor") {
+    return has(["activate", "enable", "apply", "включить", "активировать", "применить"]);
+  }
+  return true;
+}
+
+function routeSourceScore(requestTokens, source, weight) {
+  const sourceTokens = routeTokens(source);
+  return requestTokens.reduce((score, token) => {
+    const affinity = sourceTokens.reduce(
+      (best, sourceToken) => Math.max(best, routeTokenAffinity(token, sourceToken)),
+      0,
+    );
+    return score + affinity * weight;
+  }, 0);
+}
+
+function scoreRouteTarget(loop, requestTokens) {
+  const hints = routeKeywordHints[loop.id] ?? [];
+  const fields = [
+    [loop.id.replaceAll("-", " "), 7],
+    [loop.copy.en.label, 6],
+    [loop.copy.ru.label, 6],
+    [loop.copy.en.purpose, 3],
+    [loop.copy.ru.purpose, 3],
+    [loop.contract.en.input, 2],
+    [loop.contract.en.output, 2],
+    [loop.contract.ru.input, 2],
+    [loop.contract.ru.output, 2],
+    [loop.artifacts.join(" "), 4],
+    [hints.join(" "), 8],
+  ];
+  return fields.reduce(
+    (score, [source, weight]) => score + routeSourceScore(requestTokens, source, weight),
+    0,
+  );
+}
+
+function routePath(targetId) {
+  const path = [];
+  let cursor = atlasLoop(targetId);
+  while (cursor) {
+    path.unshift(cursor.id);
+    cursor = cursor.parentId ? atlasLoop(cursor.parentId) : null;
+  }
+  return path;
+}
+
+function routeCandidates(request) {
+  const requestTokens = routeTokens(request);
+  if (!requestTokens.length) return [];
+  const override = routeIntentOverride(requestTokens);
+  if (override?.blocked) return [];
+  if (override?.targetId && atlasLoop(override.targetId)) {
+    return [{ ...override, id: override.targetId, score: Number.POSITIVE_INFINITY }];
+  }
+  return atlasData.loops
+    .filter((loop) => loop.children.length === 0)
+    .filter((loop) => routeTargetAllowed(loop.id, requestTokens))
+    .map((loop) => ({ id: loop.id, score: scoreRouteTarget(loop, requestTokens) }))
+    .filter((candidate) => candidate.score >= 6)
+    .sort((left, right) => right.score - left.score || left.id.localeCompare(right.id))
+    .slice(0, 5);
+}
+
+function proposedRouteIds() {
+  return new Set(routePreview?.loopIds ?? []);
+}
+
+const externalEffectCopy = {
+  "github-organization-profile": {
+    en: "update the organization profile",
+    ru: "обновить профиль организации",
+  },
+  "github-pages": {
+    en: "publish the site to GitHub Pages",
+    ru: "опубликовать сайт в GitHub Pages",
+  },
+  "github-pull-request": {
+    en: "open a pull request",
+    ru: "открыть запрос на слияние",
+  },
+  "github-pull-request-merge": {
+    en: "merge an approved pull request",
+    ru: "слить одобренный запрос",
+  },
+  "github-release-assets": {
+    en: "publish the release files",
+    ru: "опубликовать файлы выпуска",
+  },
+  "github-repository-homepage": {
+    en: "update the repository website link",
+    ru: "обновить ссылку на сайт репозитория",
+  },
+  "github-repository-security-settings": {
+    en: "update the repository security settings",
+    ru: "обновить настройки безопасности репозитория",
+  },
+  "github-repository-social-preview": {
+    en: "update the repository preview image",
+    ru: "обновить картинку-превью репозитория",
+  },
+  "github-repository-source": {
+    en: "push source changes to GitHub",
+    ru: "отправить изменения исходников в GitHub",
+  },
+  "github-version-tag": {
+    en: "create a version tag",
+    ru: "создать метку версии",
+  },
+};
+
+function routeProspectiveEffects(loopIds) {
+  const networkOrder = { none: 0, read: 1, write: 2 };
+  let network = "none";
+  const externalMutations = new Set();
+  loopIds.forEach((loopId) => {
+    const effects = atlasLoop(loopId)?.prospectiveEffects ?? {};
+    const candidateNetwork = effects.network ?? "none";
+    if ((networkOrder[candidateNetwork] ?? 0) > networkOrder[network]) {
+      network = candidateNetwork;
+    }
+    (effects.externalMutations ?? []).forEach((effect) => externalMutations.add(effect));
+  });
+  return { network, externalMutations: [...externalMutations].sort() };
+}
+
+function externalEffectLabel(effect) {
+  return externalEffectCopy[effect]?.[language] ?? effect;
+}
+
+function renderRoutePreview() {
+  const feedback = document.querySelector("[data-route-preview-feedback]");
+  const message = document.querySelector("[data-route-preview-message]");
+  const choices = document.querySelector("[data-route-preview-choices]");
+  const result = document.querySelector("[data-route-preview-result]");
+  const area = document.querySelector("[data-route-preview-area]");
+  const list = document.querySelector("[data-route-preview-list]");
+  const effects = document.querySelector("[data-route-preview-effects]");
+  if (!feedback || !message || !choices || !result || !area || !list || !effects) return;
+
+  if (!routePreview) {
+    result.hidden = true;
+    area.innerHTML = "";
+    list.innerHTML = "";
+    effects.textContent = "";
+    if (!message.textContent) feedback.hidden = true;
+    return;
+  }
+
+  choices.innerHTML = "";
+  feedback.hidden = false;
+  feedback.dataset.state = "success";
+  message.textContent = text("routeReady");
+  result.hidden = false;
+  area.innerHTML = "";
+  const areaLabel = document.createElement("strong");
+  areaLabel.textContent = text("routeArea");
+  const areaPath = document.createElement("span");
+  routePreview.areaIds.forEach((loopId, index) => {
+    if (index) {
+      const separator = document.createElement("span");
+      separator.className = "ui-icon ui-icon-arrow-right route-preview-separator";
+      separator.setAttribute("aria-hidden", "true");
+      areaPath.append(separator);
+    }
+    const loop = atlasLoop(loopId);
+    const link = document.createElement("a");
+    link.href = `#atlas/${encodeURIComponent(loopId)}`;
+    link.textContent = loopCopy(loop).label;
+    areaPath.append(link);
+  });
+  area.append(areaLabel, areaPath);
+  list.innerHTML = "";
+  routePreview.actionIds.forEach((loopId, index) => {
+    const loop = atlasLoop(loopId);
+    const item = document.createElement("li");
+    if (loopId === routePreview.targetId) item.dataset.routeTarget = "true";
+    const link = document.createElement("a");
+    link.href = `#atlas/${encodeURIComponent(loopId)}`;
+    const step = document.createElement("span");
+    step.textContent = `${text("routeAction")} ${String(index + 1).padStart(2, "0")}`;
+    const label = document.createElement("strong");
+    label.textContent = loopCopy(loop).label;
+    link.append(step, label);
+    if (loopId === routePreview.targetId) {
+      link.setAttribute("aria-current", "step");
+      link.setAttribute("aria-label", `${text("routeTarget")}: ${loopCopy(loop).label}`);
+    }
+    item.append(link);
+    list.append(item);
+  });
+  const prospective = routeProspectiveEffects(routePreview.actionIds);
+  if (prospective.network === "none" && !prospective.externalMutations.length) {
+    effects.textContent = text("routeEffectsNone");
+  } else {
+    const network = prospective.network === "write"
+      ? text("routeNetworkWrite")
+      : text("routeNetworkRead");
+    const effectLabels = prospective.externalMutations.length
+      ? prospective.externalMutations.map(externalEffectLabel).join(", ")
+      : text("notDeclared");
+    effects.textContent = text("routeEffectsSome")
+      .replace("{network}", network)
+      .replace("{effects}", effectLabels);
+  }
+}
+
+function clearRoutePreview({ keepFeedback = false } = {}) {
+  routePreview = null;
+  routePreviewRequest = "";
+  const request = document.querySelector("[data-route-preview-request]");
+  const feedback = document.querySelector("[data-route-preview-feedback]");
+  const message = document.querySelector("[data-route-preview-message]");
+  const choices = document.querySelector("[data-route-preview-choices]");
+  if (request) request.value = "";
+  if (message && !keepFeedback) message.textContent = "";
+  if (choices) choices.innerHTML = "";
+  if (feedback && !keepFeedback) feedback.hidden = true;
+  if (feedback && !keepFeedback) delete feedback.dataset.state;
+  renderRoutePreview();
+  if (atlasData) renderGraph(atlasLoop(selectedLoopId || atlasData.binding.rootLoopIds[0]));
+}
+
+function routeExecutionIds(targetId, executionRootId = null) {
+  if (!executionRootId) return [targetId];
+  const root = atlasLoop(executionRootId);
+  if (!root?.children?.length || !root.children.includes(targetId)) return [targetId];
+  return [...root.children];
+}
+
+function selectRouteTarget(
+  targetId,
+  { executionRootId = null, focusResult = false } = {},
+) {
+  const areaIds = routePath(executionRootId || targetId);
+  const actionIds = routeExecutionIds(targetId, executionRootId);
+  routePreview = {
+    areaIds,
+    actionIds,
+    loopIds: [...new Set([...areaIds, ...actionIds])],
+    targetId,
+  };
+  renderRoutePreview();
+  renderGraph(atlasLoop(selectedLoopId || atlasData.binding.rootLoopIds[0]));
+  if (focusResult) document.getElementById("route-preview-result-title")?.focus();
+}
+
+function resolveRoutePreview(request) {
+  const feedback = document.querySelector("[data-route-preview-feedback]");
+  const message = document.querySelector("[data-route-preview-message]");
+  const choices = document.querySelector("[data-route-preview-choices]");
+  routePreview = null;
+  routePreviewRequest = request.trim();
+  choices.innerHTML = "";
+  feedback.hidden = false;
+  feedback.dataset.state = "needs-attention";
+
+  if (!routePreviewRequest) {
+    message.textContent = text("routeRequired");
+    renderRoutePreview();
+    return;
+  }
+
+  const candidates = routeCandidates(routePreviewRequest);
+  if (!candidates.length) {
+    message.textContent = text("routeNoMatch");
+    renderRoutePreview();
+    return;
+  }
+
+  const top = candidates[0];
+  const close = candidates.filter(
+    (candidate) => candidate.score >= top.score * 0.93,
+  );
+  if (close.length > 1) {
+    message.textContent = text("routeAmbiguous");
+    close.slice(0, 3).forEach((candidate) => {
+      const loop = atlasLoop(candidate.id);
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = loopCopy(loop).label;
+      button.addEventListener("click", () => selectRouteTarget(candidate.id, {
+        executionRootId: candidate.executionRootId ?? null,
+        focusResult: true,
+      }));
+      choices.append(button);
+    });
+    renderRoutePreview();
+    return;
+  }
+  selectRouteTarget(top.id, { executionRootId: top.executionRootId ?? null });
 }
 
 function atlasLink(loop, className = "") {
@@ -859,6 +1326,7 @@ function appendGraphNode(
   const mobile = variant === "mobile";
   const tablet = variant === "tablet";
   const landscape = variant === "landscape";
+  const proposed = proposedRouteIds().has(loop.id);
   const nodeWidth = current
     ? (mobile ? 326 : (landscape ? 200 : (tablet ? 360 : 320)))
     : (mobile ? 310 : (landscape ? 148 : (tablet ? 300 : 220)));
@@ -867,16 +1335,16 @@ function appendGraphNode(
     : (mobile ? 92 : (landscape ? 64 : (tablet ? 98 : 104)));
   const corner = current ? 22 : 17;
   const group = svgElement("g", {
-    class: `node-assembly${current ? " is-current" : ""} is-${variant}`,
+    class: `node-assembly${current ? " is-current" : ""}${proposed ? " is-proposed-route" : ""} is-${variant}`,
     transform: `translate(${x} ${y})`,
   });
   const link = svgElement("a", {
     href: `#atlas/${encodeURIComponent(loop.id)}`,
-    class: `graph-node${current ? " is-current" : ""}`,
+    class: `graph-node${current ? " is-current" : ""}${proposed ? " is-proposed-route" : ""}`,
     "data-loop-id": loop.id,
     "aria-label": `${loopCopy(loop).label}. ${
       loop.children.length ? `${text("childCount")}: ${loop.children.length}.` : `${text("noChildCount")}.`
-    } ${text("inspect")}`,
+    }${proposed ? ` ${text("routeIncluded")}.` : ""} ${text("inspect")}`,
   });
   const title = svgElement("title");
   title.textContent = `${loopCopy(loop).label}. ${loopCopy(loop).purpose}`;
@@ -970,6 +1438,7 @@ function renderGraph(loop) {
   const layout = landscape
     ? "landscape"
     : (mobile ? "mobile" : (tablet ? "tablet" : "desktop"));
+  stage.toggleAttribute("data-has-proposed-route", Boolean(routePreview));
   const rows = mobile ? children.length : Math.ceil(children.length / 2);
   const viewWidth = landscape
     ? 844
@@ -986,7 +1455,7 @@ function renderGraph(loop) {
   );
   stage.dataset.layout = layout;
   if (landscape) {
-    stage.style.setProperty("--atlas-graph-height", `${viewHeight}px`);
+    stage.style.removeProperty("--atlas-graph-height");
     stage.style.removeProperty("--atlas-graph-width");
   } else if (mobile || tablet) {
     const renderedHeight = Math.ceil(viewHeight * (stage.clientWidth / viewWidth));
@@ -998,6 +1467,9 @@ function renderGraph(loop) {
   }
   appendGraphDefs(svg);
   const level = svgElement("g", { class: "level-constellation" });
+  const routeIds = proposedRouteIds();
+  const proposedConnection = (child) =>
+    routeIds.has(loop.id) && routeIds.has(child.id) ? " is-proposed-route" : "";
 
   const previous = previousLoopId ? atlasLoop(previousLoopId) : null;
   let motion = "none";
@@ -1057,13 +1529,13 @@ function renderGraph(loop) {
   });
 
   if (positions.length && landscape) {
-    positions.forEach(({ x, y }) => {
+    positions.forEach(({ child, x, y }) => {
       level.append(svgElement("path", {
-        class: "graph-link",
+        class: `graph-link${proposedConnection(child)}`,
         d: `M ${centerX} ${centerY} L ${x} ${y}`,
       }));
       level.append(svgElement("circle", {
-        class: "graph-link-dot",
+        class: `graph-link-dot${proposedConnection(child)}`,
         cx: centerX + (x - centerX) * 0.58,
         cy: centerY + (y - centerY) * 0.58,
         r: 3,
@@ -1077,13 +1549,13 @@ function renderGraph(loop) {
       class: "graph-link graph-trunk",
       d: `M ${centerX} ${rootBottom} H ${trunkX} V ${lastY}`,
     }));
-    positions.forEach(({ x, y }) => {
+    positions.forEach(({ child, x, y }) => {
       level.append(svgElement("path", {
-        class: "graph-link graph-branch",
+        class: `graph-link graph-branch${proposedConnection(child)}`,
         d: `M ${trunkX} ${y} H ${x - 155}`,
       }));
       level.append(svgElement("circle", {
-        class: "graph-link-dot",
+        class: `graph-link-dot${proposedConnection(child)}`,
         cx: trunkX,
         cy: y,
         r: 3,
@@ -1096,27 +1568,27 @@ function renderGraph(loop) {
       class: "graph-link graph-trunk",
       d: `M ${centerX} ${rootBottom} V ${lastY}`,
     }));
-    positions.forEach(({ x, y }) => {
+    positions.forEach(({ child, x, y }) => {
       const cardEdge = x < centerX ? x + 150 : x - 150;
       level.append(svgElement("path", {
-        class: "graph-link graph-branch",
+        class: `graph-link graph-branch${proposedConnection(child)}`,
         d: `M ${centerX} ${y} H ${cardEdge}`,
       }));
       level.append(svgElement("circle", {
-        class: "graph-link-dot",
+        class: `graph-link-dot${proposedConnection(child)}`,
         cx: centerX,
         cy: y,
         r: 3,
       }));
     });
   } else {
-    positions.forEach(({ x, y }) => {
+    positions.forEach(({ child, x, y }) => {
       level.append(svgElement("path", {
-        class: "graph-link",
+        class: `graph-link${proposedConnection(child)}`,
         d: `M ${centerX} ${centerY} L ${x} ${y}`,
       }));
       level.append(svgElement("circle", {
-        class: "graph-link-dot",
+        class: `graph-link-dot${proposedConnection(child)}`,
         cx: centerX + (x - centerX) * 0.56,
         cy: centerY + (y - centerY) * 0.56,
         r: 3,
@@ -1293,11 +1765,26 @@ document.querySelector(".language-switch").addEventListener("click", () => {
   persistLanguageInUrl();
 });
 
-document.querySelector(".menu-switch").addEventListener("click", (event) => {
-  const nav = document.querySelector(".view-tabs");
+const menuSwitch = document.querySelector(".menu-switch");
+const primaryNav = document.querySelector(".view-tabs");
+
+function closePrimaryMenu({ restoreFocus = false } = {}) {
+  primaryNav.classList.remove("is-open");
+  menuSwitch.setAttribute("aria-expanded", "false");
+  if (restoreFocus) menuSwitch.focus();
+}
+
+menuSwitch.addEventListener("click", (event) => {
+  const nav = primaryNav;
   const open = !nav.classList.contains("is-open");
   nav.classList.toggle("is-open", open);
   event.currentTarget.setAttribute("aria-expanded", String(open));
+});
+
+document.addEventListener("pointerdown", (event) => {
+  if (!primaryNav.classList.contains("is-open")) return;
+  if (event.target.closest(".site-header")) return;
+  closePrimaryMenu();
 });
 
 document.querySelectorAll(".reading-toc-toggle").forEach((toggle) => {
@@ -1309,6 +1796,27 @@ document.querySelectorAll(".reading-toc-toggle").forEach((toggle) => {
     icon.classList.toggle("ui-icon-plus", !open);
     icon.classList.toggle("ui-icon-minus", open);
   });
+});
+
+const routePreviewForm = document.querySelector("[data-route-preview-form]");
+const routePreviewInput = document.querySelector("[data-route-preview-request]");
+routePreviewInput.value = "";
+routePreviewForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!atlasData) return;
+  resolveRoutePreview(routePreviewInput.value);
+});
+routePreviewInput.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" || !(event.ctrlKey || event.metaKey)) return;
+  event.preventDefault();
+  routePreviewForm.requestSubmit();
+});
+document.querySelector("[data-route-preview-clear]").addEventListener("click", () => {
+  clearRoutePreview();
+  routePreviewInput.focus();
+});
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) clearRoutePreview();
 });
 
 document.querySelector("[data-atlas-graph]").addEventListener("click", (event) => {
@@ -1333,6 +1841,22 @@ document.querySelector("[data-atlas-inspector-scrim]").addEventListener("click",
 });
 
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Tab" && primaryNav.classList.contains("is-open")) {
+    const menuFocusables = [
+      menuSwitch,
+      ...primaryNav.querySelectorAll("a[href], button:not([disabled])"),
+      document.querySelector(".language-switch"),
+    ].filter((element) => element && element.getClientRects().length);
+    const first = menuFocusables[0];
+    const last = menuFocusables.at(-1);
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
   if (event.key === "Tab" && inspectorRequested) {
     const inspector = document.querySelector("[data-atlas-inspector]");
     const focusable = [...inspector.querySelectorAll(
@@ -1360,9 +1884,7 @@ document.addEventListener("keydown", (event) => {
       setInspectorOpen(false, true);
       return;
     }
-    document.querySelector(".view-tabs").classList.remove("is-open");
-    document.querySelector(".menu-switch").setAttribute("aria-expanded", "false");
-    document.querySelector(".menu-switch").focus();
+    closePrimaryMenu({ restoreFocus: true });
   }
 });
 

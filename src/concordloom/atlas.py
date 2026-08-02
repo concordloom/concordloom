@@ -14,7 +14,12 @@ from typing import Any, Mapping
 
 from .canonical import digest
 from .loops import validate_policy, validate_registry
-from .run import validate_binding
+from .run import (
+    RunStateError,
+    validate_binding,
+    validate_run_card,
+    validate_run_card_schema,
+)
 from .schema import SchemaStore
 
 
@@ -36,6 +41,7 @@ _ATLAS_UI = {
         "loop_path": "Loop path",
         "loop_path_value": "Loop path: {path}",
         "truth_layers": "Truth layers",
+        "proposed": "Proposed",
         "planned": "Planned",
         "actual": "Actual",
         "verified": "Verified",
@@ -51,6 +57,7 @@ _ATLAS_UI = {
         "not_declared": "Not declared",
         "required": "required",
         "routed_nodes": "{count} routed node(s)",
+        "no_proposed_node": "This loop is not in the proposed route",
         "no_routed_node": "No routed node for this loop",
         "accepted_contract": "Accepted loop contract",
         "actual_by": "{result} by {agent}",
@@ -80,6 +87,11 @@ _ATLAS_UI = {
         "flow_explainer": "Containment selects the loop. The map below shows only this loop's local control flow.",
         "transition_ledger": "Transition ledger",
         "planned_item": "{node} role {role}. Model: {model}. Skill: {skill}. Reasoning: {reasoning}.",
+        "future_effects_none": "If this route is later confirmed and authorized, this step needs no network access and makes no external changes. Nothing has run.",
+        "future_effects": "If this route is later confirmed and authorized, this step may use {network} network access and make these external changes: {mutations}. Nothing has run.",
+        "network_read": "read-only",
+        "network_write": "data-sending",
+        "no_external_changes": "none",
         "no_routed_declared": "No routed node is declared for this loop.",
         "only_plan": "The accepted loop contract is the only plan layer.",
         "run": "Run",
@@ -131,6 +143,8 @@ _ATLAS_UI = {
         "run_truth": "Run truth",
         "recorded_evidence": "Recorded evidence references",
         "planned_route": "Planned route",
+        "proposed_route": "Proposed route",
+        "preview_label": "route preview {id}: proposed",
         "latest_route": "Latest actual route",
         "evidence_contracts": "Evidence contracts",
         "child_invocations": "Child invocations",
@@ -145,6 +159,7 @@ _ATLAS_UI = {
         "loop_path": "Путь по циклам",
         "loop_path_value": "Путь по циклам: {path}",
         "truth_layers": "Состояния сведений",
+        "proposed": "Предложено",
         "planned": "Запланировано",
         "actual": "Выполнено",
         "verified": "Проверено",
@@ -160,6 +175,7 @@ _ATLAS_UI = {
         "not_declared": "Не указано",
         "required": "обязательно",
         "routed_nodes": "Узлов в маршруте: {count}",
+        "no_proposed_node": "Этот цикл не входит в предложенный маршрут",
         "no_routed_node": "Для этого цикла нет узла в маршруте",
         "accepted_contract": "Принятый контракт цикла",
         "actual_by": "{result}; исполнитель: {agent}",
@@ -189,6 +205,11 @@ _ATLAS_UI = {
         "flow_explainer": "Вложенность выбирает цикл. Ниже показаны только его локальные переходы.",
         "transition_ledger": "Список переходов",
         "planned_item": "{node}; роль: {role}. Модель: {model}. Инструкция: {skill}. Рассуждение: {reasoning}.",
+        "future_effects_none": "Если позже подтвердить и разрешить этот маршрут, шагу не понадобится сеть и он ничего не изменит за пределами репозитория. Сейчас ничего не запущено.",
+        "future_effects": "Если позже подтвердить и разрешить этот маршрут, шаг сможет использовать сеть ({network}) и выполнить внешние действия: {mutations}. Сейчас ничего не запущено.",
+        "network_read": "только получение данных",
+        "network_write": "передача данных",
+        "no_external_changes": "нет",
         "no_routed_declared": "Для этого цикла не указан узел маршрута.",
         "only_plan": "Единственный слой плана — принятый контракт цикла.",
         "run": "Запуск",
@@ -240,6 +261,8 @@ _ATLAS_UI = {
         "run_truth": "Сведения о запуске",
         "recorded_evidence": "Записанные ссылки на данные проверки",
         "planned_route": "Запланированный маршрут",
+        "proposed_route": "Предложенный маршрут",
+        "preview_label": "маршрут {id}: предложен",
         "latest_route": "Последний фактический маршрут",
         "evidence_contracts": "Контракты доказательств",
         "child_invocations": "Дочерние вызовы",
@@ -259,6 +282,8 @@ _STYLE = r"""
   --line-soft: #d9dedb;
   --accent: #bd482c;
   --accent-soft: #f1d8d0;
+  --pending: #7a5d00;
+  --pending-soft: #f5e9b7;
   --focus: #0b6159;
   --radius: 2px;
   --mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -396,7 +421,7 @@ a { color: inherit; }
 
 .truth-bar {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   border-bottom: 1px solid var(--ink);
   background: var(--paper-strong);
 }
@@ -425,6 +450,7 @@ a { color: inherit; }
   overflow-wrap: anywhere;
 }
 
+.truth-cell[data-layer="proposed"] h2 { color: var(--pending); }
 .truth-cell[data-layer="actual"] h2,
 .truth-cell[data-layer="verified"] h2 { color: var(--accent); }
 
@@ -529,6 +555,12 @@ a { color: inherit; }
 .loop-button[aria-current="true"] {
   border-color: var(--accent);
   background: var(--accent-soft);
+}
+
+.loop-button[data-route="proposed"] {
+  border-color: var(--pending);
+  border-style: dashed;
+  background: var(--pending-soft);
 }
 
 .loop-button strong {
@@ -712,6 +744,12 @@ a { color: inherit; }
 
 .plain-list strong { color: var(--ink); font-weight: 680; }
 
+.prospective-effects {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+}
+
 .run-status {
   display: inline-block;
   border: 1px solid var(--accent);
@@ -760,8 +798,9 @@ a { color: inherit; }
   .brand { display: grid; gap: 8px; }
   .masthead-meta { justify-items: start; text-align: left; }
   .truth-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .truth-cell:nth-child(2) { border-right: 0; }
-  .truth-cell:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
+  .truth-cell:nth-child(even) { border-right: 0; }
+  .truth-cell:nth-child(-n + 4) { border-bottom: 1px solid var(--line); }
+  .truth-cell:last-child { grid-column: 1 / -1; }
   .atlas-shell { display: block; }
   .panel + .panel { border-top: 1px solid var(--ink); border-left: 0; }
   .detail-stack { display: grid; grid-template-columns: 1fr; }
@@ -772,6 +811,7 @@ a { color: inherit; }
 
 @media (max-width: 430px) {
   .truth-bar { display: block; }
+  .truth-cell:last-child { grid-column: auto; }
   .truth-cell { border-right: 0; border-bottom: 1px solid var(--line); }
   .truth-cell:last-child { border-bottom: 0; }
   .state-rail { grid-template-columns: 1fr 1fr; }
@@ -868,6 +908,7 @@ _SCRIPT = r"""
     evidence: [],
     drift: []
   };
+  const previewFor = (loopId) => model.preview.loops[loopId] || [];
 
   const navigate = (loopId, replace = false) => {
     if (!byId.has(loopId)) return;
@@ -897,6 +938,10 @@ _SCRIPT = r"""
 
   const truthSummary = (loop, runtime) => {
     const latest = runtime.attempts.at(-1);
+    const proposedNodes = previewFor(loop.id);
+    const proposed = proposedNodes.length
+      ? message("routed_nodes", {count: proposedNodes.length})
+      : model.preview.attached ? ui.no_proposed_node : ui.not_declared;
     const planned = runtime.planned.length
       ? message("routed_nodes", {count: runtime.planned.length})
       : model.runtime.attached ? ui.no_routed_node : ui.accepted_contract;
@@ -911,11 +956,12 @@ _SCRIPT = r"""
       : !latest ? ui.not_evaluated_attempt
       : runtime.drift.length ? message("mismatches", {count: runtime.drift.length})
       : ui.no_mismatch;
-    return {planned, actual, verified, drift, loop};
+    return {proposed, planned, actual, verified, drift, loop};
   };
 
   const renderTruth = (loop, runtime) => {
     const value = truthSummary(loop, runtime);
+    document.getElementById("truth-proposed").textContent = value.proposed;
     document.getElementById("truth-planned").textContent = value.planned;
     document.getElementById("truth-actual").textContent = value.actual;
     document.getElementById("truth-verified").textContent = value.verified;
@@ -932,6 +978,7 @@ _SCRIPT = r"""
         const current = rootId === loop.id;
         const state = current ? ui.current : path.has(rootId) ? ui.branch : ui.open;
         return `<button class="loop-button" type="button" data-loop="${esc(rootId)}"
+          ${previewFor(rootId).length ? 'data-route="proposed"' : ""}
           ${current ? 'aria-current="true"' : ""}>
           <strong>${esc(root.label)}</strong><span>${state}</span>
         </button>`;
@@ -939,7 +986,8 @@ _SCRIPT = r"""
     const parentMarkup = parent
       ? `<p class="level-label">${ui.parent_loop}</p>
          <div class="loop-nav">
-           <button class="loop-button" type="button" data-loop="${esc(parent.parent_loop_id)}">
+           <button class="loop-button" type="button" data-loop="${esc(parent.parent_loop_id)}"
+             ${previewFor(parent.parent_loop_id).length ? 'data-route="proposed"' : ""}>
              <strong>${esc(byId.get(parent.parent_loop_id).label)}</strong><span>${ui.up}</span>
            </button>
          </div>`
@@ -947,7 +995,8 @@ _SCRIPT = r"""
     const childrenMarkup = edges.length
       ? `<div class="loop-nav" id="child-loop-nav">${edges.map((edge) => {
           const child = byId.get(edge.child_loop_id);
-          return `<button class="loop-button" type="button" data-loop="${esc(child.id)}">
+          return `<button class="loop-button" type="button" data-loop="${esc(child.id)}"
+            ${previewFor(child.id).length ? 'data-route="proposed"' : ""}>
             <strong>${esc(child.label)}</strong><span>${ui.open}</span>
           </button>`;
         }).join("")}</div>`
@@ -1021,12 +1070,36 @@ _SCRIPT = r"""
     `<dt>${esc(key)}</dt><dd>${esc(text(value))}</dd>`
   ).join("");
 
+  const prospectiveEffects = (scope = {}) => {
+    const network = scope.network || "none";
+    const mutations = list(scope.external_mutations);
+    if (network === "none" && !mutations.length) return ui.future_effects_none;
+    return message("future_effects", {
+      network: ui[`network_${network}`] || network,
+      mutations: mutations.length ? mutations.join(", ") : ui.no_external_changes
+    });
+  };
+
   const renderDetails = (loop, runtime) => {
     const budgets = loop.budgets || {};
     const authority = loop.authority || {};
     const contracts = list(loop.evidence_contracts);
     const invocations = list(loop.child_invocations);
     const latest = runtime.attempts.at(-1);
+    const proposed = previewFor(loop.id);
+    const proposedList = proposed.length
+      ? `<ul class="plain-list">${proposed.map((item) => `
+          <li>
+            <span>${esc(message("planned_item", {
+              node: item.node_id,
+              role: item.role,
+              model: item.model || item.model_intent,
+              skill: item.skills?.map((value) => value.id).join(", ") || item.skill_intent,
+              reasoning: item.reasoning || item.reasoning_intent
+            }))}</span>
+            <small class="prospective-effects">${esc(prospectiveEffects(item.scope))}</small>
+          </li>`).join("")}</ul>`
+      : `<p class="empty">${model.preview.attached ? ui.no_proposed_node : ui.not_declared}</p>`;
     const plannedList = runtime.planned.length
       ? `<ul class="plain-list">${runtime.planned.map((item) => `
           <li>${esc(message("planned_item", {
@@ -1091,7 +1164,9 @@ _SCRIPT = r"""
     document.getElementById("details-title").textContent =
       message("contract_title", {label: loop.label});
     document.getElementById("details-status").textContent =
-      model.runtime.attached ? runtime.status : ui.planned;
+      model.runtime.attached
+        ? runtime.status
+        : proposed.length ? ui.proposed : ui.planned;
     document.getElementById("details-content").innerHTML = `
       <section class="detail-group">
         <h3>${ui.interface}</h3>
@@ -1126,6 +1201,10 @@ _SCRIPT = r"""
       <section class="detail-group">
         <h3>${ui.recorded_evidence}</h3>
         ${evidenceList}
+      </section>
+      <section class="detail-group">
+        <h3>${ui.proposed_route}</h3>
+        ${proposedList}
       </section>
       <section class="detail-group">
         <h3>${ui.planned_route}</h3>
@@ -1236,7 +1315,7 @@ def _validate_run_identity(
     *,
     schema_store: SchemaStore,
 ) -> None:
-    schema_store.validate(dict(run_card), "run-card.schema.json")
+    validate_run_card_schema(dict(run_card), schema_store=schema_store)
     expected = {
         "binding_digest": binding["binding_digest"],
         "registry_digest": digest(registry),
@@ -1419,11 +1498,44 @@ def _runtime_projection(
     }
 
 
+def _preview_projection(
+    route_preview: Mapping[str, Any] | None,
+    loop_ids: set[str],
+) -> dict[str, Any]:
+    if route_preview is None:
+        return {
+            "attached": False,
+            "id": None,
+            "status": "no-preview",
+            "digest": None,
+            "request_ref": None,
+            "target_loop_ids": [],
+            "loops": {},
+        }
+    per_loop: dict[str, list[dict[str, Any]]] = {
+        loop_id: [] for loop_id in loop_ids
+    }
+    for item in route_preview["proposed_route"]:
+        per_loop[item["loop_id"]].append(deepcopy(item))
+    for values in per_loop.values():
+        values.sort(key=lambda item: item["node_id"])
+    return {
+        "attached": True,
+        "id": route_preview["id"],
+        "status": route_preview["status"],
+        "digest": route_preview["preview_digest"],
+        "request_ref": route_preview["request_ref"],
+        "target_loop_ids": list(route_preview["target_loop_ids"]),
+        "loops": per_loop,
+    }
+
+
 def _atlas_model(
     binding: Mapping[str, Any],
     registry: Mapping[str, Any],
     policy: Mapping[str, Any],
     run_card: Mapping[str, Any] | None,
+    route_preview: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     active_roots = list(binding["active_root_loop_ids"])
     reachable_loop_ids = _reachable_loop_ids(registry, active_roots)
@@ -1461,6 +1573,7 @@ def _atlas_model(
     loops.sort(key=lambda item: item["id"])
     loop_ids = {item["id"] for item in loops}
     runtime = _runtime_projection(run_card, loop_ids, policy)
+    preview = _preview_projection(route_preview, loop_ids)
     return {
         "framework": "Concord Loom",
         "framework_version": binding["framework_version"],
@@ -1480,11 +1593,16 @@ def _atlas_model(
         "containment": {
             "roots": active_roots,
             "default_root": (
-                run_card["root_loop_id"] if run_card is not None else active_roots[0]
+                run_card["root_loop_id"]
+                if run_card is not None
+                else route_preview["root_loop_id"]
+                if route_preview is not None
+                else active_roots[0]
             ),
             "edges": edges,
         },
         "loops": loops,
+        "preview": preview,
         "runtime": runtime,
     }
 
@@ -1516,6 +1634,10 @@ def render_atlas(
     registry: Mapping[str, Any],
     policy: Mapping[str, Any],
     run_card: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    candidate_manifest: Mapping[str, Any] | None = None,
+    development_model: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
     locale: str = "en",
 ) -> str:
     """Render validated inputs to deterministic standalone HTML."""
@@ -1544,7 +1666,73 @@ def render_atlas(
             policy_value,
             schema_store=store,
         )
-    model = _atlas_model(binding_value, registry_value, policy_value, run_value)
+    preview_value = (
+        deepcopy(dict(route_preview)) if route_preview is not None else None
+    )
+    if preview_value is not None:
+        if candidate_manifest is None or development_model is None:
+            raise AtlasError(
+                "route preview requires its exact candidate manifest and development model"
+            )
+        from .route import RoutePreviewError, validate_route_preview
+
+        try:
+            preview_value = validate_route_preview(
+                preview_value,
+                binding_value,
+                registry_value,
+                policy_value,
+                dict(candidate_manifest),
+                dict(development_model),
+                replaced_preview=(
+                    dict(replaced_route_preview)
+                    if replaced_route_preview is not None
+                    else None
+                ),
+                schema_store=store,
+            )
+        except RoutePreviewError as exc:
+            raise AtlasError(str(exc)) from exc
+    if run_value is not None:
+        preview_backed = "route_preview_digest" in run_value
+        if preview_backed:
+            if preview_value is None:
+                raise AtlasError(
+                    "preview-backed run card requires its exact route preview"
+                )
+            if candidate_manifest is None or development_model is None:
+                raise AtlasError(
+                    "preview-backed run card requires its exact candidate manifest "
+                    "and development model"
+                )
+            try:
+                validate_run_card(
+                    run_value,
+                    binding_value,
+                    registry_value,
+                    policy_value,
+                    deepcopy(dict(candidate_manifest)),
+                    repository=None,
+                    development_model=deepcopy(dict(development_model)),
+                    route_preview=preview_value,
+                    replaced_route_preview=(
+                        deepcopy(dict(replaced_route_preview))
+                        if replaced_route_preview is not None
+                        else None
+                    ),
+                    schema_store=store,
+                )
+            except (RunStateError, RoutePreviewError) as exc:
+                raise AtlasError(str(exc)) from exc
+        elif preview_value is not None or replaced_route_preview is not None:
+            raise AtlasError("run card does not cite the supplied route preview")
+    model = _atlas_model(
+        binding_value,
+        registry_value,
+        policy_value,
+        run_value,
+        preview_value,
+    )
     script = (
         "const ATLAS_MODEL="
         + _script_safe_json(model)
@@ -1563,6 +1751,8 @@ def render_atlas(
     runtime_label = (
         ui["run_label"].format(id=run_value["id"], status=run_value["status"])
         if run_value is not None
+        else ui["preview_label"].format(id=preview_value["id"])
+        if preview_value is not None
         else ui["no_run"]
     )
     return f"""<!doctype html>
@@ -1590,6 +1780,9 @@ def render_atlas(
   </header>
   <nav class="breadcrumbs" id="breadcrumbs" aria-label="{html_escape(ui["loop_path"])}"></nav>
   <section class="truth-bar" aria-label="{html_escape(ui["truth_layers"])}">
+    <div class="truth-cell" data-layer="proposed">
+      <h2>{html_escape(ui["proposed"])}</h2><p id="truth-proposed"></p>
+    </div>
     <div class="truth-cell" data-layer="planned">
       <h2>{html_escape(ui["planned"])}</h2><p id="truth-planned"></p>
     </div>
@@ -1649,6 +1842,10 @@ def generate_atlas(
     policy: Mapping[str, Any],
     output: str | Path,
     run_card: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    candidate_manifest: Mapping[str, Any] | None = None,
+    development_model: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
     check: bool = False,
     locale: str = "en",
 ) -> Path:
@@ -1660,6 +1857,10 @@ def generate_atlas(
         registry=registry,
         policy=policy,
         run_card=run_card,
+        route_preview=route_preview,
+        candidate_manifest=candidate_manifest,
+        development_model=development_model,
+        replaced_route_preview=replaced_route_preview,
         locale=locale,
     ).encode("utf-8")
     if check:

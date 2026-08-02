@@ -173,8 +173,8 @@ invariant checks.
 ## Accepted Concord Loom development system
 
 Concord Loom's repository uses an operator-accepted development configuration
-rooted at `steward-concordloom`. Its ten responsibility areas contain 58
-cycles, including product direction, theory, protocol, runtime, assurance,
+rooted at `steward-concordloom`. It contains 66 cycles across ten responsibility
+areas, including product direction, theory, protocol, runtime, assurance,
 adapters, knowledge, release, adoption, and system evolution.
 
 Every run still separates observation from accepted intent, design acceptance
