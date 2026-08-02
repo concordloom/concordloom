@@ -208,20 +208,18 @@ class TaskRouteMaterializationTests(unittest.TestCase):
         self.assertEqual("require-explicit-target-loop", semantic["fallback"])
 
     def test_history_binds_both_decisions_and_publication_route(self) -> None:
-        design_receipt = load(
-            ROOT / ".concord" / "runs" / "route-preview-v10" / "design-decision-r2.json"
-        )
-        evolution_receipt = load(
-            ROOT / ".concord" / "runs" / "route-preview-v10" / "evolution-decision-r2.json"
-        )
         receipts = {item["kind"]: item for item in self.history["decisions"]}
         self.assertEqual(
-            design_receipt["receipt_digest"],
+            "sha256:14af14a4a3eb9310fcf28586ca676c297ebe242af753324b796898ed457bdbc4",
             receipts["accept-loop-design"]["receipt_digest"],
         )
         self.assertEqual(
-            evolution_receipt["receipt_digest"],
+            "sha256:12883b0cd7a53a47660ce01e5cf981bbc02eb5a874c75c5676065d94c157a56f",
             receipts["decide-evolution"]["receipt_digest"],
+        )
+        self.assertEqual(
+            self.design["accepted_by"]["decision_id"],
+            receipts["accept-loop-design"]["id"],
         )
         self.assertEqual(
             EVOLUTION_PROPOSAL_DIGEST,
@@ -296,8 +294,30 @@ class TaskRouteMaterializationTests(unittest.TestCase):
         )
         self.assertIn("TASK_ROUTE_MATERIALIZATION_CHECK_OK", checked.stdout)
 
-        receipt = load(
-            ROOT / ".concord" / "runs" / "route-preview-v10" / "evolution-decision-r2.json"
+        receipt = {
+            "activation_allowed": False,
+            "authority_ref": "operator",
+            "base_binding_digest": BASE_BINDING_DIGEST,
+            "candidate_manifest_digest": self.history["candidate_manifest_digest"],
+            "candidate_tree_digest": self.history["candidate_tree_digest"],
+            "capability": "decide-evolution",
+            "decided_at": "2026-08-02T15:55:00Z",
+            "evolution_proposal_digest": EVOLUTION_PROPOSAL_DIGEST,
+            "id": "accept-v10-task-route-evolution-r2",
+            "kind": "concordloom.evolution-decision",
+            "principal": {"id": "example-operator", "kind": "human"},
+            "rationale": (
+                "Accept the exact revised non-activating v10 evolution with "
+                "explicit CAS for both authority scope replacements. Activation "
+                "remains a separate decision after independent review."
+            ),
+            "schema_version": "0.1",
+            "verdict": "accepted",
+        }
+        receipt["receipt_digest"] = digest(receipt)
+        self.assertEqual(
+            self.history["decisions"][0]["receipt_digest"],
+            receipt["receipt_digest"],
         )
         receipt["candidate_tree_digest"] = "sha256:" + ("f" * 64)
         payload = dict(receipt)
@@ -321,6 +341,22 @@ class TaskRouteMaterializationTests(unittest.TestCase):
             )
         self.assertNotEqual(0, rejected.returncode)
         self.assertIn("candidate_tree_digest", rejected.stdout + rejected.stderr)
+
+        missing_inputs = subprocess.run(
+            [sys.executable, str(ROOT / "tools" / "materialize_task_route.py")],
+            cwd=ROOT,
+            env=environment,
+            text=True,
+            capture_output=True,
+        )
+        self.assertNotEqual(0, missing_inputs.returncode)
+        message = missing_inputs.stdout + missing_inputs.stderr
+        for flag in (
+            "--design-decision",
+            "--evolution-decision",
+            "--candidate-manifest",
+        ):
+            self.assertIn(flag, message)
 
 
 if __name__ == "__main__":

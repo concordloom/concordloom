@@ -15,6 +15,7 @@ from concordloom.compiler import (
     accept_loop_design,
     compile_registry,
     create_binding_proposal,
+    validate_binding_proposal,
 )
 from concordloom.evolution import validate_evolution_proposal
 from concordloom.loops import (
@@ -252,94 +253,122 @@ def _validate_decisions(
 ) -> None:
     store = SchemaStore()
     store.validate(candidate_manifest, "candidate-manifest.schema.json")
-    candidate_manifest_digest = digest(candidate_manifest)
-    candidate_tree_digest = candidate_manifest["tree_digest"]
-
-    _require_exact_keys(
-        design_decision,
-        {
-            "activation_allowed",
-            "authority_ref",
-            "base_binding_digest",
-            "candidate_manifest_digest",
-            "candidate_tree_digest",
-            "capability",
-            "decided_at",
-            "evolution_proposal_digest",
-            "id",
-            "kind",
-            "principal",
-            "proposal_digest",
-            "rationale",
-            "receipt_digest",
-            "schema_version",
-            "verdict",
-        },
-        label="design decision",
+    _validate_decision_receipts(
+        policy=policy,
+        evolution=evolution,
+        design_proposal=design_proposal,
+        binding=binding,
+        candidate_manifest_digest=digest(candidate_manifest),
+        candidate_tree_digest=candidate_manifest["tree_digest"],
+        design_decision=design_decision,
+        evolution_decision=evolution_decision,
     )
-    _receipt_payload(design_decision, label="design decision")
-    expected_design = {
-        "kind": "concordloom.task-route-design-decision",
-        "schema_version": "0.1",
-        "proposal_digest": LOOP_DESIGN_PROPOSAL_DIGEST,
-        "evolution_proposal_digest": EVOLUTION_PROPOSAL_DIGEST,
-        "base_binding_digest": BASE_BINDING_DIGEST,
-        "candidate_manifest_digest": candidate_manifest_digest,
-        "candidate_tree_digest": candidate_tree_digest,
-        "capability": "accept-loop-design",
-        "verdict": "accepted",
-        "activation_allowed": False,
-        "authority_ref": "operator",
-    }
-    for key, value in expected_design.items():
-        if design_decision.get(key) != value:
-            raise ValueError(f"design decision does not bind exact {key}")
 
-    _require_exact_keys(
-        evolution_decision,
-        {
-            "activation_allowed",
-            "authority_ref",
-            "base_binding_digest",
-            "candidate_manifest_digest",
-            "candidate_tree_digest",
-            "capability",
-            "decided_at",
-            "evolution_proposal_digest",
-            "id",
-            "kind",
-            "principal",
-            "rationale",
-            "receipt_digest",
-            "schema_version",
-            "verdict",
-        },
-        label="evolution decision",
-    )
-    _receipt_payload(evolution_decision, label="evolution decision")
-    expected_evolution = {
-        "kind": "concordloom.evolution-decision",
-        "schema_version": "0.1",
-        "evolution_proposal_digest": EVOLUTION_PROPOSAL_DIGEST,
-        "base_binding_digest": BASE_BINDING_DIGEST,
-        "candidate_manifest_digest": candidate_manifest_digest,
-        "candidate_tree_digest": candidate_tree_digest,
-        "capability": "decide-evolution",
-        "verdict": "accepted",
-        "activation_allowed": False,
-        "authority_ref": "operator",
-    }
-    for key, value in expected_evolution.items():
-        if evolution_decision.get(key) != value:
-            raise ValueError(f"evolution decision does not bind exact {key}")
 
-    if design_decision["id"] == evolution_decision["id"]:
+def _validate_decision_receipts(
+    *,
+    policy: dict[str, Any],
+    evolution: dict[str, Any],
+    design_proposal: dict[str, Any],
+    binding: dict[str, Any],
+    candidate_manifest_digest: str,
+    candidate_tree_digest: str,
+    design_decision: dict[str, Any] | None = None,
+    evolution_decision: dict[str, Any] | None = None,
+) -> None:
+    """Validate any supplied historical receipts against public pinned state."""
+
+    if design_decision is not None:
+        _require_exact_keys(
+            design_decision,
+            {
+                "activation_allowed",
+                "authority_ref",
+                "base_binding_digest",
+                "candidate_manifest_digest",
+                "candidate_tree_digest",
+                "capability",
+                "decided_at",
+                "evolution_proposal_digest",
+                "id",
+                "kind",
+                "principal",
+                "proposal_digest",
+                "rationale",
+                "receipt_digest",
+                "schema_version",
+                "verdict",
+            },
+            label="design decision",
+        )
+        _receipt_payload(design_decision, label="design decision")
+        expected_design = {
+            "kind": "concordloom.task-route-design-decision",
+            "schema_version": "0.1",
+            "proposal_digest": LOOP_DESIGN_PROPOSAL_DIGEST,
+            "evolution_proposal_digest": EVOLUTION_PROPOSAL_DIGEST,
+            "base_binding_digest": BASE_BINDING_DIGEST,
+            "candidate_manifest_digest": candidate_manifest_digest,
+            "candidate_tree_digest": candidate_tree_digest,
+            "capability": "accept-loop-design",
+            "verdict": "accepted",
+            "activation_allowed": False,
+            "authority_ref": "operator",
+        }
+        for key, value in expected_design.items():
+            if design_decision.get(key) != value:
+                raise ValueError(f"design decision does not bind exact {key}")
+
+    if evolution_decision is not None:
+        _require_exact_keys(
+            evolution_decision,
+            {
+                "activation_allowed",
+                "authority_ref",
+                "base_binding_digest",
+                "candidate_manifest_digest",
+                "candidate_tree_digest",
+                "capability",
+                "decided_at",
+                "evolution_proposal_digest",
+                "id",
+                "kind",
+                "principal",
+                "rationale",
+                "receipt_digest",
+                "schema_version",
+                "verdict",
+            },
+            label="evolution decision",
+        )
+        _receipt_payload(evolution_decision, label="evolution decision")
+        expected_evolution = {
+            "kind": "concordloom.evolution-decision",
+            "schema_version": "0.1",
+            "evolution_proposal_digest": EVOLUTION_PROPOSAL_DIGEST,
+            "base_binding_digest": BASE_BINDING_DIGEST,
+            "candidate_manifest_digest": candidate_manifest_digest,
+            "candidate_tree_digest": candidate_tree_digest,
+            "capability": "decide-evolution",
+            "verdict": "accepted",
+            "activation_allowed": False,
+            "authority_ref": "operator",
+        }
+        for key, value in expected_evolution.items():
+            if evolution_decision.get(key) != value:
+                raise ValueError(f"evolution decision does not bind exact {key}")
+
+    if (
+        design_decision is not None
+        and evolution_decision is not None
+        and design_decision["id"] == evolution_decision["id"]
+    ):
         raise ValueError("design and evolution decisions need distinct ids")
-    if not design_decision["rationale"].strip() or not evolution_decision[
-        "rationale"
-    ].strip():
-        raise ValueError("both decisions require a rationale")
-    for decision in (design_decision, evolution_decision):
+    for decision in (
+        item for item in (design_decision, evolution_decision) if item is not None
+    ):
+        if not decision["rationale"].strip():
+            raise ValueError("accepted decision requires a rationale")
         principal = decision["principal"]
         require_actor_capability(
             policy,
@@ -841,6 +870,246 @@ def build(
     }
 
 
+def _validate_materialized_history(
+    history: dict[str, Any],
+    *,
+    design_proposal: dict[str, Any],
+    evolution: dict[str, Any],
+    publication_route: list[dict[str, Any]],
+    accepted_design: dict[str, Any],
+) -> dict[str, dict[str, Any]]:
+    _require_exact_keys(
+        history,
+        {
+            "activation_allowed",
+            "base_binding_digest",
+            "candidate_manifest_digest",
+            "candidate_tree_digest",
+            "decisions",
+            "evolution_proposal",
+            "id",
+            "kind",
+            "loop_design_proposal",
+            "publication_route",
+            "schema_version",
+        },
+        label="evolution history",
+    )
+    expected = {
+        "kind": "concordloom.evolution-history",
+        "schema_version": "0.1",
+        "id": "task-route-v10-evolution-history",
+        "base_binding_digest": BASE_BINDING_DIGEST,
+        "activation_allowed": False,
+        "evolution_proposal": {
+            "id": evolution["id"],
+            "digest": EVOLUTION_PROPOSAL_DIGEST,
+        },
+        "loop_design_proposal": {
+            "id": design_proposal["id"],
+            "digest": LOOP_DESIGN_PROPOSAL_DIGEST,
+        },
+        "publication_route": {
+            "path": "framework/concordloom/v10/publication-route.json",
+            "digest": digest(publication_route),
+        },
+    }
+    for key, value in expected.items():
+        if history.get(key) != value:
+            raise ValueError(f"evolution history does not bind exact {key}")
+    for key in ("candidate_manifest_digest", "candidate_tree_digest"):
+        value = history.get(key)
+        if not isinstance(value, str) or not value.startswith("sha256:") or len(value) != 71:
+            raise ValueError(f"evolution history has invalid {key}")
+
+    decisions = history.get("decisions")
+    if not isinstance(decisions, list) or len(decisions) != 2:
+        raise ValueError("evolution history must bind exactly two decisions")
+    by_kind: dict[str, dict[str, Any]] = {}
+    for decision in decisions:
+        if not isinstance(decision, dict):
+            raise ValueError("evolution history decision entry must be an object")
+        _require_exact_keys(
+            decision,
+            {"id", "kind", "receipt_digest"},
+            label="evolution history decision",
+        )
+        kind = decision["kind"]
+        if kind in by_kind or kind not in {"accept-loop-design", "decide-evolution"}:
+            raise ValueError("evolution history has duplicate or unknown decision kind")
+        receipt_digest = decision["receipt_digest"]
+        if (
+            not isinstance(receipt_digest, str)
+            or not receipt_digest.startswith("sha256:")
+            or len(receipt_digest) != 71
+        ):
+            raise ValueError("evolution history has invalid receipt digest")
+        by_kind[kind] = decision
+    if by_kind["accept-loop-design"]["id"] != accepted_design["accepted_by"][
+        "decision_id"
+    ]:
+        raise ValueError("evolution history does not bind the accepted loop design")
+    return by_kind
+
+
+def build_check(
+    root: Path,
+    *,
+    design_decision_path: Path | None = None,
+    evolution_decision_path: Path | None = None,
+    candidate_manifest_path: Path | None = None,
+) -> dict[str, dict[str, Any]]:
+    """Rebuild public v10 outputs without depending on ignored run receipts."""
+
+    source = root / "framework" / "concordloom"
+    predecessor = source / "v9"
+    target = source / "v10"
+    graph = load(source / "v3" / "accepted-project-graph.json")
+    decisions = load(source / "v3" / "decision-log.json")
+    binding = load(predecessor / "binding.json")
+    previous_registry = load(predecessor / "cycle-registry.json")
+    policy = load(predecessor / "policy.json")
+    publication_route = load(predecessor / "publication-route.json")
+    design_proposal = load(target / "loop-design-proposal.json")
+    evolution = load(target / "evolution-proposal.json")
+    accepted_design = load(target / "loop-design.json")
+    history = load(target / "evolution-history.json")
+    materialized_proposal = load(target / "binding-proposal.json")
+    registry = load(target / "cycle-registry.json")
+    model = load(target / "development-model.json")
+    materialized_policy = load(target / "policy.json")
+    materialized_publication_route = load(target / "publication-route.json")
+
+    _require_lifecycle_state(target, load(source / "catalog.json"))
+    if binding["binding_digest"] != document_digest(
+        binding, excluded_fields=binding["digest_contract"]["excluded_fields"]
+    ):
+        raise ValueError("v9 binding digest contract failed")
+    if binding["binding_digest"] != BASE_BINDING_DIGEST:
+        raise ValueError("v9 binding is not the accepted materialization base")
+    validate_policy(policy)
+    if digest(evolution) != EVOLUTION_PROPOSAL_DIGEST:
+        raise ValueError("evolution proposal changed after operator acceptance")
+    if digest(design_proposal) != LOOP_DESIGN_PROPOSAL_DIGEST:
+        raise ValueError("loop-design proposal changed after operator acceptance")
+    if materialized_policy != policy:
+        raise ValueError("materialized policy differs from the accepted predecessor")
+    if materialized_publication_route != publication_route:
+        raise ValueError("materialized publication route differs from its predecessor")
+
+    accepted_by = accepted_design.get("accepted_by", {})
+    reconstructed_design = accept_loop_design(
+        design_proposal,
+        decisions,
+        policy,
+        accepted_graph=graph,
+        decision_id=accepted_by.get("decision_id"),
+        actor=accepted_by.get("actor"),
+        accepted_at=accepted_by.get("accepted_at"),
+        authority_ref=accepted_by.get("authority_ref"),
+        rationale=accepted_by.get("rationale"),
+    )
+    if reconstructed_design != accepted_design:
+        raise ValueError("accepted loop design is not reproducible from public metadata")
+    history_decisions = _validate_materialized_history(
+        history,
+        design_proposal=design_proposal,
+        evolution=evolution,
+        publication_route=publication_route,
+        accepted_design=accepted_design,
+    )
+
+    if candidate_manifest_path is not None:
+        candidate_manifest = load(candidate_manifest_path)
+        SchemaStore().validate(candidate_manifest, "candidate-manifest.schema.json")
+        if digest(candidate_manifest) != history["candidate_manifest_digest"]:
+            raise ValueError("candidate manifest does not match evolution history")
+        if candidate_manifest["tree_digest"] != history["candidate_tree_digest"]:
+            raise ValueError("candidate tree does not match evolution history")
+        _verify_pinned_input_files(root, candidate_manifest)
+
+    supplied_receipts = {
+        "accept-loop-design": (
+            _load_canonical_receipt(design_decision_path, label="design decision")
+            if design_decision_path is not None
+            else None
+        ),
+        "decide-evolution": (
+            _load_canonical_receipt(evolution_decision_path, label="evolution decision")
+            if evolution_decision_path is not None
+            else None
+        ),
+    }
+    _validate_decision_receipts(
+        policy=policy,
+        evolution=evolution,
+        design_proposal=design_proposal,
+        binding=binding,
+        candidate_manifest_digest=history["candidate_manifest_digest"],
+        candidate_tree_digest=history["candidate_tree_digest"],
+        design_decision=supplied_receipts["accept-loop-design"],
+        evolution_decision=supplied_receipts["decide-evolution"],
+    )
+    for kind, receipt in supplied_receipts.items():
+        if receipt is None:
+            continue
+        expected = history_decisions[kind]
+        if receipt["id"] != expected["id"] or receipt["receipt_digest"] != expected[
+            "receipt_digest"
+        ]:
+            raise ValueError(f"{kind} receipt does not match evolution history")
+
+    old_edges = {
+        edge["id"]: edge for edge in previous_registry["containment_graph"]["edges"]
+    }
+    validate_evolution_proposal(
+        evolution,
+        policy,
+        base_binding=binding,
+        base_targets={
+            "containment": {
+                key: old_edges[key]
+                for key in (
+                    "runtime-tooling.operate-run-lifecycle",
+                    "steward-concordloom.runtime-tooling",
+                )
+            }
+        },
+    )
+    validate_registry(registry, policy)
+    _validate_publication_route(publication_route, registry, policy)
+    validate_binding_proposal(
+        materialized_proposal,
+        graph,
+        decisions,
+        design_proposal,
+        accepted_design,
+        registry,
+        policy,
+        extra_artifacts={
+            "atlas_input": (
+                "framework/concordloom/v10/development-model.json",
+                model,
+            ),
+            "evolution_history": (
+                "framework/concordloom/v10/evolution-history.json",
+                history,
+            ),
+        },
+    )
+    if materialized_proposal.get("proposal_digest") != BINDING_PROPOSAL_DIGEST:
+        raise ValueError("binding proposal does not match the activated successor")
+    return {
+        "loop-design.json": accepted_design,
+        "cycle-registry.json": registry,
+        "policy.json": materialized_policy,
+        "development-model.json": model,
+        "evolution-history.json": history,
+        "binding-proposal.json": materialized_proposal,
+        "publication-route.json": materialized_publication_route,
+    }
+
+
 def _resolve_under_root(root: Path, value: Path) -> Path:
     return value if value.is_absolute() else root / value
 
@@ -852,27 +1121,55 @@ def main() -> None:
     parser.add_argument(
         "--design-decision",
         type=Path,
-        default=Path(".concord/runs/route-preview-v10/design-decision-r2.json"),
     )
     parser.add_argument(
         "--evolution-decision",
         type=Path,
-        default=Path(".concord/runs/route-preview-v10/evolution-decision-r2.json"),
     )
     parser.add_argument(
         "--candidate-manifest",
         type=Path,
-        default=Path(".concord/runs/route-preview-v10/revision-candidate.json"),
     )
     args = parser.parse_args()
     root = args.root.resolve()
     target = root / "framework" / "concordloom" / "v10"
-    documents = build(
-        root,
-        design_decision_path=_resolve_under_root(root, args.design_decision),
-        evolution_decision_path=_resolve_under_root(root, args.evolution_decision),
-        candidate_manifest_path=_resolve_under_root(root, args.candidate_manifest),
-    )
+    if args.check:
+        documents = build_check(
+            root,
+            design_decision_path=(
+                _resolve_under_root(root, args.design_decision)
+                if args.design_decision is not None
+                else None
+            ),
+            evolution_decision_path=(
+                _resolve_under_root(root, args.evolution_decision)
+                if args.evolution_decision is not None
+                else None
+            ),
+            candidate_manifest_path=(
+                _resolve_under_root(root, args.candidate_manifest)
+                if args.candidate_manifest is not None
+                else None
+            ),
+        )
+    else:
+        missing = [
+            flag
+            for flag, value in (
+                ("--design-decision", args.design_decision),
+                ("--evolution-decision", args.evolution_decision),
+                ("--candidate-manifest", args.candidate_manifest),
+            )
+            if value is None
+        ]
+        if missing:
+            parser.error("materialization requires " + ", ".join(missing))
+        documents = build(
+            root,
+            design_decision_path=_resolve_under_root(root, args.design_decision),
+            evolution_decision_path=_resolve_under_root(root, args.evolution_decision),
+            candidate_manifest_path=_resolve_under_root(root, args.candidate_manifest),
+        )
     if set(documents) != MATERIALIZED_OUTPUTS:
         raise SystemExit("materializer output set changed")
     if args.check:
