@@ -1,0 +1,265 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:1940a57ca917d6136c5742048dfccc68d0434c530da2ad3ef3b2ba486f866597",
+  "decision_authority_ref": "operator",
+  "decision_required": true,
+  "expected_effect": "Add one proposal-only route-planning child and grant the existing run-lifecycle child exact ownership of src/concordloom/route.py and src/concordloom/schema.py. Raise only the exact steward-to-runtime-tooling delegation ceiling required for those two paths. The preview keeps the task area separate from the full accepted local execution flow, including verification and review, may use Luna at low reasoning to suggest a target, and requires separate explicit confirmation before run new may create a draft run card. It cannot write candidate bytes, use task network access, mutate external systems, authorize execution, or activate a successor.",
+  "generated_at": "2026-08-02T00:00:00Z",
+  "id": "add-task-route-preview-cycle",
+  "kind": "concordloom.evolution-proposal",
+  "operations": [
+    {
+      "op": "add",
+      "target_id": "plan-task-route",
+      "target_kind": "loop",
+      "value": {
+        "after_child_loop_id": "maintain-compiler-core",
+        "before_child_loop_id": "operate-run-lifecycle",
+        "input_outcome": "A task request, the active binding, its accepted loop registry, and an exact candidate manifest.",
+        "output_outcome": "An immutable candidate-bound proposed route preview that keeps the task area separate from every accepted execution, verification, and review action; confirmation is required and execution is forbidden.",
+        "parent_loop_id": "runtime-tooling",
+        "proposed_runtime_contract": {
+          "authority": {
+            "accept_capability": "accept-parent",
+            "escalate_capability": "escalate",
+            "execute_capability": "route-run"
+          },
+          "candidate_effects": {
+            "external_mutations": [],
+            "network": "none",
+            "repository_candidate_write_paths": []
+          },
+          "preview_artifact": {
+            "area_path_separated": true,
+            "candidate_bound": true,
+            "confirmation_required": true,
+            "execution_allowed": false,
+            "execution_route_source": "accepted-local-control-flow",
+            "immutable": true,
+            "run_card_creation": "after-explicit-confirmation-only",
+            "state": "proposed",
+            "verification_steps_included": true
+          },
+          "routes": {
+            "exact_route_compiler": {
+              "mcp_servers": [],
+              "model": "none",
+              "model_provider": "",
+              "reasoning": "deterministic",
+              "required": true,
+              "resources": [],
+              "skills": [],
+              "subagent_identities": [],
+              "tool_capabilities": []
+            },
+            "semantic_target_selection": {
+              "fallback": "require-explicit-target-loop",
+              "mcp_servers": [],
+              "model": "gpt-5.6-luna",
+              "model_provider": "openai",
+              "optional": true,
+              "reasoning": "low",
+              "resources": [],
+              "skills": [
+                {
+                  "id": "design-project-loops",
+                  "version": "0.1.0"
+                }
+              ],
+              "subagent_identities": [],
+              "tool_capabilities": []
+            }
+          }
+        },
+        "purpose": "Compile an exact, immutable proposed route preview from the accepted local control flow before any run card exists."
+      }
+    },
+    {
+      "op": "add",
+      "target_id": "runtime-tooling.plan-task-route",
+      "target_kind": "containment",
+      "value": {
+        "after_child_loop_id": "maintain-compiler-core",
+        "before_child_loop_id": "operate-run-lifecycle",
+        "child_loop_id": "plan-task-route",
+        "id": "runtime-tooling.plan-task-route",
+        "parent_loop_id": "runtime-tooling"
+      }
+    },
+    {
+      "op": "replace",
+      "precondition_digest": "sha256:f0d829ead4d14f025a6ec2489b1debc6397e6908d5c90d8bc9c52349aec2779f",
+      "target_id": "runtime-tooling.operate-run-lifecycle",
+      "target_kind": "containment",
+      "value": {
+        "at_state": "invoke-runtime-tooling.operate-run-lifecycle",
+        "child_loop_id": "operate-run-lifecycle",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              "AGENTS.md",
+              "framework/concordloom/catalog.json",
+              "schemas",
+              "src/concordloom/run.py",
+              "src/concordloom/route.py",
+              "src/concordloom/schema.py",
+              "tests"
+            ],
+            "write_paths": [
+              "schemas",
+              "src/concordloom/route.py",
+              "src/concordloom/run.py",
+              "src/concordloom/schema.py",
+              "tests"
+            ]
+          }
+        },
+        "id": "runtime-tooling.operate-run-lifecycle",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "runtime-tooling",
+        "success_state": "invoke-runtime-tooling.maintain-cli",
+        "timeout_seconds": 3600
+      }
+    },
+    {
+      "op": "replace",
+      "precondition_digest": "sha256:8d72161e7a22c9609cade5f9bb73b8e847673eecc41c3707d1bbacd2fb5e6c4a",
+      "target_id": "steward-concordloom.runtime-tooling",
+      "target_kind": "containment",
+      "value": {
+        "at_state": "invoke-steward-concordloom.runtime-tooling",
+        "child_loop_id": "runtime-tooling",
+        "deadline_outcome": "escalated",
+        "failure_state": "escalated",
+        "grant": {
+          "budgets": {
+            "max_attempts": 3,
+            "max_cost_units": 10,
+            "max_elapsed_seconds": 3600,
+            "on_exhaustion": "failed"
+          },
+          "capabilities": [
+            "accept-parent",
+            "escalate",
+            "execute-work",
+            "produce-evidence"
+          ],
+          "scope": {
+            "external_mutations": [],
+            "network": "none",
+            "read_paths": [
+              ".github/dependabot.yml",
+              ".github/workflows",
+              "AGENTS.md",
+              "framework/concordloom/catalog.json",
+              "plugins",
+              "schemas",
+              "src/concordloom/canonical.py",
+              "src/concordloom/catalog.py",
+              "src/concordloom/cli.py",
+              "src/concordloom/compiler.py",
+              "src/concordloom/evolution.py",
+              "src/concordloom/loops.py",
+              "src/concordloom/route.py",
+              "src/concordloom/run.py",
+              "src/concordloom/schema.py",
+              "tests",
+              "tools"
+            ],
+            "write_paths": [
+              ".github/dependabot.yml",
+              ".github/workflows",
+              "plugins",
+              "schemas",
+              "src/concordloom/canonical.py",
+              "src/concordloom/catalog.py",
+              "src/concordloom/cli.py",
+              "src/concordloom/compiler.py",
+              "src/concordloom/evolution.py",
+              "src/concordloom/loops.py",
+              "src/concordloom/route.py",
+              "src/concordloom/run.py",
+              "src/concordloom/schema.py",
+              "tests",
+              "tools"
+            ]
+          }
+        },
+        "id": "steward-concordloom.runtime-tooling",
+        "input_mapping": {},
+        "output_mapping": {},
+        "parent_loop_id": "steward-concordloom",
+        "success_state": "invoke-steward-concordloom.trust-assurance",
+        "timeout_seconds": 3600
+      }
+    }
+  ],
+  "proposed_by": {
+    "id": "example-orchestrator",
+    "kind": "orchestrator"
+  },
+  "risk": {
+    "failure_modes": [
+      "Semantic target selection may suggest the wrong loop.",
+      "An ancestry-only preview may hide mandatory execution, verification, or review actions.",
+      "A preview may become stale when its binding or candidate changes."
+    ],
+    "level": "medium",
+    "rollback": "Reject v10 and retain the active v9 binding unchanged."
+  },
+  "schema_version": "0.1",
+  "signals": [
+    {
+      "base_binding_digest": "sha256:1940a57ca917d6136c5742048dfccc68d0434c530da2ad3ef3b2ba486f866597",
+      "category": "friction",
+      "id": "task-routes-are-invisible-before-execution",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 3,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "operator-route-preview-feedback"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:be70dd3816e89b76d3a5ec01267f7c88f2c155a47bd6459d733809fba985e596",
+      "summary": "Operators cannot inspect which accepted loops a task will traverse before authorizing the run."
+    },
+    {
+      "base_binding_digest": "sha256:1940a57ca917d6136c5742048dfccc68d0434c530da2ad3ef3b2ba486f866597",
+      "category": "coverage",
+      "id": "task-target-selection-lacks-a-native-preview",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 2,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "task-route-runtime-audit"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:d71f16866a4e26067e90e4a407e9b279615eab4b3ff522bfcedc4cd3182096b2",
+      "summary": "The runtime can compile an explicit target closure but has no bounded user-facing step that separates its area breadcrumb from every accepted execution, verification, and review action."
+    }
+  ],
+  "status": "proposed"
+}

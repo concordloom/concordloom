@@ -20,7 +20,13 @@ from concordloom.atlas import (
     render_atlas,
 )
 from concordloom.canonical import digest, load
-from concordloom.run import build_candidate_manifest, create_run_card
+from concordloom.run import (
+    _authorization_plan,
+    _planned_node_identities,
+    build_candidate_manifest,
+    create_run_card,
+)
+from concordloom.route import create_route_preview
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,6 +58,159 @@ def active_self_artifacts() -> tuple[dict, dict, dict]:
 
 
 class AtlasTests(unittest.TestCase):
+    def test_route_preview_is_proposed_before_it_becomes_a_plan(self) -> None:
+        source = ROOT / "framework" / "concordloom" / "v9"
+        binding = load(source / "binding.json")
+        registry = load(source / "cycle-registry.json")
+        policy = load(source / "policy.json")
+        development_model = load(source / "development-model.json")
+        candidate = {
+            "kind": "concordloom.candidate-manifest",
+            "schema_version": "0.1",
+            "id": "atlas-route-candidate",
+            "generated_at": "2026-08-02T08:00:00Z",
+            "revision": "a" * 40,
+            "tree_digest": "sha256:" + ("b" * 64),
+            "dirty": False,
+            "files": [],
+        }
+        preview = create_route_preview(
+            binding,
+            registry,
+            policy,
+            candidate,
+            development_model,
+            preview_id="atlas-route-preview",
+            request_digest="sha256:" + ("c" * 64),
+            request_ref="task-request",
+            root_loop_id="steward-concordloom",
+            target_loop_ids=["maintain-cli"],
+            created_at="2026-08-02T08:01:00Z",
+        )
+
+        rendered = render_atlas(
+            binding=binding,
+            registry=registry,
+            policy=policy,
+            route_preview=preview,
+            candidate_manifest=candidate,
+            development_model=development_model,
+        )
+        self.assertIn(">Proposed<", rendered)
+        self.assertIn("route preview atlas-route-preview: proposed", rendered)
+        self.assertIn('data-route="proposed"', rendered)
+        self.assertNotIn("task request text", rendered)
+
+        no_effects = next(
+            item for item in preview["proposed_route"] if item["loop_id"] == "maintain-cli"
+        )
+        self.assertEqual(no_effects["scope"]["network"], "none")
+        self.assertEqual(no_effects["scope"]["external_mutations"], [])
+        self.assertIn("needs no network access and makes no external changes", rendered)
+
+        publication_preview = create_route_preview(
+            binding,
+            registry,
+            policy,
+            candidate,
+            development_model,
+            preview_id="atlas-publication-preview",
+            request_digest="sha256:" + ("e" * 64),
+            request_ref="publish-request",
+            root_loop_id="steward-concordloom",
+            target_loop_ids=["publish-site"],
+            created_at="2026-08-02T08:02:00Z",
+        )
+        publish_item = next(
+            item
+            for item in publication_preview["proposed_route"]
+            if item["loop_id"] == "publish-site"
+        )
+        self.assertEqual(publish_item["scope"]["network"], "write")
+        self.assertEqual(publish_item["scope"]["external_mutations"], ["github-pages"])
+        publication_atlas = render_atlas(
+            binding=binding,
+            registry=registry,
+            policy=policy,
+            route_preview=publication_preview,
+            candidate_manifest=candidate,
+            development_model=development_model,
+        )
+        self.assertIn("data-sending", publication_atlas)
+        self.assertIn("make these external changes", publication_atlas)
+        self.assertIn("github-pages", publication_atlas)
+
+        card = create_run_card(
+            binding,
+            registry,
+            policy,
+            candidate,
+            run_id="atlas-preview-run",
+            root_loop_id="steward-concordloom",
+            candidate_author_principal_ids=["example-executor"],
+            development_model=development_model,
+            route_preview=preview,
+        )
+        with self.assertRaisesRegex(AtlasError, "exact route preview"):
+            render_atlas(
+                binding=binding,
+                registry=registry,
+                policy=policy,
+                run_card=card,
+                candidate_manifest=candidate,
+                development_model=development_model,
+            )
+        planned = render_atlas(
+            binding=binding,
+            registry=registry,
+            policy=policy,
+            run_card=card,
+            route_preview=preview,
+            candidate_manifest=candidate,
+            development_model=development_model,
+        )
+        self.assertIn("run atlas-preview-run: draft", planned)
+        self.assertIn(preview["preview_digest"], planned)
+
+        authorized = deepcopy(card)
+        authorized["status"] = "authorized"
+        authorized["authorization"] = {
+            "actor": {"id": "example-operator", "kind": "operator"},
+            "capability": "authorize-run",
+            "authorized_at": "2026-08-02T08:03:00Z",
+            "binding_digest": binding["binding_digest"],
+            "scope_digest": digest(card["scope"]),
+            "route_preview_digest": preview["preview_digest"],
+            "planned_route_digest": digest(card["planned_route"]),
+            "planned_nodes_digest": digest(_planned_node_identities(card)),
+            "authorization_plan_digest": digest(_authorization_plan(card)),
+        }
+        changed_plan = deepcopy(authorized)
+        changed_plan["candidate_author_principal_ids"] = ["example-reviewer"]
+        with self.assertRaisesRegex(AtlasError, "authorization plan digest mismatch"):
+            render_atlas(
+                binding=binding,
+                registry=registry,
+                policy=policy,
+                run_card=changed_plan,
+                route_preview=preview,
+                candidate_manifest=candidate,
+                development_model=development_model,
+            )
+
+        mismatched = deepcopy(card)
+        mismatched["route_preview_digest"] = "sha256:" + ("d" * 64)
+        with self.assertRaisesRegex(AtlasError, "route preview digest mismatch"):
+            render_atlas(
+                binding=binding,
+                registry=registry,
+                policy=policy,
+                run_card=mismatched,
+                route_preview=preview,
+                candidate_manifest=candidate,
+                development_model=development_model,
+            )
+
     def test_render_is_deterministic_offline_and_accessible(self) -> None:
         binding, registry, policy = artifacts()
         first = render_atlas(binding=binding, registry=registry, policy=policy)
@@ -260,6 +419,7 @@ class AtlasTests(unittest.TestCase):
             "active_root_loop_ids": ["alpha", "beta"],
         }
         run_card = {
+            "schema_version": "0.2",
             "binding_digest": binding["binding_digest"],
             "registry_digest": digest(registry),
             "policy_digest": digest(policy),

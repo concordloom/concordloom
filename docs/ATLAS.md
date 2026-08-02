@@ -9,10 +9,28 @@ The Atlas answers 3 questions:
 It is a read-only view. It cannot authorize work, execute a transition, publish
 an external change, or activate evolution.
 
+## Preview a task route
+
+Describe a task in ordinary language. Concord Loom can propose the shortest
+accepted route that reaches the relevant cycles and includes the parent cycles
+needed to contain them.
+
+The preview is shown as **Proposed**, not **Planned**. It is bound to the exact
+Atlas rules, development model, and candidate files, but it grants no authority
+and performs no repository, network, or external action. The original request
+stays outside the durable artifact; only its fingerprint is recorded.
+The preview also shows the network access and external changes each step would
+be allowed to use only after a later confirmation and authorization.
+
+You can correct the selected cycles or confirm the preview. Confirmation
+creates a draft run from that exact route version. It does not change the accepted
+Atlas. If the binding, candidate, or development model changes, the old preview
+is stale and must be rebuilt.
+
 ## Interactive project Atlas
 
 The [public Atlas](https://concordloom.github.io/concordloom/#atlas/steward-concordloom)
-shows all 65 cycles used to develop Concord Loom. Start at the root and select
+shows all 66 cycles used to develop Concord Loom. Start at the root and select
 a child to move one level deeper.
 
 The first screen shows plain-language information:
@@ -29,10 +47,10 @@ The header keeps 2 version axes separate:
 
 ```text
 Product release: 0.1.5
-Development rules: revision 9
+Development rules: revision 10
 ```
 
-Revision 8 is the eighth accepted version of Concord Loom's own development
+Revision 10 is the tenth accepted version of Concord Loom's own development
 rules. It is not a product release.
 
 ## Complete development system
@@ -77,6 +95,7 @@ The Atlas distinguishes:
 
 | Layer | Meaning |
 |---|---|
+| Proposed route | A non-authorizing route preview awaiting confirmation |
 | Accepted plan | The active cycle structure, roles, limits, and intended resources |
 | Recorded run | The principal, model, instructions, tools, network use, effects, and result actually recorded |
 | Verified result | Evidence attached to the exact candidate and checked against a contract |

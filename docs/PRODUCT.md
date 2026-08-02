@@ -19,6 +19,19 @@ agnostic.
 Formal graphs, policies, evidence records, and authority checks support this
 path. They should not become onboarding work for a newcomer.
 
+## Everyday task path
+
+1. Describe the desired change in ordinary language.
+2. Review the proposed route through the accepted Atlas.
+3. Correct the route or confirm it for this task.
+4. Run the confirmed plan and compare the plan with what actually happened.
+
+A route preview is a proposal, not permission to execute. It is pinned to the
+active rules and exact candidate, contains no raw request text, and becomes
+stale when those inputs change. Confirming one route does not change the
+accepted Atlas. A lasting change still goes through the separate evolution
+path.
+
 ## Users
 
 - A project owner who wants an understandable map of how work gets done.

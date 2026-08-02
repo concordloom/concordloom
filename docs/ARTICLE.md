@@ -427,7 +427,7 @@ steward-concordloom
 └── system-evolution
 ```
 
-Those areas contain 55 narrower cycles, for 65 cycles in total. They cover
+Those areas contain 56 narrower cycles, for 66 cycles in total. They cover
 product decisions, theory, protocol, implementation, independent review,
 adapters, documentation, localization, the site, releases, adoption, and the
 full evolution circuit. The seven phases—observe, negotiate, bind, execute,

@@ -32,6 +32,37 @@ class RunStateError(ValueError):
     """A requested run transition is invalid or insufficiently authorized."""
 
 
+def run_card_schema_name(card: Mapping[str, Any]) -> str:
+    """Select the immutable public contract declared by a run card."""
+
+    version = card.get("schema_version")
+    if version == "0.1":
+        return "run-card.schema.json"
+    if version == "0.2":
+        return "run-card-v0.2.schema.json"
+    raise RunStateError(f"unsupported run-card schema version {version!r}")
+
+
+def validate_run_card_schema(
+    card: Mapping[str, Any],
+    *,
+    schema_store: SchemaStore | None = None,
+) -> None:
+    """Validate a run card against its explicitly versioned public contract."""
+
+    (schema_store or SchemaStore()).validate(
+        dict(card), run_card_schema_name(card)
+    )
+
+
+def _require_runtime_run_card(card: Mapping[str, Any]) -> None:
+    if card.get("schema_version") != "0.2":
+        raise RunStateError(
+            "run-card 0.1 is legacy read-only; migrate it to 0.2 and authorize "
+            "the migrated draft before execution"
+        )
+
+
 def _raw_digest(payload: bytes) -> str:
     return "sha256:" + sha256(payload).hexdigest()
 
@@ -581,6 +612,16 @@ def _target_ancestor_closure(
     return selected
 
 
+def target_ancestor_closure(
+    registry: Mapping[str, Any],
+    root_loop_id: str,
+    target_loop_ids: Sequence[str],
+) -> set[str]:
+    """Return the deterministic target-and-ancestor closure for a task route."""
+
+    return _target_ancestor_closure(registry, root_loop_id, target_loop_ids)
+
+
 _ROUTE_ARRAY_FIELDS = (
     "skills",
     "mcp_servers",
@@ -696,6 +737,16 @@ def _verify_planned_route_metadata(
             )
 
 
+def validate_planned_route_metadata(
+    planned: Mapping[str, Any],
+    policy: Mapping[str, Any],
+    candidate_manifest: Mapping[str, Any],
+) -> None:
+    """Validate exact route resources against policy, scope, and candidate bytes."""
+
+    _verify_planned_route_metadata(planned, policy, candidate_manifest)
+
+
 def _verify_planned_actual_metadata(
     planned: Mapping[str, Any],
     actual: Mapping[str, Any],
@@ -806,6 +857,24 @@ def _default_route(
     return result
 
 
+def materialize_route(
+    registry: Mapping[str, Any],
+    policy: Mapping[str, Any],
+    root_loop_id: str,
+    selected_loop_ids: set[str],
+    development_model: Mapping[str, Any],
+) -> list[dict[str, Any]]:
+    """Materialize one exact, policy-bound route without authorizing it."""
+
+    return _default_route(
+        registry,
+        policy,
+        root_loop_id,
+        set(selected_loop_ids),
+        development_model,
+    )
+
+
 def _loop_route_scope(
     registry: Mapping[str, Any],
     loop_id: str,
@@ -896,6 +965,8 @@ def create_run_card(
     target_loop_ids: Sequence[str] | None = None,
     portfolio: bool = False,
     development_model: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     store = schema_store or SchemaStore()
     validate_binding(binding, registry, policy, schema_store=store)
@@ -940,6 +1011,35 @@ def create_run_card(
                 "development model is not the binding's exact atlas input"
             )
     targets = list(target_loop_ids or [])
+    if route_preview is None and replaced_route_preview is not None:
+        raise RunStateError("replaced route preview requires a route preview")
+    if route_preview is not None:
+        from .route import validate_route_preview
+
+        if planned_route is not None or targets or portfolio:
+            raise RunStateError(
+                "route preview is mutually exclusive with planned route, targets, "
+                "and portfolio"
+            )
+        is_correction = "replaces_preview_digest" in route_preview
+        if is_correction != (replaced_route_preview is not None):
+            raise RunStateError(
+                "corrected route preview and exact replaced preview must be "
+                "provided together"
+            )
+        validate_route_preview(
+            route_preview,
+            binding,
+            registry,
+            policy,
+            candidate_manifest,
+            development_model,
+            replaced_preview=replaced_route_preview,
+            schema_store=store,
+        )
+        if route_preview["root_loop_id"] != root_loop_id:
+            raise RunStateError("route preview root does not match the run root")
+        planned_route = route_preview["proposed_route"]
     if planned_route is not None and (targets or portfolio):
         raise RunStateError(
             "custom planned route is mutually exclusive with targets and portfolio"
@@ -1001,7 +1101,7 @@ def create_run_card(
         raise RunStateError("planned route omits the root loop")
     card = {
         "kind": "concordloom.run-card",
-        "schema_version": "0.1",
+        "schema_version": "0.2",
         "id": run_id,
         "binding_digest": binding["binding_digest"],
         "registry_digest": digest(registry),
@@ -1026,10 +1126,132 @@ def create_run_card(
         ],
         "evidence": [],
     }
-    store.validate(card, "run-card.schema.json")
+    if route_preview is not None:
+        card["route_preview_digest"] = route_preview["preview_digest"]
+    validate_run_card_schema(card, schema_store=store)
     for item in card["planned_route"]:
         _verify_planned_route_metadata(item, policy, candidate_manifest)
     return card
+
+
+def _check_card_route_preview(
+    card: Mapping[str, Any],
+    route_preview: Mapping[str, Any] | None,
+    replaced_route_preview: Mapping[str, Any] | None,
+    *,
+    schema_store: SchemaStore,
+) -> None:
+    _check_authorization_binding(card)
+    preview_digest = card.get("route_preview_digest")
+    if preview_digest is None:
+        if route_preview is not None or replaced_route_preview is not None:
+            raise RunStateError(
+                "run card does not cite the supplied route preview"
+            )
+        return
+    if route_preview is None:
+        raise RunStateError(
+            "run card route_preview_digest requires the exact route preview"
+        )
+
+    from .route import validate_route_preview_reference
+
+    preview = validate_route_preview_reference(
+        route_preview,
+        replaced_preview=replaced_route_preview,
+        schema_store=schema_store,
+    )
+    if preview_digest != preview["preview_digest"]:
+        raise RunStateError("run card route preview digest mismatch")
+    if card["planned_route"] != preview["proposed_route"]:
+        raise RunStateError("run card planned route differs from route preview")
+    planned_identities = [
+        (item["node_id"], item["loop_id"])
+        for item in preview["proposed_route"]
+    ]
+    node_identities = [
+        (item["node_id"], item["loop_id"])
+        for item in card["nodes"]
+    ]
+    if node_identities != planned_identities:
+        raise RunStateError("run card nodes differ from route preview")
+
+
+def _planned_node_identities(card: Mapping[str, Any]) -> list[dict[str, str]]:
+    return [
+        {
+            "node_id": str(item["node_id"]),
+            "loop_id": str(item["loop_id"]),
+        }
+        for item in card["nodes"]
+    ]
+
+
+def _authorization_plan(card: Mapping[str, Any]) -> dict[str, Any]:
+    """Canonical immutable facts an operator authorizes before execution."""
+
+    fields = (
+        "id",
+        "binding_digest",
+        "registry_digest",
+        "policy_digest",
+        "candidate_tree_digest",
+        "candidate_manifest_digest",
+        "candidate_author_principal_ids",
+        "root_loop_id",
+        "scope",
+        "budgets",
+        "planned_route",
+    )
+    plan = {
+        **{field: deepcopy(card[field]) for field in fields},
+        "planned_nodes": _planned_node_identities(card),
+    }
+    if "route_preview_digest" in card:
+        plan["route_preview_digest"] = card["route_preview_digest"]
+    return plan
+
+
+def _check_authorization_binding(card: Mapping[str, Any]) -> None:
+    """Reject mutable-card drift from the exact plan an operator authorized."""
+
+    authorization = card.get("authorization")
+    if authorization is None:
+        if card.get("status") != "draft":
+            raise RunStateError("non-draft run card lacks authorization")
+        return
+    if authorization.get("binding_digest") != card.get("binding_digest"):
+        raise RunStateError("run authorization binding digest mismatch")
+    if authorization.get("scope_digest") != digest(card.get("scope")):
+        raise RunStateError("run authorization scope digest mismatch")
+    if authorization.get("authorization_plan_digest") != digest(
+        _authorization_plan(card)
+    ):
+        raise RunStateError("run authorization plan digest mismatch")
+
+    preview_digest = card.get("route_preview_digest")
+    preview_fields = {
+        "route_preview_digest",
+        "planned_route_digest",
+        "planned_nodes_digest",
+    }
+    if preview_digest is None:
+        if preview_fields & set(authorization):
+            raise RunStateError(
+                "legacy run authorization cannot cite a route preview plan"
+            )
+        return
+
+    expected = {
+        "route_preview_digest": preview_digest,
+        "planned_route_digest": digest(card.get("planned_route")),
+        "planned_nodes_digest": digest(_planned_node_identities(card)),
+    }
+    for field, value in expected.items():
+        if authorization.get(field) != value:
+            raise RunStateError(
+                f"run authorization {field.replace('_', ' ')} mismatch"
+            )
 
 
 def _check_card_identity(
@@ -1040,11 +1262,17 @@ def _check_card_identity(
     candidate_manifest: dict[str, Any],
     *,
     repository: str | Path | None = None,
+    development_model: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
+    legacy_read_only: bool = False,
     schema_store: SchemaStore | None = None,
 ) -> None:
     store = schema_store or SchemaStore()
     validate_binding(binding, registry, policy, schema_store=store)
-    store.validate(dict(card), "run-card.schema.json")
+    validate_run_card_schema(card, schema_store=store)
+    if card.get("schema_version") == "0.1" and not legacy_read_only:
+        _require_runtime_run_card(card)
     store.validate(candidate_manifest, "candidate-manifest.schema.json")
     checks = {
         "binding_digest": binding["binding_digest"],
@@ -1056,6 +1284,39 @@ def _check_card_identity(
     for key, value in checks.items():
         if card[key] != value:
             raise RunStateError(f"run card {key} mismatch")
+    if card.get("schema_version") == "0.1":
+        if route_preview is not None or replaced_route_preview is not None:
+            raise RunStateError("legacy run-card 0.1 cannot cite a route preview")
+        authorization = card.get("authorization")
+        if authorization is not None:
+            if authorization.get("binding_digest") != card.get("binding_digest"):
+                raise RunStateError("run authorization binding digest mismatch")
+            if authorization.get("scope_digest") != digest(card.get("scope")):
+                raise RunStateError("run authorization scope digest mismatch")
+    else:
+        _check_card_route_preview(
+            card,
+            route_preview,
+            replaced_route_preview,
+            schema_store=store,
+        )
+    if "route_preview_digest" in card:
+        if development_model is None:
+            raise RunStateError(
+                "preview-backed run card requires the exact development model"
+            )
+        from .route import validate_route_preview
+
+        validate_route_preview(
+            route_preview,
+            binding,
+            registry,
+            policy,
+            candidate_manifest,
+            development_model,
+            replaced_preview=replaced_route_preview,
+            schema_store=store,
+        )
     if repository is not None:
         verify_candidate_manifest(repository, candidate_manifest, schema_store=store)
 
@@ -1067,10 +1328,14 @@ def validate_run_card(
     policy: dict[str, Any],
     candidate_manifest: dict[str, Any],
     *,
-    repository: str | Path,
+    repository: str | Path | None,
+    development_model: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
+    legacy_read_only: bool = False,
     schema_store: SchemaStore | None = None,
 ) -> dict[str, Any]:
-    """Validate a public run card against all content-addressed inputs."""
+    """Validate a run card; legacy 0.1 requires explicit read-only mode."""
 
     _check_card_identity(
         card,
@@ -1079,9 +1344,51 @@ def validate_run_card(
         policy,
         candidate_manifest,
         repository=repository,
+        development_model=development_model,
+        route_preview=route_preview,
+        replaced_route_preview=replaced_route_preview,
+        legacy_read_only=legacy_read_only,
         schema_store=schema_store,
     )
     return card
+
+
+def migrate_run_card_v0_1(
+    card: Mapping[str, Any],
+    *,
+    schema_store: SchemaStore | None = None,
+) -> dict[str, Any]:
+    """Convert one pristine legacy card into an unauthorised v0.2 draft."""
+
+    store = schema_store or SchemaStore()
+    if card.get("schema_version") != "0.1":
+        raise RunStateError("only run-card 0.1 can be migrated")
+    validate_run_card_schema(card, schema_store=store)
+    if card.get("status") not in {"draft", "authorized"}:
+        raise RunStateError(
+            "only a draft or not-yet-started authorized run-card can be migrated"
+        )
+    if card.get("evidence"):
+        raise RunStateError("a run-card with evidence cannot be migrated")
+    for node in card.get("nodes", []):
+        if (
+            node.get("status") != "pending"
+            or node.get("attempts")
+            or node.get("evidence_ids")
+            or "accepted_by" in node
+        ):
+            raise RunStateError(
+                "a started or reviewed run-card cannot be migrated"
+            )
+
+    result = deepcopy(dict(card))
+    result["schema_version"] = "0.2"
+    result["status"] = "draft"
+    result.pop("authorization", None)
+    result.pop("completed_at", None)
+    result.pop("root_outcome", None)
+    validate_run_card_schema(result, schema_store=store)
+    return result
 
 
 def authorize_run(
@@ -1095,6 +1402,9 @@ def authorize_run(
     authority_ref: str,
     authorized_at: str,
     repository: str | Path,
+    development_model: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
     schema_store: SchemaStore | None = None,
 ) -> dict[str, Any]:
     store = schema_store or SchemaStore()
@@ -1105,6 +1415,9 @@ def authorize_run(
         policy,
         candidate_manifest,
         repository=repository,
+        development_model=development_model,
+        route_preview=route_preview,
+        replaced_route_preview=replaced_route_preview,
         schema_store=store,
     )
     if card["status"] != "draft":
@@ -1119,9 +1432,20 @@ def authorize_run(
         "authorized_at": authorized_at,
         "binding_digest": binding["binding_digest"],
         "scope_digest": digest(card["scope"]),
+        "authorization_plan_digest": digest(_authorization_plan(card)),
     }
+    if "route_preview_digest" in card:
+        result["authorization"].update(
+            {
+                "route_preview_digest": card["route_preview_digest"],
+                "planned_route_digest": digest(card["planned_route"]),
+                "planned_nodes_digest": digest(
+                    _planned_node_identities(card)
+                ),
+            }
+        )
     result["status"] = "authorized"
-    store.validate(result, "run-card.schema.json")
+    validate_run_card_schema(result, schema_store=store)
     return result
 
 
@@ -1133,7 +1457,54 @@ def guard(
     write_paths: Iterable[str] = (),
     principal_id: str | None = None,
     policy: Mapping[str, Any] | None = None,
+    binding: Mapping[str, Any] | None = None,
+    registry: Mapping[str, Any] | None = None,
+    candidate_manifest: Mapping[str, Any] | None = None,
+    repository: str | Path | None = None,
+    development_model: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
+    schema_store: SchemaStore | None = None,
 ) -> None:
+    store = schema_store or SchemaStore()
+    _require_runtime_run_card(card)
+    validate_run_card_schema(card, schema_store=store)
+    if "route_preview_digest" in card:
+        if any(
+            value is None
+            for value in (
+                binding,
+                registry,
+                policy,
+                candidate_manifest,
+                repository,
+                development_model,
+                route_preview,
+            )
+        ):
+            raise RunStateError(
+                "preview-backed guard requires exact binding, registry, policy, "
+                "candidate, repository, development model, and route preview"
+            )
+        _check_card_identity(
+            card,
+            dict(binding),
+            dict(registry),
+            dict(policy),
+            dict(candidate_manifest),
+            repository=repository,
+            development_model=development_model,
+            route_preview=route_preview,
+            replaced_route_preview=replaced_route_preview,
+            schema_store=store,
+        )
+    else:
+        _check_card_route_preview(
+            card,
+            route_preview,
+            replaced_route_preview,
+            schema_store=store,
+        )
     if card["status"] not in {"authorized", "running", "review"}:
         raise RunStateError("run is not authorized for execution")
     planned = _route(card, node_id)
@@ -1192,11 +1563,17 @@ def record_attempt(
     cost_units: float = 0,
     result: str,
     repository: str | Path,
+    binding: Mapping[str, Any] | None = None,
+    registry: Mapping[str, Any] | None = None,
+    development_model: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
     schema_store: SchemaStore | None = None,
 ) -> dict[str, Any]:
     store = schema_store or SchemaStore()
     validate_policy(policy, schema_store=store)
-    store.validate(card, "run-card.schema.json")
+    _require_runtime_run_card(card)
+    validate_run_card_schema(card, schema_store=store)
     store.validate(candidate_manifest, "candidate-manifest.schema.json")
     if card["policy_digest"] != digest(policy):
         raise RunStateError("attempt policy digest mismatch")
@@ -1207,7 +1584,20 @@ def record_attempt(
         raise RunStateError("attempt candidate digest mismatch")
     if repository is not None:
         verify_candidate_manifest(repository, candidate_manifest, schema_store=store)
-    guard(card, node_id, principal_id=effective_principal_id, policy=policy)
+    guard(
+        card,
+        node_id,
+        principal_id=effective_principal_id,
+        policy=policy,
+        binding=binding,
+        registry=registry,
+        candidate_manifest=candidate_manifest,
+        repository=repository,
+        development_model=development_model,
+        route_preview=route_preview,
+        replaced_route_preview=replaced_route_preview,
+        schema_store=store,
+    )
     if set(effective_tools) - set(policy["execution"]["allowed_tools"]):
         raise RunStateError("attempt used a tool outside the bound policy")
     current = _node(card, node_id)
@@ -1359,7 +1749,7 @@ def record_attempt(
     target["status"] = "running"
     if result_card["status"] == "authorized":
         result_card["status"] = "running"
-    store.validate(result_card, "run-card.schema.json")
+    validate_run_card_schema(result_card, schema_store=store)
     return result_card
 
 
@@ -1385,9 +1775,42 @@ def _check_runtime_identity(
     policy: Mapping[str, Any],
     candidate_manifest: Mapping[str, Any],
     *,
+    binding: Mapping[str, Any] | None = None,
+    repository: str | Path | None = None,
+    development_model: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
     schema_store: SchemaStore,
 ) -> None:
-    schema_store.validate(dict(card), "run-card.schema.json")
+    if "route_preview_digest" in card:
+        if any(
+            value is None
+            for value in (
+                binding,
+                repository,
+                development_model,
+                route_preview,
+            )
+        ):
+            raise RunStateError(
+                "preview-backed lifecycle requires exact binding, repository, "
+                "development model, and route preview"
+            )
+        _check_card_identity(
+            card,
+            dict(binding),
+            dict(registry),
+            dict(policy),
+            dict(candidate_manifest),
+            repository=repository,
+            development_model=development_model,
+            route_preview=route_preview,
+            replaced_route_preview=replaced_route_preview,
+            schema_store=schema_store,
+        )
+        return
+    _require_runtime_run_card(card)
+    validate_run_card_schema(card, schema_store=schema_store)
     schema_store.validate(dict(candidate_manifest), "candidate-manifest.schema.json")
     checks = {
         "registry_digest": digest(registry),
@@ -1398,6 +1821,12 @@ def _check_runtime_identity(
     for field, expected in checks.items():
         if card[field] != expected:
             raise RunStateError(f"run card {field} mismatch")
+    _check_card_route_preview(
+        card,
+        route_preview,
+        replaced_route_preview,
+        schema_store=schema_store,
+    )
 
 
 def _matching_attempt(
@@ -1539,6 +1968,11 @@ def _verify_evidence(
     policy: Mapping[str, Any],
     candidate_manifest: Mapping[str, Any],
     *,
+    binding: Mapping[str, Any] | None = None,
+    repository: str | Path | None = None,
+    development_model: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
     schema_store: SchemaStore,
 ) -> Mapping[str, Any]:
     schema_store.validate(evidence, "evidence.schema.json")
@@ -1562,6 +1996,14 @@ def _verify_evidence(
         evidence["node_id"],
         principal_id=evidence["producer"]["id"],
         policy=policy,
+        binding=binding,
+        registry=registry,
+        candidate_manifest=candidate_manifest,
+        repository=repository,
+        development_model=development_model,
+        route_preview=route_preview,
+        replaced_route_preview=replaced_route_preview,
+        schema_store=schema_store,
     )
     _matching_attempt(evidence, node)
     _verify_effective_route_policy(evidence, card, policy)
@@ -1635,18 +2077,41 @@ def record_evidence(
     *,
     payload_root: str | Path,
     repository: str | Path,
+    binding: Mapping[str, Any] | None = None,
+    development_model: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
     schema_store: SchemaStore | None = None,
 ) -> dict[str, Any]:
     store = schema_store or SchemaStore()
     validate_registry(registry, policy, schema_store=store)
     _check_runtime_identity(
-        card, registry, policy, candidate_manifest, schema_store=store
+        card,
+        registry,
+        policy,
+        candidate_manifest,
+        binding=binding,
+        repository=repository,
+        development_model=development_model,
+        route_preview=route_preview,
+        replaced_route_preview=replaced_route_preview,
+        schema_store=store,
     )
     if repository is not None:
         verify_candidate_manifest(repository, candidate_manifest, schema_store=store)
     _verify_payload_bytes(evidence, payload_root)
     _verify_evidence(
-        evidence, card, registry, policy, candidate_manifest, schema_store=store
+        evidence,
+        card,
+        registry,
+        policy,
+        candidate_manifest,
+        binding=binding,
+        repository=repository,
+        development_model=development_model,
+        route_preview=route_preview,
+        replaced_route_preview=replaced_route_preview,
+        schema_store=store,
     )
     node = _node(card, evidence["node_id"])
     if node["status"] != "running" or not node["attempts"]:
@@ -1666,7 +2131,7 @@ def record_evidence(
         item for item in result["nodes"] if item["node_id"] == evidence["node_id"]
     )
     target["evidence_ids"].append(evidence["id"])
-    store.validate(result, "run-card.schema.json")
+    validate_run_card_schema(result, schema_store=store)
     return result
 
 
@@ -1679,6 +2144,10 @@ def validate_evidence(
     *,
     repository: str | Path,
     payload_root: str | Path,
+    binding: Mapping[str, Any] | None = None,
+    development_model: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
     schema_store: SchemaStore | None = None,
 ) -> dict[str, Any]:
     """Validate evidence bytes, route, candidate, policy, and cited attempt."""
@@ -1686,7 +2155,16 @@ def validate_evidence(
     store = schema_store or SchemaStore()
     validate_registry(registry, policy, schema_store=store)
     _check_runtime_identity(
-        card, registry, policy, candidate_manifest, schema_store=store
+        card,
+        registry,
+        policy,
+        candidate_manifest,
+        binding=binding,
+        repository=repository,
+        development_model=development_model,
+        route_preview=route_preview,
+        replaced_route_preview=replaced_route_preview,
+        schema_store=store,
     )
     verify_candidate_manifest(repository, candidate_manifest, schema_store=store)
     _verify_payload_bytes(evidence, payload_root)
@@ -1696,6 +2174,11 @@ def validate_evidence(
         registry,
         policy,
         candidate_manifest,
+        binding=binding,
+        repository=repository,
+        development_model=development_model,
+        route_preview=route_preview,
+        replaced_route_preview=replaced_route_preview,
         schema_store=store,
     )
     return evidence
@@ -1713,12 +2196,25 @@ def complete_node(
     payload_root: str | Path,
     repository: str | Path,
     outcome: str = "passed",
+    binding: Mapping[str, Any] | None = None,
+    development_model: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
     schema_store: SchemaStore | None = None,
 ) -> dict[str, Any]:
     store = schema_store or SchemaStore()
     validate_registry(registry, policy, schema_store=store)
     _check_runtime_identity(
-        card, registry, policy, candidate_manifest, schema_store=store
+        card,
+        registry,
+        policy,
+        candidate_manifest,
+        binding=binding,
+        repository=repository,
+        development_model=development_model,
+        route_preview=route_preview,
+        replaced_route_preview=replaced_route_preview,
+        schema_store=store,
     )
     if repository is not None:
         verify_candidate_manifest(repository, candidate_manifest, schema_store=store)
@@ -1769,6 +2265,11 @@ def complete_node(
                 registry,
                 policy,
                 candidate_manifest,
+                binding=binding,
+                repository=repository,
+                development_model=development_model,
+                route_preview=route_preview,
+                replaced_route_preview=replaced_route_preview,
                 schema_store=store,
             )
             receipts_by_contract.setdefault(contract["id"], []).append(evidence)
@@ -1795,7 +2296,7 @@ def complete_node(
         result["status"] = "running"
     else:
         result["status"] = "review"
-    store.validate(result, "run-card.schema.json")
+    validate_run_card_schema(result, schema_store=store)
     return result
 
 
@@ -1808,6 +2309,9 @@ def complete_run(
     *,
     completed_at: str,
     repository: str | Path,
+    development_model: Mapping[str, Any] | None = None,
+    route_preview: Mapping[str, Any] | None = None,
+    replaced_route_preview: Mapping[str, Any] | None = None,
     schema_store: SchemaStore | None = None,
 ) -> dict[str, Any]:
     store = schema_store or SchemaStore()
@@ -1818,6 +2322,9 @@ def complete_run(
         policy,
         candidate_manifest,
         repository=repository,
+        development_model=development_model,
+        route_preview=route_preview,
+        replaced_route_preview=replaced_route_preview,
         schema_store=store,
     )
     root_nodes = [
@@ -1836,7 +2343,7 @@ def complete_run(
     result["status"] = "complete"
     result["completed_at"] = completed_at
     result["root_outcome"] = "succeeded"
-    store.validate(result, "run-card.schema.json")
+    validate_run_card_schema(result, schema_store=store)
     return result
 
 

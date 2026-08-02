@@ -131,7 +131,7 @@ the portable core continues to govern the artifact and authority chain.
 The repository is one governed instance of the framework. The operator
 corrected the earlier delivery-shaped intent and later accepted the complete
 development system rooted at `steward-concordloom`. Its ten responsibility
-areas now contain 65 cycles. The accepted frontend successor added an explicit
+areas now contain 66 cycles. The accepted frontend successor added an explicit
 concept, workshop, implementation, browser-verification, and independent
 visual-critique path without changing the ten top-level responsibilities.
 

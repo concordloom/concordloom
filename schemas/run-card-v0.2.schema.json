@@ -1,0 +1,545 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://concordloom.dev/schemas/v0.2/run-card.schema.json",
+  "title": "Concord Loom governed run card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "binding_digest",
+    "registry_digest",
+    "policy_digest",
+    "candidate_tree_digest",
+    "candidate_manifest_digest",
+    "candidate_author_principal_ids",
+    "root_loop_id",
+    "status",
+    "scope",
+    "budgets",
+    "planned_route",
+    "nodes",
+    "evidence"
+  ],
+  "properties": {
+    "kind": {
+      "const": "concordloom.run-card"
+    },
+    "schema_version": {
+      "const": "0.2"
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "binding_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "registry_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "policy_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "candidate_tree_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "candidate_manifest_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "candidate_author_principal_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "common.schema.json#/$defs/identifier"
+      },
+      "uniqueItems": true
+    },
+    "root_loop_id": {
+      "$ref": "common.schema.json#/$defs/identifier"
+    },
+    "route_preview_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "authorized",
+        "running",
+        "review",
+        "complete",
+        "blocked",
+        "cancelled"
+      ]
+    },
+    "scope": {
+      "$ref": "common.schema.json#/$defs/scope"
+    },
+    "budgets": {
+      "$ref": "common.schema.json#/$defs/budget"
+    },
+    "authorization": {
+      "$ref": "#/$defs/authorization"
+    },
+    "planned_route": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/plannedNode"
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/nodeRun"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceRef"
+      }
+    },
+    "completed_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "root_outcome": {
+      "enum": [
+        "succeeded",
+        "failed",
+        "blocked",
+        "escalated",
+        "cancelled"
+      ]
+    }
+  },
+  "$defs": {
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actor",
+        "capability",
+        "authorized_at",
+        "binding_digest",
+        "scope_digest",
+        "authorization_plan_digest"
+      ],
+      "properties": {
+        "actor": {
+          "$ref": "common.schema.json#/$defs/actor"
+        },
+        "capability": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "authorized_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "binding_digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        },
+        "scope_digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        },
+        "route_preview_digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        },
+        "planned_route_digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        },
+        "planned_nodes_digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        },
+        "authorization_plan_digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        }
+      }
+    },
+    "plannedNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_id",
+        "loop_id",
+        "role",
+        "skill_intent",
+        "model_intent",
+        "reasoning_intent",
+        "subagent_intent",
+        "scope"
+      ],
+      "properties": {
+        "node_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "loop_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "role": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "skill_intent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_intent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_provider": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reasoning": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reasoning_intent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subagent_intent": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/versionedComponent"
+          },
+          "uniqueItems": true
+        },
+        "mcp_servers": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/versionedComponent"
+          },
+          "uniqueItems": true
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/resourceRef"
+          },
+          "uniqueItems": true
+        },
+        "tool_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "subagent_identities": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/subagentIdentity"
+          },
+          "uniqueItems": true
+        },
+        "scope": {
+          "$ref": "common.schema.json#/$defs/scope"
+        }
+      }
+    },
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "started_at",
+        "finished_at",
+        "effective_principal_id",
+        "effective_agent",
+        "effective_model",
+        "effective_reasoning",
+        "effective_skill",
+        "effective_subagents",
+        "effective_tools",
+        "data_egress",
+        "network",
+        "external_mutations",
+        "elapsed_seconds",
+        "token_accounting",
+        "input_tokens",
+        "output_tokens",
+        "reasoning_tokens",
+        "cached_tokens",
+        "cost_units",
+        "policy_digest",
+        "candidate_tree_digest",
+        "result"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "started_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "finished_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "effective_principal_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "effective_agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_model_provider": {
+          "type": "string"
+        },
+        "effective_reasoning": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_skill": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_subagents": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "effective_tools": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "effective_skills": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/versionedComponent"
+          },
+          "uniqueItems": true
+        },
+        "effective_mcp_servers": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/versionedComponent"
+          },
+          "uniqueItems": true
+        },
+        "effective_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/resourceRef"
+          },
+          "uniqueItems": true
+        },
+        "effective_tool_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "effective_subagent_identities": {
+          "type": "array",
+          "items": {
+            "$ref": "evidence.schema.json#/$defs/subagentIdentity"
+          },
+          "uniqueItems": true
+        },
+        "data_egress": {
+          "$ref": "evidence.schema.json#/$defs/dataEgress"
+        },
+        "network": {
+          "enum": [
+            "none",
+            "read",
+            "write"
+          ]
+        },
+        "external_mutations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "elapsed_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "token_accounting": {
+          "enum": [
+            "measured",
+            "unavailable",
+            "not-applicable"
+          ]
+        },
+        "input_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "output_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reasoning_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cached_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cost_units": {
+          "type": "number",
+          "minimum": 0
+        },
+        "policy_digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        },
+        "candidate_tree_digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        },
+        "result": {
+          "enum": [
+            "pass",
+            "fail",
+            "indeterminate"
+          ]
+        }
+      }
+    },
+    "nodeRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_id",
+        "loop_id",
+        "status",
+        "attempts",
+        "evidence_ids"
+      ],
+      "properties": {
+        "node_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "loop_id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "running",
+            "passed",
+            "failed",
+            "blocked",
+            "skipped"
+          ]
+        },
+        "attempts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/attempt"
+          }
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "accepted_by": {
+          "$ref": "common.schema.json#/$defs/actor"
+        }
+      }
+    },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "path",
+        "digest"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/identifier"
+        },
+        "path": {
+          "$ref": "common.schema.json#/$defs/relativePath"
+        },
+        "digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "authorization",
+          "route_preview_digest"
+        ]
+      },
+      "then": {
+        "properties": {
+          "authorization": {
+            "required": [
+              "route_preview_digest",
+              "planned_route_digest",
+              "planned_nodes_digest"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "not": {
+              "const": "draft"
+            }
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "authorization"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "complete"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "completed_at",
+          "root_outcome"
+        ]
+      }
+    }
+  ]
+}

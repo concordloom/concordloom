@@ -286,6 +286,9 @@ test.describe("JavaScript disabled", () => {
 });
 
 test("all localized inspector titles preserve complete words", async ({ page }) => {
+  const expectedLabelCount = JSON.parse(
+    readFileSync("site/data/atlas.json", "utf8"),
+  ).loops.length;
   const viewports = [
     { width: 360, height: 800 },
     { width: 390, height: 844 },
@@ -340,7 +343,7 @@ test("all localized inspector titles preserve complete words", async ({ page }) 
       };
     });
 
-    expect(result.labelCount).toBe(65);
+    expect(result.labelCount).toBe(expectedLabelCount);
     failures.push(...result.brokenWords.map((failure) => ({
       ...failure,
       viewport,

@@ -250,6 +250,40 @@ never as authority or a trace database.
 
 ## 6. Govern execution
 
+Before creating a run card, turn the person's ordinary-language task into a
+separate route preview:
+
+1. Check that `concordloom route preview --help` succeeds. The public v0.1.5
+   release does not contain Route Preview. If the command is unavailable,
+   explain that plainly and stop unless the person separately approves a
+   pinned unreleased installation. Never imitate a preview artifact in prose.
+2. Select the smallest set of accepted target loops that covers the task. Use
+   the accepted Atlas language and evidence; never default an unclear task to
+   the whole root or portfolio.
+3. Keep the raw request in ephemeral session storage. Give the preview command
+   only its digest and an opaque reference. Never persist task prose that may
+   contain secrets in a run card or route artifact.
+4. Compile two distinct views against the active binding, policy, candidate
+   manifest, registry control flow, and development model: a non-numbered area
+   breadcrumb and the ordered child invocations that would actually execute,
+   including required verification and independent review. Never label an
+   ancestor coordinator as an execution step. State clearly that nothing has
+   run.
+5. Ask for one ordinary decision: confirm the route or describe what is wrong.
+   A correction creates a successor preview; it does not mutate the previous
+   preview. Route Preview v0.1 accepts one verified correction hop. If that
+   corrected route is still wrong, create a new base preview instead of
+   attaching an unverified deeper history.
+6. Create a draft run card from the exact confirmed preview. If any pinned
+   input changed, stop and rebuild the preview instead of silently adapting it.
+   When the confirmed preview is a correction, also pass the exact predecessor
+   it names so that correction can be verified.
+
+Keep `proposed`, `draft`, `authorized`, `actual`, and `verified` visible as
+different states. Confirmation creates a draft; it authorizes neither
+execution nor publication. The normal run authorization boundary still
+applies.
+
 Create and mutate run cards only through the launcher's `run` commands. Pin the
 binding and candidate manifest. Before task inspection or mutation, authorize
 the node and run its scope guard for every read and write path.
