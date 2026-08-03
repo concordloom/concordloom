@@ -875,7 +875,7 @@
       },
       {
         "path": "site/data/atlas.json",
-        "sha256": "sha256:72968adc116e4397e0ff501a71f8cf2a658a431903da6eddbee23d2c03b49ecd"
+        "sha256": "sha256:9d2a21c40f2d38dd71bc4e67364aae1f0b3c91bcfd0210a5d8f88ee6360517f6"
       },
       {
         "path": "site/data/content.json",
@@ -895,7 +895,7 @@
       },
       {
         "path": "site/index.html",
-        "sha256": "sha256:05779ffa1369ca82c10c703a3e85f46fa28a331c4575ae14ba669b77e699d192"
+        "sha256": "sha256:21bf86fa812683a03ccf152c94bbcb7a1f097a85e26d514f2acb0d2a9d908df3"
       },
       {
         "path": "site/styles.css",
