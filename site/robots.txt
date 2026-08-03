@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://concordloom.github.io/concordloom/sitemap.xml

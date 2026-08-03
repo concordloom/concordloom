@@ -100,6 +100,58 @@ def main() -> int:
     if parser.localized < 25:
         errors.append(f"expected substantial bilingual copy, found {parser.localized}")
 
+    root_html = index.read_text(encoding="utf-8")
+    seo_urls = {
+        "x-default": "https://concordloom.github.io/concordloom/",
+        "en": "https://concordloom.github.io/concordloom/en/",
+        "ru": "https://concordloom.github.io/concordloom/ru/",
+    }
+    for language, url in seo_urls.items():
+        marker = f'rel="alternate" hreflang="{language}" href="{url}"'
+        if marker not in root_html:
+            errors.append(f"site root lacks {language} alternate URL")
+    if 'rel="canonical" href="https://concordloom.github.io/concordloom/"' not in root_html:
+        errors.append("site root lacks its canonical URL")
+    if 'property="og:url" content="https://concordloom.github.io/concordloom/"' not in root_html:
+        errors.append("site root lacks an absolute Open Graph URL")
+
+    for language in ("en", "ru"):
+        localized_path = SITE / language / "index.html"
+        if not localized_path.is_file():
+            errors.append(f"site lacks the crawlable {language} page")
+            continue
+        localized = localized_path.read_text(encoding="utf-8")
+        canonical = f"https://concordloom.github.io/concordloom/{language}/"
+        if f'<html lang="{language}"' not in localized:
+            errors.append(f"crawlable {language} page has the wrong language")
+        if f'rel="canonical" href="{canonical}"' not in localized:
+            errors.append(f"crawlable {language} page lacks its canonical URL")
+        for alternate_language, url in seo_urls.items():
+            marker = (
+                f'rel="alternate" hreflang="{alternate_language}" href="{url}"'
+            )
+            if marker not in localized:
+                errors.append(
+                    f"crawlable {language} page lacks {alternate_language} alternate URL"
+                )
+        if len(re.sub(r"<[^>]+>", " ", localized)) < 8_000:
+            errors.append(f"crawlable {language} page lacks substantial static copy")
+
+    robots = SITE / "robots.txt"
+    sitemap = SITE / "sitemap.xml"
+    if not robots.is_file() or (
+        "Sitemap: https://concordloom.github.io/concordloom/sitemap.xml"
+        not in robots.read_text(encoding="utf-8")
+    ):
+        errors.append("robots.txt does not advertise the public sitemap")
+    if not sitemap.is_file():
+        errors.append("site lacks sitemap.xml")
+    else:
+        sitemap_text = sitemap.read_text(encoding="utf-8")
+        for url in seo_urls.values():
+            if f"<loc>{url}</loc>" not in sitemap_text:
+                errors.append(f"sitemap lacks {url}")
+
     for asset in parser.local_assets:
         target = SITE / asset
         if not target.exists():

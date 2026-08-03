@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from tools.build_site import markdown_fragment
+from tools.build_site import localized_index, markdown_fragment, robots_txt, sitemap_xml
 from tools.check_site import (
     has_forbidden_signal_canvas_background,
     has_raw_font_stack,
@@ -37,6 +37,36 @@ class SiteContentProjectionTests(unittest.TestCase):
                 ".atlas { background: var(--surface-page); }"
             )
         )
+
+    def test_localized_indexes_have_canonical_and_language_alternates(self) -> None:
+        content = {
+            "article": {
+                "en": {"html": "<p>English article</p>"},
+                "ru": {"html": "<p>Русская статья</p>"},
+            },
+            "quickstart": {
+                "en": {"html": "<p>English quickstart</p>"},
+                "ru": {"html": "<p>Русский быстрый старт</p>"},
+            },
+        }
+        russian = localized_index(content, "ru").decode("utf-8")
+        self.assertIn('<html lang="ru"', russian)
+        self.assertIn(
+            'rel="canonical" href="https://concordloom.github.io/concordloom/ru/"',
+            russian,
+        )
+        self.assertIn('hreflang="en"', russian)
+        self.assertIn('hreflang="x-default"', russian)
+
+    def test_crawler_files_name_every_public_language_url(self) -> None:
+        robots = robots_txt().decode("utf-8")
+        sitemap = sitemap_xml().decode("utf-8")
+        self.assertIn("Sitemap: https://concordloom.github.io/concordloom/sitemap.xml", robots)
+        for suffix in ("/", "/en/", "/ru/"):
+            self.assertIn(
+                f"<loc>https://concordloom.github.io/concordloom{suffix}</loc>",
+                sitemap,
+            )
 
 
 if __name__ == "__main__":

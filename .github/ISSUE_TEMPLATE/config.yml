@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and early ideas
+    url: https://github.com/concordloom/concordloom/discussions
+    about: Ask for help or discuss an idea before turning it into an actionable issue.
+  - name: Security reports
+    url: https://github.com/concordloom/concordloom/security/advisories/new
+    about: Report a vulnerability privately.

@@ -120,17 +120,23 @@ def _require_lifecycle_state(target: Path, catalog: dict[str, Any]) -> None:
             raise ValueError("catalog tail does not match the pinned v9 base")
         return
 
-    if catalog["active_binding_digest"] != ACTIVE_BINDING_DIGEST:
-        raise ValueError("catalog head is neither the v9 base nor exact v10 successor")
     if present != ACTIVATION_OUTPUTS:
-        raise ValueError("catalog activates v10 without both authority artifacts")
+        raise ValueError("catalog contains v10 without both authority artifacts")
+    v10_entry = next(
+        (
+            entry
+            for entry in catalog["entries"]
+            if entry.get("binding_digest") == ACTIVE_BINDING_DIGEST
+        ),
+        None,
+    )
     if (
-        tail.get("binding_digest") != ACTIVE_BINDING_DIGEST
-        or tail.get("binding_id") != "concordloom-self-binding-v10"
-        or tail.get("path") != "framework/concordloom/v10/binding.json"
-        or tail.get("previous_binding_digest") != BASE_BINDING_DIGEST
+        v10_entry is None
+        or v10_entry.get("binding_id") != "concordloom-self-binding-v10"
+        or v10_entry.get("path") != "framework/concordloom/v10/binding.json"
+        or v10_entry.get("previous_binding_digest") != BASE_BINDING_DIGEST
     ):
-        raise ValueError("catalog tail does not match the exact v10 successor")
+        raise ValueError("catalog does not contain the exact v10 successor")
 
     active_binding = load(target / "binding.json")
     if (
