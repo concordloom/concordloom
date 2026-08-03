@@ -1,0 +1,19 @@
+{
+  "activated_at": "2026-08-03T10:02:00Z",
+  "activation_decision_id": "activate-community-surfaces-v11",
+  "activation_evidence_digest": "sha256:bae4ff2251c1a7660b23fcb6eafe92249465a750369d611872c7fbb0c2525846",
+  "activation_evidence_id": "activate-community-surfaces-v11-evidence",
+  "binding_digest": "sha256:1826c3dfc48c2518c2258548c11e846769c99d5df61e4d032b65091325c4c952",
+  "binding_proposal_digest": "sha256:e0dde58f5c57ceac829d2b4aefc29797f91f1544360f786aefa0b4396de57cdc",
+  "evolution_decision_digest": "sha256:2b29f94c1770df8833c77d22114c33dbf6d6cc262fe038579badda4de6f74afc",
+  "evolution_decision_id": "accept-community-surfaces-v11-r2",
+  "id": "activate-concordloom-self-binding-v11-receipt",
+  "kind": "concordloom.activation-receipt",
+  "proposal_tree_digest": "sha256:f1ee9ec411eb0edbc06c1b6f8fdebb5a16917805a8414c52a68230f5035fe474",
+  "review_card_digest": "sha256:304ab04e78b24485333ee9b78406d0f756da7f0ab73ab10dd19e6ea5480d7d69",
+  "review_recommendation_digest": "sha256:6e39dc0fb45036b805f9ccd8d7d01ee20eeca6bb3f5f65f8a0c7c86abf095962",
+  "review_recommendation_id": "review-community-surfaces-v11",
+  "reviewed_candidate_manifest_digest": "sha256:07e24e987a9f87ed3162f215cdc7ca6869dacc8436fe680836be02740013af5d",
+  "reviewed_candidate_tree_digest": "sha256:9545cd86ce8d2bccfa6b1be775c64a1803d6451bed47e2beda44268bc7071421",
+  "schema_version": "0.1"
+}

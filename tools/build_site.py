@@ -50,6 +50,13 @@ PUBLIC_DOCS = [
 TOKEN_SOURCE = SITE / "design-tokens.json"
 TOKEN_OUTPUT = SITE / "design-tokens.css"
 INDEX = SITE / "index.html"
+SITE_BASE_URL = "https://concordloom.github.io/concordloom"
+LOCALIZED_INDEXES = {
+    "en": SITE / "en" / "index.html",
+    "ru": SITE / "ru" / "index.html",
+}
+ROBOTS = SITE / "robots.txt"
+SITEMAP = SITE / "sitemap.xml"
 TOKEN_LAYERS = ("primitive", "semantic", "component", "compatibility")
 
 
@@ -347,6 +354,124 @@ def index_with_static_reading(content: dict) -> bytes:
     return source.encode("utf-8")
 
 
+def localized_index(content: dict, language: str) -> bytes:
+    """Build one crawlable language URL without relying on JavaScript."""
+
+    if language not in {"en", "ru"}:
+        raise ValueError(f"unsupported site locale: {language}")
+    copy = {
+        "en": {
+            "title": "Concord Loom — governed systems of development loops",
+            "description": (
+                "Discover, negotiate, execute, verify, and evolve bounded systems "
+                "of development loops with explicit human authority."
+            ),
+            "label": "ENGLISH DOCUMENTATION",
+            "intro": (
+                "Concord Loom maps how work is accepted, executed, verified, and "
+                "allowed to change. Start with the practical guide, then read the "
+                "complete argument."
+            ),
+            "quickstart": "Quickstart",
+            "article": "Cycles of Cycles",
+            "interactive": "Open the interactive site",
+            "alternate": "Русская версия",
+        },
+        "ru": {
+            "title": "Concord Loom — управляемые системы циклов разработки",
+            "description": (
+                "Исследуйте, согласуйте, выполняйте, проверяйте и развивайте "
+                "ограниченные системы циклов с явными решениями человека."
+            ),
+            "label": "РУССКАЯ ДОКУМЕНТАЦИЯ",
+            "intro": (
+                "Concord Loom показывает, как работа принимается, выполняется, "
+                "проверяется и получает право на изменение. Начните с практического "
+                "руководства, затем прочитайте полное обоснование."
+            ),
+            "quickstart": "Быстрый старт",
+            "article": "Циклы циклов",
+            "interactive": "Открыть интерактивный сайт",
+            "alternate": "English version",
+        },
+    }[language]
+    canonical = f"{SITE_BASE_URL}/{language}/"
+    alternate_language = "ru" if language == "en" else "en"
+    document = f"""<!doctype html>
+<html lang="{language}" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="{html.escape(copy['description'], quote=True)}">
+    <link rel="canonical" href="{canonical}">
+    <link rel="alternate" hreflang="en" href="{SITE_BASE_URL}/en/">
+    <link rel="alternate" hreflang="ru" href="{SITE_BASE_URL}/ru/">
+    <link rel="alternate" hreflang="x-default" href="{SITE_BASE_URL}/">
+    <meta property="og:title" content="{html.escape(copy['title'], quote=True)}">
+    <meta property="og:description" content="{html.escape(copy['description'], quote=True)}">
+    <meta property="og:image" content="{SITE_BASE_URL}/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="{canonical}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="{'en_US' if language == 'en' else 'ru_RU'}">
+    <title>{html.escape(copy['title'])}</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+    <link rel="stylesheet" href="../design-tokens.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">{'Skip to content' if language == 'en' else 'Перейти к содержанию'}</a>
+    <header class="site-header">
+      <a class="brand" href="../?lang={language}" aria-label="Concord Loom">
+        <img src="../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="{'Language versions' if language == 'en' else 'Языковые версии'}">
+        <a class="view-tab" href="../{alternate_language}/">{html.escape(copy['alternate'])}</a>
+        <a class="view-tab is-active" href="../?lang={language}">{html.escape(copy['interactive'])}</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">{html.escape(copy['label'])}</p>
+        <h1>{html.escape(copy['title'])}</h1>
+        <p>{html.escape(copy['intro'])}</p>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy">
+          <h2>{html.escape(copy['quickstart'])}</h2>
+          {content['quickstart'][language]['html']}
+          <h2>{html.escape(copy['article'])}</h2>
+          {content['article'][language]['html']}
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
+"""
+    return document.encode("utf-8")
+
+
+def robots_txt() -> bytes:
+    return (
+        "User-agent: *\n"
+        "Allow: /\n"
+        f"Sitemap: {SITE_BASE_URL}/sitemap.xml\n"
+    ).encode("utf-8")
+
+
+def sitemap_xml() -> bytes:
+    urls = (f"{SITE_BASE_URL}/", f"{SITE_BASE_URL}/en/", f"{SITE_BASE_URL}/ru/")
+    entries = "\n".join(f"  <url><loc>{url}</loc></url>" for url in urls)
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{entries}\n"
+        "</urlset>\n"
+    ).encode("utf-8")
+
+
 def active_documents() -> tuple[dict, dict, dict]:
     catalog_path = PUBLIC_CATALOG if PUBLIC_CATALOG.exists() else TRANSITION_CATALOG
     catalog = load(catalog_path)
@@ -460,6 +585,12 @@ def main() -> int:
     content = site_content()
     expected_content = canonical_bytes(content) + b"\n"
     expected_index = index_with_static_reading(content)
+    expected_localized_indexes = {
+        language: localized_index(content, language)
+        for language in LOCALIZED_INDEXES
+    }
+    expected_robots = robots_txt()
+    expected_sitemap = sitemap_xml()
     expected_tokens = design_tokens_css()
     assets = {
         ROOT / "docs" / "assets" / "concordloom-hero.webp": (
@@ -495,6 +626,13 @@ def main() -> int:
             stale.append(str(TOKEN_OUTPUT.relative_to(ROOT)))
         if not check_bytes(INDEX, expected_index):
             stale.append(str(INDEX.relative_to(ROOT)))
+        for language, path in LOCALIZED_INDEXES.items():
+            if not check_bytes(path, expected_localized_indexes[language]):
+                stale.append(str(path.relative_to(ROOT)))
+        if not check_bytes(ROBOTS, expected_robots):
+            stale.append(str(ROBOTS.relative_to(ROOT)))
+        if not check_bytes(SITEMAP, expected_sitemap):
+            stale.append(str(SITEMAP.relative_to(ROOT)))
         for source, target in assets.items():
             if not target.exists() or source.read_bytes() != target.read_bytes():
                 stale.append(str(target.relative_to(ROOT)))
@@ -509,6 +647,11 @@ def main() -> int:
     content_output.write_bytes(expected_content)
     TOKEN_OUTPUT.write_bytes(expected_tokens)
     INDEX.write_bytes(expected_index)
+    for language, path in LOCALIZED_INDEXES.items():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(expected_localized_indexes[language])
+    ROBOTS.write_bytes(expected_robots)
+    SITEMAP.write_bytes(expected_sitemap)
     for source, target in assets.items():
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, target)

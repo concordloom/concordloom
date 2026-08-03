@@ -160,14 +160,18 @@ class TaskRouteEvolutionTests(unittest.TestCase):
         catalog = load(FRAMEWORK / "catalog.json")
         self.assertEqual(BASE_BINDING_DIGEST, self.binding["binding_digest"])
         self.assertEqual(BASE_BINDING_DIGEST, self.evolution["base_binding_digest"])
-        self.assertEqual(ACTIVE_BINDING_DIGEST, catalog["active_binding_digest"])
+        v10_entry = next(
+            entry
+            for entry in catalog["entries"]
+            if entry["binding_digest"] == ACTIVE_BINDING_DIGEST
+        )
         self.assertEqual(
             "concordloom-self-binding-v10",
-            catalog["entries"][-1]["binding_id"],
+            v10_entry["binding_id"],
         )
         self.assertEqual(
             BASE_BINDING_DIGEST,
-            catalog["entries"][-1]["previous_binding_digest"],
+            v10_entry["previous_binding_digest"],
         )
         self.assertEqual(
             [
@@ -378,9 +382,13 @@ class TaskRouteEvolutionTests(unittest.TestCase):
             receipt["binding_proposal_digest"],
         )
         catalog = load(FRAMEWORK / "catalog.json")
-        self.assertEqual(ACTIVE_BINDING_DIGEST, catalog["active_binding_digest"])
-        self.assertEqual("concordloom-self-binding-v10", catalog["entries"][-1]["binding_id"])
-        self.assertEqual(BASE_BINDING_DIGEST, catalog["entries"][-1]["previous_binding_digest"])
+        v10_entry = next(
+            entry
+            for entry in catalog["entries"]
+            if entry["binding_digest"] == ACTIVE_BINDING_DIGEST
+        )
+        self.assertEqual("concordloom-self-binding-v10", v10_entry["binding_id"])
+        self.assertEqual(BASE_BINDING_DIGEST, v10_entry["previous_binding_digest"])
 
     def test_generator_is_deterministic_checkable_and_fails_closed(self) -> None:
         environment = dict(os.environ)

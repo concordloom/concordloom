@@ -1,0 +1,50 @@
+name: Bug report
+description: Report a reproducible defect in Concord Loom.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping improve Concord Loom. Do not disclose vulnerabilities here; use the security policy.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: v0.1.5 or a full commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+      description: Describe what happened, including the exact command and complete error output where practical.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Describe the result you expected and why.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Provide the smallest safe sequence that reproduces the problem. Remove secrets and private data.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include operating system, Python version, installation method, and relevant tool versions.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and Discussions.
+          required: true
+        - label: This report does not contain a vulnerability or sensitive data.
+          required: true

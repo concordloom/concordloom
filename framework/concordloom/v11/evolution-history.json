@@ -1,0 +1,29 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:7ab2f2e59e3f08a914bb9af266165f5ef9868489d43e4eb841f23fb52b9b04c4",
+  "candidate_manifest_digest": "sha256:f2365698d75104cf9434b4146057695505a3a49ab2bdc9518927d831546068b3",
+  "candidate_tree_digest": "sha256:2a8c1a735f43fdb04b52c14132a001b911dcf1a38b7c7c3b0651b588ffed6415",
+  "decisions": [
+    {
+      "id": "accept-community-surfaces-v11-r2",
+      "kind": "decide-evolution",
+      "receipt_digest": "sha256:2b29f94c1770df8833c77d22114c33dbf6d6cc262fe038579badda4de6f74afc"
+    },
+    {
+      "id": "accept-community-surfaces-v11-design",
+      "kind": "accept-loop-design",
+      "receipt_digest": "sha256:923df712c06f8dd4e89f68e7e00109e20d3cb4bddd7e043f2bf5d861ab706310"
+    }
+  ],
+  "evolution_proposal": {
+    "digest": "sha256:9cca4032a0d83773cea0629477b7bafb5e087379dab6661d69881db79f87b37f",
+    "id": "community-surfaces-v11-r2"
+  },
+  "id": "community-surfaces-v11-evolution-history",
+  "kind": "concordloom.evolution-history",
+  "loop_design_proposal": {
+    "digest": "sha256:51fa1b8a6dd30dd77d6f5231aa26b9692f90899d5e13b3101a4f7d3f10add6c7",
+    "id": "community-surfaces-v11-loop-design-proposal"
+  },
+  "schema_version": "0.1"
+}

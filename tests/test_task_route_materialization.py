@@ -96,7 +96,11 @@ class TaskRouteMaterializationTests(unittest.TestCase):
         )
         catalog = load(FRAMEWORK / "catalog.json")
         validate_catalog(catalog, artifact_root=ROOT)
-        self.assertEqual(ACTIVE_BINDING_DIGEST, catalog["active_binding_digest"])
+        v10_entry = next(
+            entry
+            for entry in catalog["entries"]
+            if entry["binding_digest"] == ACTIVE_BINDING_DIGEST
+        )
         self.assertEqual(
             {
                 "binding_digest": ACTIVE_BINDING_DIGEST,
@@ -105,7 +109,7 @@ class TaskRouteMaterializationTests(unittest.TestCase):
                 "previous_binding_digest": BASE_BINDING_DIGEST,
             },
             {
-                key: catalog["entries"][-1][key]
+                key: v10_entry[key]
                 for key in (
                     "binding_digest",
                     "binding_id",

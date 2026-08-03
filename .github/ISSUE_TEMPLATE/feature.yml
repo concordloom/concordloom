@@ -1,0 +1,40 @@
+name: Feature proposal
+description: Propose a concrete, bounded improvement.
+title: "[Proposal]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: Describe the outcome that is difficult today. Separate observed evidence from assumptions.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Explain the smallest useful change without assuming it has already been accepted.
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Authority and product boundary
+      description: What may this change read, write, execute, publish, or authorize? What must remain out of scope?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and alternatives
+      description: Link examples, experiments, prior art, or alternatives considered.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and Discussions.
+          required: true
+        - label: I understand that a proposal is not an accepted decision or activation.
+          required: true
