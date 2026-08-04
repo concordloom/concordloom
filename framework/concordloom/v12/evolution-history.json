@@ -1,0 +1,29 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:1826c3dfc48c2518c2258548c11e846769c99d5df61e4d032b65091325c4c952",
+  "candidate_manifest_digest": "sha256:08e03274471593e11a328864cc10f7e0644c689ec95a5cb58c8d9ea433441744",
+  "candidate_tree_digest": "sha256:7929f83359dc92ba49f28a97a95e59733755fd07f27c01b507e1ee5eddd9ff3d",
+  "decisions": [
+    {
+      "id": "accept-github-issue-administration-v12",
+      "kind": "decide-evolution",
+      "receipt_digest": "sha256:d717f96eb7de6fa895766df29d7d31f7ff3b58ce21b72fe19b1eafd06ee60cbc"
+    },
+    {
+      "id": "accept-github-issue-administration-v12-design",
+      "kind": "accept-loop-design",
+      "receipt_digest": "sha256:c1cba21fba57a7d4516e033f9bc3863807c7eeb38dcc70c219acb3f9c13a2012"
+    }
+  ],
+  "evolution_proposal": {
+    "digest": "sha256:c9e5aa36d27f6e4b1f52f1b59be7eb284d59e17e3cfaa2dedeb2e885d0cc8a00",
+    "id": "github-issue-administration-v12"
+  },
+  "id": "github-issue-administration-v12-evolution-history",
+  "kind": "concordloom.evolution-history",
+  "loop_design_proposal": {
+    "digest": "sha256:0c03c31f8a819a0a01e317a488d8ba48ca09ff367100a16fc71a5f078e7969c7",
+    "id": "github-issue-administration-v12-loop-design-proposal"
+  },
+  "schema_version": "0.1"
+}

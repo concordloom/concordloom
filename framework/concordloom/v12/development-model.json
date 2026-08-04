@@ -1,0 +1,4202 @@
+{
+  "activation_boundary": {
+    "activation_loop_id": "activate-successor",
+    "authority": "operator only",
+    "evolve_phase_terminates_at": "propose-successor",
+    "self_activation_allowed": false
+  },
+  "activation_requirements": {
+    "activation": {
+      "capability": "activate-binding",
+      "decision_id_required": true,
+      "exact_receipt_digest_required": true,
+      "receipt_kind": "concordloom.activation-evidence-receipt"
+    },
+    "digest_contract": {
+      "algorithm": "sha256",
+      "candidate_tree_is_proposal_artifact_tree": true,
+      "canonicalization": "rfc8785",
+      "exact_binding_proposal_digest_required": true,
+      "exact_proposal_tree_digest_required": true,
+      "one_candidate_tree_digest_across_all_receipts": true,
+      "receipt_digest_excludes": [
+        "/receipt_digest"
+      ]
+    },
+    "evolution_decision": {
+      "capability": "decide-evolution",
+      "decision_id_required": true,
+      "exact_receipt_digest_required": true,
+      "receipt_kind": "concordloom.evolution-decision-receipt",
+      "separate_from_activation_decision": true
+    },
+    "id": "concordloom-self-binding-v7-activation-requirements",
+    "kind": "concordloom.activation-requirements",
+    "review_successor": {
+      "capability": "review-candidate",
+      "exact_receipt_digest_required": true,
+      "may_decide_evolution": false,
+      "outcome": "recommendation",
+      "receipt_kind": "concordloom.review-recommendation-receipt"
+    },
+    "schema_version": "0.1"
+  },
+  "base_binding_digest": "sha256:1940a57ca917d6136c5742048dfccc68d0434c530da2ad3ef3b2ba486f866597",
+  "evolution_circuit": [
+    "collect-evolution-signals",
+    "propose-successor",
+    "review-successor",
+    "activate-successor",
+    "observe-migration"
+  ],
+  "id": "concordloom-development-system-v10",
+  "kind": "concordloom.development-model",
+  "nodes": [
+    {
+      "artifacts": [
+        "charter",
+        "catalog",
+        "receipts"
+      ],
+      "children": [
+        "product-direction",
+        "research-theory",
+        "protocol-design",
+        "runtime-tooling",
+        "trust-assurance",
+        "bindings-adapters",
+        "knowledge-experience",
+        "release-distribution",
+        "adoption-feedback",
+        "system-evolution"
+      ],
+      "contract": {
+        "en": {
+          "input": "Mission, evidence and operator decisions.",
+          "output": "An accepted product, release or successor decision."
+        },
+        "ru": {
+          "input": "Цель, данные проверки и решения оператора.",
+          "output": "Принятый продукт, выпуск или решение о новой версии."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Steward Concord Loom",
+          "purpose": "Keep the whole product useful, trustworthy and coherent."
+        },
+        "ru": {
+          "label": "Развивать Concord Loom",
+          "purpose": "Сохранять продукт полезным, надёжным и цельным."
+        }
+      },
+      "execution_profile": "strategy",
+      "id": "steward-concordloom",
+      "parent_id": null,
+      "responsible_role": {
+        "en": "operator",
+        "ru": "оператор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "human-decision",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "decision-log",
+          "repository"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "product-boundary",
+        "decisions",
+        "roadmap"
+      ],
+      "children": [
+        "discover-product-needs",
+        "maintain-product-boundary",
+        "decide-product",
+        "prioritize-roadmap"
+      ],
+      "contract": {
+        "en": {
+          "input": "Needs, research and adoption signals.",
+          "output": "Accepted product intent and priorities."
+        },
+        "ru": {
+          "input": "Потребности, исследования и сигналы применения.",
+          "output": "Принятые цели продукта и приоритеты."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Product Direction",
+          "purpose": "Decide what Concord Loom is and what it should do next."
+        },
+        "ru": {
+          "label": "Направление продукта",
+          "purpose": "Определять границы продукта и его следующие задачи."
+        }
+      },
+      "execution_profile": "strategy",
+      "id": "product-direction",
+      "parent_id": "steward-concordloom",
+      "responsible_role": {
+        "en": "product steward",
+        "ru": "ответственный за продукт"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "decision-log",
+          "repository"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "observation-corpus",
+        "claim-ledger",
+        "article"
+      ],
+      "children": [
+        "observe-landscape",
+        "formalize-theory",
+        "test-applicability",
+        "maintain-article"
+      ],
+      "contract": {
+        "en": {
+          "input": "Questions, sources and counterexamples.",
+          "output": "Supported claims, models and article revisions."
+        },
+        "ru": {
+          "input": "Вопросы, источники и контрпримеры.",
+          "output": "Обоснованные утверждения, модели и новая версия статьи."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Research and Theory",
+          "purpose": "Build and challenge the conceptual basis."
+        },
+        "ru": {
+          "label": "Исследования и теория",
+          "purpose": "Создавать и проверять теоретическую основу."
+        }
+      },
+      "execution_profile": "research",
+      "id": "research-theory",
+      "parent_id": "steward-concordloom",
+      "responsible_role": {
+        "en": "researcher",
+        "ru": "исследователь"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "citation-checks",
+          "primary-sources"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "schemas",
+        "graph-contracts",
+        "compatibility-matrix"
+      ],
+      "children": [
+        "define-artifact-semantics",
+        "design-graphs-policies",
+        "evolve-schemas",
+        "assure-compatibility"
+      ],
+      "contract": {
+        "en": {
+          "input": "Accepted theory and protocol requirements.",
+          "output": "Schemas, invariants and compatibility rules."
+        },
+        "ru": {
+          "input": "Принятая теория и требования к протоколу.",
+          "output": "Схемы, инварианты и правила совместимости."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Protocol Design",
+          "purpose": "Define portable machine semantics and compatibility."
+        },
+        "ru": {
+          "label": "Проектирование протокола",
+          "purpose": "Задавать переносимые машинные правила и совместимость."
+        }
+      },
+      "execution_profile": "protocol",
+      "id": "protocol-design",
+      "parent_id": "steward-concordloom",
+      "responsible_role": {
+        "en": "protocol designer",
+        "ru": "проектировщик протокола"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "json-schema",
+          "repository",
+          "tests"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "source",
+        "tests",
+        "cli",
+        "plugin"
+      ],
+      "children": [
+        "maintain-compiler-core",
+        "plan-task-route",
+        "operate-run-lifecycle",
+        "maintain-cli",
+        "maintain-automation"
+      ],
+      "contract": {
+        "en": {
+          "input": "Accepted protocol semantics.",
+          "output": "Tested compiler, runner, CLI and automation."
+        },
+        "ru": {
+          "input": "Принятые правила протокола.",
+          "output": "Проверенные компилятор, runner, CLI и автоматизация."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Runtime and Tooling",
+          "purpose": "Make the protocol executable and practical."
+        },
+        "ru": {
+          "label": "Исполнение и инструменты",
+          "purpose": "Делать протокол исполнимым и удобным."
+        }
+      },
+      "execution_profile": "engineering",
+      "id": "runtime-tooling",
+      "parent_id": "steward-concordloom",
+      "responsible_role": {
+        "en": "implementer",
+        "ru": "разработчик"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "shell",
+          "tests"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "threat-model",
+        "tests",
+        "review-receipts"
+      ],
+      "children": [
+        "model-threats",
+        "validate-invariants",
+        "review-candidate",
+        "assure-release"
+      ],
+      "contract": {
+        "en": {
+          "input": "A pinned claim, candidate or release.",
+          "output": "An independent verdict with evidence."
+        },
+        "ru": {
+          "input": "Зафиксированное утверждение, результат или выпуск.",
+          "output": "Независимый вердикт с данными проверки."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Trust and Assurance",
+          "purpose": "Independently challenge claims, authority and candidates."
+        },
+        "ru": {
+          "label": "Доверие и проверка",
+          "purpose": "Независимо проверять утверждения, полномочия и результаты."
+        }
+      },
+      "execution_profile": "assurance",
+      "id": "trust-assurance",
+      "parent_id": "steward-concordloom",
+      "responsible_role": {
+        "en": "independent reviewer",
+        "ru": "независимый проверяющий"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "test-runner",
+          "validators"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "bindings",
+        "adapters",
+        "fixtures"
+      ],
+      "children": [
+        "maintain-self-binding",
+        "maintain-evidence-adapters",
+        "maintain-execution-adapters",
+        "maintain-reference-bindings"
+      ],
+      "contract": {
+        "en": {
+          "input": "Kernel contracts and environment needs.",
+          "output": "Tested bindings and adapter contracts."
+        },
+        "ru": {
+          "input": "Контракты ядра и требования среды.",
+          "output": "Проверенные конфигурации циклов и адаптеры."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Bindings and Adapters",
+          "purpose": "Connect the neutral kernel to real domains and environments."
+        },
+        "ru": {
+          "label": "Привязки и адаптеры",
+          "purpose": "Соединять нейтральное ядро с предметными областями и средами."
+        }
+      },
+      "execution_profile": "integration",
+      "id": "bindings-adapters",
+      "parent_id": "steward-concordloom",
+      "responsible_role": {
+        "en": "integration author",
+        "ru": "автор интеграции"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "contract-fixtures"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "markdown",
+        "glossary",
+        "site",
+        "atlas"
+      ],
+      "children": [
+        "design-information-architecture",
+        "author-documentation",
+        "localize-content",
+        "review-comprehension",
+        "design-site-experience",
+        "project-atlas"
+      ],
+      "contract": {
+        "en": {
+          "input": "Accepted facts and reader tasks.",
+          "output": "Clear bilingual documentation and interfaces."
+        },
+        "ru": {
+          "input": "Принятые факты и задачи читателя.",
+          "output": "Понятная двуязычная документация и интерфейсы."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Knowledge and Experience",
+          "purpose": "Make the system understandable and navigable."
+        },
+        "ru": {
+          "label": "Знания и опыт",
+          "purpose": "Делать систему понятной и удобной для изучения."
+        }
+      },
+      "execution_profile": "editorial",
+      "id": "knowledge-experience",
+      "parent_id": "steward-concordloom",
+      "responsible_role": {
+        "en": "editor",
+        "ru": "редактор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "low",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "link-check",
+          "terminology-check"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "release-manifest",
+        "checksums",
+        "deployment-receipts"
+      ],
+      "children": [
+        "plan-release",
+        "distribute-package",
+        "publish-site",
+        "maintain-repository-presence",
+        "publish-source-change",
+        "accept-source-change",
+        "maintain-organization-presence",
+        "verify-live-release"
+      ],
+      "contract": {
+        "en": {
+          "input": "A verified candidate and publication authority.",
+          "output": "Published bytes, external state and provenance."
+        },
+        "ru": {
+          "input": "Проверенная версия и право на публикацию.",
+          "output": "Опубликованные файлы, внешнее состояние и отчёт о происхождении."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Release and Distribution",
+          "purpose": "Deliver verified bytes and authorized external effects."
+        },
+        "ru": {
+          "label": "Выпуск и распространение",
+          "purpose": "Публиковать проверенные файлы и разрешённые внешние изменения."
+        }
+      },
+      "execution_profile": "release",
+      "id": "release-distribution",
+      "parent_id": "steward-concordloom",
+      "responsible_role": {
+        "en": "publisher",
+        "ru": "публикатор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "pages"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "onboarding-studies",
+        "case-reports",
+        "signals"
+      ],
+      "children": [
+        "observe-onboarding",
+        "validate-use-cases",
+        "collect-friction",
+        "synthesize-feedback"
+      ],
+      "contract": {
+        "en": {
+          "input": "A released system and real usage.",
+          "output": "Classified friction and normalized signals."
+        },
+        "ru": {
+          "input": "Опубликованная система и реальное использование.",
+          "output": "Разобранные проблемы и нормализованные сигналы."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Adoption and Feedback",
+          "purpose": "Test usefulness in real work and collect friction."
+        },
+        "ru": {
+          "label": "Применение и обратная связь",
+          "purpose": "Проверять пользу в реальной работе и собирать проблемы."
+        }
+      },
+      "execution_profile": "insight",
+      "id": "adoption-feedback",
+      "parent_id": "steward-concordloom",
+      "responsible_role": {
+        "en": "adoption analyst",
+        "ru": "аналитик применения"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-luna",
+        "model_provider": "openai",
+        "reasoning": "low",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "interviews",
+          "issues"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "signals",
+        "proposal",
+        "review",
+        "activation-receipt"
+      ],
+      "children": [
+        "collect-evolution-signals",
+        "propose-successor",
+        "review-successor",
+        "activate-successor",
+        "observe-migration"
+      ],
+      "contract": {
+        "en": {
+          "input": "Repeated signals pinned to the active binding.",
+          "output": "A rejected proposal or separately activated successor."
+        },
+        "ru": {
+          "input": "Повторяющиеся сигналы, привязанные к действующей версии.",
+          "output": "Отклонённое предложение или отдельно включённая новая версия."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "System Evolution",
+          "purpose": "Propose, review and explicitly activate successor bindings."
+        },
+        "ru": {
+          "label": "Эволюция системы",
+          "purpose": "Предлагать, проверять и отдельно включать новые версии правил."
+        }
+      },
+      "execution_profile": "evolution-analysis",
+      "id": "system-evolution",
+      "parent_id": "steward-concordloom",
+      "responsible_role": {
+        "en": "evolution steward",
+        "ru": "ответственный за эволюцию"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "cas-validator",
+          "digest-validator"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "interviews",
+        "need-records"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "User observations and unresolved work.",
+          "output": "Prioritized problem statements."
+        },
+        "ru": {
+          "input": "Наблюдения за пользователями и нерешённые задачи.",
+          "output": "Упорядоченные формулировки проблем."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Discover Needs",
+          "purpose": "Find valuable problems without prescribing a solution."
+        },
+        "ru": {
+          "label": "Выявлять потребности",
+          "purpose": "Находить важные проблемы, не навязывая решение."
+        }
+      },
+      "execution_profile": "strategy",
+      "id": "discover-product-needs",
+      "parent_id": "product-direction",
+      "responsible_role": {
+        "en": "product researcher",
+        "ru": "исследователь продукта"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [
+          {
+            "id": "design-project-loops",
+            "version": "0.1.0"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "decision-log",
+          "repository"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "charter",
+        "cut-list"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Features and domain assumptions under consideration.",
+          "output": "A boundary verdict and cut list."
+        },
+        "ru": {
+          "input": "Предлагаемые функции и предметные допущения.",
+          "output": "Решение о границе продукта и список исключений."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Maintain Product Boundary",
+          "purpose": "Keep domain assumptions out of the universal kernel."
+        },
+        "ru": {
+          "label": "Удерживать границы продукта",
+          "purpose": "Не допускать предметные допущения в универсальное ядро."
+        }
+      },
+      "execution_profile": "strategy",
+      "id": "maintain-product-boundary",
+      "parent_id": "product-direction",
+      "responsible_role": {
+        "en": "product steward",
+        "ru": "ответственный за продукт"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "decision-log",
+          "repository"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "decision-record"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Alternatives, evidence and consequences.",
+          "output": "One recorded product decision."
+        },
+        "ru": {
+          "input": "Варианты, данные и последствия.",
+          "output": "Одно зафиксированное продуктовое решение."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Make Product Decisions",
+          "purpose": "Resolve consequential product choices."
+        },
+        "ru": {
+          "label": "Принимать продуктовые решения",
+          "purpose": "Принимать важные продуктовые решения."
+        }
+      },
+      "execution_profile": "strategy",
+      "id": "decide-product",
+      "parent_id": "product-direction",
+      "responsible_role": {
+        "en": "operator",
+        "ru": "оператор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "human-decision",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "decision-log",
+          "repository"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "roadmap",
+        "outcome-cards"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Accepted decisions and constraints.",
+          "output": "An ordered set of bounded outcomes."
+        },
+        "ru": {
+          "input": "Принятые решения и ограничения.",
+          "output": "Упорядоченный набор ограниченных результатов."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Prioritize Roadmap",
+          "purpose": "Order bounded outcomes under real constraints."
+        },
+        "ru": {
+          "label": "Определять приоритеты",
+          "purpose": "Упорядочивать ограниченные результаты с учётом ограничений."
+        }
+      },
+      "execution_profile": "strategy",
+      "id": "prioritize-roadmap",
+      "parent_id": "product-direction",
+      "responsible_role": {
+        "en": "product steward",
+        "ru": "ответственный за продукт"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "decision-log",
+          "repository"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "sources",
+        "provenance"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Research questions and primary sources.",
+          "output": "An attributable observation corpus."
+        },
+        "ru": {
+          "input": "Исследовательские вопросы и первичные источники.",
+          "output": "Корпус наблюдений с указанием источников."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Observe the Landscape",
+          "purpose": "Collect attributable primary evidence."
+        },
+        "ru": {
+          "label": "Исследовать ландшафт",
+          "purpose": "Собирать проверяемые первичные источники."
+        }
+      },
+      "execution_profile": "research",
+      "id": "observe-landscape",
+      "parent_id": "research-theory",
+      "responsible_role": {
+        "en": "researcher",
+        "ru": "исследователь"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-luna",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "citation-checks",
+          "primary-sources"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "definitions",
+        "claim-ledger"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Observations and candidate claims.",
+          "output": "Definitions, invariants and falsifiable propositions."
+        },
+        "ru": {
+          "input": "Наблюдения и проверяемые идеи.",
+          "output": "Определения, инварианты и опровержимые утверждения."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Formalize Theory",
+          "purpose": "Turn claims into definitions and falsifiable propositions."
+        },
+        "ru": {
+          "label": "Формализовать теорию",
+          "purpose": "Превращать идеи в определения и проверяемые утверждения."
+        }
+      },
+      "execution_profile": "research",
+      "id": "formalize-theory",
+      "parent_id": "research-theory",
+      "responsible_role": {
+        "en": "theorist",
+        "ru": "теоретик"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "citation-checks",
+          "primary-sources"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "case-matrix",
+        "counterexamples"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A formal model and cases from different domains.",
+          "output": "Counterexamples and an applicability report."
+        },
+        "ru": {
+          "input": "Формальная модель и случаи из разных областей.",
+          "output": "Контрпримеры и отчёт о применимости."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Test Applicability",
+          "purpose": "Search for counterexamples across domains."
+        },
+        "ru": {
+          "label": "Проверять применимость",
+          "purpose": "Искать контрпримеры в разных предметных областях."
+        }
+      },
+      "execution_profile": "research",
+      "id": "test-applicability",
+      "parent_id": "research-theory",
+      "responsible_role": {
+        "en": "independent researcher",
+        "ru": "независимый исследователь"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "citation-checks",
+          "primary-sources"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "article-en",
+        "article-ru",
+        "citations"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Accepted claims, citations and reader findings.",
+          "output": "Matched English and Russian article candidates."
+        },
+        "ru": {
+          "input": "Принятые утверждения, ссылки и замечания читателей.",
+          "output": "Согласованные английская и русская версии статьи."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Maintain the Article",
+          "purpose": "Keep the long-form theory accurate and readable."
+        },
+        "ru": {
+          "label": "Развивать статью",
+          "purpose": "Поддерживать точность и понятность научного текста."
+        }
+      },
+      "execution_profile": "research",
+      "id": "maintain-article",
+      "parent_id": "research-theory",
+      "responsible_role": {
+        "en": "research editor",
+        "ru": "научный редактор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "citation-checks",
+          "primary-sources"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "schemas",
+        "vocabulary"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Accepted concepts and fact-state requirements.",
+          "output": "Canonical artifact types and vocabulary."
+        },
+        "ru": {
+          "input": "Принятые понятия и требования к состояниям факта.",
+          "output": "Канонические типы артефактов и словарь."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Define Artifact Semantics",
+          "purpose": "Define fact states and artifact relationships."
+        },
+        "ru": {
+          "label": "Определять семантику артефактов",
+          "purpose": "Определять состояния фактов и связи артефактов."
+        }
+      },
+      "execution_profile": "protocol",
+      "id": "define-artifact-semantics",
+      "parent_id": "protocol-design",
+      "responsible_role": {
+        "en": "protocol designer",
+        "ru": "проектировщик протокола"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [
+          {
+            "id": "design-project-loops",
+            "version": "0.1.0"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "json-schema",
+          "repository",
+          "tests"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "registry-schema",
+        "policy-schema"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Containment, flow, scope and authority needs.",
+          "output": "Graph and policy contracts."
+        },
+        "ru": {
+          "input": "Требования к вложенности, переходам, действиям и полномочиям.",
+          "output": "Контракты графов и правил."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Design Graphs and Policies",
+          "purpose": "Define containment, flow, scope and authority."
+        },
+        "ru": {
+          "label": "Проектировать графы и правила",
+          "purpose": "Задавать вложенность, переходы, область действий и полномочия."
+        }
+      },
+      "execution_profile": "protocol",
+      "id": "design-graphs-policies",
+      "parent_id": "protocol-design",
+      "responsible_role": {
+        "en": "protocol designer",
+        "ru": "проектировщик протокола"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [
+          {
+            "id": "design-project-loops",
+            "version": "0.1.0"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "json-schema",
+          "repository",
+          "tests"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "schemas",
+        "migration-rules"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "An accepted protocol change.",
+          "output": "Successor schemas and migration rules."
+        },
+        "ru": {
+          "input": "Принятое изменение протокола.",
+          "output": "Новые схемы и правила перехода."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Evolve Schemas",
+          "purpose": "Introduce compatible protocol changes."
+        },
+        "ru": {
+          "label": "Развивать схемы",
+          "purpose": "Вносить совместимые изменения протокола."
+        }
+      },
+      "execution_profile": "protocol",
+      "id": "evolve-schemas",
+      "parent_id": "protocol-design",
+      "responsible_role": {
+        "en": "schema maintainer",
+        "ru": "ответственный за схемы"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [
+          {
+            "id": "design-project-loops",
+            "version": "0.1.0"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "json-schema",
+          "repository",
+          "tests"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "fixtures",
+        "compatibility-matrix"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Old and new artifact versions.",
+          "output": "A compatibility verdict backed by fixtures."
+        },
+        "ru": {
+          "input": "Старые и новые версии артефактов.",
+          "output": "Вердикт о совместимости, подтверждённый примерами."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Assure Compatibility",
+          "purpose": "Prove how older artifacts are handled."
+        },
+        "ru": {
+          "label": "Проверять совместимость",
+          "purpose": "Доказывать, как обрабатываются старые артефакты."
+        }
+      },
+      "execution_profile": "assurance",
+      "id": "assure-compatibility",
+      "parent_id": "protocol-design",
+      "responsible_role": {
+        "en": "protocol reviewer",
+        "ru": "проверяющий протокола"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "test-runner",
+          "validators"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "compiler",
+        "binding",
+        "digest-tests"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Accepted graph, design and policy.",
+          "output": "A deterministic content-addressed binding."
+        },
+        "ru": {
+          "input": "Принятые граф, дизайн и правила.",
+          "output": "Детерминированная конфигурация с точным хешем."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Maintain Compiler Core",
+          "purpose": "Compile accepted inputs deterministically."
+        },
+        "ru": {
+          "label": "Развивать компилятор",
+          "purpose": "Детерминированно собирать принятые входные данные."
+        }
+      },
+      "execution_profile": "engineering",
+      "id": "maintain-compiler-core",
+      "parent_id": "runtime-tooling",
+      "responsible_role": {
+        "en": "implementer",
+        "ru": "разработчик"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "shell",
+          "tests"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "task-request",
+        "candidate-manifest",
+        "route-preview"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A task request, active binding, accepted registry and exact candidate.",
+          "output": "A candidate-bound proposed route that cannot execute or authorize work."
+        },
+        "ru": {
+          "input": "Запрос, действующая версия правил, принятая карта циклов и точная версия файлов.",
+          "output": "Предлагаемый путь, привязанный к точной версии файлов и не способный запустить или разрешить работу."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Preview Task Route",
+          "purpose": "Show the complete accepted work path before a run is authorized."
+        },
+        "ru": {
+          "label": "Показать путь задачи",
+          "purpose": "Показывать весь принятый путь работы до разрешения запуска."
+        }
+      },
+      "execution_profile": "route-planning",
+      "id": "plan-task-route",
+      "parent_id": "runtime-tooling",
+      "responsible_role": {
+        "en": "orchestrator",
+        "ru": "координатор"
+      },
+      "route_contract": {
+        "authority": {
+          "accept_capability": "accept-parent",
+          "escalate_capability": "escalate",
+          "execute_capability": "route-run"
+        },
+        "candidate_effects": {
+          "external_mutations": [],
+          "network": "none",
+          "repository_candidate_write_paths": []
+        },
+        "preview_artifact": {
+          "area_path_separated": true,
+          "candidate_bound": true,
+          "confirmation_required": true,
+          "execution_allowed": false,
+          "execution_route_source": "accepted-local-control-flow",
+          "immutable": true,
+          "run_card_creation": "after-explicit-confirmation-only",
+          "state": "proposed",
+          "verification_steps_included": true
+        },
+        "routes": {
+          "exact_route_compiler": {
+            "mcp_servers": [],
+            "model": "none",
+            "model_provider": "",
+            "reasoning": "deterministic",
+            "required": true,
+            "resources": [],
+            "skills": [],
+            "subagent_identities": [],
+            "tool_capabilities": []
+          },
+          "semantic_target_selection": {
+            "fallback": "require-explicit-target-loop",
+            "mcp_servers": [],
+            "model": "gpt-5.6-luna",
+            "model_provider": "openai",
+            "optional": true,
+            "reasoning": "low",
+            "resources": [],
+            "skills": [
+              {
+                "id": "design-project-loops",
+                "version": "0.1.0"
+              }
+            ],
+            "subagent_identities": [],
+            "tool_capabilities": []
+          }
+        }
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "route-compiler"
+        ]
+      },
+      "route_variants": {
+        "semantic_target_selection": {
+          "fallback": "require-explicit-target-loop",
+          "mcp_servers": [],
+          "model": "gpt-5.6-luna",
+          "model_provider": "openai",
+          "optional": true,
+          "reasoning": "low",
+          "resources": [],
+          "skills": [
+            {
+              "id": "design-project-loops",
+              "version": "0.1.0"
+            }
+          ],
+          "subagent_identities": [],
+          "tool_capabilities": []
+        }
+      }
+    },
+    {
+      "artifacts": [
+        "run-card",
+        "attempts",
+        "evidence",
+        "receipt"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "An authorized card and exact candidate.",
+          "output": "Attempts, evidence and a completion receipt."
+        },
+        "ru": {
+          "input": "Разрешённая карточка запуска и точная версия результата.",
+          "output": "Попытки, данные проверки и отчёт о завершении."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Operate Run Lifecycle",
+          "purpose": "Guard scope, collect evidence and complete runs."
+        },
+        "ru": {
+          "label": "Исполнять жизненный цикл запуска",
+          "purpose": "Проверять область действий, собирать данные и завершать запуски."
+        }
+      },
+      "execution_profile": "engineering",
+      "id": "operate-run-lifecycle",
+      "parent_id": "runtime-tooling",
+      "responsible_role": {
+        "en": "executor",
+        "ru": "исполнитель"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [
+          {
+            "id": "design-project-loops",
+            "version": "0.1.0"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "shell",
+          "tests"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "cli",
+        "help",
+        "tests"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Kernel operations and user tasks.",
+          "output": "Safe commands, help and contract tests."
+        },
+        "ru": {
+          "input": "Операции ядра и задачи пользователя.",
+          "output": "Безопасные команды, справка и контрактные тесты."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Maintain CLI",
+          "purpose": "Expose kernel operations safely."
+        },
+        "ru": {
+          "label": "Развивать CLI",
+          "purpose": "Безопасно предоставлять операции ядра."
+        }
+      },
+      "execution_profile": "engineering",
+      "id": "maintain-cli",
+      "parent_id": "runtime-tooling",
+      "responsible_role": {
+        "en": "implementer",
+        "ru": "разработчик"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "shell",
+          "tests"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "plugin",
+        "skills",
+        "harness"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Explicit automation contracts.",
+          "output": "A bounded plugin, skill or harness."
+        },
+        "ru": {
+          "input": "Явные контракты автоматизации.",
+          "output": "Ограниченный плагин, скилл или набор проверок."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Maintain Automation",
+          "purpose": "Integrate agents without hidden authority."
+        },
+        "ru": {
+          "label": "Развивать автоматизацию",
+          "purpose": "Подключать агентов без скрытых полномочий."
+        }
+      },
+      "execution_profile": "engineering",
+      "id": "maintain-automation",
+      "parent_id": "runtime-tooling",
+      "responsible_role": {
+        "en": "automation author",
+        "ru": "автор автоматизации"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "shell",
+          "tests"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "threat-model"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "System model, assets and trust assumptions.",
+          "output": "Threats, mitigations and open risks."
+        },
+        "ru": {
+          "input": "Модель системы, активы и допущения о доверии.",
+          "output": "Угрозы, меры защиты и открытые риски."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Model Threats",
+          "purpose": "Find authority, provenance and isolation failures."
+        },
+        "ru": {
+          "label": "Моделировать угрозы",
+          "purpose": "Находить ошибки полномочий, происхождения и изоляции."
+        }
+      },
+      "execution_profile": "assurance",
+      "id": "model-threats",
+      "parent_id": "trust-assurance",
+      "responsible_role": {
+        "en": "security reviewer",
+        "ru": "проверяющий безопасность"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "test-runner",
+          "validators"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "tests",
+        "test-evidence"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Implementation and declared invariants.",
+          "output": "Deterministic and adversarial test evidence."
+        },
+        "ru": {
+          "input": "Реализация и заявленные инварианты.",
+          "output": "Данные детерминированных и атакующих тестов."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Validate Invariants",
+          "purpose": "Exercise graph, scope, digest and authority rules."
+        },
+        "ru": {
+          "label": "Проверять инварианты",
+          "purpose": "Проверять правила графа, области действий, хешей и полномочий."
+        }
+      },
+      "execution_profile": "assurance",
+      "id": "validate-invariants",
+      "parent_id": "trust-assurance",
+      "responsible_role": {
+        "en": "test author",
+        "ru": "автор проверок"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "test-runner",
+          "validators"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "candidate-manifest",
+        "review-receipt"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "An exact candidate manifest and evidence contract.",
+          "output": "A pass, fail or indeterminate review receipt."
+        },
+        "ru": {
+          "input": "Точное описание версии и требования к проверке.",
+          "output": "Отчёт с результатом: пройдено, ошибка или недостаточно данных."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Review Candidate",
+          "purpose": "Independently judge one pinned candidate."
+        },
+        "ru": {
+          "label": "Проверять результат",
+          "purpose": "Независимо оценивать одну точно зафиксированную версию результата."
+        }
+      },
+      "execution_profile": "assurance",
+      "id": "review-candidate",
+      "parent_id": "trust-assurance",
+      "responsible_role": {
+        "en": "independent reviewer",
+        "ru": "независимый проверяющий"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "test-runner",
+          "validators"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "release-evidence",
+        "readiness-verdict"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A verified candidate and publication route.",
+          "output": "A release-readiness verdict."
+        },
+        "ru": {
+          "input": "Проверенная версия и маршрут публикации.",
+          "output": "Вердикт о готовности выпуска."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Assure Release",
+          "purpose": "Confirm verified bytes match the publication plan."
+        },
+        "ru": {
+          "label": "Проверять готовность выпуска",
+          "purpose": "Подтверждать соответствие проверенных файлов плану публикации."
+        }
+      },
+      "execution_profile": "assurance",
+      "id": "assure-release",
+      "parent_id": "trust-assurance",
+      "responsible_role": {
+        "en": "release reviewer",
+        "ru": "проверяющий выпуска"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "test-runner",
+          "validators"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "registry",
+        "policy",
+        "binding",
+        "catalog"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "The accepted development process of this repository.",
+          "output": "A new self-binding proposal and catalog entry."
+        },
+        "ru": {
+          "input": "Принятый процесс разработки этого репозитория.",
+          "output": "Предложение новых правил самоизменения и запись каталога."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Maintain Self-Binding",
+          "purpose": "Describe how Concord Loom governs its own changes."
+        },
+        "ru": {
+          "label": "Развивать правила самоизменения",
+          "purpose": "Описывать правила, по которым Concord Loom меняет сам себя."
+        }
+      },
+      "execution_profile": "integration",
+      "id": "maintain-self-binding",
+      "parent_id": "bindings-adapters",
+      "responsible_role": {
+        "en": "binding author",
+        "ru": "автор конфигурации"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [
+          {
+            "id": "design-project-loops",
+            "version": "0.1.0"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "contract-fixtures"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "adapter",
+        "provenance-fixtures"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "An environment and observation contract.",
+          "output": "Observed facts with provenance."
+        },
+        "ru": {
+          "input": "Среда и контракт наблюдения.",
+          "output": "Наблюдаемые факты с указанием источника."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Maintain Evidence Adapters",
+          "purpose": "Observe environments without making them universal."
+        },
+        "ru": {
+          "label": "Развивать адаптеры наблюдения",
+          "purpose": "Наблюдать среды, не превращая их особенности в общие правила."
+        }
+      },
+      "execution_profile": "integration",
+      "id": "maintain-evidence-adapters",
+      "parent_id": "bindings-adapters",
+      "responsible_role": {
+        "en": "integration author",
+        "ru": "автор интеграции"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "contract-fixtures"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "adapter",
+        "effect-receipt"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A scoped grant and environment contract.",
+          "output": "An external effect and exact receipt."
+        },
+        "ru": {
+          "input": "Ограниченное разрешение и контракт среды.",
+          "output": "Внешнее изменение и точный отчёт."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Maintain Execution Adapters",
+          "purpose": "Perform explicitly scoped environment effects."
+        },
+        "ru": {
+          "label": "Развивать адаптеры исполнения",
+          "purpose": "Выполнять только явно разрешённые изменения среды."
+        }
+      },
+      "execution_profile": "integration",
+      "id": "maintain-execution-adapters",
+      "parent_id": "bindings-adapters",
+      "responsible_role": {
+        "en": "integration author",
+        "ru": "автор интеграции"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "contract-fixtures"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "example",
+        "fixtures"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A domain model and kernel grammar.",
+          "output": "A tested example binding."
+        },
+        "ru": {
+          "input": "Модель предметной области и общая схема ядра.",
+          "output": "Проверенная примерная конфигурация циклов."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Maintain Reference Bindings",
+          "purpose": "Demonstrate the grammar in real domains."
+        },
+        "ru": {
+          "label": "Развивать эталонные конфигурации",
+          "purpose": "Показывать применение общей схемы в реальных областях."
+        }
+      },
+      "execution_profile": "integration",
+      "id": "maintain-reference-bindings",
+      "parent_id": "bindings-adapters",
+      "responsible_role": {
+        "en": "domain author",
+        "ru": "эксперт предметной области"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [
+          {
+            "id": "design-project-loops",
+            "version": "0.1.0"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "contract-fixtures"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "content-map",
+        "route-map"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Content inventory and reader tasks.",
+          "output": "A route, navigation and section map."
+        },
+        "ru": {
+          "input": "Список материалов и задачи читателя.",
+          "output": "Карта маршрутов, навигации и разделов."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Design Information Architecture",
+          "purpose": "Keep content discoverable by task and concept."
+        },
+        "ru": {
+          "label": "Проектировать структуру знаний",
+          "purpose": "Делать материалы доступными по задачам и понятиям."
+        }
+      },
+      "execution_profile": "editorial",
+      "id": "design-information-architecture",
+      "parent_id": "knowledge-experience",
+      "responsible_role": {
+        "en": "information architect",
+        "ru": "архитектор информации"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "low",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "link-check",
+          "terminology-check"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "markdown",
+        "examples"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Accepted behavior and concrete user tasks.",
+          "output": "Direct source documentation with examples."
+        },
+        "ru": {
+          "input": "Принятое поведение и конкретные задачи пользователя.",
+          "output": "Прямая исходная документация с примерами."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Author Documentation",
+          "purpose": "Explain accepted behavior in direct human language."
+        },
+        "ru": {
+          "label": "Писать документацию",
+          "purpose": "Объяснять принятое поведение прямым человеческим языком."
+        }
+      },
+      "execution_profile": "editorial",
+      "id": "author-documentation",
+      "parent_id": "knowledge-experience",
+      "responsible_role": {
+        "en": "technical writer",
+        "ru": "технический писатель"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "low",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "link-check",
+          "terminology-check"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "locale-peers",
+        "glossary"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Source text, glossary and semantic section map.",
+          "output": "Equivalent English and Russian peers."
+        },
+        "ru": {
+          "input": "Исходный текст, словарь и смысловая карта разделов.",
+          "output": "Равнозначные английская и русская версии."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Localize Content",
+          "purpose": "Preserve meaning across English and Russian."
+        },
+        "ru": {
+          "label": "Локализовать материалы",
+          "purpose": "Сохранять смысл в английской и русской версиях."
+        }
+      },
+      "execution_profile": "localization",
+      "id": "localize-content",
+      "parent_id": "knowledge-experience",
+      "responsible_role": {
+        "en": "bilingual editor",
+        "ru": "двуязычный редактор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "comprehension-check",
+          "glossary",
+          "parity-check"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "terminology-findings",
+        "task-answers",
+        "review-receipt"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A text candidate and representative reader tasks.",
+          "output": "A comprehension verdict and actionable findings."
+        },
+        "ru": {
+          "input": "Версия текста и типовые задачи читателя.",
+          "output": "Вердикт о понятности и конкретные замечания."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Review Human Comprehension",
+          "purpose": "Catch jargon, literal translation and empty prose."
+        },
+        "ru": {
+          "label": "Проверять понятность",
+          "purpose": "Находить жаргон, буквальный перевод и бессодержательный текст."
+        }
+      },
+      "execution_profile": "comprehension",
+      "id": "review-comprehension",
+      "parent_id": "knowledge-experience",
+      "responsible_role": {
+        "en": "independent language reviewer",
+        "ru": "независимый редактор понятности"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "task-based-reading-test"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "visual-contract",
+        "frontend-workshop",
+        "site",
+        "atlas",
+        "browser-report",
+        "visual-review"
+      ],
+      "children": [
+        "define-frontend-concept",
+        "accept-frontend-concept",
+        "maintain-component-workshop",
+        "implement-frontend-surface",
+        "maintain-frontend-verification",
+        "verify-frontend-candidate",
+        "critique-frontend-experience"
+      ],
+      "contract": {
+        "en": {
+          "input": "Information architecture, content and accessibility needs.",
+          "output": "A distinctive checked static interface."
+        },
+        "ru": {
+          "input": "Структура знаний, материалы и требования доступности.",
+          "output": "Выразительный проверенный статический интерфейс."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Design Site Experience",
+          "purpose": "Turn knowledge into a distinctive accessible interface."
+        },
+        "ru": {
+          "label": "Проектировать сайт",
+          "purpose": "Превращать знания в выразительный и доступный интерфейс."
+        }
+      },
+      "execution_profile": "experience",
+      "id": "design-site-experience",
+      "parent_id": "knowledge-experience",
+      "responsible_role": {
+        "en": "experience designer",
+        "ru": "дизайнер интерфейса"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "route-child-receipts"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "atlas-json",
+        "static-ui"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "The active catalog, binding and recorded runs.",
+          "output": "A deterministic read-only Atlas projection."
+        },
+        "ru": {
+          "input": "Действующий каталог, конфигурация и записанные запуски.",
+          "output": "Детерминированная проекция Atlas только для чтения."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Project the Atlas",
+          "purpose": "Render accepted facts without becoming their source."
+        },
+        "ru": {
+          "label": "Строить Atlas",
+          "purpose": "Показывать принятые факты, не становясь их источником."
+        }
+      },
+      "execution_profile": "experience",
+      "id": "project-atlas",
+      "parent_id": "knowledge-experience",
+      "responsible_role": {
+        "en": "projection builder",
+        "ru": "разработчик проекции"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "accessibility-checks",
+          "browser"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "candidate-manifest",
+        "release-card"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A verified change and release constraints.",
+          "output": "An exact candidate, version, route and authority plan."
+        },
+        "ru": {
+          "input": "Проверенное изменение и ограничения выпуска.",
+          "output": "Точный план версии, маршрута и полномочий."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Plan Release",
+          "purpose": "Pin the candidate, route and authority."
+        },
+        "ru": {
+          "label": "Планировать выпуск",
+          "purpose": "Фиксировать результат, маршрут и полномочия."
+        }
+      },
+      "execution_profile": "release",
+      "id": "plan-release",
+      "parent_id": "release-distribution",
+      "responsible_role": {
+        "en": "release manager",
+        "ru": "ответственный за выпуск"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "pages"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "package",
+        "checksum",
+        "registry-receipt"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "An authorized immutable release.",
+          "output": "A package, checksum and registry receipt."
+        },
+        "ru": {
+          "input": "Разрешённый неизменяемый выпуск.",
+          "output": "Пакет, контрольная сумма и отчёт реестра."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Distribute Package",
+          "purpose": "Publish immutable installable artifacts."
+        },
+        "ru": {
+          "label": "Публиковать пакет",
+          "purpose": "Публиковать неизменяемые устанавливаемые артефакты."
+        }
+      },
+      "execution_profile": "release",
+      "id": "distribute-package",
+      "parent_id": "release-distribution",
+      "responsible_role": {
+        "en": "publisher",
+        "ru": "публикатор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "pages"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "site-artifact",
+        "deployment-receipt"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A checked site artifact and Pages authority.",
+          "output": "A Pages deployment and provenance receipt."
+        },
+        "ru": {
+          "input": "Проверенный сайт и право публикации в Pages.",
+          "output": "Развёртывание Pages и отчёт о происхождении."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Publish Site",
+          "purpose": "Deploy exact checked static bytes."
+        },
+        "ru": {
+          "label": "Публиковать сайт",
+          "purpose": "Развёртывать точные проверенные файлы сайта."
+        }
+      },
+      "execution_profile": "release",
+      "id": "publish-site",
+      "parent_id": "release-distribution",
+      "responsible_role": {
+        "en": "publisher",
+        "ru": "публикатор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "pages"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "issue-backlog",
+        "label-taxonomy",
+        "mark",
+        "settings-receipt",
+        "social-preview"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Approved brand assets and repository metadata.",
+          "output": "A receipt for approved repository presence, issue backlog, and label changes."
+        },
+        "ru": {
+          "input": "Принятые материалы бренда и данные репозитория.",
+          "output": "Отчёт о принятых изменениях оформления репозитория, задач и меток."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Maintain Repository Presence",
+          "purpose": "Publish approved repository metadata, community surfaces, issues, and labels."
+        },
+        "ru": {
+          "label": "Оформлять репозиторий",
+          "purpose": "Публиковать принятые данные репозитория, общественные разделы, задачи и метки."
+        }
+      },
+      "execution_profile": "release",
+      "id": "maintain-repository-presence",
+      "parent_id": "release-distribution",
+      "responsible_role": {
+        "en": "publisher",
+        "ru": "публикатор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "pages"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "candidate-manifest",
+        "branch-ref",
+        "pull-request-receipt"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A pinned candidate, independent review and publication authority.",
+          "output": "A branch and pull request bound to the candidate digest."
+        },
+        "ru": {
+          "input": "Зафиксированная версия, независимая проверка и право публикации.",
+          "output": "Ветка и запрос на слияние, связанные с хешем версии."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Publish Source Change",
+          "purpose": "Publish a pinned candidate to a branch and pull request."
+        },
+        "ru": {
+          "label": "Публиковать изменение исходников",
+          "purpose": "Публиковать зафиксированную версию в ветку и запрос на слияние."
+        }
+      },
+      "execution_profile": "release",
+      "id": "publish-source-change",
+      "parent_id": "release-distribution",
+      "responsible_role": {
+        "en": "publisher",
+        "ru": "публикатор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "pages"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "review-receipt",
+        "operator-decision",
+        "merge-receipt"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A reviewed pull request and exact candidate digest.",
+          "output": "A separate operator merge receipt."
+        },
+        "ru": {
+          "input": "Проверенный запрос на слияние и точный хеш версии.",
+          "output": "Отдельное решение оператора и отчёт о слиянии."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Accept Source Change",
+          "purpose": "Merge an independently reviewed source change by a separate operator act."
+        },
+        "ru": {
+          "label": "Принимать изменение исходников",
+          "purpose": "Объединять независимо проверенное изменение отдельным решением оператора."
+        }
+      },
+      "execution_profile": "operator",
+      "id": "accept-source-change",
+      "parent_id": "release-distribution",
+      "responsible_role": {
+        "en": "operator only",
+        "ru": "только оператор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "human-decision",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "recorded-operator-decision"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "mark",
+        "organization-metadata",
+        "settings-receipt"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Approved organization identity and brand assets.",
+          "output": "An organization profile settings receipt."
+        },
+        "ru": {
+          "input": "Принятые данные организации и материалы бренда.",
+          "output": "Отчёт о настройках профиля организации."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Maintain Organization Presence",
+          "purpose": "Publish the organization mark, name and website."
+        },
+        "ru": {
+          "label": "Оформлять организацию",
+          "purpose": "Публиковать знак, название и сайт организации."
+        }
+      },
+      "execution_profile": "release",
+      "id": "maintain-organization-presence",
+      "parent_id": "release-distribution",
+      "responsible_role": {
+        "en": "publisher",
+        "ru": "публикатор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "pages"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "http-evidence",
+        "dom-evidence",
+        "screenshots"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A deployment URL and pinned site digest.",
+          "output": "HTTP, DOM and screenshot evidence."
+        },
+        "ru": {
+          "input": "Адрес развёртывания и точный хеш сайта.",
+          "output": "Данные HTTP, DOM и снимки экрана."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Verify Live Release",
+          "purpose": "Prove the public endpoint serves the pinned candidate."
+        },
+        "ru": {
+          "label": "Проверять опубликованный выпуск",
+          "purpose": "Доказывать, что публичный адрес отдаёт зафиксированную версию."
+        }
+      },
+      "execution_profile": "assurance",
+      "id": "verify-live-release",
+      "parent_id": "release-distribution",
+      "responsible_role": {
+        "en": "release verifier",
+        "ru": "проверяющий публикации"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "test-runner",
+          "validators"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "session-notes",
+        "task-outcomes"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A new user task and session.",
+          "output": "Friction points and task outcomes."
+        },
+        "ru": {
+          "input": "Задача нового пользователя и наблюдаемая сессия.",
+          "output": "Проблемные места и результаты задач."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Observe Onboarding",
+          "purpose": "Find where new users succeed or get stuck."
+        },
+        "ru": {
+          "label": "Наблюдать за первым использованием",
+          "purpose": "Находить места, где новые пользователи справляются или застревают."
+        }
+      },
+      "execution_profile": "insight",
+      "id": "observe-onboarding",
+      "parent_id": "adoption-feedback",
+      "responsible_role": {
+        "en": "adoption researcher",
+        "ru": "исследователь применения"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-luna",
+        "model_provider": "openai",
+        "reasoning": "low",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "interviews",
+          "issues"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "case-report",
+        "binding-needs"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A real case outside the self-binding.",
+          "output": "Utility evidence and reusable binding needs."
+        },
+        "ru": {
+          "input": "Реальный случай вне разработки самого Concord Loom.",
+          "output": "Данные о пользе и требования к повторному применению."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Validate Use Cases",
+          "purpose": "Test the framework outside its self-binding."
+        },
+        "ru": {
+          "label": "Проверять сценарии применения",
+          "purpose": "Проверять фреймворк за пределами его собственной разработки."
+        }
+      },
+      "execution_profile": "insight",
+      "id": "validate-use-cases",
+      "parent_id": "adoption-feedback",
+      "responsible_role": {
+        "en": "domain researcher",
+        "ru": "исследователь предметной области"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-luna",
+        "model_provider": "openai",
+        "reasoning": "low",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "interviews",
+          "issues"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "issues",
+        "support-signals"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Issues, support reports and confusion.",
+          "output": "Classified observations with provenance."
+        },
+        "ru": {
+          "input": "Ошибки, обращения и непонимание.",
+          "output": "Разобранные наблюдения с указанием источника."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Collect Friction",
+          "purpose": "Record defects and confusion with provenance."
+        },
+        "ru": {
+          "label": "Собирать проблемы",
+          "purpose": "Фиксировать ошибки и непонимание вместе с источником."
+        }
+      },
+      "execution_profile": "insight",
+      "id": "collect-friction",
+      "parent_id": "adoption-feedback",
+      "responsible_role": {
+        "en": "triager",
+        "ru": "ответственный за разбор сигналов"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-luna",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "interviews",
+          "issues"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "signal-set"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Repeated attributable observations.",
+          "output": "Normalized signals without automatic intent."
+        },
+        "ru": {
+          "input": "Повторяющиеся наблюдения с известным источником.",
+          "output": "Нормализованные сигналы без автоматического решения."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Synthesize Feedback",
+          "purpose": "Turn repeated observations into evidence, not intent."
+        },
+        "ru": {
+          "label": "Обобщать обратную связь",
+          "purpose": "Превращать повторяющиеся наблюдения в данные, а не решения."
+        }
+      },
+      "execution_profile": "insight",
+      "id": "synthesize-feedback",
+      "parent_id": "adoption-feedback",
+      "responsible_role": {
+        "en": "analyst",
+        "ru": "аналитик"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-luna",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "interviews",
+          "issues"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "normalized-signals",
+        "provenance"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Run, adoption and research evidence.",
+          "output": "Multiple signals pinned to the active binding."
+        },
+        "ru": {
+          "input": "Данные запусков, применения и исследований.",
+          "output": "Несколько сигналов, привязанных к действующей версии."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Collect Evolution Signals",
+          "purpose": "Pin multiple attributable signals to the active binding."
+        },
+        "ru": {
+          "label": "Собирать сигналы эволюции",
+          "purpose": "Привязывать несколько проверяемых сигналов к действующей версии."
+        }
+      },
+      "execution_profile": "evolution-analysis",
+      "id": "collect-evolution-signals",
+      "parent_id": "system-evolution",
+      "responsible_role": {
+        "en": "evolution analyst",
+        "ru": "аналитик эволюции"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-luna",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [
+          {
+            "id": "design-project-loops",
+            "version": "0.1.0"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "cas-validator",
+          "digest-validator"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "evolution-proposal"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "The active binding, pinned signals and CAS preconditions.",
+          "output": "A non-activating exact evolution proposal."
+        },
+        "ru": {
+          "input": "Действующая версия, сигналы и условия сравнения.",
+          "output": "Точное предложение новой версии без права включения."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Propose Successor",
+          "purpose": "Describe exact bounded changes without granting authority."
+        },
+        "ru": {
+          "label": "Предлагать новую версию",
+          "purpose": "Описывать точные изменения, не выдавая им полномочий."
+        }
+      },
+      "execution_profile": "evolution-proposal",
+      "id": "propose-successor",
+      "parent_id": "system-evolution",
+      "responsible_role": {
+        "en": "evolution proposer",
+        "ru": "автор предложения"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [
+          {
+            "id": "design-project-loops",
+            "version": "0.1.0"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "cas-validator",
+          "digest-validator"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "review",
+        "recommendation"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A proposal and reproduced successor artifacts.",
+          "output": "An independent recommendation with evidence, not an evolution decision."
+        },
+        "ru": {
+          "input": "Предложение и воспроизведённые артефакты новой версии.",
+          "output": "Независимая рекомендация с доказательствами, а не решение об эволюции."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Review Successor",
+          "purpose": "Independently verify need, exactness and boundaries."
+        },
+        "ru": {
+          "label": "Проверять новую версию",
+          "purpose": "Независимо проверять необходимость, точность и границы."
+        }
+      },
+      "execution_profile": "evolution-review",
+      "id": "review-successor",
+      "parent_id": "system-evolution",
+      "responsible_role": {
+        "en": "evolution reviewer",
+        "ru": "проверяющий новой версии"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [
+          {
+            "id": "design-project-loops",
+            "version": "0.1.0"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "cas-validator",
+          "digest-validator"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "activation-receipt",
+        "catalog-append"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "An exact binding proposal, independent recommendation, separate operator evolution decision and activation evidence.",
+          "output": "An activation receipt and catalog head update."
+        },
+        "ru": {
+          "input": "Точное предложение привязки, независимая рекомендация, отдельное решение оператора об эволюции и доказательство активации.",
+          "output": "Отчёт о включении и новая вершина каталога."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Activate Successor",
+          "purpose": "Make a reviewed successor active through a separate operator act."
+        },
+        "ru": {
+          "label": "Включать новую версию",
+          "purpose": "Включать проверенную версию отдельным решением оператора."
+        }
+      },
+      "execution_profile": "operator",
+      "id": "activate-successor",
+      "parent_id": "system-evolution",
+      "responsible_role": {
+        "en": "operator only",
+        "ru": "только оператор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "human-decision",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "recorded-operator-decision"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "migration-report",
+        "regression-signals"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "The new active binding and subsequent runs.",
+          "output": "A migration report and regression signals."
+        },
+        "ru": {
+          "input": "Новая действующая версия и последующие запуски.",
+          "output": "Отчёт о переходе и сигналы регрессии."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Observe Migration",
+          "purpose": "Detect regressions after activation without rewriting history."
+        },
+        "ru": {
+          "label": "Наблюдать за переходом",
+          "purpose": "Находить регрессии после включения, не переписывая историю."
+        }
+      },
+      "execution_profile": "evolution-analysis",
+      "id": "observe-migration",
+      "parent_id": "system-evolution",
+      "responsible_role": {
+        "en": "evolution analyst",
+        "ru": "аналитик эволюции"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [
+          {
+            "id": "design-project-loops",
+            "version": "0.1.0"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "cas-validator",
+          "digest-validator"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "concept-reference",
+        "visual-contract",
+        "viewport-matrix"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Concept art, product truth and target user tasks.",
+          "output": "A digest-bound visual contract, state inventory and viewport matrix."
+        },
+        "ru": {
+          "input": "Концепт-арт, факты о продукте и задачи пользователя.",
+          "output": "Визуальный контракт с точным хешем, список состояний и матрица экранов."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Lock Visual Contract",
+          "purpose": "Turn an approved concept into exact visual, responsive, motion and state constraints."
+        },
+        "ru": {
+          "label": "Зафиксировать визуальный контракт",
+          "purpose": "Превращать принятую концепцию в точные правила композиции, адаптивности, движения и состояний."
+        }
+      },
+      "execution_profile": "frontend-author",
+      "id": "define-frontend-concept",
+      "parent_id": "design-site-experience",
+      "responsible_role": {
+        "en": "visual design author",
+        "ru": "автор визуальной концепции"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [
+          {
+            "id": "impeccable",
+            "version": "4.0.3"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "image-generation",
+          "repository"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "visual-contract-decision"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A digest-bound visual contract.",
+          "output": "An operator decision bound to the exact contract digest."
+        },
+        "ru": {
+          "input": "Визуальный контракт с точным хешем.",
+          "output": "Решение оператора, привязанное к точному хешу контракта."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Accept Visual Contract",
+          "purpose": "Accept or reject the exact visual contract as a separate human decision."
+        },
+        "ru": {
+          "label": "Принять визуальный контракт",
+          "purpose": "Отдельным решением принять или отклонить точный визуальный контракт."
+        }
+      },
+      "execution_profile": "operator",
+      "id": "accept-frontend-concept",
+      "parent_id": "design-site-experience",
+      "responsible_role": {
+        "en": "operator",
+        "ru": "оператор"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "human-decision",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "decision-log"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "frontend-workshop",
+        "state-fixtures"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "An accepted visual contract and production component boundaries.",
+          "output": "A local workshop covering normal, long-copy, loading, empty, error and stale states."
+        },
+        "ru": {
+          "input": "Принятый визуальный контракт и границы компонентов продукта.",
+          "output": "Локальная мастерская с обычным, длинным, загружаемым, пустым, ошибочным и устаревшим состояниями."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Build Interface Workshop",
+          "purpose": "Expose real production components in every consequential state."
+        },
+        "ru": {
+          "label": "Собрать мастерскую интерфейса",
+          "purpose": "Показывать настоящие компоненты продукта во всех важных состояниях."
+        }
+      },
+      "execution_profile": "frontend-author",
+      "id": "maintain-component-workshop",
+      "parent_id": "design-site-experience",
+      "responsible_role": {
+        "en": "frontend implementer",
+        "ru": "разработчик интерфейса"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [
+          {
+            "id": "impeccable",
+            "version": "4.0.3"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "repository",
+          "test-runner"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "site",
+        "atlas-interface",
+        "component-modules"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Accepted visual contract, content, Atlas data and workshop fixtures.",
+          "output": "A pinned responsive bilingual frontend candidate."
+        },
+        "ru": {
+          "input": "Принятый визуальный контракт, материалы, данные Атласа и примеры состояний.",
+          "output": "Зафиксированная адаптивная двуязычная версия интерфейса."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Implement Frontend Candidate",
+          "purpose": "Build the site and Atlas from the accepted visual contract and production components."
+        },
+        "ru": {
+          "label": "Реализовать интерфейс",
+          "purpose": "Собирать сайт и Атлас из принятого визуального контракта и компонентов продукта."
+        }
+      },
+      "execution_profile": "frontend-author",
+      "id": "implement-frontend-surface",
+      "parent_id": "design-site-experience",
+      "responsible_role": {
+        "en": "frontend implementer",
+        "ru": "разработчик интерфейса"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [
+          {
+            "id": "impeccable",
+            "version": "4.0.3"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "repository",
+          "test-runner"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "playwright-harness",
+        "layout-contract",
+        "visual-baselines"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Accepted visual contract and supported browser matrix.",
+          "output": "A pinned Playwright and axe harness with immutable approved baselines."
+        },
+        "ru": {
+          "input": "Принятый визуальный контракт и поддерживаемая матрица браузеров.",
+          "output": "Зафиксированный набор Playwright и axe с отдельно принятыми эталонными снимками."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Maintain Browser Harness",
+          "purpose": "Keep deterministic browser, layout, accessibility and visual-regression checks exact."
+        },
+        "ru": {
+          "label": "Развивать браузерные проверки",
+          "purpose": "Поддерживать точные браузерные проверки вёрстки, доступности и визуальных регрессий."
+        }
+      },
+      "execution_profile": "frontend-harness",
+      "id": "maintain-frontend-verification",
+      "parent_id": "design-site-experience",
+      "responsible_role": {
+        "en": "test author",
+        "ru": "автор проверок"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "low",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "axe",
+          "layout-assertions",
+          "playwright-test",
+          "repository"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "playwright-report",
+        "screenshots",
+        "layout-evidence",
+        "axe-report"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "A pinned candidate, visual contract, harness and approved baselines.",
+          "output": "A deterministic report with screenshots, diffs, geometry, accessibility and runtime evidence."
+        },
+        "ru": {
+          "input": "Зафиксированная версия, визуальный контракт, проверки и принятые эталонные снимки.",
+          "output": "Детерминированный отчёт со снимками, сравнением, геометрией, доступностью и данными исполнения."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Verify Frontend Runtime",
+          "purpose": "Measure the exact candidate across locale, viewport, zoom, motion and browser states."
+        },
+        "ru": {
+          "label": "Проверить интерфейс в браузере",
+          "purpose": "Измерять точную версию во всех языках, размерах, масштабах, режимах движения и браузерах."
+        }
+      },
+      "execution_profile": "frontend-verification",
+      "id": "verify-frontend-candidate",
+      "parent_id": "design-site-experience",
+      "responsible_role": {
+        "en": "deterministic verifier",
+        "ru": "детерминированная проверка"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "axe",
+          "layout-assertions",
+          "playwright-test"
+        ]
+      }
+    },
+    {
+      "artifacts": [
+        "visual-review",
+        "reference-comparison",
+        "critic-receipt"
+      ],
+      "children": [],
+      "contract": {
+        "en": {
+          "input": "Exact concept, candidate, browser report and screenshots.",
+          "output": "An independent pass, revise or indeterminate visual and comprehension verdict."
+        },
+        "ru": {
+          "input": "Точные концепция, версия, браузерный отчёт и снимки.",
+          "output": "Независимый вердикт о визуальном соответствии и понятности."
+        }
+      },
+      "copy": {
+        "en": {
+          "label": "Review Visual Fidelity",
+          "purpose": "Independently reject candidates that pass mechanics but miss the accepted concept."
+        },
+        "ru": {
+          "label": "Проверить визуальное соответствие",
+          "purpose": "Независимо отклонять версии, которые формально работают, но не соответствуют принятой концепции."
+        }
+      },
+      "execution_profile": "frontend-critique",
+      "id": "critique-frontend-experience",
+      "parent_id": "design-site-experience",
+      "responsible_role": {
+        "en": "independent visual critic",
+        "ru": "независимый визуальный критик"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [
+          {
+            "id": "impeccable",
+            "version": "4.0.3"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "screenshots"
+        ]
+      }
+    }
+  ],
+  "profiles": {
+    "assurance": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "fresh independent review context",
+        "ru": "независимая проверка в новом контексте"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "test-runner",
+          "validators"
+        ]
+      },
+      "skills": [
+        "web-design-guidelines"
+      ],
+      "tools": [
+        "validators",
+        "browser",
+        "test-runner"
+      ],
+      "truth_layer": "planned"
+    },
+    "comprehension": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "independent reader review, preferably human-backed",
+        "ru": "независимая читательская проверка, желательно с участием человека"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "task-based-reading-test"
+        ]
+      },
+      "skills": [
+        "writing-clearly-and-concisely"
+      ],
+      "tools": [
+        "task-based-reading-test"
+      ],
+      "truth_layer": "planned"
+    },
+    "editorial": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "precise technical editing",
+        "ru": "точное техническое редактирование"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "low",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "link-check",
+          "terminology-check"
+        ]
+      },
+      "skills": [
+        "writing-clearly-and-concisely"
+      ],
+      "tools": [
+        "terminology-check",
+        "link-check"
+      ],
+      "truth_layer": "planned"
+    },
+    "engineering": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "coding and debugging",
+        "ru": "разработка и отладка"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "shell",
+          "tests"
+        ]
+      },
+      "skills": [],
+      "tools": [
+        "shell",
+        "tests",
+        "github"
+      ],
+      "truth_layer": "planned"
+    },
+    "evolution-analysis": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "high-reasoning signal analysis",
+        "ru": "глубокий анализ сигналов"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "cas-validator",
+          "digest-validator"
+        ]
+      },
+      "skills": [
+        "writing-clearly-and-concisely"
+      ],
+      "tools": [
+        "digest-validator",
+        "cas-validator"
+      ],
+      "truth_layer": "planned"
+    },
+    "evolution-proposal": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "high-reasoning bounded proposal",
+        "ru": "подготовка ограниченного предложения"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "cas-validator",
+          "digest-validator"
+        ]
+      },
+      "skills": [
+        "writing-clearly-and-concisely"
+      ],
+      "tools": [
+        "digest-validator",
+        "cas-validator"
+      ],
+      "truth_layer": "planned"
+    },
+    "evolution-review": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "independent successor review",
+        "ru": "независимая проверка новой версии"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "cas-validator",
+          "digest-validator"
+        ]
+      },
+      "skills": [
+        "writing-clearly-and-concisely"
+      ],
+      "tools": [
+        "digest-validator",
+        "cas-validator"
+      ],
+      "truth_layer": "planned"
+    },
+    "experience": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "visual and frontend implementation",
+        "ru": "визуальная и интерфейсная разработка"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "accessibility-checks",
+          "browser"
+        ]
+      },
+      "skills": [
+        "design-taste-frontend",
+        "frontend-design",
+        "web-design-guidelines",
+        "imagegen"
+      ],
+      "tools": [
+        "browser",
+        "accessibility-checks"
+      ],
+      "truth_layer": "planned"
+    },
+    "frontend-author": {
+      "mcp": {
+        "source": "pinned run route",
+        "status": "optional-adapter"
+      },
+      "model_intent": {
+        "en": "concept-faithful frontend design and implementation",
+        "ru": "проектирование и реализация интерфейса по принятой концепции"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [
+          {
+            "id": "impeccable",
+            "version": "4.0.3"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "image-generation",
+          "repository",
+          "test-runner"
+        ]
+      },
+      "skills": [
+        "impeccable",
+        "design-system-patterns",
+        "ui-animation"
+      ],
+      "tools": [
+        "browser",
+        "repository",
+        "image-generation",
+        "test-runner"
+      ],
+      "truth_layer": "planned"
+    },
+    "frontend-critique": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "fresh independent multimodal comparison against the accepted concept",
+        "ru": "независимое визуальное сравнение с принятой концепцией в новом контексте"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [
+          {
+            "id": "impeccable",
+            "version": "4.0.3"
+          }
+        ],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "browser",
+          "screenshots"
+        ]
+      },
+      "skills": [
+        "impeccable",
+        "web-design-guidelines"
+      ],
+      "tools": [
+        "browser",
+        "playwright-mcp",
+        "screenshots"
+      ],
+      "truth_layer": "planned"
+    },
+    "frontend-harness": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-required"
+      },
+      "model_intent": {
+        "en": "bounded browser-harness engineering",
+        "ru": "разработка ограниченного набора браузерных проверок"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "low",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "axe",
+          "layout-assertions",
+          "playwright-test",
+          "repository"
+        ]
+      },
+      "skills": [],
+      "tools": [
+        "playwright-test",
+        "axe",
+        "layout-assertions",
+        "repository"
+      ],
+      "truth_layer": "planned"
+    },
+    "frontend-verification": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-used-as-oracle"
+      },
+      "model_intent": {
+        "en": "deterministic browser and accessibility verification",
+        "ru": "детерминированная браузерная проверка и проверка доступности"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "axe",
+          "layout-assertions",
+          "playwright-test"
+        ]
+      },
+      "skills": [],
+      "tools": [
+        "playwright-test",
+        "axe",
+        "layout-assertions"
+      ],
+      "truth_layer": "planned"
+    },
+    "insight": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "qualitative synthesis without inventing intent",
+        "ru": "обобщение наблюдений без выдумывания намерений"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-luna",
+        "model_provider": "openai",
+        "reasoning": "low",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "interviews",
+          "issues"
+        ]
+      },
+      "skills": [
+        "writing-clearly-and-concisely"
+      ],
+      "tools": [
+        "issues",
+        "interviews"
+      ],
+      "truth_layer": "planned"
+    },
+    "integration": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "environment-specific implementation reasoning",
+        "ru": "разработка с учётом конкретной среды"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "contract-fixtures"
+        ]
+      },
+      "skills": [],
+      "tools": [
+        "contract-fixtures"
+      ],
+      "truth_layer": "planned"
+    },
+    "localization": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "bilingual editorial reasoning",
+        "ru": "двуязычное редактирование смысла"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "comprehension-check",
+          "glossary",
+          "parity-check"
+        ]
+      },
+      "skills": [
+        "writing-clearly-and-concisely"
+      ],
+      "tools": [
+        "glossary",
+        "parity-check",
+        "comprehension-check"
+      ],
+      "truth_layer": "planned"
+    },
+    "operator": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "human decision; a model may explain but cannot decide",
+        "ru": "решение человека; модель может объяснить, но не решать"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "human-decision",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "recorded-operator-decision"
+        ]
+      },
+      "skills": [],
+      "tools": [
+        "recorded-operator-decision"
+      ],
+      "truth_layer": "planned"
+    },
+    "protocol": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "schema and invariant reasoning",
+        "ru": "проектирование схем и инвариантов"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "json-schema",
+          "repository",
+          "tests"
+        ]
+      },
+      "skills": [
+        "writing-clearly-and-concisely"
+      ],
+      "tools": [
+        "json-schema",
+        "tests",
+        "repository"
+      ],
+      "truth_layer": "planned"
+    },
+    "release": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "deterministic publisher",
+        "ru": "детерминированная публикация"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "github",
+          "pages"
+        ]
+      },
+      "skills": [
+        "github"
+      ],
+      "tools": [
+        "github",
+        "pages"
+      ],
+      "truth_layer": "planned"
+    },
+    "research": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "source-critical research reasoning",
+        "ru": "исследование с критической проверкой источников"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-terra",
+        "model_provider": "openai",
+        "reasoning": "medium",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "citation-checks",
+          "primary-sources"
+        ]
+      },
+      "skills": [
+        "writing-clearly-and-concisely"
+      ],
+      "tools": [
+        "primary-sources",
+        "citation-checks"
+      ],
+      "truth_layer": "planned"
+    },
+    "route-planning": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "deterministic accepted-route compilation",
+        "ru": "детерминированная сборка принятого пути"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "none",
+        "model_provider": "",
+        "reasoning": "deterministic",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "route-compiler"
+        ]
+      },
+      "skills": [],
+      "tools": [
+        "route-compiler"
+      ],
+      "truth_layer": "planned"
+    },
+    "strategy": {
+      "mcp": {
+        "source": "active binding",
+        "status": "not-declared"
+      },
+      "model_intent": {
+        "en": "high-reasoning synthesis and trade-offs",
+        "ru": "глубокий анализ вариантов и компромиссов"
+      },
+      "route_materialization": {
+        "mcp_servers": [],
+        "model": "gpt-5.6-sol",
+        "model_provider": "openai",
+        "reasoning": "high",
+        "resources": [],
+        "skills": [],
+        "subagent_identities": [],
+        "tool_capabilities": [
+          "decision-log",
+          "repository"
+        ]
+      },
+      "skills": [
+        "writing-clearly-and-concisely"
+      ],
+      "tools": [
+        "repository",
+        "decision-log"
+      ],
+      "truth_layer": "planned"
+    }
+  },
+  "resource_semantics": {
+    "actual_resources_come_from": "a pinned run route or attempt",
+    "empty_resources_mean": "no MCP or repository resource was declared",
+    "max_reasoning": "explicit escalation only; never a default",
+    "mcp_default": "not-declared",
+    "profiles_are": "planned binding metadata, not timeless loop identity",
+    "route_materialization": "exact binding metadata; actual execution must match"
+  },
+  "root_loop_id": "steward-concordloom",
+  "schema_version": "0.1",
+  "shared_run_grammar": [
+    {
+      "copy": {
+        "en": {
+          "label": "Observe",
+          "purpose": "Collect attributable facts."
+        },
+        "ru": {
+          "label": "Наблюдать",
+          "purpose": "Собрать факты с указанием источника."
+        }
+      },
+      "id": "observe"
+    },
+    {
+      "copy": {
+        "en": {
+          "label": "Negotiate",
+          "purpose": "Turn ambiguity into accepted intent."
+        },
+        "ru": {
+          "label": "Согласовать",
+          "purpose": "Превратить неоднозначность в принятое решение."
+        }
+      },
+      "id": "negotiate"
+    },
+    {
+      "copy": {
+        "en": {
+          "label": "Bind",
+          "purpose": "Compile exact scope and authority."
+        },
+        "ru": {
+          "label": "Зафиксировать правила",
+          "purpose": "Зафиксировать точные границы и полномочия."
+        }
+      },
+      "id": "bind"
+    },
+    {
+      "copy": {
+        "en": {
+          "label": "Execute",
+          "purpose": "Produce one bounded candidate."
+        },
+        "ru": {
+          "label": "Выполнить",
+          "purpose": "Создать один результат в разрешённых границах."
+        }
+      },
+      "id": "execute"
+    },
+    {
+      "copy": {
+        "en": {
+          "label": "Verify",
+          "purpose": "Independently evaluate that candidate."
+        },
+        "ru": {
+          "label": "Проверить",
+          "purpose": "Независимо проверить этот результат."
+        }
+      },
+      "id": "verify"
+    },
+    {
+      "copy": {
+        "en": {
+          "label": "Publish",
+          "purpose": "Perform an explicitly authorized effect."
+        },
+        "ru": {
+          "label": "Опубликовать",
+          "purpose": "Выполнить только явно разрешённое внешнее изменение."
+        }
+      },
+      "id": "publish"
+    },
+    {
+      "copy": {
+        "en": {
+          "label": "Evolve",
+          "purpose": "Draft a non-activating successor."
+        },
+        "ru": {
+          "label": "Предложить изменение",
+          "purpose": "Подготовить новую версию без её включения."
+        }
+      },
+      "id": "evolve"
+    }
+  ]
+}

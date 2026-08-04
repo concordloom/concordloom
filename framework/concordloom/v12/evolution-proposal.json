@@ -1,0 +1,123 @@
+{
+  "activation_allowed": false,
+  "base_binding_digest": "sha256:1826c3dfc48c2518c2258548c11e846769c99d5df61e4d032b65091325c4c952",
+  "decision_authority_ref": "operator",
+  "decision_required": true,
+  "expected_effect": "Permit only GitHub issue and label administration in the existing repository-presence publication leaf.",
+  "generated_at": "2026-08-04T12:10:00Z",
+  "id": "github-issue-administration-v12",
+  "kind": "concordloom.evolution-proposal",
+  "operations": [
+    {
+      "op": "replace",
+      "path": "/grant/scope/external_mutations",
+      "precondition_digest": "sha256:33c9b950ecbb467a2be14490162147bbc1922949296df523d561e4b20125befe",
+      "target_id": "release-distribution.maintain-repository-presence",
+      "target_kind": "containment",
+      "value": [
+        "github-repository-discussions",
+        "github-repository-homepage",
+        "github-repository-issues",
+        "github-repository-labels",
+        "github-repository-security-settings",
+        "github-repository-social-preview",
+        "github-repository-topics"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/grant/scope/external_mutations",
+      "precondition_digest": "sha256:6322282e03e87429e07c468066ad0e37faa1cd7fdf7874d15efd0241c665bbfe",
+      "target_id": "steward-concordloom.release-distribution",
+      "target_kind": "containment",
+      "value": [
+        "github-organization-profile",
+        "github-pages",
+        "github-pull-request",
+        "github-pull-request-merge",
+        "github-release-assets",
+        "github-repository-discussions",
+        "github-repository-homepage",
+        "github-repository-issues",
+        "github-repository-labels",
+        "github-repository-security-settings",
+        "github-repository-social-preview",
+        "github-repository-source",
+        "github-repository-topics",
+        "github-version-tag"
+      ]
+    },
+    {
+      "op": "replace",
+      "path": "/external_mutations",
+      "precondition_digest": "sha256:6322282e03e87429e07c468066ad0e37faa1cd7fdf7874d15efd0241c665bbfe",
+      "target_id": "execution-default-scope",
+      "target_kind": "policy",
+      "value": [
+        "github-organization-profile",
+        "github-pages",
+        "github-pull-request",
+        "github-pull-request-merge",
+        "github-release-assets",
+        "github-repository-discussions",
+        "github-repository-homepage",
+        "github-repository-issues",
+        "github-repository-labels",
+        "github-repository-security-settings",
+        "github-repository-social-preview",
+        "github-repository-source",
+        "github-repository-topics",
+        "github-version-tag"
+      ]
+    }
+  ],
+  "proposed_by": {
+    "id": "example-orchestrator",
+    "kind": "orchestrator"
+  },
+  "risk": {
+    "failure_modes": [
+      "A publisher could create or relabel repository issues outside the approved backlog."
+    ],
+    "level": "low",
+    "rollback": "Retain v11 as active, or remove the two exact effects through a separately accepted successor."
+  },
+  "schema_version": "0.1",
+  "signals": [
+    {
+      "base_binding_digest": "sha256:1826c3dfc48c2518c2258548c11e846769c99d5df61e4d032b65091325c4c952",
+      "category": "friction",
+      "id": "v11-rejects-issue-administration",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 1,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "product-backlog-20260804-scope-audit"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:613db3468262c74a8b56dead65d79a9454b9e2dfbaa593ebd1be98a7b608bc39",
+      "summary": "The active v11 repository-presence route does not declare issue or label mutations."
+    },
+    {
+      "base_binding_digest": "sha256:1826c3dfc48c2518c2258548c11e846769c99d5df61e4d032b65091325c4c952",
+      "category": "coverage",
+      "id": "operator-requested-product-backlog",
+      "kind": "concordloom.evolution-signal",
+      "occurrences": 1,
+      "provenance": [
+        {
+          "kind": "evidence",
+          "ref": "conversation-2026-08-04-product-backlog"
+        }
+      ],
+      "schema_version": "0.1",
+      "severity": "warning",
+      "source_digest": "sha256:8b22b293a6256806efd917270599e7763f844c60c3d16ca66a82c2f5c09563b8",
+      "summary": "The operator requested an actionable GitHub issue backlog with labels."
+    }
+  ],
+  "status": "proposed"
+}

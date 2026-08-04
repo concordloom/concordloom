@@ -1,0 +1,10 @@
+{
+  "activated_at": "2026-08-04T12:20:00Z",
+  "activation_decision_id": "activate-github-issue-administration-v12",
+  "binding_digest": "sha256:264df5fff61a6768a846b2e76a74a86e1c98a1ed235f41bc04cfee8ebb1c6f86",
+  "binding_proposal_digest": "sha256:df6df3bb2ceceebd6cff059b71f278e495e2b5ffa9d8f88505de45b94395e11c",
+  "evolution_decision_id": "accept-github-issue-administration-v12",
+  "id": "activate-concordloom-self-binding-v12-receipt",
+  "kind": "concordloom.activation-receipt",
+  "schema_version": "0.1"
+}
