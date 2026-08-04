@@ -565,8 +565,8 @@ def main() -> int:
                 )
 
     content = json.loads((SITE / "data" / "content.json").read_text(encoding="utf-8"))
-    if len(content.get("documents", [])) != 14:
-        errors.append("Docs hub must expose all 14 bilingual document pairs")
+    if len(content.get("documents", [])) != 17:
+        errors.append("Docs hub must expose all 17 bilingual document pairs")
     for section in ("article", "quickstart"):
         for locale in ("en", "ru"):
             rendered = content.get(section, {}).get(locale, {})

@@ -827,7 +827,7 @@
       },
       {
         "path": "site/app.js",
-        "sha256": "sha256:63c3cbe0220129d9855d5f44b6da2331a00f5109d961698dcfbfbae136f9d2f3"
+        "sha256": "sha256:9a93ce1259b1ea7ac36ffe2d252b29cdc83694e4b22e9bbfc068a8ce467ea983"
       },
       {
         "path": "site/assets/concordloom-hero.webp",
@@ -879,11 +879,11 @@
       },
       {
         "path": "site/data/content.json",
-        "sha256": "sha256:a1ac9259a8ccc42249dd3f9962304b4089d0757e7569b94fd74c4dc5931ecf85"
+        "sha256": "sha256:14218d44e827f1b141e4886d8fccfc7befed565dbaf73c58adb166d81c72bcd3"
       },
       {
         "path": "site/design-system.css",
-        "sha256": "sha256:09598814256b9e245afcb4d6ab86c01d12e425e855b47566a980998e2778051f"
+        "sha256": "sha256:8405bdf6f0e0228a8a151bdec8a9c42d7f4f60772e0d3dcd8f2d6c454416b073"
       },
       {
         "path": "site/design-tokens.css",
@@ -895,7 +895,7 @@
       },
       {
         "path": "site/index.html",
-        "sha256": "sha256:a317055531a3d7dadd52b9c53f7f4ab9eb77b50e4be6d8d4e7b8dfc8651aed97"
+        "sha256": "sha256:07ac6d914fbbbbaf544cc1d761a69b9f60de268680112f9046bb4efa10e42bac"
       },
       {
         "path": "site/styles.css",

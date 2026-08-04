@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 import unittest
 
 from tools.build_site import localized_index, markdown_fragment, robots_txt, sitemap_xml
@@ -18,6 +19,17 @@ class SiteContentProjectionTests(unittest.TestCase):
         self.assertIn("Проверка — отдельное решение.", fragment)
         self.assertIn("2025–2026", fragment)
         self.assertNotIn("Проверка - отдельное решение.", fragment)
+
+    def test_public_document_links_stay_inside_the_crawlable_site(self) -> None:
+        fragment, _ = markdown_fragment(
+            "Read the [trial](REPOSITORY_TRIAL.md).\n",
+            source_path=Path("docs/HOW_TO_HELP.md").resolve(),
+        )
+
+        self.assertIn(
+            'href="https://concordloom.github.io/concordloom/docs/en/repository-trial/"',
+            fragment,
+        )
 
     def test_signal_canvas_css_rejects_raw_fonts_and_background_art(self) -> None:
         self.assertTrue(has_raw_font_stack("main { font-family: Arial, sans-serif; }"))
@@ -57,6 +69,10 @@ class SiteContentProjectionTests(unittest.TestCase):
         )
         self.assertIn('hreflang="en"', russian)
         self.assertIn('hreflang="x-default"', russian)
+        self.assertIn(
+            'href="https://concordloom.github.io/concordloom/docs/ru/how-to-help/"',
+            russian,
+        )
 
     def test_crawler_files_name_every_public_language_url(self) -> None:
         robots = robots_txt().decode("utf-8")

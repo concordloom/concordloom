@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Language: English | Русский">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/repository-trial/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/repository-trial/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/repository-trial/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/repository-trial/">
+    <meta property="og:title" content="Repository trial | Concord Loom">
+    <meta property="og:description" content="Language: English | Русский">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/repository-trial/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Repository trial | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/repository-trial/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Repository trial</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>Language: <strong>English</strong> | <a href="https://concordloom.github.io/concordloom/docs/ru/repository-trial/">Русский</a></p>
+<p>This trial checks whether a newcomer can obtain and correct a useful Atlas without surrendering control of the repository. It is a product test, not a request to prove that Concord Loom works.</p>
+<p>Allow 30–60 minutes. Stop earlier if the process becomes unsafe or unclear.</p>
+<h2 id="section-01">Before the trial</h2>
+<p>Use a disposable repository, a public repository you may inspect, or a copy with secrets and private data removed. Do not use production credentials. Note:</p>
+<ul>
+<li>repository language, size, and approximate age;</li>
+<li>operating system, Python version, agent, and agent version;</li>
+<li>Concord Loom version or full commit SHA;</li>
+<li>whether you already understand the repository.</li>
+</ul>
+<p>Read the <a href="https://concordloom.github.io/concordloom/docs/en/quickstart/">Quickstart</a>. The first inspection should be read-only. Do not approve repository writes merely to finish the trial.</p>
+<h2 id="section-02">Run the scenario</h2>
+<ol>
+<li>Start a new agent conversation in the repository.</li>
+<li>Ask the <code>design-project-loops</code> skill to inspect the repository and build a</li>
+</ol>
+<p>first Atlas without changing repository files.</p>
+<ol>
+<li>Answer the language and operator-name questions.</li>
+<li>Review the proposed map. Correct at least one wrong or uncertain conclusion</li>
+</ol>
+<p>in ordinary language.</p>
+<ol>
+<li>Stop before connecting the repository unless you deliberately want to test</li>
+</ol>
+<p>the write path.</p>
+<p>If you test the write path, inspect the proposed paths and authorization before approving it. Record every file changed. A draft map must not silently become accepted intent or active authority.</p>
+<h2 id="section-03">Record what happened</h2>
+<p>Capture facts while the trial is fresh:</p>
+<ul>
+<li>minutes to the first readable Atlas;</li>
+<li>commands or prompts that were hard to understand;</li>
+<li>questions that felt unnecessary or arrived too late;</li>
+<li>incorrect repository areas, cycles, or relationships;</li>
+<li>whether evidence and inference were visibly different;</li>
+<li>any unexpected file, network, or external action;</li>
+<li>whether recovery instructions were clear after an error;</li>
+<li>the point where you would have abandoned the process without this test.</li>
+</ul>
+<p>Screenshots and short redacted logs help. Do not upload secrets, private source code, personal data, tokens, or complete proprietary logs.</p>
+<h2 id="section-04">Submit the result</h2>
+<p>Open a <a href="https://github.com/concordloom/concordloom/issues/new?template=repository-trial.yml" rel="noreferrer">repository trial report</a>. Choose an outcome even when no Atlas appeared:</p>
+<ul>
+<li>completed without repository writes;</li>
+<li>completed and deliberately tested the write path;</li>
+<li>stopped because instructions were unclear;</li>
+<li>stopped because the boundary felt unsafe;</li>
+<li>blocked by an error.</li>
+</ul>
+<p>Describe the smallest change that would have helped most. Maintainers will use the report as evidence; it does not automatically change accepted product intent.</p>
+<p>For a security vulnerability, do not open a public issue. Follow the <a href="https://github.com/concordloom/concordloom/blob/main/.github/SECURITY.md" rel="noreferrer">security policy</a>.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

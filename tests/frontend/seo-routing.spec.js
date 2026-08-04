@@ -11,6 +11,9 @@ const PUBLIC_DOC_SLUGS = [
   "article",
   "atlas",
   "codex-plugin",
+  "how-to-help",
+  "repository-trial",
+  "ai-agent-governance",
   "decisions",
   "release",
   "writing",
@@ -93,7 +96,7 @@ test("sitemap lists every canonical page once and pairs localized documentation"
   expect(sitemap).toContain('xmlns:xhtml="http://www.w3.org/1999/xhtml"');
 
   const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-  expect(locations).toHaveLength(31);
+  expect(locations).toHaveLength(37);
   expect(new Set(locations).size).toBe(locations.length);
   expect(locations).toContain(`${SITE_ORIGIN}/`);
 

@@ -25,6 +25,11 @@ python -m pip install -e .
 
 ## Working on a change
 
+Repository changes are developed through AI coding agents and Concord Loom.
+If you only want to report evidence, you do not need to set up that workflow:
+use the [repository trial form](https://github.com/concordloom/concordloom/issues/new?template=repository-trial.yml)
+or a Discussion. A maintainer can turn the evidence into a governed task.
+
 1. Read `AGENTS.md` before task-scoped repository work.
 2. Keep observed, proposed, accepted, planned, actual, and verified facts distinct.
 3. Make the smallest coherent change and add a regression test for every bug fixed.

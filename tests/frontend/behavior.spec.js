@@ -73,3 +73,17 @@ test("public header contains no simulated lifecycle progress", async ({ page }) 
     await expect(page.locator(".view-tabs a")).toHaveCount(routes.length);
   }
 });
+
+test("contributor entry offers bounded actions in both languages", async ({ page }) => {
+  for (const language of ["en", "ru"]) {
+    await openView(page, "concept", language);
+    const entry = page.locator(".contributor-entry");
+    await entry.scrollIntoViewIfNeeded();
+    await expect(entry.locator("article")).toHaveCount(3);
+    await expect(entry.locator("a")).toHaveCount(3);
+    await expect(entry.locator("h2")).toContainText(
+      language === "en" ? "real repository" : "реальный репозиторий",
+    );
+    await expect(entry.locator('a[href*="repository-trial"]')).toHaveCount(2);
+  }
+});
