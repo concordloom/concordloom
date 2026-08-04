@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Concord Loom is a domain-neutral, declarative governance framework. It makes declared claims mechanically checkable, but it cannot turn an untrusted…">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/trust-model/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/trust-model/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/trust-model/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/trust-model/">
+    <meta property="og:title" content="Trust model | Concord Loom">
+    <meta property="og:description" content="Concord Loom is a domain-neutral, declarative governance framework. It makes declared claims mechanically checkable, but it cannot turn an untrusted…">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/trust-model/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Trust model | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/trust-model/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Trust model</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/TRUST_MODEL.md" rel="noreferrer">Русская версия</a></p>
+<p>Concord Loom is a domain-neutral, declarative governance framework. It makes declared claims mechanically checkable, but it cannot turn an untrusted machine, source, identity provider, model, or operator into a trusted one. The shipped generic SDLC binding is one example governed by this trust model; it does not narrow the model to software delivery.</p>
+<h2 id="section-01">Protected invariants</h2>
+<p>The portable core fails closed on:</p>
+<ul>
+<li>inferred intent used as accepted authority;</li>
+<li>unaccepted loop designs passed to compilation;</li>
+<li>cyclic containment or unbounded local feedback;</li>
+<li>child scope, budget, or authority broader than its parent;</li>
+<li>stale binding, policy, candidate, attempt, or evidence digests;</li>
+<li>candidate inventory, content, mode, link, or revision drift;</li>
+<li>evidence claims that do not match recorded payload bytes;</li>
+<li>planned routes represented as factual attempts;</li>
+<li>author/reviewer overlap where separation is required;</li>
+<li>append-only catalog predecessor or active-head mismatch; and</li>
+<li>evolution proposals that try to accept or activate themselves.</li>
+</ul>
+<p>Canonical JSON and explicit digest envelopes make these checks reproducible. They prove internal consistency, not truth outside the recorded boundary.</p>
+<h2 id="section-02">Observation adapters</h2>
+<p>Every observation adapter must treat its subject as data, expose coverage and truncation, preserve provenance, and distinguish facts from hypotheses.</p>
+<p>The v0.1 Git adapter disables hooks, fsmonitor, external diff and text conversion, pagers, prompts, replace objects, lazy fetch, and optional locks where applicable. It does not check out history, import repository code, or execute the target. File, history, path, byte, time, and co-change limits are explicit. Untracked files require opt-in before entering a candidate.</p>
+<p>These controls describe the shipped adapter. Other domains need their own source-specific isolation and provenance rules.</p>
+<h2 id="section-03">What <code>guard</code> means</h2>
+<p><code>guard</code> checks requested paths and effects against a run-card capability. It is a policy gate, not an operating-system sandbox. A process that bypasses the runner can still use every permission granted to its operating-system account.</p>
+<p>Use restricted users, containers, virtual machines, network policy, secret brokers, protected storage, and platform authorization when hostile-code isolation is required. Those controls complement Concord Loom.</p>
+<h2 id="section-04">Identity and independence</h2>
+<p>Policy resolves principal IDs, roles, and capabilities from content-addressed artifacts. The runner records the effective principal, agent, model, skill, subagents, and tools. It rejects author/reviewer overlap when the binding requires independence.</p>
+<p>In the portable local deployment, identities are logical assertions rather than cryptographic authentication. They support accountability and consistency checks, but cannot stop one malicious local actor from assuming two names or editing all local state.</p>
+<p>Deployments that require adversarial identity assurance should bind receipts to signed workload identities or platform attestations and protect policy, candidate, catalog, and run storage from candidate authors.</p>
+<h2 id="section-05">Evidence is scoped</h2>
+<p>Evidence can establish only its declared predicate for its exact subject, candidate, policy, attempt, producer, and payload. It cannot establish:</p>
+<ul>
+<li>that the chosen outcome is valuable;</li>
+<li>that an oracle or measurement is complete;</li>
+<li>that a physical observation was honest before digitization;</li>
+<li>that an authorized decision was wise;</li>
+<li>that one child result satisfies the full parent contract; or</li>
+<li>that verification grants publication authority.</li>
+</ul>
+<p>Parent loops own parent acceptance. External effects require their own capability and scope.</p>
+<h2 id="section-06">Models, runtimes, and external services</h2>
+<p>Python and the standard library form the portable core. The core has no model provider dependency or implicit network egress. Model-assisted plugins and external runtimes are adapters; their outputs remain untrusted until schemas, policy, and invariants accept them.</p>
+<p>A run policy should name allowed providers, models, data classes, egress, tools, network access, external mutations, cost, and elapsed-time budgets. Actual attempts record what happened, including drift from the plan.</p>
+<p>Concord Loom validates declared execution facts. It does not prove that an external runtime enforced a transition or that a remote service returned honest data.</p>
+<h2 id="section-07">Publication boundary</h2>
+<p>A verified candidate is not a published effect. Publication requires a publisher capability, an exact candidate, and scope naming the permitted external mutation. The publish node records the effect, a deliberate no-op, or escalation.</p>
+<p>This boundary keeps <code>PASSED</code> factual: it means a node met its evidence contract. It never means “release authorized” unless a separate policy and authority explicitly say so.</p>
+<h2 id="section-08">Self-binding and evolution</h2>
+<p>Concord Loom&#x27;s accepted repository binding is:</p>
+<pre tabindex="0"><code class="language-text">Observe → Negotiate → Bind → Execute → Verify → Publish → Evolve</code></pre>
+<p>It separates observation from intent, compilation from activation, execution from independent verification, and verification from publication. The final stage may only propose a successor.</p>
+<p>The active binding defines the authority that may decide on its replacement. An evolution proposal names its base binding, signals, preconditions, risk, and required decision. It cannot edit the catalog, grant itself capability, or activate itself. A separate operator decision and activation are required.</p>
+<h2 id="section-09">Bootstrap receipts</h2>
+<p>The first release used an explicitly separate trust-seed protocol under <code>concord/</code>. Mutable bootstrap cards and signals live under ignored <code>.concord/runs/</code> and <code>.concord/signals/</code>; they are not source-candidate bytes.</p>
+<p>The bootstrap runner can export a deterministic receipt bundle containing the final card, cycle, policy, candidate digest, and review evidence. A published SHA-256 gains meaning only when an independently referenced release or attestation anchors it.</p>
+<p>Bootstrap cards must never be represented as public <code>concordloom.run-card</code> artifacts. Public runs use <code>schemas/run-card.schema.json</code> and bind an accepted registry, policy, binding, candidate manifest, route, evidence, and authority.</p>
+<h2 id="section-10">Residual risks</h2>
+<ul>
+<li>A compromised operating-system account can bypass a policy-only guard.</li>
+<li>A malicious authority can approve a harmful but structurally valid model.</li>
+<li>Logical identities can be impersonated without external authentication.</li>
+<li>An adapter can produce plausible but wrong observations.</li>
+<li>Digest integrity does not imply semantic or physical truth.</li>
+<li>A correct child receipt can still be irrelevant to parent acceptance.</li>
+<li>Availability, secrets, and remote-runtime isolation remain deployment</li>
+</ul>
+<p>responsibilities.</p>
+<p>Treat a passing validator as evidence about declared invariants, never as a universal safety certificate.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

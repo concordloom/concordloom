@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Документация является частью продукта. Схема может быть точной, но при этом не помогать читателю действовать. Поэтому Concord Loom проверяет не только…">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/ru/writing/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/writing/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/writing/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/writing/">
+    <meta property="og:title" content="Как писать для людей | Concord Loom">
+    <meta property="og:description" content="Документация является частью продукта. Схема может быть точной, но при этом не помогать читателю действовать. Поэтому Concord Loom проверяет не только…">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/ru/writing/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ru_RU">
+    <title>Как писать для людей | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
+    <header class="site-header">
+      <a class="brand" href="../../../ru/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Навигация по документу">
+        <a class="view-tab" href="../">Документация</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/en/writing/">English version</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">СПРАВОЧНИК CONCORD LOOM</p>
+        <h1>Как писать для людей</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p><a href="https://github.com/concordloom/concordloom/blob/main/docs/WRITING.md" rel="noreferrer">English version</a></p>
+<p>Документация является частью продукта. Схема может быть точной, но при этом не помогать читателю действовать. Поэтому Concord Loom проверяет не только ссылки, заголовки и объём перевода, но также смысл и понятность.</p>
+<h2 id="section-01">Проверка читателем</h2>
+<p>После первых 150 слов о важном понятии читатель должен ответить на три вопроса:</p>
+<ol>
+<li>Что это?</li>
+<li>Зачем это нужно?</li>
+<li>Как выглядит один конкретный пример?</li>
+</ol>
+<p>Если текст не даёт ответов, он не готов.</p>
+<h2 id="section-02">Сначала объясните идею</h2>
+<p>Используйте в тексте обычные слова. Машинный идентификатор нужен только тогда, когда читатель встретит его в команде, JSON-документе или атласе.</p>
+<p>Хорошо:</p>
+<blockquote>Действующая конфигурация перечисляет циклы и полномочия. В JSON этот артефакт называется <code>binding</code>.</blockquote>
+<p>Плохо:</p>
+<blockquote>Активный binding материализует policy-bound containment semantics.</blockquote>
+<h2 id="section-03">Не смешивайте состояния факта</h2>
+<p>Указывайте, что именно произошло: наблюдение, предложение, принятие решения, планирование, запуск или проверка. Уверенная формулировка не должна скрывать отсутствие решения или данных проверки.</p>
+<h2 id="section-04">Перевод сохраняет смысл</h2>
+<p>Русский текст редактируется как русский. Это не английское предложение с переведёнными существительными. Названия продукта, команды, пути, ключи JSON и код остаются без изменений. Поясняющие термины берутся из [<code>terminology.json</code>](../terminology.json).</p>
+<h2 id="section-05">Понятность проверяется отдельно</h2>
+<p>Цикл <code>review-comprehension</code> начинается после написания и перевода текста. Другой участник ищет необъяснённый жаргон, буквальный перевод, пустые утверждения, пропущенные примеры и инструкции, которые нельзя выполнить. Автор не может закрыть проверку простым заявлением, что всё понятно.</p>
+<p>Автоматическая проверка находит известные ошибки терминологии и структуры. Она не заменяет читателя.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Concord Loom is a domain-neutral compiler and governance harness for bounded systems of loops. It binds accepted intent, finite loop contracts, policy…">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/architecture/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/architecture/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/architecture/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/architecture/">
+    <meta property="og:title" content="Architecture | Concord Loom">
+    <meta property="og:description" content="Concord Loom is a domain-neutral compiler and governance harness for bounded systems of loops. It binds accepted intent, finite loop contracts, policy…">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/architecture/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Architecture | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/architecture/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Architecture</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/ARCHITECTURE.md" rel="noreferrer">Русская версия</a></p>
+<h2 id="section-01">1. System boundary</h2>
+<p>Concord Loom is a domain-neutral compiler and governance harness for bounded systems of loops. It binds accepted intent, finite loop contracts, policy, execution facts, and evidence into a content-addressed chain. It does not replace a domain engine, workflow runtime, model provider, hosting platform, identity service, or operator authority.</p>
+<p>The portable kernel has five boundaries:</p>
+<pre tabindex="0"><code class="language-text">evidence sources → observation adapters → accepted loop model
+                                             │
+                                             ▼
+                                   compiler and policy kernel
+                                             │
+                       ┌─────────────────────┼─────────────────────┐
+                       ▼                     ▼                     ▼
+               execution adapters        Atlas             evolution proposals</code></pre>
+<p>Git inspection, the local file-backed runner, and the generic SDLC model are shipped adapters and examples. They demonstrate the kernel; they do not define its product boundary.</p>
+<p>Every transformation persists a new artifact. Later artifacts cite exact digests instead of rewriting earlier evidence.</p>
+<h2 id="section-02">2. Knowledge and authority</h2>
+<p>Concord Loom separates what the system knows from what an operator authorizes:</p>
+<div class="content-table-wrap"><table>
+<thead><tr><th>State</th><th>Meaning</th><th>May authorize execution?</th></tr></thead><tbody>
+<tr><td><code>observed</code></td><td>Direct evidence from a declared source</td><td>No</td></tr>
+<tr><td><code>inferred</code></td><td>A deterministic or model-assisted hypothesis</td><td>No</td></tr>
+<tr><td><code>confirmed</code></td><td>An operator accepted the proposed meaning</td><td>After compilation</td></tr>
+<tr><td><code>rejected</code></td><td>An operator rejected the proposal</td><td>No</td></tr>
+<tr><td><code>runtime_verified</code></td><td>Bound evidence met a declared predicate</td><td>Only within that predicate</td></tr>
+</tbody></table></div>
+<p>Observations retain provenance. Inferences retain confidence and their source references. Acceptance overlays append-only decisions; it never rewrites an inference as an observation. Confidence helps rank questions, but grants no capability.</p>
+<p>The artifact chain is one-way:</p>
+<pre tabindex="0"><code class="language-text">observations → questions → decisions → accepted intent
+             → loop-design proposal → design acceptance
+             → registry and binding proposal → binding activation
+             → run facts and evidence → successor proposal</code></pre>
+<h2 id="section-03">3. Two graphs define a loop system</h2>
+<h3 id="section-03-detail-01">3.1 Containment</h3>
+<p><code>contains(parent_loop, child_loop)</code> means a composite parent state invokes a child through a typed contract. The containment graph must be finite and acyclic. A child cannot contain an ancestor.</p>
+<p>Containment supports recursive navigation and repeated use of the loop contract pattern. It never authorizes unbounded runtime recursion.</p>
+<h3 id="section-03-detail-02">3.2 Local control flow</h3>
+<p>Each loop has a directed state graph. Forward and feedback transitions are allowed. Every cyclic strongly connected component must consume a finite, monotonic budget; exhaustion must lead to a terminal or escalation outcome.</p>
+<pre tabindex="0"><code class="language-text">prepare → act → inspect → decide ──accept──► ACCEPTED
+            ▲       │          │
+            └─retry─┘          └──────────► ESCALATED</code></pre>
+<p>Continuous activity becomes a sequence of bounded runs. One run ends; a later signal may start another.</p>
+<h3 id="section-03-detail-03">3.3 Loop contract</h3>
+<p>A loop is:</p>
+<pre tabindex="0"><code class="language-text">L = (I, O, S, δ, C, E, A, B, X)</code></pre>
+<ul>
+<li><code>I</code>, <code>O</code>: typed input and output descriptions;</li>
+<li><code>S</code>, <code>δ</code>: states and declarative local transitions;</li>
+<li><code>C</code>: child invocations and their mappings;</li>
+<li><code>E</code>: evidence predicates;</li>
+<li><code>A</code>: capabilities and independence rules;</li>
+<li><code>B</code>: attempt, time, cost, and tool budgets;</li>
+<li><code>X</code>: terminal outcomes.</li>
+</ul>
+<p>The validator checks one entry, reachability, terminal paths, finite child deadlines, bounded feedback, scope containment, and authority separation. Predicates use a finite declarative grammar; they contain no executable code.</p>
+<h2 id="section-04">4. Adapters</h2>
+<h3 id="section-04-detail-01">4.1 Observation adapters</h3>
+<p>An observation adapter turns bounded source evidence into provenance-rich facts and hypotheses. The v0.1 built-in adapter reads one local Git repository. It records:</p>
+<ul>
+<li>tracked files, sizes, extensions, and language categories;</li>
+<li>conventional build, test, CI, decision, documentation, and agent surfaces;</li>
+<li>lightweight local Python import edges;</li>
+<li>commit identity, timestamps, churn, authors, renames, and co-change; and</li>
+<li>coverage, truncation, and stable source references.</li>
+</ul>
+<p>The v0.1 inspector does not parse JavaScript or TypeScript imports, synthesize directory nodes, check out historical revisions, import target code, or run repository hooks. It caps history depth, file count, bytes, subprocess time, paths per commit, and co-change pairs.</p>
+<p>Future adapters may observe other repositories, artifact stores, services, or physical-process receipts. They must preserve the same fact/inference and authority boundaries.</p>
+<h3 id="section-04-detail-02">4.2 Execution adapters</h3>
+<p>The kernel validates contracts and records governed facts. An execution adapter may use a workflow engine, CI, an agent graph, a local process, or a mixed runtime. It must return candidate- and policy-bound evidence.</p>
+<p>Concord Loom v0.1 validates local state machines and containment but does not step every transition, schedule durable children, or derive parent acceptance from a child status.</p>
+<h3 id="section-04-detail-03">4.3 Projections</h3>
+<p>The Atlas is a deterministic, self-contained HTML projection of accepted artifacts and optional run data. It shows containment separately from feedback and keeps planned, actual, verified, and drift layers distinct. It is not a source of truth or execution authority.</p>
+<h2 id="section-05">5. Negotiation and acceptance</h2>
+<p>Questions rank unresolved hypotheses by downstream impact and uncertainty. Each question identifies its evidence, why the answer matters, and the graph delta for each option.</p>
+<p>An accepted model requires decisions for every blocking question. The actor and capability resolve through content-addressed policy. A correction creates a decision-backed replacement; it does not mutate the observation.</p>
+<p>Loop design and binding activation have separate acceptance seams. The compiler can reject an unsafe proposal, but it cannot approve one.</p>
+<h2 id="section-06">6. Compilation and binding</h2>
+<p>The binder consumes accepted intent, an accepted loop design, registry, authority and routing policy, compute policy, and evolution policy. It validates schemas and cross-artifact invariants, computes canonical SHA-256 digests, and emits a binding over those exact inputs.</p>
+<p>Runs pin a binding digest. The catalog appends successor bindings and preserves their predecessors. No component may resolve authority from an unpinned “current workflow.”</p>
+<p>Canonical JSON is deterministic UTF-8 with a trailing newline. Digest envelopes exclude declared mutable display metadata.</p>
+<h2 id="section-07">7. Governed execution</h2>
+<p>A run card is the execution record for one objective:</p>
+<pre tabindex="0"><code class="language-text">PENDING → AUTHORIZED → RUNNING → PASSED
+                          ├────► REVISE
+                          ├────► BLOCKED
+                          └────► CANCELLED</code></pre>
+<p>Authorization checks dependencies, capabilities, budgets, and scope. <code>guard</code> compares intended reads and writes with the node grant. It is a policy check, not an operating-system sandbox.</p>
+<p>An actual attempt records the effective principal, model and reasoning when used, skill, subagents, tools, policy digest, candidate digest, times, and terminal result. Evidence records its producer, predicate scope, candidate, policy, provenance, checks, and payload digest.</p>
+<p>Parent contracts choose which child receipts matter. A passing child never closes its parent automatically. Independent gates reject a principal that authored candidate content when policy requires separation. A passed gate proves its evidence contract; it does not grant publication authority.</p>
+<h2 id="section-08">8. Concord Loom&#x27;s development system</h2>
+<p>The active, operator-accepted configuration has root <code>steward-concordloom</code>, ten responsibility areas, and 66 cycles in total. The interactive Atlas projects that complete containment graph.</p>
+<p>Ordinary run cards do not execute all 66 cycles. By default they contain only the root coordinator. A task selects one or more leaves with <code>--target-loop</code>; the route adds only their ancestors. <code>--portfolio</code> is an explicit full-system audit mode.</p>
+<p>Every governed run still uses seven phases:</p>
+<div class="content-table-wrap"><table>
+<thead><tr><th>Stage</th><th>Contract outcome</th></tr></thead><tbody>
+<tr><td>Observe</td><td>Provenance-rich facts, hypotheses, and coverage</td></tr>
+<tr><td>Negotiate</td><td>Accepted intent and append-only decisions</td></tr>
+<tr><td>Bind</td><td>Separately activated loops, policy, and scope</td></tr>
+<tr><td>Execute</td><td>A scoped candidate and factual attempt evidence</td></tr>
+<tr><td>Verify</td><td>An independent receipt for the pinned candidate</td></tr>
+<tr><td>Publish</td><td>An authorized effect, no-op receipt, or escalation</td></tr>
+<tr><td>Evolve</td><td>A non-activating successor proposal</td></tr>
+</tbody></table></div>
+<p>The development configuration succeeded the earlier seven-loop example through explicit operator decisions recorded in the append-only catalog. It governs Concord Loom itself; other projects may accept different topologies.</p>
+<h2 id="section-09">9. Evolution</h2>
+<p>Signals are append-only observations about repeated friction, drift, failure, or cadence. A reducer may deduplicate them and propose a graph or policy delta. Every proposal identifies its base binding, source signals, preconditions, risk, and required authority.</p>
+<pre tabindex="0"><code class="language-text">binding vN → runs → signals → proposal
+       └──────── defines who may decide ────────┘</code></pre>
+<p>The reducer cannot edit the catalog. The proposal cannot authorize or activate itself. A separate decision under <code>vN</code> must accept the proposal before the binder can create and activate <code>vN+1</code>; stale preconditions fail closed.</p>
+<h2 id="section-10">10. Modules</h2>
+<pre tabindex="0"><code class="language-text">src/concordloom/
+  canonical.py       deterministic JSON and digests
+  schema.py          public schema validation
+  graph.py           observations and decision overlays
+  inspect_repo.py    built-in Git observation adapter
+  interview.py       question ranking and decisions
+  loops.py           containment and control-flow invariants
+  compiler.py        accepted model to binding
+  run.py             governed execution lifecycle
+  atlas.py           offline projection
+  evolution.py       signal reduction and proposals
+  cli.py             stable command surface</code></pre>
+<p>Python 3.11 and the standard library form the portable core. The built-in schema validator implements the deliberately small JSON Schema subset used by the shipped schemas and rejects unsupported keywords.</p>
+<h2 id="section-11">11. Security and v0.1 limits</h2>
+<p>The Git adapter normalizes paths beneath its root, observes but does not follow external symlinks, disables interactive and executable Git features, and exposes dirty or truncated coverage. Model-assisted output remains untrusted until schema and invariant checks pass. The portable core performs no implicit network egress.</p>
+<p>The first public release remains a complete local vertical slice: one local Git observation adapter, one accepted binding at a time, deterministic JSON, an offline Atlas, and file-backed runs. These are v0.1 implementation limits, not universal ontology.</p>
+<p>The first release used a separate bootstrap trust-seed protocol under <code>concord/</code>. Public projects use <code>schemas/run-card.schema.json</code> and an accepted binding. Bootstrap cards must never be represented as public v0.1 run cards.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

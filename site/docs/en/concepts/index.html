@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Concord Loom models a bounded system as loops that contain other loops. It does not prescribe a domain, engine, runtime, provider, or repository layout. A…">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/concepts/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/concepts/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/concepts/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/concepts/">
+    <meta property="og:title" content="Foundations | Concord Loom">
+    <meta property="og:description" content="Concord Loom models a bounded system as loops that contain other loops. It does not prescribe a domain, engine, runtime, provider, or repository layout. A…">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/concepts/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Foundations | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/concepts/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Foundations</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/CONCEPTS.md" rel="noreferrer">Русская версия</a></p>
+<p>Concord Loom models a bounded system as loops that contain other loops. It does not prescribe a domain, engine, runtime, provider, or repository layout. A software development life cycle (SDLC) is one possible binding of the model, not the identity of the framework.</p>
+<h2 id="section-01">A system of bounded loops</h2>
+<p>A loop turns a declared input into a terminal outcome under evidence, authority, scope, and budget constraints. A parent loop may refine one of its states through a child loop. The same contract pattern applies at every level, but the resulting system remains finite.</p>
+<p>The shipped generic SDLC binding illustrates this pattern with requirements, implementation, testing, release, and operations. Another binding could govern research, content production, hardware qualification, incident response, or a mixed human-and-machine process without changing the core model.</p>
+<h2 id="section-02">Containment is not feedback</h2>
+<p>Concord Loom stores two different graphs:</p>
+<ul>
+<li><code>contains(parent, child)</code> is a finite, acyclic refinement relation. It gives</li>
+</ul>
+<p>nested execution a maximum depth.</p>
+<ul>
+<li>A loop&#x27;s local state graph may contain feedback. Each cyclic strongly</li>
+</ul>
+<p>connected component must decrease a finite attempt, time, cost, or tool budget and retain a path to termination or escalation.</p>
+<p>Calling both relationships “recursion” hides the safety property. The Atlas renders them differently.</p>
+<h2 id="section-03">A loop contract</h2>
+<p>A loop defines:</p>
+<ul>
+<li>typed input and output descriptions;</li>
+<li>a single entry, states, declarative transitions, and terminal outcomes;</li>
+<li>child invocations with input/output mapping, deadline, and cancellation;</li>
+<li>evidence predicates;</li>
+<li>required capabilities and independence rules;</li>
+<li>attempt, time, cost, and tool budgets; and</li>
+<li>escalation when the loop cannot finish safely.</li>
+</ul>
+<p>The validator rejects cyclic containment, unreachable states, nonterminal dead ends, unbudgeted feedback, budget exhaustion without an exit, child authority broader than its parent, and author self-certification where independence is required.</p>
+<h2 id="section-04">A child receipt is not a parent decision</h2>
+<p>A child reports a result scoped to its input, candidate, policy, producer, and evidence. Its parent evaluates that receipt against the parent&#x27;s own contract.</p>
+<p>A scenario can pass while its campaign remains open. A campaign can pass while publication remains unauthorized. A valid child receipt supplies evidence; it never expands authority or closes its parent automatically.</p>
+<p>The v0.1 runner records attempts and evidence per planned loop node. It does not synthesize child receipts, traverse every local transition, or launch a durable child workflow. An execution adapter supplies candidate-bound evidence to the parent, whose completion check remains authoritative.</p>
+<h2 id="section-05">Epistemic states</h2>
+<p>Concord Loom keeps these states distinct:</p>
+<div class="content-table-wrap"><table>
+<thead><tr><th>State</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>Observed</td><td>Derived directly from declared evidence sources</td></tr>
+<tr><td>Inferred</td><td>A hypothesis with provenance and confidence</td></tr>
+<tr><td>Accepted</td><td>Intent approved by an authorized operator</td></tr>
+<tr><td>Planned</td><td>Intended route, scope, model, tool, or reviewer</td></tr>
+<tr><td>Actual</td><td>What an attempt recorded</td></tr>
+<tr><td>Verified</td><td>Evidence satisfied a bound contract</td></tr>
+<tr><td>Drift</td><td>Planned and actual facts differ</td></tr>
+</tbody></table></div>
+<p>Observation adapters may read a Git repository, an artifact store, a service API, or another bounded source. Confidence ranks questions; it never grants authority.</p>
+<h2 id="section-06">Acceptance seams</h2>
+<p>Three decisions carry different meanings:</p>
+<ol>
+<li><strong>Intent acceptance:</strong> decisions resolve consequential hypotheses.</li>
+<li><strong>Loop-design acceptance:</strong> an exact proposal digest becomes an accepted</li>
+</ol>
+<p>design.</p>
+<ol>
+<li><strong>Binding activation:</strong> an exact compiled proposal becomes active.</li>
+</ol>
+<p>Collapsing these seams would let an inference, generator, or compiler authorize its own output.</p>
+<h2 id="section-07">Candidate and evidence identity</h2>
+<p>A candidate is the exact subject of a run. The built-in repository adapter represents it as a canonical manifest of selected paths, content, modes, symlink targets, submodule commits, revision, and inventory. Other adapters must provide an equally stable identity contract.</p>
+<p>Evidence names the candidate, policy, factual attempt, producer, result, payload digest, provenance, and checks. Matching evidence IDs cannot justify substituting different bytes or a different subject.</p>
+<h2 id="section-08">Binding and catalog</h2>
+<p>A binding names exact accepted intent, decision log, accepted loop design, registry, and policy digests. A run pins a binding digest, never the word “current.”</p>
+<p>The catalog is append-only. Activating a successor preserves prior bindings so historical runs retain their original meaning.</p>
+<h2 id="section-09">Concord Loom&#x27;s self-binding</h2>
+<p>Concord Loom governs its own bounded changes with an operator-accepted self-binding:</p>
+<pre tabindex="0"><code class="language-text">Observe → Negotiate → Bind → Execute → Verify → Publish → Evolve</code></pre>
+<ul>
+<li><strong>Observe</strong> separates facts from inferred intent.</li>
+<li><strong>Negotiate</strong> records operator decisions.</li>
+<li><strong>Bind</strong> compiles and separately activates exact loops, policy, and scope.</li>
+<li><strong>Execute</strong> produces a scoped candidate and factual attempt evidence.</li>
+<li><strong>Verify</strong> independently evaluates the pinned candidate.</li>
+<li><strong>Publish</strong> performs only an explicitly authorized external effect, or</li>
+</ul>
+<p>records that no effect occurred.</p>
+<ul>
+<li><strong>Evolve</strong> reduces pinned signals into a successor proposal.</li>
+</ul>
+<p>This sequence is Concord Loom&#x27;s accepted binding for its own repository. It is not a mandatory topology for every project.</p>
+<h2 id="section-10">Evolution cannot authorize itself</h2>
+<p>Runs produce bounded signals about friction, failure, drift, or cadence. Signals may reduce into a proposal with explicit preconditions and risk. The proposal cannot edit the active catalog or grant itself activation authority.</p>
+<p>The active binding defines who may decide on its successor. A separately authorized decision and activation create the next binding; otherwise the current binding remains active.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

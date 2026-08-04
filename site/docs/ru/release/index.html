@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ru" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Релизы Concord Loom v0.1 связывают исходники, пакет, независимые проверки и квитанцию начального выпуска.">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/ru/release/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/release/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/release/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/release/">
+    <meta property="og:title" content="Релиз | Concord Loom">
+    <meta property="og:description" content="Релизы Concord Loom v0.1 связывают исходники, пакет, независимые проверки и квитанцию начального выпуска.">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/ru/release/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ru_RU">
+    <title>Релиз | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
+    <header class="site-header">
+      <a class="brand" href="../../../ru/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Навигация по документу">
+        <a class="view-tab" href="../">Документация</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/en/release/">English version</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">СПРАВОЧНИК CONCORD LOOM</p>
+        <h1>Релиз</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>Релизы Concord Loom v0.1 связывают исходники, пакет, независимые проверки и квитанцию начального выпуска.</p>
+<p>Инструкции для <code>v0.1.0</code> ниже относятся к исторической проверке неизменяемого тега. В текущей разработке также есть принятые правила, по которым Concord Loom меняет сам себя, и двуязычная версия сайта для Pages. Нельзя использовать файлы текущего рабочего дерева, чтобы пересматривать утверждения о теге.</p>
+<h2 id="section-01">Проверка исходников</h2>
+<pre tabindex="0"><code class="language-bash">git clone https://github.com/concordloom/concordloom.git
+cd concordloom
+git fetch --tags
+git checkout --detach v0.1.0
+git status --short
+./tools/check.sh</code></pre>
+<p>Рабочее дерево должно быть чистым, а проверка должна закончиться <code>CHECK_OK</code>.</p>
+<h2 id="section-02">Проверка артефактов релиза</h2>
+<p>Скачайте wheel, архив исходников, <code>SHA256SUMS</code> и набор квитанций начального выпуска из GitHub-релиза <code>v0.1.0</code>, затем выполните:</p>
+<pre tabindex="0"><code class="language-bash">sha256sum --check SHA256SUMS
+python3 -m venv /tmp/concordloom-release-check
+/tmp/concordloom-release-check/bin/python -m pip install \
+  --no-deps concordloom-0.1.0-py3-none-any.whl
+/tmp/concordloom-release-check/bin/concordloom --version
+/tmp/concordloom-release-check/bin/python -m pip check</code></pre>
+<p>У wheel не должно быть зависимостей Python, необходимых во время исполнения. В него входят переносимый пакет, семнадцать публичных схем и пример цепочки артефактов для поставки ПО.</p>
+<h2 id="section-03">Проверка квитанции начального выпуска</h2>
+<p>В набор квитанций входят:</p>
+<ul>
+<li>завершённая начальная карточка запуска;</li>
+<li>точный начальный цикл и политика вычислений;</li>
+<li>закреплённые коммит и хеш дерева проверяемой версии;</li>
+<li>фактические попытки узлов;</li>
+<li>независимые доказательства R, L, Q и M;</li>
+<li>собственный канонический хеш SHA-256.</li>
+</ul>
+<p>Исполнитель экспортирует набор только из завершённого запуска и повторно проверяет версию результата, все узлы, связь независимой проверки с этой версией и разделение автора с проверяющим. <code>SHA256SUMS</code> релиза закрепляет экспортированные байты рядом с кандидатом тега.</p>
+<p>Собственный хеш не подтверждает личность автора. Проверяйте происхождение релиза и тега подходящим для среды способом и добавляйте подписанные подтверждения, если нужна криптографическая идентичность.</p>
+<h2 id="section-04">Уровни доказательств</h2>
+<p>Не объединяйте следующие утверждения:</p>
+<ul>
+<li>Модульные и интеграционные тесты проверяют детерминированные пути кода.</li>
+<li>Быстрая проверка установленного wheel подтверждает упаковку и доступность команды.</li>
+<li>Проверка в браузере доказывает только просмотренные состояния и размеры окна.</li>
+<li>Независимая проверка качества оценивает точную закреплённую версию.</li>
+<li>Быстрая проверка свежего публичного клона подтверждает доступность тега и</li>
+</ul>
+<p>файлов релиза.</p>
+<p>Ни одно из них само по себе не доказывает ценность продукта, полноту тестовых оракулов или криптографическую идентичность ревьюера.</p>
+<h2 id="section-05">Проверка действующих правил разработки</h2>
+<p>Проверяйте точные файлы конфигурации, реестра и политики, связь с предыдущей версией и дописываемый каталог, а не полагайтесь на слово «текущая». Принятый корень — <code>steward-concordloom</code>; действующая модель содержит десять областей ответственности и 66 циклов. Наблюдение, согласование, фиксация правил, исполнение, проверка, публикация и эволюция — этапы запуска, а не верхний уровень графа вложенности.</p>
+<p>Конфигурация включена решением, отдельным от предложения эволюции. В предложении остаётся <code>activation_allowed: false</code>, а предыдущая конфигурация доступна в каталоге. Это подтверждает управляемое изменение собственных правил; сгенерированный Атлас или текст сайта сами по себе этого не доказывают.</p>
+<h2 id="section-06">Проверка двуязычного кандидата Pages</h2>
+<p>В рабочем дереве с текущей проверяемой версией выполните:</p>
+<pre tabindex="0"><code class="language-bash">PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 tools/build_site.py --check
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 tools/check_site.py</code></pre>
+<p>Проверки привязывают <code>site/data/atlas.json</code> к действующей конфигурации, требуют достаточный объём английского и русского текста, проверяют локальные локальные файлы и элементы доступности, а также точный размер изображения для карточки ссылки — 1280 × 640 пикселей. Главное изображение и карточка ссылки в <code>docs/assets/</code> — исходные коммуникационные материалы; копии в <code>site/assets/</code> должны совпадать с детерминированной сборкой.</p>
+<p>Процесс Pages публикует сайт в ограниченной области. Проверьте условие запуска, путь артефакта, разрешения <code>contents: read</code>, <code>pages: write</code>, <code>id-token: write</code> и отдельную среду <code>github-pages</code>. Успешная локальная проверка или сборка процесса не доказывает ни разрешение публикации, ни наличие живого URL.</p>
+<p>Для проверки опубликованного сайта нужны запись о развёртывании и URL точной версии. После этого свежий запрос должен проверить переключение языка, локальные файлы, метаданные карточки ссылки и хеш принятого Атласа. Пока таких данных нет, называйте сайт кандидатом Pages, а не развёрнутым сайтом.</p>
+<h2 id="section-07">Последовательность релиза для сопровождающего</h2>
+<p>Для неизменяемого релиза v0.1:</p>
+<ol>
+<li>Завершить код и документацию.</li>
+<li>Сгенерировать и проверить автономный атлас.</li>
+<li>Закоммитить чистого кандидата и один раз закрепить его.</li>
+<li>Выполнить независимые проверки справочных данных, внешнего вида, качества и</li>
+</ol>
+<p>готовности к выпуску.</p>
+<ol>
+<li>Опубликовать точный commit и аннотированный тег <code>v0.1.0</code>.</li>
+<li>Быстро проверить свежий публичный клон и установленный wheel.</li>
+<li>Записать сигналы эволюции, которые могут только обосновать предложение.</li>
+<li>Завершить начальный запуск и экспортировать набор квитанций.</li>
+<li>Приложить набор и итоговые контрольные суммы к GitHub-релизу.</li>
+</ol>
+<p>Для преемника и публикации Pages:</p>
+<ol>
+<li>Закрепить проверяемую версию под действующей предыдущей конфигурацией.</li>
+<li>Проверить двуязычную документацию, файлы сайта, изображения и происхождение атласа.</li>
+<li>Получить независимую проверку точного кандидата.</li>
+<li>Для активации преемника записать отдельное решение полномочного оператора.</li>
+<li>Добавить включённую конфигурацию, не заменяя предыдущую в истории.</li>
+<li>Разрешить издателю развернуть только проверенный артефакт <code>site/</code>.</li>
+<li>Сохранить квитанцию развёртывания и быстро проверить живой URL.</li>
+<li>Записать последующие затруднения как сигналы; не активировать их предложение</li>
+</ol>
+<p>автоматически.</p>
+<p>Если байты исходников изменились после закрепления версии, начните новый запуск.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

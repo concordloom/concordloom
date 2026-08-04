@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ru" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Атлас отвечает на три вопроса:">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/ru/atlas/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/atlas/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/atlas/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/atlas/">
+    <meta property="og:title" content="Атлас | Concord Loom">
+    <meta property="og:description" content="Атлас отвечает на три вопроса:">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/ru/atlas/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ru_RU">
+    <title>Атлас | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
+    <header class="site-header">
+      <a class="brand" href="../../../ru/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Навигация по документу">
+        <a class="view-tab" href="../">Документация</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/en/atlas/">English version</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">СПРАВОЧНИК CONCORD LOOM</p>
+        <h1>Атлас</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>Атлас отвечает на три вопроса:</p>
+<ol>
+<li>Какой цикл отвечает за эту работу?</li>
+<li>Что цикл должен получить и вернуть?</li>
+<li>Какие сведения взяты из утверждённого плана, а какие записаны во время запуска?</li>
+</ol>
+<p>Это представление только для просмотра. Оно не разрешает работу, не выполняет переходы, не публикует внешние изменения и не включает новую конфигурацию.</p>
+<h2 id="section-01">Предварительный маршрут задачи</h2>
+<p>Опишите задачу обычными словами. Concord Loom может предложить короткий маршрут до нужных циклов и добавить родительские циклы, которые задают их границы.</p>
+<p>Такой маршрут помечен как <strong>предложенный</strong>, а не <strong>запланированный</strong>. Он привязан к точной версии Атласа, описанию способов выполнения и версии файлов, но не даёт полномочий и ничего не записывает в репозиторий, не обращается к сети и не выполняет внешних действий. Исходный текст запроса не попадает в постоянный артефакт: сохраняется только его отпечаток. Предпросмотр также показывает, понадобится ли каждому шагу сеть и что он сможет изменить за пределами репозитория после отдельного подтверждения и разрешения.</p>
+<p>Вы можете исправить выбранные циклы или подтвердить маршрут. После подтверждения из этой точной версии маршрута создаётся черновик запуска. Принятый Атлас при этом не меняется. Если изменилась конфигурация, версия файлов или описание способов выполнения, старый маршрут считается устаревшим и строится заново.</p>
+<h2 id="section-02">Интерактивный Атлас проекта</h2>
+<p><a href="https://concordloom.github.io/concordloom/?lang=ru#atlas/steward-concordloom" rel="noreferrer">Публичный Атлас</a> показывает все 66 циклов разработки Concord Loom. Начните с корня и выберите дочерний цикл, чтобы перейти на уровень глубже.</p>
+<p>Первый экран объясняет цикл без внутренних терминов:</p>
+<ul>
+<li>зачем нужен цикл;</li>
+<li>что он получает;</li>
+<li>какой результат возвращает;</li>
+<li>какие дочерние циклы можно открыть.</li>
+</ul>
+<p>Ответственная роль, ограничения, модель, режим рассуждения, навыки, инструменты и подключения MCP находятся в блоке <strong>Технические данные</strong>. Откройте его, если нужно проверить маршрут работы. Там же находятся машинные идентификаторы, имена артефактов, обязательные проверки и хеш принятого источника.</p>
+<p>Атлас отдельно показывает план и записанный запуск. Если модель, навык, инструмент или MCP-сервер не записаны, интерфейс сообщает об отсутствии данных, а не подставляет предполагаемое значение.</p>
+<p>В заголовке разделены 2 версии:</p>
+<pre tabindex="0"><code class="language-text">Версия продукта: 0.1.5
+Правила разработки: редакция 12</code></pre>
+<p>Редакция 11 — это одиннадцатая принятая версия правил собственной разработки Concord Loom. Это не выпуск продукта.</p>
+<h2 id="section-03">Полная система разработки</h2>
+<p>Корневой цикл содержит 10 областей ответственности:</p>
+<pre tabindex="0"><code class="language-text">Развивать Concord Loom
+├── Направление продукта
+├── Исследования и теория
+├── Проектирование протокола
+├── Исполнение и инструменты
+├── Доверие и проверка
+├── Привязки и адаптеры
+├── Знания и опыт
+├── Выпуск и распространение
+├── Применение и обратная связь
+└── Эволюция системы</code></pre>
+<p>Каждая область раскрывается до конкретных циклов возможностей. Полная схема остаётся доступной под интерактивным представлением.</p>
+<h2 id="section-04">Эволюция</h2>
+<p>Контур эволюции всегда виден:</p>
+<pre tabindex="0"><code class="language-text">собрать сигналы
+  → предложить новую конфигурацию
+  → независимо проверить её
+  → включить отдельным решением оператора
+  → наблюдать за переходом</code></pre>
+<p>Предложение не может включить себя само. Право включения берётся из действующих правил, а не из предлагаемой замены.</p>
+<h2 id="section-05">План и факт</h2>
+<p>Атлас разделяет:</p>
+<div class="content-table-wrap"><table>
+<thead><tr><th>Слой</th><th>Значение</th></tr></thead><tbody>
+<tr><td>Предложенный маршрут</td><td>Предварительный маршрут без права запуска, который ждёт подтверждения</td></tr>
+<tr><td>Утверждённый план</td><td>Действующая структура циклов, роли, ограничения и предполагаемые ресурсы</td></tr>
+<tr><td>Записанный запуск</td><td>Кто работал, какую модель, инструкции и инструменты использовал, обращался ли к сети, какие эффекты выполнил и что получил</td></tr>
+<tr><td>Проверенный результат</td><td>Данные проверки, связанные с точной версией результата и проверенные по контракту</td></tr>
+<tr><td>Расхождение</td><td>Видимая разница между планом и фактом</td></tr>
+</tbody></table></div>
+<p>Если данных запуска нет, Атлас так и показывает. Он не превращает план в выдуманную историю исполнения.</p>
+<h2 id="section-06">Автономный Атлас</h2>
+<p>Команда <code>concordloom atlas</code> создаёт один автономный HTML-файл для любой совместимой конфигурации:</p>
+<pre tabindex="0"><code class="language-bash">concordloom atlas \
+  --binding path/to/binding.json \
+  --registry path/to/cycle-registry.json \
+  --policy path/to/policy.json \
+  --run-card path/to/run-card.json \
+  --output path/to/atlas.html</code></pre>
+<p>Карточка запуска необязательна. Без неё файл показывает только утверждённый план.</p>
+<p>В CI используйте <code>--check</code>, чтобы отклонять устаревший файл:</p>
+<pre tabindex="0"><code class="language-bash">concordloom atlas \
+  --binding path/to/binding.json \
+  --registry path/to/cycle-registry.json \
+  --policy path/to/policy.json \
+  --output path/to/atlas.html \
+  --check</code></pre>
+<p>Готовый файл не загружает удалённые скрипты, шрифты, API или аналитику.</p>
+<h2 id="section-07">Источник данных</h2>
+<p>Атлас строится из принятых JSON-артефактов и записанных квитанций запуска. Редактирование <code>docs/ATLAS.html</code> или <code>site/data/atlas.json</code> не меняет принятую систему.</p>
+<p>После изменения принятых входов пересоберите и проверьте оба представления:</p>
+<pre tabindex="0"><code class="language-bash">PYTHONPATH=src python3 tools/build_site.py
+PYTHONPATH=src python3 tools/build_site.py --check
+./tools/check.sh</code></pre>
+<p>Используйте Атлас для объяснения и проверки системы, но не считайте его границей безопасности.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

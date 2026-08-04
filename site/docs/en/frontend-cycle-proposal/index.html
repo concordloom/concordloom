@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Language: English | Русский">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/frontend-cycle-proposal/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/frontend-cycle-proposal/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/frontend-cycle-proposal/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/frontend-cycle-proposal/">
+    <meta property="og:title" content="Frontend cycle proposal | Concord Loom">
+    <meta property="og:description" content="Language: English | Русский">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/frontend-cycle-proposal/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Frontend cycle proposal | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/frontend-cycle-proposal/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Frontend cycle proposal</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>Language: <strong>English</strong> | <a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/FRONTEND_CYCLE_PROPOSAL.md" rel="noreferrer">Русский</a></p>
+<p>Status: <strong>proposal only — not activated</strong></p>
+<p>Base: active Concord Loom self-binding v9</p>
+<h2 id="section-01">Decision requested</h2>
+<p>Approve strengthening the existing frontend cycle without adding or removing loops.</p>
+<p>The current topology is sufficient. The failure was in its acceptance contracts: a page could work mechanically while remaining visibly unlike the accepted concept. The successor should make that impossible to call complete.</p>
+<h2 id="section-02">What the user should receive</h2>
+<p>Every frontend change should end with one exact candidate that:</p>
+<ul>
+<li>follows the accepted visual contract on every public route;</li>
+<li>works at 360×800, 390×844, 844×390, 768×1024, 1024×768, 1440×900,</li>
+</ul>
+<p>and 1920×1080;</p>
+<ul>
+<li>works in English and Russian, with English as the deterministic default;</li>
+<li>stays understandable with JavaScript disabled;</li>
+<li>has honest loading, empty, stale, and error states;</li>
+<li>supports keyboard use, 200% zoom, and reduced motion;</li>
+<li>preserves URLs, browser Back and Forward, language, and Atlas location;</li>
+<li>has no overlaps, clipped labels, accidental horizontal scrolling, duplicate</li>
+</ul>
+<p>navigation, dead controls, or targets smaller than 44×44 CSS pixels;</p>
+<ul>
+<li>has a readable text or tree alternative for every interactive graph;</li>
+<li>is reviewed visually by an independent critic against the accepted concept,</li>
+</ul>
+<p>not only against its previous screenshot.</p>
+<h2 id="section-03">Existing cycle, stronger contracts</h2>
+<h3 id="section-03-detail-01">1. Define frontend concept</h3>
+<p>Turn product intent and references into one visual contract. The contract names the composition, hierarchy, responsive changes, component states, motion, forbidden patterns, supported viewports, and evidence required for acceptance.</p>
+<p>Use <code>ui-ux-pro-max</code>, the Concord Loom design system, and relevant design skills as pinned resources. A generated recommendation is input, not a second source of truth.</p>
+<h3 id="section-03-detail-02">2. Accept frontend concept</h3>
+<p>An operator accepts or rejects the exact contract digest. Screenshots and prose that are not bound to that digest cannot substitute for this decision.</p>
+<h3 id="section-03-detail-03">3. Maintain interface workshop</h3>
+<p>The workshop must use production tokens and production component CSS. It must show normal, hover, focus, pressed, disabled, loading, empty, error, stale, long-copy, English, and Russian states. A mock component that does not share production styles is not evidence.</p>
+<p>Storybook is optional. The dependency-free workshop remains the default until component count or collaboration needs justify the additional runtime and maintenance cost.</p>
+<h3 id="section-03-detail-04">4. Implement frontend candidate</h3>
+<p>Build only from the accepted contract and workshop components. Route state, Atlas selection, language, and overlays must be addressable and restorable. Technical data stays available without dominating the main interface.</p>
+<h3 id="section-03-detail-05">5. Maintain browser harness</h3>
+<p>The harness must test the exact viewport and locale matrix, no-JavaScript rendering, loading and failure paths, keyboard focus, modal isolation, minimum target size, graph geometry, label collisions, browser history, zoom, reduced motion, and accessibility rules.</p>
+<p>The Playwright MCP may help an author inspect the interface, but deterministic Playwright tests and exact artifacts remain the verification source.</p>
+<h3 id="section-03-detail-06">6. Verify frontend candidate</h3>
+<p>A model-free verifier runs the pinned harness against the exact candidate. It produces screenshots, geometry results, accessibility results, runtime state evidence, and a SHA-256 manifest of the visual baselines. It cannot update its own baselines and cannot make a taste judgment.</p>
+<h3 id="section-03-detail-07">7. Critique frontend experience</h3>
+<p>A fresh high-reasoning critic compares the exact concept, contract, candidate, and full screenshot matrix. The critic checks visual fidelity, hierarchy, clarity, Russian copy, and whether the interface feels like one product.</p>
+<p>Its verdict is <code>PASS</code>, <code>REVISE</code>, or <code>INDETERMINATE</code>. A mechanical pass cannot override <code>REVISE</code>.</p>
+<h2 id="section-04">Revision boundary</h2>
+<p><code>REVISE</code> returns the candidate to implementation, then verification and independent critique run again on a new digest. After three failed revisions, the run stops and asks the operator whether the concept, the implementation, or the acceptance contract should change.</p>
+<p>No agent may silently weaken the visual contract, update golden screenshots to hide a regression, or accept work it authored.</p>
+<h2 id="section-05">Model and resource budget</h2>
+<div class="content-table-wrap"><table>
+<thead><tr><th>Work</th><th>Default route</th></tr></thead><tbody>
+<tr><td>Concept, workshop, implementation</td><td>Terra, medium reasoning</td></tr>
+<tr><td>Harness maintenance</td><td>Terra, low reasoning</td></tr>
+<tr><td>Deterministic browser and manifest checks</td><td>No model</td></tr>
+<tr><td>Routine failure triage</td><td>Luna, low reasoning where a model is useful</td></tr>
+<tr><td>Final independent visual critique</td><td>Sol, high reasoning</td></tr>
+<tr><td>Russian interface and documentation review</td><td><code>ru-text</code>; escalate to Sol only for unresolved high-impact copy</td></tr>
+</tbody></table></div>
+<p>This keeps expensive reasoning at the judgment boundary instead of spending it on every CSS or test change.</p>
+<h2 id="section-06">Exact evidence required</h2>
+<p>One candidate digest must bind:</p>
+<ol>
+<li>the accepted visual-contract digest;</li>
+<li>the source tree and generated site bytes;</li>
+<li>the production workshop;</li>
+<li>the browser harness;</li>
+<li>screenshots for all accepted routes, locales, states, and viewports;</li>
+<li>the visual-baseline manifest;</li>
+<li>deterministic verification results;</li>
+<li>an independent critic receipt.</li>
+</ol>
+<p>Publication remains a separate publisher action. A passing frontend candidate is not deployment authority.</p>
+<h2 id="section-07">Proposed successor delta</h2>
+<p>If this proposal is approved, a future self-binding successor should:</p>
+<ul>
+<li>keep the current <code>design-site-experience</code> topology;</li>
+<li>bind <code>ui-ux-pro-max</code>, <code>ru-text</code>, design-system guidance, and the browser</li>
+</ul>
+<p>adapter as versioned resources where they are used;</p>
+<ul>
+<li>replace broad prose outputs with the exact evidence above;</li>
+<li>make the three-revision boundary and return path explicit;</li>
+<li>require negative geometry, interaction, and language assertions;</li>
+<li>reject a critic receipt from the candidate author;</li>
+<li>document the public guard command consistently as</li>
+</ul>
+<p><code>python3 -m concordloom run guard</code>.</p>
+<p>Activation must remain a separate operator decision. This document does not change the active binding.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

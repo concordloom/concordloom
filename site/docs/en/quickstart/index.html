@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="You do not need to learn Concord Loom&#x27;s internal file formats before you can use it. The normal path has four steps:">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/quickstart/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/quickstart/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/quickstart/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/quickstart/">
+    <meta property="og:title" content="Quickstart | Concord Loom">
+    <meta property="og:description" content="You do not need to learn Concord Loom&#x27;s internal file formats before you can use it. The normal path has four steps:">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/quickstart/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Quickstart | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/quickstart/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Quickstart</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>You do not need to learn Concord Loom&#x27;s internal file formats before you can use it. The normal path has four steps:</p>
+<ol>
+<li>install one Codex skill;</li>
+<li>let it inspect the repository without changing it;</li>
+<li>review a visual Atlas and correct anything it misunderstood;</li>
+<li>approve the connection only when the map looks right.</li>
+</ol>
+<p>The schemas, graph checks, evidence records, and authority rules stay behind that conversation.</p>
+<h2 id="section-01">What you will get</h2>
+<p>The first session produces a draft Atlas of the repository:</p>
+<ul>
+<li>the work areas the skill found;</li>
+<li>the cycles it thinks connect those areas;</li>
+<li>the evidence behind each conclusion;</li>
+<li>and the uncertain parts that still need your judgment.</li>
+</ul>
+<p>The draft is not an accepted configuration and cannot grant itself authority. Until you approve it, the repository remains unchanged.</p>
+<h2 id="section-02">1. Install the Codex skill</h2>
+<p>Ask Codex:</p>
+<pre tabindex="0"><code class="language-text">Use $skill-installer to install
+https://github.com/concordloom/concordloom/tree/v0.1.5/plugins/concordloom/skills/design-project-loops</code></pre>
+<p>Start a new Codex conversation in the repository after installation. The new conversation is important: it ensures that Codex loads the installed skill.</p>
+<h2 id="section-03">2. Ask for the first Atlas</h2>
+<p>Say:</p>
+<pre tabindex="0"><code class="language-text">Use $design-project-loops to analyse this repository and build its first Atlas.
+Do not change the repository until I approve the map.</code></pre>
+<p>The skill first asks:</p>
+<ol>
+<li>which language to use for the conversation and generated material;</li>
+<li>what name to use when addressing you.</li>
+</ol>
+<p>It does not ask you to invent roles, authority identifiers, graph boundaries, or artifact paths.</p>
+<p>Next, the skill checks whether the Concord Loom command is available. If it is missing, the skill shows one safe installation plan and asks for permission before changing your environment or using the network. The preferred command is:</p>
+<pre tabindex="0"><code class="language-bash">pipx install \
+  &quot;concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5&quot;</code></pre>
+<p>Do not use <code>--break-system-packages</code>. The skill can also use <code>uv tool</code> or an isolated managed environment when <code>pipx</code> is unavailable.</p>
+<h2 id="section-04">3. Review the map</h2>
+<p>The first analysis is read-only. The skill inspects tracked files, repository areas, imports, bounded Git history, and files that often change together. It does not run the repository&#x27;s code.</p>
+<p>The draft Atlas is written outside the repository. Open it and click through the proposed cycles. Each cycle should answer three ordinary questions:</p>
+<ul>
+<li>What part of the project is this?</li>
+<li>What result does this work produce?</li>
+<li>What other work does it depend on?</li>
+</ul>
+<p>Then answer one question: <strong>does this map describe the project correctly?</strong></p>
+<p>You can reply in ordinary language:</p>
+<pre tabindex="0"><code class="language-text">Yes, this is accurate.</code></pre>
+<p>or:</p>
+<pre tabindex="0"><code class="language-text">No. Release notes belong to the release cycle, not documentation.</code></pre>
+<p>The skill updates the draft and shows it again. A correction is only a correction; it does not require a role or a special authority label.</p>
+<h2 id="section-05">4. Connect the repository</h2>
+<p>When the map is accurate, the skill asks separately whether it may save the first accepted configuration inside the repository. This is the first repository write, so approval must be explicit.</p>
+<p>After connection:</p>
+<ul>
+<li>the accepted Atlas becomes the shared map of the project;</li>
+<li>later work can target the relevant cycle instead of loading the whole system;</li>
+<li>the Atlas can be regenerated from the accepted configuration;</li>
+<li>repeated problems can produce a reviewable evolution proposal;</li>
+<li>and a person still decides whether a proposed successor becomes active.</li>
+</ul>
+<p>Approving the map and activating a future evolution are separate decisions. The framework may suggest a better version of its rules; it cannot install that version by itself.</p>
+<h2 id="section-06">Everyday use</h2>
+<blockquote><strong>Release status:</strong> Route Preview is available on unreleased <code>main</code>, not in the stable v0.1.5 package used above. Keep using v0.1.5 for onboarding and Atlas generation. Test the preview only after explicitly accepting an unreleased install; otherwise wait for the next tagged release.</blockquote>
+<p>For normal work, describe the task and ask Codex to show the route before it starts:</p>
+<pre tabindex="0"><code class="language-text">Use $design-project-loops for this change. Show me the route first. Do not start
+until I confirm it.</code></pre>
+<p>You will see a short sequence of relevant cycles and a plain explanation of why each one is needed. Nothing runs at this point. You can confirm the route or correct it in ordinary language.</p>
+<p>Confirmation creates an exact draft. A separate run authorization is still required before work can start. After authorization, the skill records what actually happened, and shows any difference between plan and fact. A change that should apply only to this task stays in this run. A change that should affect future work becomes a separate evolution proposal and does not activate itself.</p>
+<h2 id="section-07">Manual CLI path</h2>
+<p>The skill is the recommended interface. Use the CLI directly when you are integrating Concord Loom into automation or developing the framework itself.</p>
+<p>Read-only inspection:</p>
+<pre tabindex="0"><code class="language-bash">WORK_DIR=&quot;$(mktemp -d /tmp/concordloom-quickstart-XXXXXX)&quot;
+concordloom inspect . \
+  --output &quot;$WORK_DIR/observed-project-graph.json&quot;
+concordloom questions \
+  --graph &quot;$WORK_DIR/observed-project-graph.json&quot; \
+  --output &quot;$WORK_DIR/questions.json&quot;</code></pre>
+<p>These files contain observations and hypotheses, not an accepted project map. Run <code>concordloom --help</code> for the lower-level proposal, compilation, run, Atlas, and evolution commands.</p>
+<h2 id="section-08">What to read next</h2>
+<ul>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ATLAS.md" rel="noreferrer">Atlas guide</a> explains the interactive and portable views.</li>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/CONCEPTS.md" rel="noreferrer">Core concepts</a> explains the two graphs and fact states.</li>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/TRUST_MODEL.md" rel="noreferrer">Trust model</a> explains why verification and permission are</li>
+</ul>
+<p>separate.</p>
+<ul>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ARCHITECTURE.md" rel="noreferrer">Architecture</a> documents the kernel and adapters.</li>
+</ul>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

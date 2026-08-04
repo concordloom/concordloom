@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Documentation is part of the product. A schema may be exact and still leave a reader unable to act. Concord Loom therefore reviews meaning and…">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/writing/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/writing/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/writing/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/writing/">
+    <meta property="og:title" content="Writing for humans | Concord Loom">
+    <meta property="og:description" content="Documentation is part of the product. A schema may be exact and still leave a reader unable to act. Concord Loom therefore reviews meaning and…">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/writing/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Writing for humans | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/writing/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Writing for humans</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/WRITING.md" rel="noreferrer">Русская версия</a></p>
+<p>Documentation is part of the product. A schema may be exact and still leave a reader unable to act. Concord Loom therefore reviews meaning and comprehension, not only links, headings, and translation length.</p>
+<h2 id="section-01">The reader test</h2>
+<p>Within the first 150 words of a top-level concept, a reader should be able to answer three questions:</p>
+<ol>
+<li>What is it?</li>
+<li>Why does it matter?</li>
+<li>What is one concrete example?</li>
+</ol>
+<p>If the text cannot answer those questions, it is not ready.</p>
+<h2 id="section-02">Write the idea before the identifier</h2>
+<p>Use ordinary words in prose. Introduce a machine identifier only when the reader needs to recognize it in a command, JSON document, or Atlas view.</p>
+<p>Good:</p>
+<blockquote>The active configuration lists the cycles and their authority. The JSON artifact calls this configuration a <code>binding</code>.</blockquote>
+<p>Bad:</p>
+<blockquote>The active binding materializes policy-bound containment semantics.</blockquote>
+<h2 id="section-03">Keep fact states separate</h2>
+<p>Say whether something was observed, proposed, accepted, planned, run, or verified. Do not use a confident verb to hide a missing decision or missing evidence.</p>
+<h2 id="section-04">Translation preserves meaning</h2>
+<p>Russian text is edited as Russian prose. It is not an English sentence with translated nouns. Product identifiers, commands, paths, JSON keys, and code remain unchanged. Explanatory terms follow [<code>terminology.json</code>](terminology.json).</p>
+<h2 id="section-05">Comprehension is an independent cycle</h2>
+<p><code>review-comprehension</code> checks the candidate after authoring and localization. Its reviewer looks for unexplained jargon, literal translation, empty claims, missing examples, and instructions that cannot be followed. The author cannot close this check by asserting that the text is clear.</p>
+<p>Automated checks catch known terminology leaks and structural defects. They do not replace a reader.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
