@@ -18,6 +18,15 @@
 [![Pages](https://github.com/concordloom/concordloom/actions/workflows/pages.yml/badge.svg)](https://github.com/concordloom/concordloom/actions/workflows/pages.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-c8ff00.svg)](LICENSE)
 
+> [!WARNING]
+> **Concord Loom находится на очень ранней, экспериментальной стадии.** Часть
+> сценариев ещё не реализована, настройка может оказаться неудобной, а сбои —
+> неожиданными. Пока не используйте систему как единственную защиту критичных
+> процессов. Особенно полезны испытания на реальных репозиториях, сообщения
+> о багах и неудобствах, а также правки документации и кода. Подробнее —
+> в [руководстве для участников](.github/CONTRIBUTING.ru.md). Можно также открыть
+> [обсуждение](https://github.com/concordloom/concordloom/discussions).
+
 **Concord Loom помогает описать сложную работу как систему вложенных циклов.
 Для каждого цикла он фиксирует вход, результат, пределы, ответственных и
 условия завершения.**

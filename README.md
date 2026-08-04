@@ -18,6 +18,14 @@
 [![Pages](https://github.com/concordloom/concordloom/actions/workflows/pages.yml/badge.svg)](https://github.com/concordloom/concordloom/actions/workflows/pages.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-c8ff00.svg)](LICENSE)
 
+> [!WARNING]
+> **Concord Loom is at a very early, experimental stage.** Some workflows are
+> incomplete, setup may be awkward, and unexpected failures are likely. Do not
+> rely on it as the only control for production-critical work yet. Tests on real
+> repositories, bug reports, usability feedback, documentation fixes, and code
+> contributions are especially welcome. See [CONTRIBUTING.md](.github/CONTRIBUTING.md)
+> or start a [Discussion](https://github.com/concordloom/concordloom/discussions).
+
 **Concord Loom is a domain-neutral framework for discovering, negotiating,
 binding, executing, verifying, visualizing, and evolving finite systems of
 loops.**
