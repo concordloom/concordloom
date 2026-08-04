@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Quickstart, theory, and reference material for Concord Loom.">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/">
+    <meta property="og:title" content="Concord Loom documentation">
+    <meta property="og:description" content="Quickstart, theory, and reference material for Concord Loom.">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <title>Concord Loom documentation</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../design-tokens.css">
+    <link rel="stylesheet" href="../../design-system.css">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../en/" aria-label="Concord Loom">
+        <img src="../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Language versions">
+        <a class="view-tab" href="../ru/">Русская версия</a>
+        <a class="view-tab is-active" href="../../en/">Open the interactive site</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">ENGLISH DOCUMENTATION</p>
+        <h1>Concord Loom documentation</h1>
+        <p>Concord Loom maps how work is accepted, executed, verified, and allowed to change. Start with the practical guide, then read the complete argument.</p>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy">
+          <h2>Quickstart</h2>
+          <h1 id="quickstart-document-title">Concord Loom quickstart</h1>
+<p>You do not need to learn Concord Loom&#x27;s internal file formats before you can use it. The normal path has four steps:</p>
+<ol>
+<li>install one Codex skill;</li>
+<li>let it inspect the repository without changing it;</li>
+<li>review a visual Atlas and correct anything it misunderstood;</li>
+<li>approve the connection only when the map looks right.</li>
+</ol>
+<p>The schemas, graph checks, evidence records, and authority rules stay behind that conversation.</p>
+<h2 id="quickstart-section-01">What you will get</h2>
+<p>The first session produces a draft Atlas of the repository:</p>
+<ul>
+<li>the work areas the skill found;</li>
+<li>the cycles it thinks connect those areas;</li>
+<li>the evidence behind each conclusion;</li>
+<li>and the uncertain parts that still need your judgment.</li>
+</ul>
+<p>The draft is not an accepted configuration and cannot grant itself authority. Until you approve it, the repository remains unchanged.</p>
+<h2 id="quickstart-section-02">1. Install the Codex skill</h2>
+<p>Ask Codex:</p>
+<pre tabindex="0"><code class="language-text">Use $skill-installer to install
+https://github.com/concordloom/concordloom/tree/v0.1.5/plugins/concordloom/skills/design-project-loops</code></pre>
+<p>Start a new Codex conversation in the repository after installation. The new conversation is important: it ensures that Codex loads the installed skill.</p>
+<h2 id="quickstart-section-03">2. Ask for the first Atlas</h2>
+<p>Say:</p>
+<pre tabindex="0"><code class="language-text">Use $design-project-loops to analyse this repository and build its first Atlas.
+Do not change the repository until I approve the map.</code></pre>
+<p>The skill first asks:</p>
+<ol>
+<li>which language to use for the conversation and generated material;</li>
+<li>what name to use when addressing you.</li>
+</ol>
+<p>It does not ask you to invent roles, authority identifiers, graph boundaries, or artifact paths.</p>
+<p>Next, the skill checks whether the Concord Loom command is available. If it is missing, the skill shows one safe installation plan and asks for permission before changing your environment or using the network. The preferred command is:</p>
+<pre tabindex="0"><code class="language-bash">pipx install \
+  &quot;concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5&quot;</code></pre>
+<p>Do not use <code>--break-system-packages</code>. The skill can also use <code>uv tool</code> or an isolated managed environment when <code>pipx</code> is unavailable.</p>
+<h2 id="quickstart-section-04">3. Review the map</h2>
+<p>The first analysis is read-only. The skill inspects tracked files, repository areas, imports, bounded Git history, and files that often change together. It does not run the repository&#x27;s code.</p>
+<p>The draft Atlas is written outside the repository. Open it and click through the proposed cycles. Each cycle should answer three ordinary questions:</p>
+<ul>
+<li>What part of the project is this?</li>
+<li>What result does this work produce?</li>
+<li>What other work does it depend on?</li>
+</ul>
+<p>Then answer one question: <strong>does this map describe the project correctly?</strong></p>
+<p>You can reply in ordinary language:</p>
+<pre tabindex="0"><code class="language-text">Yes, this is accurate.</code></pre>
+<p>or:</p>
+<pre tabindex="0"><code class="language-text">No. Release notes belong to the release cycle, not documentation.</code></pre>
+<p>The skill updates the draft and shows it again. A correction is only a correction; it does not require a role or a special authority label.</p>
+<h2 id="quickstart-section-05">4. Connect the repository</h2>
+<p>When the map is accurate, the skill asks separately whether it may save the first accepted configuration inside the repository. This is the first repository write, so approval must be explicit.</p>
+<p>After connection:</p>
+<ul>
+<li>the accepted Atlas becomes the shared map of the project;</li>
+<li>later work can target the relevant cycle instead of loading the whole system;</li>
+<li>the Atlas can be regenerated from the accepted configuration;</li>
+<li>repeated problems can produce a reviewable evolution proposal;</li>
+<li>and a person still decides whether a proposed successor becomes active.</li>
+</ul>
+<p>Approving the map and activating a future evolution are separate decisions. The framework may suggest a better version of its rules; it cannot install that version by itself.</p>
+<h2 id="quickstart-section-06">Everyday use</h2>
+<blockquote><strong>Release status:</strong> Route Preview is available on unreleased <code>main</code>, not in the stable v0.1.5 package used above. Keep using v0.1.5 for onboarding and Atlas generation. Test the preview only after explicitly accepting an unreleased install; otherwise wait for the next tagged release.</blockquote>
+<p>For normal work, describe the task and ask Codex to show the route before it starts:</p>
+<pre tabindex="0"><code class="language-text">Use $design-project-loops for this change. Show me the route first. Do not start
+until I confirm it.</code></pre>
+<p>You will see a short sequence of relevant cycles and a plain explanation of why each one is needed. Nothing runs at this point. You can confirm the route or correct it in ordinary language.</p>
+<p>Confirmation creates an exact draft. A separate run authorization is still required before work can start. After authorization, the skill records what actually happened, and shows any difference between plan and fact. A change that should apply only to this task stays in this run. A change that should affect future work becomes a separate evolution proposal and does not activate itself.</p>
+<h2 id="quickstart-section-07">Manual CLI path</h2>
+<p>The skill is the recommended interface. Use the CLI directly when you are integrating Concord Loom into automation or developing the framework itself.</p>
+<p>Read-only inspection:</p>
+<pre tabindex="0"><code class="language-bash">WORK_DIR=&quot;$(mktemp -d /tmp/concordloom-quickstart-XXXXXX)&quot;
+concordloom inspect . \
+  --output &quot;$WORK_DIR/observed-project-graph.json&quot;
+concordloom questions \
+  --graph &quot;$WORK_DIR/observed-project-graph.json&quot; \
+  --output &quot;$WORK_DIR/questions.json&quot;</code></pre>
+<p>These files contain observations and hypotheses, not an accepted project map. Run <code>concordloom --help</code> for the lower-level proposal, compilation, run, Atlas, and evolution commands.</p>
+<h2 id="quickstart-section-08">What to read next</h2>
+<ul>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ATLAS.md" rel="noreferrer">Atlas guide</a> explains the interactive and portable views.</li>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/CONCEPTS.md" rel="noreferrer">Core concepts</a> explains the two graphs and fact states.</li>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/TRUST_MODEL.md" rel="noreferrer">Trust model</a> explains why verification and permission are</li>
+</ul>
+<p>separate.</p>
+<ul>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ARCHITECTURE.md" rel="noreferrer">Architecture</a> documents the kernel and adapters.</li>
+</ul>
+          <h2>Cycles of Cycles</h2>
+          <h1 id="article-document-title">Cycles of Cycles: A General Grammar for Governed Change</h1>
+<p><em>How finite containment, bounded feedback, evidence, and authority turn nested iteration into an inspectable system</em></p>
+<h2 id="article-section-01">Abstract</h2>
+<p>Research, incident response, creative production, governance, and software delivery look different, but each repeatedly turns an input into a result, checks that result, and decides what happens next. Each also contains smaller cycles. An experiment contains calibration and analysis; an incident contains diagnosis and recovery; a film contains editorial and sound-review loops; a policy process contains consultation and ratification. A consequential system of work is often a cycle composed of cycles.</p>
+<p>Nesting and iteration are established ideas. The open engineering problem is their governed composition. In ordinary terms, every loop must say what it receives, what counts as finished, what proves the result, who may decide, and when retrying must stop. A parent must not mistake a successful child task for success of the whole system.</p>
+<p>Formally, a loop needs a typed contract, terminal outcomes, bounded feedback, explicit evidence, named authority, and a precise rule for how a child result affects its parent. The system needs a finite containment graph separate from each loop&#x27;s local control-flow graph. Its records must also keep observed, proposed, accepted, planned, actual, and verified facts distinct.</p>
+<p>Concord Loom provides that general grammar without prescribing a domain, runtime, model provider, hosting platform, or repository layout. It discovers evidence, asks an operator to resolve consequential intent, binds accepted decisions to finite loop contracts, records governed attempts, projects the result in an Atlas, and may propose a successor binding. Evolution can propose; it cannot authorize itself.</p>
+<h2 id="article-section-02">Consequential work already contains loops</h2>
+<p>A flat process diagram makes each stage look atomic. Practice reveals another structure.</p>
+<p>In research, a program moves from question to hypothesis, experiment, interpretation, and revision. The experiment may contain calibration, recruitment, data-quality, and analysis loops. A successful calibration does not validate the hypothesis. It produces evidence that the experiment parent must evaluate.</p>
+<p>In incident response, a signal starts triage, containment, diagnosis, recovery, and learning. Diagnosis may invoke log collection, reproduction, or vendor coordination. A recovered dependency does not close the incident. The incident commander still decides whether the service is stable, customers were notified, and follow-up work has an owner.</p>
+<p>In creative production, a brief leads to exploration, selection, production, critique, and delivery. A film, exhibition, or campaign may contain writing, visual-development, editing, sound, legal-clearance, and accessibility loops. One approved shot does not authorize publication of the whole work.</p>
+<p>In governance, observation leads to a proposal, consultation, decision, implementation, and review. Consultation can contain expert, community, legal, and financial review loops. A consultation receipt informs the decision authority; it does not vote on the proposal by itself.</p>
+<p>Software delivery is one more binding of this pattern. Requirements, implementation, testing, release, and operations each contain feedback and may invoke smaller loops. A passing test reports what it observed about one candidate. It neither accepts the product nor grants permission to publish.</p>
+<p>The common problem is not iteration. It is deciding:</p>
+<ul>
+<li>which activities are children of which parent;</li>
+<li>which feedback stays local to one loop;</li>
+<li>what each boundary accepts and returns;</li>
+<li>what evidence supports a result;</li>
+<li>who may execute, verify, accept, publish, or escalate;</li>
+<li>what budgets force a terminal outcome; and</li>
+<li>how the active system may be replaced.</li>
+</ul>
+<h2 id="article-section-03">The historical claim should stay honest</h2>
+<p>Concord Loom does not claim to invent loops, hierarchy, or iterative work. Software-process research supplies one well-documented lineage. Winston Royce&#x27;s <a href="https://cse.msu.edu/~cse435/Homework/HW3/royce1970.pdf" rel="noreferrer">1970 paper on large software systems</a> described feedback between successive phases, warned about discovering major problems at test time, and recommended an early pilot, documentation, and customer review. Barry Boehm&#x27;s <a href="https://doi.org/10.1109/2.59" rel="noreferrer">spiral model</a> made repeated, risk-driven cycles central to development and enhancement.</p>
+<p>The public description of the <a href="https://standards.ieee.org/ieee/12207/11416/" rel="noreferrer">IEEE/ISO/IEC 12207-2026 life-cycle standard</a> says that processes may be applied concurrently, iteratively, and recursively to a software system and its elements. Deming&#x27;s <a href="https://deming.org/explore/pdsa/" rel="noreferrer">Plan-Do-Study-Act model</a> treats improvement as repeated, evidence-producing learning. David Harel&#x27;s <a href="https://doi.org/10.1016/0167-6423%2887%2990035-9" rel="noreferrer">statecharts</a> extended state machines with hierarchy, concurrency, and communication in 1987.</p>
+<p>Modern guidance also composes concerns rather than imposing one universal process. NIST&#x27;s <a href="https://csrc.nist.gov/pubs/sp/800/218/final" rel="noreferrer">Secure Software Development Framework</a> defines outcome-oriented security practices that organizations integrate into their chosen life cycles. Security crosses requirements, design, implementation, verification, release, and response.</p>
+<p>The claim is deliberately narrow:</p>
+<blockquote>Concord Loom does not claim to invent nested loops. Its contribution is one inspectable contract for their boundaries: which loops contain which work, what evidence supports a result, who may make a decision, what actually ran, and how a new version of the rules is proposed and activated.</blockquote>
+<p>Here, “executable” does not mean hiding arbitrary code in a diagram. A validator can reject an invalid declaration. An adapter can run work only within the accepted contract. A consequential claim must identify the exact result, policy, attempt, and evidence that support it.</p>
+<h2 id="article-section-04">One grammar, many bindings</h2>
+<p>Concord Loom treats a domain process as a binding of a general change grammar:</p>
+<pre tabindex="0"><code class="language-text">observe
+  → negotiate
+  → bind
+  → execute
+  → verify
+  → publish an authorized effect, or record none
+  → evolve by proposing a successor</code></pre>
+<p><strong>Observe.</strong> Record facts with provenance and limits. Observation may include files, measurements, interviews, sensor readings, prior decisions, or runtime events. It can also produce explicit hypotheses, but it cannot accept them.</p>
+<p><strong>Negotiate.</strong> Ask the questions whose answers would change the proposed system. An accountable operator confirms, rejects, or corrects consequential intent. Confidence can rank a question; it cannot answer it.</p>
+<p><strong>Bind.</strong> Compile accepted intent into exact loop contracts, policy, scope, and authority. Binding fails on cyclic containment, unbounded feedback, unreachable terminal outcomes, or unauthorized capability expansion.</p>
+<p><strong>Execute.</strong> Produce one scoped candidate or effect under the active binding. A candidate may be a dataset, recovery action, creative master, policy package, or software tree. The binding, not the framework, defines its meaning.</p>
+<p><strong>Verify.</strong> Evaluate the pinned candidate against an evidence contract. Verification records what the evidence supports. It does not inherit authority from execution, and independent review may require a different principal.</p>
+<p><strong>Publish.</strong> Perform an explicitly authorized external effect. Publication might release a dataset, restore traffic, deliver a master, enact a rule, deploy software, or intentionally do nothing. A passed verification gate is evidence, not publication authority.</p>
+<p><strong>Evolve.</strong> Reduce repeated, content-addressed signals into a reviewable successor proposal. The active binding states who may accept and activate that proposal.</p>
+<p>This sequence is a grammar, not a mandatory workflow engine. A binding may omit irrelevant detail, specialize labels, or delegate execution to laboratory systems, incident tooling, production software, committee procedure, CI, local processes, or agent graphs.</p>
+<h2 id="article-section-05">Two graphs, not one recursive tangle</h2>
+<p>Calling the whole system a recursive graph collapses two different relationships.</p>
+<p>The <strong>containment graph</strong> says that a composite state in one loop invokes another loop. An experiment can invoke calibration; an incident can invoke recovery; a production can invoke legal review. Containment explains refinement, scope, and parent-child ownership. It must be finite and acyclic. A loop cannot contain itself, directly or through descendants.</p>
+<p>The <strong>local control-flow graph</strong> describes progress inside one loop. It may contain feedback. An experiment can return from analysis to measurement; a recovery loop can return from validation to mitigation; an edit can return from critique to revision. Each feedback cycle must consume a finite budget and retain a path to a terminal or escalation outcome.</p>
+<pre tabindex="0"><code class="language-text">Containment (finite DAG)              Local flow (bounded)
+
+program                               prepare → act → evaluate → ACCEPT
+├── workstream                                  ▲       │
+│   └── review                                  └ retry┘
+└── publication                                     │
+                                             budget exhausted
+                                                    ▼
+                                                ESCALATE</code></pre>
+<p>This separation gives recursive navigation a precise, safe meaning. An Atlas may descend through several containment levels, but ancestry has a finite maximum depth. Local repetition has a finite maximum number of traversals. Containment never disguises a retry, and feedback never creates a hidden child.</p>
+<p>Continuous operations use the same discipline. A research program, service, or governance regime may last for years, but one run covers a bounded question, incident, observation window, or change. A later signal starts another run. This makes an ongoing system distinguishable from an execution that cannot terminate.</p>
+<h2 id="article-section-06">A minimal formal model</h2>
+<p>Let a governed system be:</p>
+<pre tabindex="0"><code class="language-text">K = (H, {Lᵢ}, Π, V)</code></pre>
+<p><code>H</code> is the containment graph, <code>{Lᵢ}</code> is the set of loop contracts, <code>Π</code> is the policy that maps child receipts into parent decisions, and <code>V</code> is the versioned binding over the exact contracts and policy.</p>
+<p>Each loop is:</p>
+<pre tabindex="0"><code class="language-text">Lᵢ = (I, O, S, s₀, Δ, C, E, A, B, X)</code></pre>
+<ul>
+<li><code>I</code> and <code>O</code> define input and output contracts.</li>
+<li><code>S</code> and <code>s₀</code> define states and the single entry.</li>
+<li><code>Δ</code> defines declarative local transitions.</li>
+<li><code>C</code> defines child invocations attached to composite states.</li>
+<li><code>E</code> defines evidence predicates.</li>
+<li><code>A</code> defines capabilities and separation-of-duty rules.</li>
+<li><code>B</code> defines attempt, time, cost, and tool budgets.</li>
+<li><code>X</code> defines terminal outcomes such as <code>ACCEPTED</code>, <code>REVISE</code>, <code>ESCALATED</code>,</li>
+</ul>
+<p>and <code>CANCELLED</code>.</p>
+<p>A containment edge records more than “parent calls child”:</p>
+<pre tabindex="0"><code class="language-text">h = (parent, state, child, map_in, map_out, deadline, receipt_predicate)</code></pre>
+<p>The maps prevent hidden shared state from becoming the real contract. The deadline and cancellation or escalation path bound the invocation. The receipt predicate states what the parent may learn from the child.</p>
+<p>A child receipt should bind at least:</p>
+<pre tabindex="0"><code class="language-text">r = digest(
+  child_contract,
+  run_id,
+  input_digest,
+  output_digest,
+  candidate_digest,
+  policy_digest,
+  producer,
+  result,
+  evidence_refs
+)</code></pre>
+<p>The parent evaluates <code>receipt_predicate(r)</code> and its own evidence predicates. It does not copy the child&#x27;s terminal state. Acceptance is contextual: only the parent knows whether the child was mandatory, the evidence set is complete, the producer was independent, and another child invalidated the candidate.</p>
+<p>Three structural conditions make execution finite:</p>
+<ol>
+<li><code>H</code> is a finite directed acyclic graph, so child nesting has bounded depth.</li>
+<li>Every cyclic strongly connected component in a local <code>Δ</code> has a ranking</li>
+</ol>
+<p>function over a well-founded budget. Each feedback traversal strictly decreases that ranking; no transition in the component restores it.</p>
+<ol>
+<li>Budget exhaustion, timeout, and cancellation each lead to a terminal or</li>
+</ol>
+<p>escalation state, while every reachable nonterminal state retains such a path.</p>
+<p>These conditions establish structural termination, not correctness. A validator cannot prove that an experiment answers a valuable question, a recovery restored customer trust, a creative judgment was good, a policy was just, or a test oracle was complete.</p>
+<h2 id="article-section-07">Truth needs more than green and red</h2>
+<p>A governed system preserves distinct truth states:</p>
+<div class="content-table-wrap"><table>
+<thead><tr><th>State</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><strong>Observed</strong></td><td>A sourced fact or measurement was recorded</td></tr>
+<tr><td><strong>Proposed</strong></td><td>Someone or something suggested an interpretation or change</td></tr>
+<tr><td><strong>Accepted</strong></td><td>An authorized operator accepted exact intent or structure</td></tr>
+<tr><td><strong>Planned</strong></td><td>A route, role, budget, or tool use was declared for a run</td></tr>
+<tr><td><strong>Actual</strong></td><td>An attempt recorded what principal, agent, tools, scope, and result actually occurred</td></tr>
+<tr><td><strong>Verified</strong></td><td>Evidence bound to exact bytes and policy met a declared contract</td></tr>
+</tbody></table></div>
+<p>These states do not promote themselves. Repository history, sensor data, and interviews are evidence, not product intent. A proposal is not an accepted binding. A plan is not an attempt. An attempt is not verification. Verification is not permission to publish.</p>
+<p>Repository analysis illustrates the boundary. <a href="https://pydriller.readthedocs.io/en/latest/processmetrics.html" rel="noreferrer">PyDriller</a> exposes commit-derived process metrics, while <a href="https://codescene.io/docs/guides/technical/change-coupling.html" rel="noreferrer">CodeScene&#x27;s change-coupling model</a> uses co-change to reveal logical dependencies. The <a href="https://github.com/scip-code/scip" rel="noreferrer">SCIP protocol</a> provides language-agnostic symbol indexing, and <a href="https://aider.chat/docs/repomap.html" rel="noreferrer">Aider&#x27;s repository map</a> ranks symbols for bounded context. Each can ground an observation. None can decide that an observed structure is intended or authorized.</p>
+<p>An Atlas must therefore display accepted structure, plans, attempts, evidence references, and drift as separate layers. Missing runtime evidence means “not recorded,” not “failed” or “passed.”</p>
+<h2 id="article-section-08">Evidence and authority cross every domain</h2>
+<p>Evidence answers “what supports this claim?” Authority answers “who may make this decision or effect?” They interact, but neither substitutes for the other.</p>
+<p>A research instrument may produce calibrated measurements, while the principal investigator accepts the interpretation. A monitoring system may show stable latency, while an incident commander authorizes traffic restoration. A legal review may clear a soundtrack, while a producer approves the final master. A public consultation may record responses, while a named body enacts policy. A test suite may pass, while a release authority decides whether to deploy.</p>
+<p>A useful evidence contract names:</p>
+<ul>
+<li>required claims and accepted results;</li>
+<li>candidate and policy binding requirements;</li>
+<li>payload identity and producer;</li>
+<li>reviewer capability and independence when required; and</li>
+<li>the parent decision that may consume the receipt.</li>
+</ul>
+<p>A useful authority policy names:</p>
+<ul>
+<li>principals, roles, and capabilities;</li>
+<li>permitted read, write, network, and external-mutation scope;</li>
+<li>separation between authorship, review, acceptance, and publication; and</li>
+<li>the existing authority that may activate a successor.</li>
+</ul>
+<p><code>PASSED</code> means that a node met its declared evidence contract for its pinned candidate. It does not grant release, enactment, publication, or product authority.</p>
+<h2 id="article-section-09">Worked bindings</h2>
+<h3 id="article-section-09-detail-01">Research</h3>
+<p>A clinical methods program contains a sample-preparation loop and an analysis loop. Preparation reports temperature, reagent lot, operator, and quality controls for specimen set <code>S4</code>. Analysis reports a result for <code>S4</code> under protocol <code>P2</code>. The program parent rejects an analysis receipt for <code>S3</code>, even if that receipt passed. It also requires an independent statistical review before accepting the conclusion. A later protocol change makes old receipts stale unless an explicit policy defines a narrower reuse rule.</p>
+<h3 id="article-section-09-detail-02">Incident response</h3>
+<p>An incident parent invokes containment and recovery. Containment blocks a faulty dependency and reports the exact services and time window affected. Recovery restores traffic in two bounded stages, then reports health evidence. Neither child may declare the incident closed. The incident commander evaluates customer impact, residual risk, and communication obligations. If the recovery budget expires, the loop escalates instead of retrying indefinitely.</p>
+<h3 id="article-section-09-detail-03">Creative production</h3>
+<p>A campaign parent invokes copy, visual, accessibility, and legal-clearance loops. Each child returns a receipt for the same master revision. If the copy changes after accessibility review, that receipt no longer verifies the current master. The producer may accept the creative package only after every mandatory receipt matches the pinned revision; a separate principal may hold publication authority.</p>
+<h3 id="article-section-09-detail-04">Governance</h3>
+<p>A rulemaking parent invokes impact analysis, consultation, and legal review. The consultation loop records coverage, responses, and unresolved objections. It does not decide the rule. The authorized body evaluates the combined evidence, records its rationale, and either accepts, revises, or rejects the proposal. The adopted rule cannot silently broaden the mechanism that governs its own successor.</p>
+<h3 id="article-section-09-detail-05">Software delivery</h3>
+<p>Consider service candidate <code>C7</code> under policy <code>P3</code>. A testing parent requires API contract, database migration, authorization, and performance children, plus an independent producer and complete candidate-bound receipts.</p>
+<p>The migration child receives an immutable database image and <code>C7</code>:</p>
+<pre tabindex="0"><code class="language-text">prepare → migrate → verify → rollback → verify_restore → report
+             ▲         │
+             └ diagnose┘</code></pre>
+<p>The first attempt fails because the isolated fixture lacks an extension. Diagnosis classifies environment drift, preparation repairs the fixture, and the second attempt succeeds. The child emits a <code>PASS</code> receipt for <code>C7/P3</code> with logs, snapshots, rollback observations, attempt count, and producer identity. Its retry budget is exhausted; a third attempt would escalate.</p>
+<p>An authorization child reports that an endpoint accepts an expired token. Its <code>REVISE</code> receipt also binds to <code>C7/P3</code>, so the testing parent returns <code>REVISE</code> despite other green children. Implementation produces <code>C8</code>, which makes every receipt bound only to <code>C7</code> stale. Once all mandatory children return valid receipts for <code>C8/P3</code>, the testing parent may emit its own <code>PASS</code> receipt.</p>
+<p>The delivery parent still requires a release build, independent review, and publication decision. The test receipt supplies evidence; it does not grant release authority.</p>
+<h2 id="article-section-10">Concord Loom as its own worked binding</h2>
+<p>Concord Loom governs its own development without defining software delivery as the framework&#x27;s boundary. The active configuration has one root, <code>steward-concordloom</code>, and ten responsibility areas:</p>
+<pre tabindex="0"><code class="language-text">steward-concordloom
+├── product-direction
+├── research-theory
+├── protocol-design
+├── runtime-tooling
+├── trust-assurance
+├── bindings-adapters
+├── knowledge-experience
+├── release-distribution
+├── adoption-feedback
+└── system-evolution</code></pre>
+<p>Those areas contain 56 narrower cycles, for 66 cycles in total. They cover product decisions, theory, protocol, implementation, independent review, adapters, documentation, localization, the site, releases, adoption, and the full evolution circuit. The seven phases—observe, negotiate, bind, execute, verify, publish, and evolve—remain the grammar of a governed run. They are not the repository&#x27;s top-level department chart.</p>
+<p>This configuration was accepted by an operator; repository history did not promote itself into intent. Self-application also grants no special authority. The active configuration limits execution, keeps independent review separate, and reserves external effects for publisher or operator roles. Evolution produces a proposal with <code>activation_allowed: false</code>; a separate operator decision activates exact successor bytes.</p>
+<p>These self-governance rules are not mandatory for adopters. A laboratory, studio, operations team, public body, or software project defines its own policy, artifacts, identities, evidence, and loop topology.</p>
+<h2 id="article-section-11">Runtime and generated-view boundaries</h2>
+<p>Concord Loom v0.1 validates containment, local state contracts, candidate identity, authority, and evidence boundaries. Its portable runner treats each planned loop node as one governed execution unit. It does not step every local transition, schedule durable child workflows, stream live execution, or synthesize child receipts into parent acceptance.</p>
+<p>Dedicated systems can provide execution. Temporal defines <a href="https://docs.temporal.io/child-workflows" rel="noreferrer">Child Workflows</a> with their own histories and parent-close behavior. LangGraph defines <a href="https://docs.langchain.com/oss/python/langgraph/use-subgraphs" rel="noreferrer">subgraphs</a> with state-mapping and persistence choices. Laboratory systems, incident platforms, production suites, committee processes, CI, and local executors can play the same adapter role.</p>
+<p>Execution capability does not establish governed intent, evidence validity, or authority. Concord Loom binds adapter attempts and receipts to accepted contracts; it does not replace the adapters.</p>
+<p>The Atlas is a generated projection of accepted artifacts and recorded run facts. It can explain the system and expose drift. It cannot change a binding, authorize a transition, revalidate referenced payload bytes, or become a source of truth by being edited.</p>
+<h2 id="article-section-12">The evolution loop</h2>
+<p>No initial binding remains correct forever. Repeated timeouts, unused evidence, ambiguous questions, failed handoffs, or unnecessary gates are signals about the system itself.</p>
+<pre tabindex="0"><code class="language-text">observe bounded signals
+  → diagnose contract or routing friction
+  → propose a graph or policy delta
+  → assess risk and compatibility
+  → accept or reject under existing authority
+  → activate a successor binding
+  → observe again</code></pre>
+<p>The active version <code>Vₙ</code> defines who may accept <code>Vₙ₊₁</code>. The proposal cannot grant itself that capability. Activation appends a successor to a catalog and keeps prior bindings addressable. In-flight runs continue to point to their original binding.</p>
+<p>This rule blocks a seductive failure mode: treating repeated friction as permission to remove the gate that reports the friction. Evolution may propose new budgets, evidence, authority, or loop boundaries. Existing authority decides whether to accept the exact successor bytes.</p>
+<h2 id="article-section-13">Related work and limits of the claim</h2>
+<p>Concord Loom composes established ideas:</p>
+<ul>
+<li>iterative and recursive process models;</li>
+<li>risk-driven iteration from spiral development;</li>
+<li>learning cycles from PDSA;</li>
+<li>hierarchy and concurrency from statecharts;</li>
+<li>outcome-oriented practices such as SSDF;</li>
+<li>parent-child execution from durable workflow systems;</li>
+<li>subgraph composition from graph runtimes; and</li>
+<li>evidence discovery from domain tools, semantic indexes, and history mining.</li>
+</ul>
+<p>It does <strong>not</strong> claim to invent any item in that list. It does not claim that every activity deserves a loop, every organization should share a topology, or a containment DAG models every relationship. Communication, dependency, and shared-resource graphs may contain other structures; only execution containment must remain acyclic.</p>
+<p>It makes no productivity, quality, safety, artistic, scientific, or governance claim without comparative evidence. Validation can establish schema conformance, digest integrity, bounded control flow, and some authority invariants. It cannot establish that evidence is truthful at its physical source or an authorized decision was wise.</p>
+<p>Concord Loom is not a game engine, hosting platform, model provider, workflow runtime, operating-system sandbox, credential authority, or repository layout. Portable principal identifiers support accountability and separation checks; deployments that need adversarial identity assurance must add platform enforcement and signed attestations.</p>
+<p>The testable contribution is an integration boundary: represent a bounded system of loops, its evidence rules, authority, execution facts, and evolution as one content-addressed artifact chain; validate that chain; and make each claim traceable to a candidate and policy.</p>
+<h2 id="article-section-14">A research and evaluation agenda</h2>
+<p>Evaluation should compare a governed loop system with the same work expressed in conventional workflow and prose forms. Useful measures include:</p>
+<ul>
+<li>detection of stale-candidate and wrong-policy evidence;</li>
+<li>time required to explain why a parent remains open;</li>
+<li>frequency and cause of budget exhaustion or escalation;</li>
+<li>divergence between planned and actual execution;</li>
+<li>operator effort per accepted change;</li>
+<li>false-positive rates in inferred loop boundaries; and</li>
+<li>comprehension across domain and containment levels.</li>
+</ul>
+<p>Domain studies should test whether the grammar transfers without erasing local meaning. Research users may need protocol and data lineage; incident teams, real-time authority and rollback; creative teams, revision and rights lineage; governance users, consultation and decision records; software teams, candidate and release identity.</p>
+<p>Adversarial tests matter as much as usability tests. A system should fail closed when evidence names another candidate, a child broadens parent scope, an author occupies an independent-review role, feedback lacks a decreasing budget, an inferred relationship seeks authority, or an evolution proposal activates itself.</p>
+<p>The Atlas needs separate study. A valid graph can still be unreadable. Operators must distinguish containment from feedback, move between levels, inspect evidence and authority at a boundary, and understand which facts remain unverified.</p>
+<h2 id="article-section-15">Conclusion</h2>
+<p>Many consequential systems are cycles of cycles. Their domains differ, but the governance problem repeats: make boundaries, evidence, authority, budgets, terminal outcomes, and succession explicit.</p>
+<p>Concord Loom supplies a general grammar for that problem. It keeps containment finite, feedback bounded, truth states distinct, child receipts subordinate to parent decisions, and evolution unable to authorize itself. A domain binding then gives those rules concrete meaning without turning one worked case into the product boundary.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
