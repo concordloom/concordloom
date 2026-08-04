@@ -1,230 +1,143 @@
 <!doctype html>
-<html lang="ru" class="no-js" style="color-scheme: light" data-design-system="signal-canvas">
+<html lang="ru" style="color-scheme: light" data-design-system="signal-canvas">
   <head>
     <meta charset="utf-8">
-    <script>
-      (() => {
-        document.documentElement.classList.replace("no-js", "js");
-        const requested = new URLSearchParams(location.search).get("lang");
-        let stored = null;
-        try {
-          stored = localStorage.getItem("concordloom-language");
-        } catch {
-          stored = null;
-        }
-        const language =
-          (requested === "en" || requested === "ru" ? requested : null)
-          || "ru";
-        document.documentElement.lang = language;
-        document.documentElement.dataset.initialLanguage = language;
-        if (language === "ru") {
-          document.documentElement.dataset.languagePending = "ru";
-        }
-      })();
-    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f3f0e8">
-    <link rel="canonical" href="https://concordloom.github.io/concordloom/ru/">
-    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/en/">
-    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/ru/">
-    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/">
-    <meta name="description" content="Concord Loom показывает, из каких связанных циклов состоит работа над проектом."
-      data-en-content="Concord Loom shows how a project changes, one connected cycle at a time."
-      data-ru-content="Concord Loom показывает, из каких связанных циклов состоит работа над проектом.">
-    <meta property="og:title" content="Concord Loom / увидеть связи в работе"
-      data-en-content="Concord Loom / see how the work connects"
-      data-ru-content="Concord Loom / увидеть связи в работе">
-    <meta property="og:description" content="Откройте любой цикл, его результат и место в утверждённой системе."
-      data-en-content="Inspect every cycle, its result and its place in the accepted system."
-      data-ru-content="Откройте любой цикл, его результат и место в утверждённой системе.">
+    <meta name="description" content="Быстрый старт, теория и справочные материалы Concord Loom.">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/ru/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/">
+    <meta property="og:title" content="Документация Concord Loom">
+    <meta property="og:description" content="Быстрый старт, теория и справочные материалы Concord Loom.">
     <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
-    <meta property="og:url" content="https://concordloom.github.io/concordloom/ru/">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/ru/">
     <meta property="og:type" content="website">
-    <title data-en="Concord Loom / see how the work connects" data-ru="Concord Loom / увидеть связи в работе">Concord Loom / увидеть связи в работе</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
-    <link rel="apple-touch-icon" href="../assets/concordloom-mark-192.png">
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="../design-tokens.css">
-    <link rel="stylesheet" href="../design-system.css">
-    <script src="../app.js" defer></script>
+    <meta property="og:locale" content="ru_RU">
+    <title>Документация Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../design-tokens.css">
+    <link rel="stylesheet" href="../../design-system.css">
+    <link rel="stylesheet" href="../../styles.css">
   </head>
-  <body tabindex="-1" data-design-system="signal-canvas">
-    <!--
-      THESIS: Concord Loom makes the accepted system readable as connected work, not as decorative machinery or a documentation dashboard.
-      OWN-WORLD: Warm canvas, black ink boundaries, tactile paper modules, friendly mint signal, cobalt information, coral boundaries and yellow pending choices.
-      STORY: Understand the product, learn the grammar, start safely, open the Atlas and inspect any cycle without losing the path.
-      FIRST VIEWPORT: A clear product promise and primary Atlas action sit beside a live patch module; accepted system facts remain visible below.
-      FORM: Signal Canvas implementation candidate across every route.
-      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
-    -->
-    <noscript>
-      <div class="noscript-banner">
-        <strong>Reading mode.</strong>
-        Theory and Quickstart remain available below. The interactive Atlas
-        requires JavaScript.
-        <a href="https://github.com/concordloom/concordloom/tree/main/docs/ru">Русская документация <span class="ui-icon ui-icon-external" aria-hidden="true"></span></a>
-      </div>
-    </noscript>
-    <a class="skip-link" href="#main" data-en="Skip to content" data-ru="Перейти к содержанию">Перейти к содержанию</a>
-
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
     <header class="site-header">
-      <a class="brand" href="#concept" data-view-link="concept" aria-label="Concord Loom home" translate="no"
-        data-en-aria-label="Concord Loom home" data-ru-aria-label="Главная Concord Loom">
-        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <a class="brand" href="../../ru/" aria-label="Concord Loom">
+        <img src="../../assets/concordloom-mark.png" width="48" height="48" alt="">
         <span>CONCORD LOOM</span>
       </a>
-      <button class="menu-switch" type="button" aria-expanded="false" aria-controls="primary-nav">
-        <span data-en="Menu" data-ru="Меню">Меню</span>
-      </button>
-      <nav class="view-tabs" id="primary-nav" aria-label="Primary navigation"
-        data-en-aria-label="Primary navigation" data-ru-aria-label="Основная навигация">
-        <a class="view-tab is-active" data-view-link="concept" href="#concept" data-en="Concept" data-ru="Концепция">Концепция</a>
-        <a class="view-tab" data-view-link="theory" href="#theory" data-en="Theory" data-ru="Теория">Теория</a>
-        <a class="view-tab" data-view-link="quickstart" href="#quickstart" data-en="Quickstart" data-ru="Быстрый старт">Быстрый старт</a>
-        <a class="view-tab" data-view-link="atlas" href="#atlas" data-en="Atlas" data-ru="Атлас">Атлас</a>
-        <a class="view-tab" data-view-link="docs" href="#docs" data-en="Docs" data-ru="Документы">Документы</a>
+      <nav class="view-tabs" aria-label="Языковые версии">
+        <a class="view-tab" href="../en/">English version</a>
+        <a class="view-tab is-active" href="../../ru/">Открыть интерактивный сайт</a>
       </nav>
-      <div class="header-actions">
-        <button class="language-switch" type="button" aria-label="Switch language">
-          <span data-lang-label>RU</span>
-        </button>
-      </div>
     </header>
-
-    <main id="main">
-      <div class="view is-active" id="concept" data-view="concept">
-        <section class="hero">
-          <div class="hero-copy reveal">
-            <p class="hero-kicker">
-              <i aria-hidden="true"></i>
-              <span data-en="YOUR PROJECT, MADE NAVIGABLE" data-ru="ПРОЕКТ, В КОТОРОМ ЛЕГКО ОРИЕНТИРОВАТЬСЯ">ПРОЕКТ, В КОТОРОМ ЛЕГКО ОРИЕНТИРОВАТЬСЯ</span>
-            </p>
-            <h1>
-              <span data-en="Map the work." data-ru="Увидьте работу.">Увидьте работу.</span>
-              <em data-en="Change it on purpose." data-ru="Меняйте её осознанно.">Меняйте её осознанно.</em>
-            </h1>
-            <div class="hero-bottom">
-              <p
-                data-en="Concord Loom turns a project into a map you can open, correct and improve—without learning the machinery behind it."
-                data-ru="Concord Loom превращает проект в карту, которую можно открыть, исправить и улучшить — без изучения внутреннего устройства."
-              >Concord Loom превращает проект в карту, которую можно открыть, исправить и улучшить — без изучения внутреннего устройства.</p>
-              <div class="hero-actions">
-                <a class="primary-cta" href="#atlas" data-atlas-entry aria-disabled="true">
-                  <span data-en="Open the Atlas" data-ru="Открыть Атлас">Открыть Атлас</span>
-                  <span class="ui-icon ui-icon-arrow-right" aria-hidden="true"></span>
-                </a>
-                <a class="secondary-cta" href="#quickstart" data-en="Get your first map" data-ru="Получить первую карту">Получить первую карту</a>
-              </div>
-            </div>
-          </div>
-          <div class="hero-map reveal" aria-label="Interactive Atlas preview"
-            data-en-aria-label="Interactive Atlas preview" data-ru-aria-label="Интерактивный фрагмент Атласа">
-            <div class="hero-map-head">
-              <strong data-en="LIVE PROJECT MAP" data-ru="ЖИВАЯ КАРТА ПРОЕКТА">ЖИВАЯ КАРТА ПРОЕКТА</strong>
-              <span><b data-loop-count>…</b> <i data-en="cycles" data-ru="циклов">циклов</i></span>
-            </div>
-            <svg data-hero-atlas viewBox="0 0 620 500" role="group"
-              aria-label="Project cycle preview"
-              data-en-aria-label="Project cycle preview"
-              data-ru-aria-label="Фрагмент карты циклов проекта"></svg>
-            <div class="hero-load-state" data-hero-status role="status" aria-live="polite">
-              <p data-hero-status-copy
-                data-en="Loading the project map…"
-                data-ru="Загружаем карту проекта…">Загружаем карту проекта…</p>
-              <button type="button" data-reload-site hidden
-                data-en="Reload the page" data-ru="Обновить страницу">Обновить страницу</button>
-            </div>
-            <p class="hero-map-note">
-              <b>01</b>
-              <span data-en="Select a cycle to open the full Atlas." data-ru="Выберите цикл, чтобы открыть полный Атлас.">Выберите цикл, чтобы открыть полный Атлас.</span>
-            </p>
-          </div>
-        </section>
-
-        <section class="truth-rail" aria-label="Fact states"
-          data-en-aria-label="Fact states" data-ru-aria-label="Состояния сведений">
-          <span data-en="OBSERVED" data-ru="НАБЛЮДАЛОСЬ">НАБЛЮДАЛОСЬ</span>
-          <span data-en="PROPOSED" data-ru="ПРЕДЛОЖЕНО">ПРЕДЛОЖЕНО</span>
-          <span data-en="ACCEPTED" data-ru="ПРИНЯТО">ПРИНЯТО</span>
-          <span data-en="PLANNED" data-ru="ЗАПЛАНИРОВАНО">ЗАПЛАНИРОВАНО</span>
-          <span data-en="ACTUAL" data-ru="ВЫПОЛНЕНО">ВЫПОЛНЕНО</span>
-          <span data-en="VERIFIED" data-ru="ПРОВЕРЕНО">ПРОВЕРЕНО</span>
-        </section>
-
-        <section class="manifesto section-grid reveal">
-          <p class="section-label" data-en="WHY IT HELPS" data-ru="ЗАЧЕМ ЭТО НУЖНО">ЗАЧЕМ ЭТО НУЖНО</p>
-          <div class="section-content">
-            <h2 data-en="A loop is useful only when you know where it ends." data-ru="Цикл полезен, только если понятно, где он заканчивается.">Цикл полезен, только если понятно, где он заканчивается.</h2>
-            <div class="manifesto-columns">
-              <p
-                data-en="Concord Loom asks six plain questions: What starts the cycle? What must it produce? Who may decide? What proves the result? How many retries are allowed? What happens when it fails?"
-                data-ru="Concord Loom задаёт шесть простых вопросов: Что запускает цикл? Что он должен дать? Кто принимает решение? Чем подтверждается результат? Сколько попыток разрешено? Что происходит при неудаче?"
-              >Concord Loom задаёт шесть простых вопросов: Что запускает цикл? Что он должен дать? Кто принимает решение? Чем подтверждается результат? Сколько попыток разрешено? Что происходит при неудаче?</p>
-              <p
-                data-en="It does not prescribe one software process. Research, incident response, creative work, governance and software delivery are peer examples of the same grammar."
-                data-ru="Он не задаёт единый процесс разработки ПО. Исследования, работа с инцидентами, творчество, управление и поставка ПО равноправно используют одну схему."
-              >Он не задаёт единый процесс разработки ПО. Исследования, работа с инцидентами, творчество, управление и поставка ПО равноправно используют одну схему.</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="grammar section-grid reveal">
-          <p class="section-label" data-en="SEVEN SHARED STEPS" data-ru="СЕМЬ ОБЩИХ ШАГОВ">СЕМЬ ОБЩИХ ШАГОВ</p>
-          <div class="section-content">
-            <h2 data-en="Seven steps take work from evidence to improvement." data-ru="Семь шагов ведут от фактов к улучшению.">Семь шагов ведут от фактов к улучшению.</h2>
-            <div class="grammar-stage">
-              <ol data-run-grammar></ol>
-              <div class="stage-readout" id="stage-readout" aria-live="polite">
-                <span data-stage-code>O</span>
-                <p data-stage-copy
-                  data-en="Record what is known and where it came from."
-                  data-ru="Зафиксировать, что известно и откуда это взято."
-                >Зафиксировать, что известно и откуда это взято.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="evolution section-grid reveal">
-          <p class="section-label" data-en="EVOLUTION" data-ru="ЭВОЛЮЦИЯ">ЭВОЛЮЦИЯ</p>
-          <div class="section-content evolution-content">
-            <p class="evolution-word" aria-hidden="true" data-en="EVOLVE" data-ru="РАЗВИВАТЬ">РАЗВИВАТЬ</p>
-            <h2 data-en="The system may propose a new version. A person decides whether to use it." data-ru="Система может предложить новую версию. Человек решает, использовать ли её.">Система может предложить новую версию. Человек решает, использовать ли её.</h2>
-            <p
-              data-en="When a problem repeats, Concord Loom records what should change and why. Review comes first; activation remains a separate decision."
-              data-ru="Если проблема повторяется, Concord Loom записывает, что стоит изменить и почему. Сначала новую версию проверяют, затем человек отдельно решает, включать ли её."
-            >Если проблема повторяется, Concord Loom записывает, что стоит изменить и почему. Сначала новую версию проверяют, затем человек отдельно решает, включать ли её.</p>
-            <a class="inverse-cta" href="#atlas/system-evolution">
-              <span data-en="See how evolution works" data-ru="Посмотреть, как меняются правила">Посмотреть, как меняются правила</span>
-              <span class="ui-icon ui-icon-arrow-down" aria-hidden="true"></span>
-            </a>
-          </div>
-        </section>
-      </div>
-
-      <div class="view reading-view" id="theory" data-view="theory">
-        <header class="reading-hero">
-          <p class="kicker" data-en="THEORY" data-ru="ТЕОРИЯ">ТЕОРИЯ</p>
-          <h1 data-en="Cycles of Cycles" data-ru="Циклы циклов">Циклы циклов</h1>
-          <p data-en="The complete argument, formal model and research agenda." data-ru="Полное обоснование, формальная модель и программа исследований.">Полное обоснование, формальная модель и программа исследований.</p>
-        </header>
-        <div class="reading-shell">
-          <aside class="reading-toc">
-            <button class="reading-toc-toggle" type="button" aria-expanded="false">
-              <span data-en="On this page" data-ru="На этой странице">На этой странице</span>
-              <i class="ui-icon ui-icon-plus" aria-hidden="true"></i>
-            </button>
-            <nav data-content-toc="article"></nav>
-          </aside>
-          <div class="route-load-state reading-load-state" data-content-status="article"
-            role="status" aria-live="polite" hidden>
-            <p data-en="Loading this page…" data-ru="Загружаем страницу…">Загружаем страницу…</p>
-            <button type="button" data-reload-site hidden
-              data-en="Reload the page" data-ru="Обновить страницу">Обновить страницу</button>
-          </div>
-          <article class="prose" data-content-body="article" aria-live="polite">
-            <!-- GENERATED:article:start -->
-<h1 id="article-document-title">Циклы циклов: общая грамматика управляемых изменений</h1>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">РУССКАЯ ДОКУМЕНТАЦИЯ</p>
+        <h1>Документация Concord Loom</h1>
+        <p>Concord Loom показывает, как работа принимается, выполняется, проверяется и получает право на изменение. Начните с практического руководства, затем прочитайте полное обоснование.</p>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy">
+          <h2>Быстрый старт</h2>
+          <h1 id="quickstart-document-title">Быстрый старт Concord Loom</h1>
+<p>Чтобы начать работу, не нужно разбираться во внутренних форматах Concord Loom. Обычный путь состоит из четырёх шагов:</p>
+<ol>
+<li>установить один навык Codex;</li>
+<li>разрешить ему исследовать репозиторий без изменений;</li>
+<li>проверить наглядный Атлас и исправить ошибки;</li>
+<li>подключить репозиторий, когда карта станет верной.</li>
+</ol>
+<p>Схемы, проверки графов, служебные записи и правила доступа остаются внутри этого процесса.</p>
+<h2 id="quickstart-section-01">Что получится</h2>
+<p>Первая сессия создаст черновой Атлас репозитория. В нём будут:</p>
+<ul>
+<li>найденные области работы;</li>
+<li>предполагаемые связи между циклами;</li>
+<li>основания для каждого вывода;</li>
+<li>части карты, в которых системе не хватает вашего решения.</li>
+</ul>
+<p>Черновик не считается принятой конфигурацией и не даёт себе никаких прав. Пока вы его не одобрите, репозиторий останется без изменений.</p>
+<h2 id="quickstart-section-02">1. Установите навык Codex</h2>
+<p>Попросите Codex:</p>
+<pre tabindex="0"><code class="language-text">Use $skill-installer to install
+https://github.com/concordloom/concordloom/tree/v0.1.5/plugins/concordloom/skills/design-project-loops</code></pre>
+<p>После установки откройте новый диалог Codex в нужном репозитории. Новый диалог нужен, чтобы Codex загрузил установленный навык.</p>
+<h2 id="quickstart-section-03">2. Попросите построить первый Атлас</h2>
+<p>Напишите:</p>
+<pre tabindex="0"><code class="language-text">Используй $design-project-loops: исследуй этот репозиторий и построй первый
+Атлас. Не меняй репозиторий, пока я не одобрю карту.</code></pre>
+<p>Сначала навык задаст два коротких вопроса:</p>
+<ol>
+<li>на каком языке вести разговор и создавать материалы;</li>
+<li>как к вам обращаться.</li>
+</ol>
+<p>Он не попросит придумывать роли, служебные идентификаторы, границы графа или пути для файлов.</p>
+<p>Затем навык проверит, доступна ли команда Concord Loom. Если команды нет, он покажет один безопасный способ установки и попросит разрешение перед изменением окружения или обращением к сети. Предпочтительная команда:</p>
+<pre tabindex="0"><code class="language-bash">pipx install \
+  &quot;concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5&quot;</code></pre>
+<p>Не используйте <code>--break-system-packages</code>. Если <code>pipx</code> недоступен, навык может использовать <code>uv tool</code> или отдельное управляемое окружение.</p>
+<h2 id="quickstart-section-04">3. Проверьте карту</h2>
+<p>Первое исследование работает только на чтение. Навык изучает отслеживаемые файлы, области репозитория, импорты, ограниченную историю Git и файлы, которые часто меняются вместе. Код самого проекта он не запускает.</p>
+<p>Черновой Атлас сохраняется вне репозитория. Откройте его и пройдите по предложенным циклам. Для каждого цикла должны быть понятны три вещи:</p>
+<ul>
+<li>Какая это часть проекта?</li>
+<li>Какой результат даёт эта работа?</li>
+<li>От какой другой работы она зависит?</li>
+</ul>
+<p>После просмотра ответьте на один вопрос: <strong>карта верно описывает проект?</strong></p>
+<p>Можно ответить обычными словами:</p>
+<pre tabindex="0"><code class="language-text">Да, всё верно.</code></pre>
+<p>или:</p>
+<pre tabindex="0"><code class="language-text">Нет. Заметки о выпуске относятся к выпуску, а не к документации.</code></pre>
+<p>Навык исправит черновик и снова покажет карту. Для обычной поправки не нужна особая роль или служебное название полномочий.</p>
+<h2 id="quickstart-section-05">4. Подключите репозиторий</h2>
+<p>Когда карта станет верной, навык отдельно спросит, можно ли сохранить первую принятую конфигурацию внутри репозитория. Это будет первая запись в репозиторий, поэтому разрешение должно быть явным.</p>
+<p>После подключения:</p>
+<ul>
+<li>принятый Атлас станет общей картой проекта;</li>
+<li>следующую задачу можно будет направлять в нужный цикл, не загружая всю</li>
+</ul>
+<p>систему;</p>
+<ul>
+<li>Атлас можно будет заново собирать из принятой конфигурации;</li>
+<li>повторяющиеся проблемы смогут стать понятным предложением по улучшению;</li>
+<li>решение о включении новой версии всё равно останется за человеком.</li>
+</ul>
+<p>Одобрение первой карты и включение будущего улучшения — разные решения. Система может предложить новую версию правил, но не может сама её включить.</p>
+<h2 id="quickstart-section-06">Повседневная работа</h2>
+<blockquote><strong>Статус функции:</strong> предпросмотр маршрута пока есть только в невыпущенной версии из <code>main</code>, но не в стабильном пакете v0.1.5, установленном выше. Используйте v0.1.5 для онбординга и создания Атласа. Проверяйте предпросмотр только после отдельного согласия на установку невыпущенной версии или дождитесь следующего релиза.</blockquote>
+<p>Опишите задачу и попросите Codex сначала показать маршрут:</p>
+<pre tabindex="0"><code class="language-text">Используй $design-project-loops для этой задачи. Сначала покажи маршрут и
+ничего не запускай без моего подтверждения.</code></pre>
+<p>Вы увидите короткую последовательность нужных циклов и понятное объяснение, зачем нужен каждый из них. На этом этапе ничего не запускается. Маршрут можно подтвердить или исправить обычными словами.</p>
+<p>Подтверждение создаст точный черновик. Для запуска всё равно потребуется отдельная авторизация. После неё навык запишет фактический ход работы и покажет расхождения с планом. Изменение только для текущей задачи останется внутри запуска. Изменение для будущих задач станет отдельным предложением эволюции и не включится само.</p>
+<h2 id="quickstart-section-07">Ручной запуск через командную строку</h2>
+<p>Навык — основной интерфейс. Команды пригодятся для автоматизации и разработки самого Concord Loom.</p>
+<p>Исследование только для чтения:</p>
+<pre tabindex="0"><code class="language-bash">WORK_DIR=&quot;$(mktemp -d /tmp/concordloom-quickstart-XXXXXX)&quot;
+concordloom inspect . \
+  --output &quot;$WORK_DIR/observed-project-graph.json&quot;
+concordloom questions \
+  --graph &quot;$WORK_DIR/observed-project-graph.json&quot; \
+  --output &quot;$WORK_DIR/questions.json&quot;</code></pre>
+<p>Эти файлы содержат наблюдения и предположения, а не принятую карту проекта. Команда <code>concordloom --help</code> покажет справку о низкоуровневых операциях: предложении правил, сборке, запусках, Атласе и эволюции.</p>
+<h2 id="quickstart-section-08">Что читать дальше</h2>
+<ul>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/ATLAS.md" rel="noreferrer">Руководство по Атласу</a> объясняет интерактивное и автономное</li>
+</ul>
+<p>представления.</p>
+<ul>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/CONCEPTS.md" rel="noreferrer">Основные понятия</a> объясняют два графа и состояния сведений.</li>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/TRUST_MODEL.md" rel="noreferrer">Модель доверия</a> объясняет, почему проверка и разрешение —</li>
+</ul>
+<p>разные вещи.</p>
+<ul>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/ARCHITECTURE.md" rel="noreferrer">Архитектура</a> описывает ядро и адаптеры.</li>
+</ul>
+          <h2>Циклы циклов</h2>
+          <h1 id="article-document-title">Циклы циклов: общая грамматика управляемых изменений</h1>
 <p><em>Как конечная вложенность, ограниченная обратная связь, доказательства и полномочия превращают итерации в наблюдаемую систему</em></p>
 <h2 id="article-section-01">Аннотация</h2>
 <p>Исследование, реагирование на инцидент, творческое производство, управление и поставка программного обеспечения устроены по-разному. Однако в каждой из этих областей вход превращают в результат, результат проверяют, а затем решают, что делать дальше. Каждый такой цикл содержит циклы меньшего масштаба. Эксперимент содержит калибровку и анализ; инцидент — диагностику и восстановление; фильм — монтаж и работу со звуком; принятие нормы — консультации и ратификацию. Поэтому ответственная деятельность часто представляет собой цикл, составленный из циклов.</p>
@@ -399,283 +312,8 @@
 <h2 id="article-section-15">Заключение</h2>
 <p>Многие ответственные системы представляют собой циклы циклов. Предметные области различаются, но задача управления повторяется: явно задать границы, доказательства, полномочия, бюджеты, терминальные исходы и преемственность.</p>
 <p>Concord Loom даёт общую грамматику этой задачи. Вложенность остаётся конечной, обратная связь — ограниченной, состояния истины — раздельными, дочерние квитанции — подчинёнными родительским решениям, а эволюция не может разрешить сама себя. Конкретная реализация придаёт правилам предметный смысл, не превращая один пример в границу продукта.</p>
-            <!-- GENERATED:article:end -->
-          </article>
-        </div>
-      </div>
-
-      <div class="view reading-view" id="quickstart" data-view="quickstart">
-        <header class="reading-hero">
-          <p class="kicker" data-en="START HERE" data-ru="НАЧНИТЕ ЗДЕСЬ">НАЧНИТЕ ЗДЕСЬ</p>
-          <h1 data-en="Get your first Atlas." data-ru="Получите первый Атлас.">Получите первый Атлас.</h1>
-          <p
-            data-en="Four steps: install the skill, map the project, review the result, then connect the repository."
-            data-ru="Четыре шага: установить навык, составить карту проекта, проверить результат и подключить репозиторий."
-          >Четыре шага: установить навык, составить карту проекта, проверить результат и подключить репозиторий.</p>
-        </header>
-        <div class="reading-shell">
-          <aside class="reading-toc">
-            <button class="reading-toc-toggle" type="button" aria-expanded="false">
-              <span data-en="On this page" data-ru="На этой странице">На этой странице</span>
-              <i class="ui-icon ui-icon-plus" aria-hidden="true"></i>
-            </button>
-            <nav data-content-toc="quickstart"></nav>
-          </aside>
-          <div class="route-load-state reading-load-state" data-content-status="quickstart"
-            role="status" aria-live="polite" hidden>
-            <p data-en="Loading this page…" data-ru="Загружаем страницу…">Загружаем страницу…</p>
-            <button type="button" data-reload-site hidden
-              data-en="Reload the page" data-ru="Обновить страницу">Обновить страницу</button>
-          </div>
-          <article class="prose" data-content-body="quickstart" aria-live="polite">
-            <!-- GENERATED:quickstart:start -->
-<h1 id="quickstart-document-title">Быстрый старт Concord Loom</h1>
-<p>Чтобы начать работу, не нужно разбираться во внутренних форматах Concord Loom. Обычный путь состоит из четырёх шагов:</p>
-<ol>
-<li>установить один навык Codex;</li>
-<li>разрешить ему исследовать репозиторий без изменений;</li>
-<li>проверить наглядный Атлас и исправить ошибки;</li>
-<li>подключить репозиторий, когда карта станет верной.</li>
-</ol>
-<p>Схемы, проверки графов, служебные записи и правила доступа остаются внутри этого процесса.</p>
-<h2 id="quickstart-section-01">Что получится</h2>
-<p>Первая сессия создаст черновой Атлас репозитория. В нём будут:</p>
-<ul>
-<li>найденные области работы;</li>
-<li>предполагаемые связи между циклами;</li>
-<li>основания для каждого вывода;</li>
-<li>части карты, в которых системе не хватает вашего решения.</li>
-</ul>
-<p>Черновик не считается принятой конфигурацией и не даёт себе никаких прав. Пока вы его не одобрите, репозиторий останется без изменений.</p>
-<h2 id="quickstart-section-02">1. Установите навык Codex</h2>
-<p>Попросите Codex:</p>
-<pre tabindex="0"><code class="language-text">Use $skill-installer to install
-https://github.com/concordloom/concordloom/tree/v0.1.5/plugins/concordloom/skills/design-project-loops</code></pre>
-<p>После установки откройте новый диалог Codex в нужном репозитории. Новый диалог нужен, чтобы Codex загрузил установленный навык.</p>
-<h2 id="quickstart-section-03">2. Попросите построить первый Атлас</h2>
-<p>Напишите:</p>
-<pre tabindex="0"><code class="language-text">Используй $design-project-loops: исследуй этот репозиторий и построй первый
-Атлас. Не меняй репозиторий, пока я не одобрю карту.</code></pre>
-<p>Сначала навык задаст два коротких вопроса:</p>
-<ol>
-<li>на каком языке вести разговор и создавать материалы;</li>
-<li>как к вам обращаться.</li>
-</ol>
-<p>Он не попросит придумывать роли, служебные идентификаторы, границы графа или пути для файлов.</p>
-<p>Затем навык проверит, доступна ли команда Concord Loom. Если команды нет, он покажет один безопасный способ установки и попросит разрешение перед изменением окружения или обращением к сети. Предпочтительная команда:</p>
-<pre tabindex="0"><code class="language-bash">pipx install \
-  &quot;concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5&quot;</code></pre>
-<p>Не используйте <code>--break-system-packages</code>. Если <code>pipx</code> недоступен, навык может использовать <code>uv tool</code> или отдельное управляемое окружение.</p>
-<h2 id="quickstart-section-04">3. Проверьте карту</h2>
-<p>Первое исследование работает только на чтение. Навык изучает отслеживаемые файлы, области репозитория, импорты, ограниченную историю Git и файлы, которые часто меняются вместе. Код самого проекта он не запускает.</p>
-<p>Черновой Атлас сохраняется вне репозитория. Откройте его и пройдите по предложенным циклам. Для каждого цикла должны быть понятны три вещи:</p>
-<ul>
-<li>Какая это часть проекта?</li>
-<li>Какой результат даёт эта работа?</li>
-<li>От какой другой работы она зависит?</li>
-</ul>
-<p>После просмотра ответьте на один вопрос: <strong>карта верно описывает проект?</strong></p>
-<p>Можно ответить обычными словами:</p>
-<pre tabindex="0"><code class="language-text">Да, всё верно.</code></pre>
-<p>или:</p>
-<pre tabindex="0"><code class="language-text">Нет. Заметки о выпуске относятся к выпуску, а не к документации.</code></pre>
-<p>Навык исправит черновик и снова покажет карту. Для обычной поправки не нужна особая роль или служебное название полномочий.</p>
-<h2 id="quickstart-section-05">4. Подключите репозиторий</h2>
-<p>Когда карта станет верной, навык отдельно спросит, можно ли сохранить первую принятую конфигурацию внутри репозитория. Это будет первая запись в репозиторий, поэтому разрешение должно быть явным.</p>
-<p>После подключения:</p>
-<ul>
-<li>принятый Атлас станет общей картой проекта;</li>
-<li>следующую задачу можно будет направлять в нужный цикл, не загружая всю</li>
-</ul>
-<p>систему;</p>
-<ul>
-<li>Атлас можно будет заново собирать из принятой конфигурации;</li>
-<li>повторяющиеся проблемы смогут стать понятным предложением по улучшению;</li>
-<li>решение о включении новой версии всё равно останется за человеком.</li>
-</ul>
-<p>Одобрение первой карты и включение будущего улучшения — разные решения. Система может предложить новую версию правил, но не может сама её включить.</p>
-<h2 id="quickstart-section-06">Повседневная работа</h2>
-<blockquote><strong>Статус функции:</strong> предпросмотр маршрута пока есть только в невыпущенной версии из <code>main</code>, но не в стабильном пакете v0.1.5, установленном выше. Используйте v0.1.5 для онбординга и создания Атласа. Проверяйте предпросмотр только после отдельного согласия на установку невыпущенной версии или дождитесь следующего релиза.</blockquote>
-<p>Опишите задачу и попросите Codex сначала показать маршрут:</p>
-<pre tabindex="0"><code class="language-text">Используй $design-project-loops для этой задачи. Сначала покажи маршрут и
-ничего не запускай без моего подтверждения.</code></pre>
-<p>Вы увидите короткую последовательность нужных циклов и понятное объяснение, зачем нужен каждый из них. На этом этапе ничего не запускается. Маршрут можно подтвердить или исправить обычными словами.</p>
-<p>Подтверждение создаст точный черновик. Для запуска всё равно потребуется отдельная авторизация. После неё навык запишет фактический ход работы и покажет расхождения с планом. Изменение только для текущей задачи останется внутри запуска. Изменение для будущих задач станет отдельным предложением эволюции и не включится само.</p>
-<h2 id="quickstart-section-07">Ручной запуск через командную строку</h2>
-<p>Навык — основной интерфейс. Команды пригодятся для автоматизации и разработки самого Concord Loom.</p>
-<p>Исследование только для чтения:</p>
-<pre tabindex="0"><code class="language-bash">WORK_DIR=&quot;$(mktemp -d /tmp/concordloom-quickstart-XXXXXX)&quot;
-concordloom inspect . \
-  --output &quot;$WORK_DIR/observed-project-graph.json&quot;
-concordloom questions \
-  --graph &quot;$WORK_DIR/observed-project-graph.json&quot; \
-  --output &quot;$WORK_DIR/questions.json&quot;</code></pre>
-<p>Эти файлы содержат наблюдения и предположения, а не принятую карту проекта. Команда <code>concordloom --help</code> покажет справку о низкоуровневых операциях: предложении правил, сборке, запусках, Атласе и эволюции.</p>
-<h2 id="quickstart-section-08">Что читать дальше</h2>
-<ul>
-<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/ATLAS.md" rel="noreferrer">Руководство по Атласу</a> объясняет интерактивное и автономное</li>
-</ul>
-<p>представления.</p>
-<ul>
-<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/CONCEPTS.md" rel="noreferrer">Основные понятия</a> объясняют два графа и состояния сведений.</li>
-<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/TRUST_MODEL.md" rel="noreferrer">Модель доверия</a> объясняет, почему проверка и разрешение —</li>
-</ul>
-<p>разные вещи.</p>
-<ul>
-<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/ARCHITECTURE.md" rel="noreferrer">Архитектура</a> описывает ядро и адаптеры.</li>
-</ul>
-            <!-- GENERATED:quickstart:end -->
-          </article>
-        </div>
-      </div>
-
-      <div class="view atlas-view" id="atlas" data-view="atlas">
-        <h1 class="visually-hidden" data-en="Concord Loom Atlas" data-ru="Атлас Concord Loom">Атлас Concord Loom</h1>
-        <section class="atlas-commandbar" aria-label="Accepted development system"
-          data-en-aria-label="Accepted development system" data-ru-aria-label="Принятая система разработки">
-          <p class="atlas-live-state"><i aria-hidden="true"></i><strong data-en="ACCEPTED MAP" data-ru="ПРИНЯТАЯ КАРТА">ПРИНЯТАЯ КАРТА</strong></p>
-          <p><span data-en="VERSION" data-ru="ВЕРСИЯ">ВЕРСИЯ</span><strong data-product-release>0.1.0</strong></p>
-          <p><span data-en="RULES" data-ru="ПРАВИЛА">ПРАВИЛА</span><strong data-atlas-binding data-en="Loading…" data-ru="Загрузка…">Загрузка…</strong></p>
-          <p><span data-en="CYCLES" data-ru="ЦИКЛЫ">ЦИКЛЫ</span><strong data-atlas-count>…</strong></p>
-          <p class="visually-hidden"><span data-en="MAIN CYCLE" data-ru="ГЛАВНЫЙ ЦИКЛ">ГЛАВНЫЙ ЦИКЛ</span><strong data-atlas-root data-en="Loading…" data-ru="Загрузка…">Загрузка…</strong></p>
-        </section>
-
-        <section class="atlas-workbench">
-          <header class="atlas-navigation">
-            <a class="atlas-up" data-atlas-up href="#atlas" hidden>
-              <span class="ui-icon ui-icon-arrow-left" aria-hidden="true"></span>
-              <span data-en="Up one level" data-ru="На уровень выше">На уровень выше</span>
-            </a>
-            <nav class="atlas-breadcrumbs" data-atlas-breadcrumbs aria-label="Cycle path"
-              data-en-aria-label="Cycle path" data-ru-aria-label="Путь по циклам"></nav>
-            <p data-atlas-provenance></p>
-          </header>
-          <ol class="visually-hidden" data-atlas-history></ol>
-          <div class="atlas-console">
-            <section class="route-preview" aria-labelledby="route-preview-title">
-              <form class="route-preview-form" data-route-preview-form>
-                <div class="route-preview-copy">
-                  <label id="route-preview-title" for="route-preview-request"
-                    data-en="What do you want to change?"
-                    data-ru="Что нужно изменить?">Что нужно изменить?</label>
-                  <p id="route-preview-hint"
-                    data-en="Describe the result. The Atlas will only propose a path — nothing runs."
-                    data-ru="Опишите результат. Атлас только предложит путь — ничего не запустится.">Опишите результат. Атлас только предложит путь — ничего не запустится.</p>
-                </div>
-                <div class="route-preview-controls">
-                  <textarea id="route-preview-request" data-route-preview-request rows="2"
-                    aria-describedby="route-preview-hint" autocomplete="off" spellcheck="true"
-                    data-en-placeholder="For example: fix the Russian Quickstart"
-                    data-ru-placeholder="Например: исправить документацию"
-                    placeholder="For example: fix the Russian Quickstart"></textarea>
-                  <button type="submit" data-route-preview-submit disabled
-                    data-en="Find a route" data-ru="Подобрать маршрут">Подобрать маршрут</button>
-                </div>
-              </form>
-              <div class="route-preview-feedback" data-route-preview-feedback hidden>
-                <p data-route-preview-message role="status" aria-live="polite" aria-atomic="true"></p>
-                <div class="route-preview-choices" data-route-preview-choices></div>
-              </div>
-              <section class="route-preview-result" data-route-preview-result hidden
-                aria-labelledby="route-preview-result-title">
-                <div class="route-preview-result-head">
-                  <div>
-                    <p class="route-preview-state" data-en="PROPOSED — NOT RUNNING"
-                      data-ru="ПРЕДЛОЖЕНО — НЕ ЗАПУЩЕНО">ПРЕДЛОЖЕНО — НЕ ЗАПУЩЕНО</p>
-                    <h2 id="route-preview-result-title" tabindex="-1" data-en="Suggested path"
-                      data-ru="Предлагаемый путь">Предлагаемый путь</h2>
-                  </div>
-                  <button type="button" class="route-preview-clear" data-route-preview-clear
-                    data-en="Clear route" data-ru="Сбросить маршрут">Сбросить маршрут</button>
-                </div>
-                <p class="route-preview-area" data-route-preview-area></p>
-                <h3 class="route-preview-actions-title" data-en="What the work would actually do"
-                  data-ru="Что будет сделано">Что будет сделано</h3>
-                <ol class="route-preview-list" data-route-preview-list
-                  aria-label="Proposed work actions"
-                  data-en-aria-label="Proposed work actions"
-                  data-ru-aria-label="Предлагаемые действия"></ol>
-                <p class="route-preview-effects" data-route-preview-effects></p>
-                <p class="route-preview-notice"
-                  data-en="This public Atlas is read-only. Open a local Atlas to create an exact draft from this route. A separate authorization is required before anything starts."
-                  data-ru="Публичный Атлас работает только для просмотра. Откройте локальный Атлас, чтобы создать точный черновик по этому маршруту. Для запуска потребуется отдельная авторизация.">Публичный Атлас работает только для просмотра. Откройте локальный Атлас, чтобы создать точный черновик по этому маршруту. Для запуска потребуется отдельная авторизация.</p>
-                <a class="route-preview-local" href="#quickstart"
-                  data-en="Open the local quickstart" data-ru="Открыть локальный быстрый старт">Открыть локальный быстрый старт</a>
-              </section>
-            </section>
-            <div class="atlas-stage" data-atlas-stage>
-              <div class="atlas-map-head">
-                <div>
-                  <p class="instrument-label" data-en="INSIDE SELECTED CYCLE"
-                    data-ru="ЧТО ВХОДИТ В ВЫБРАННЫЙ ЦИКЛ">ЧТО ВХОДИТ В ВЫБРАННЫЙ ЦИКЛ</p>
-                </div>
-                <p data-en="Choose a card to see details. Open it from the sheet to move deeper."
-                  data-ru="Выберите карточку, чтобы увидеть детали. Переход внутрь — отдельная кнопка в панели.">Выберите карточку, чтобы увидеть детали. Переход внутрь — отдельная кнопка в панели.</p>
-              </div>
-              <svg class="atlas-graph" data-atlas-graph viewBox="0 0 1440 820"
-                role="group" aria-label="Contained cycle map"
-                data-en-aria-label="Contained cycle map" data-ru-aria-label="Карта вложенных циклов"></svg>
-              <div class="route-load-state atlas-load-state" data-atlas-status role="status" aria-live="polite">
-                <p data-en="Loading the accepted project map…"
-                  data-ru="Загружаем принятую карту проекта…">Загружаем принятую карту проекта…</p>
-                <button type="button" data-reload-site hidden
-                  data-en="Reload the page" data-ru="Обновить страницу">Обновить страницу</button>
-              </div>
-              <p class="atlas-empty" data-atlas-empty hidden></p>
-            </div>
-            <div class="atlas-inspector-scrim" data-atlas-inspector-scrim
-              aria-hidden="true" hidden></div>
-            <aside class="atlas-inspector" data-atlas-inspector role="dialog" aria-modal="true"
-              aria-labelledby="atlas-inspector-title" aria-live="polite"
-              aria-hidden="true" tabindex="-1" inert></aside>
-          </div>
-        </section>
-
-        <section class="evolution-circuit">
-          <div>
-            <p class="section-label" data-en="ALWAYS VISIBLE" data-ru="ВСЕГДА НА ВИДУ">ВСЕГДА НА ВИДУ</p>
-            <h2 data-en="Evolution cannot authorize itself." data-ru="Эволюция не может выдать себе полномочия.">Эволюция не может выдать себе полномочия.</h2>
-          </div>
-          <ol data-evolution-circuit></ol>
-        </section>
-
-        <details class="full-outline">
-          <summary data-outline-summary data-en="Show the complete cycle outline" data-ru="Показать полную схему циклов">Показать полную схему циклов</summary>
-          <div data-atlas-outline></div>
-        </details>
-      </div>
-
-      <div class="view docs-view" id="docs" data-view="docs">
-        <header class="reading-hero">
-          <p class="kicker" data-en="DOCUMENTATION" data-ru="ДОКУМЕНТАЦИЯ">ДОКУМЕНТАЦИЯ</p>
-          <h1 data-en="Find the answer at the right depth." data-ru="Найдите ответ без лишних деталей.">Найдите ответ без лишних деталей.</h1>
-          <p
-            data-en="Start with a task, then open the theory, governance or reference material only when you need it."
-            data-ru="Начните с задачи, а к теории, правилам и справочным материалам переходите по мере необходимости."
-          >Начните с задачи, а к теории, правилам и справочным материалам переходите по мере необходимости.</p>
-        </header>
-        <section class="docs-grid" data-docs-grid aria-live="polite">
-          <div class="route-load-state docs-load-state" data-docs-status role="status">
-            <p data-en="Loading the documentation index…"
-              data-ru="Загружаем список документов…">Загружаем список документов…</p>
-            <button type="button" data-reload-site hidden
-              data-en="Reload the page" data-ru="Обновить страницу">Обновить страницу</button>
-          </div>
-          <noscript>
-            <p class="load-error">
-              JavaScript is off. Open the
-              <a href="https://github.com/concordloom/concordloom/tree/main/docs">English documentation</a>
-              or <a href="https://github.com/concordloom/concordloom/tree/main/docs/ru">русскую документацию</a>.
-            </p>
-          </noscript>
-        </section>
-      </div>
+        </article>
+      </section>
     </main>
-
-    <footer class="site-footer">
-      <span translate="no">CONCORD LOOM</span>
-      <span data-en="FINITE LOOPS. EXPLICIT AUTHORITY." data-ru="КОНЕЧНЫЕ ЦИКЛЫ. ЯВНЫЕ ПОЛНОМОЧИЯ.">КОНЕЧНЫЕ ЦИКЛЫ. ЯВНЫЕ ПОЛНОМОЧИЯ.</span>
-      <a href="https://github.com/concordloom/concordloom">GITHUB <span class="ui-icon ui-icon-external" aria-hidden="true"></span></a>
-    </footer>
   </body>
 </html>

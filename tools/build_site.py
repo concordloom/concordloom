@@ -55,6 +55,18 @@ LOCALIZED_INDEXES = {
     "en": SITE / "en" / "index.html",
     "ru": SITE / "ru" / "index.html",
 }
+LOCALIZED_DOC_INDEXES = {
+    "en": SITE / "docs" / "en" / "index.html",
+    "ru": SITE / "docs" / "ru" / "index.html",
+}
+LOCALIZED_ATLAS_OUTPUTS = {
+    language: path.parent / "data" / "atlas.json"
+    for language, path in LOCALIZED_INDEXES.items()
+}
+LOCALIZED_CONTENT_OUTPUTS = {
+    language: path.parent / "data" / "content.json"
+    for language, path in LOCALIZED_INDEXES.items()
+}
 ROBOTS = SITE / "robots.txt"
 SITEMAP = SITE / "sitemap.xml"
 TOKEN_LAYERS = ("primitive", "semantic", "component", "compatibility")
@@ -332,8 +344,11 @@ def site_content() -> dict:
     return sections
 
 
-def index_with_static_reading(content: dict) -> bytes:
-    """Project default-English reading content into the no-JS HTML shell."""
+def index_with_static_reading(content: dict, language: str = "en") -> bytes:
+    """Project localized reading content into the no-JS HTML shell."""
+
+    if language not in {"en", "ru"}:
+        raise ValueError(f"unsupported site locale: {language}")
 
     source = INDEX.read_text(encoding="utf-8")
     for section in ("article", "quickstart"):
@@ -345,7 +360,7 @@ def index_with_static_reading(content: dict) -> bytes:
         )
         replacement = (
             f"{start}\n"
-            f"{content[section]['en']['html']}\n"
+            f"{content[section][language]['html']}\n"
             f"            {end}"
         )
         source, count = pattern.subn(replacement, source, count=1)
@@ -354,18 +369,15 @@ def index_with_static_reading(content: dict) -> bytes:
     return source.encode("utf-8")
 
 
-def localized_index(content: dict, language: str) -> bytes:
-    """Build one crawlable language URL without relying on JavaScript."""
+def localized_documentation_index(content: dict, language: str) -> bytes:
+    """Build one crawlable documentation URL without relying on JavaScript."""
 
     if language not in {"en", "ru"}:
         raise ValueError(f"unsupported site locale: {language}")
     copy = {
         "en": {
-            "title": "Concord Loom — governed systems of development loops",
-            "description": (
-                "Discover, negotiate, execute, verify, and evolve bounded systems "
-                "of development loops with explicit human authority."
-            ),
+            "title": "Concord Loom documentation",
+            "description": "Quickstart, theory, and reference material for Concord Loom.",
             "label": "ENGLISH DOCUMENTATION",
             "intro": (
                 "Concord Loom maps how work is accepted, executed, verified, and "
@@ -378,11 +390,8 @@ def localized_index(content: dict, language: str) -> bytes:
             "alternate": "Русская версия",
         },
         "ru": {
-            "title": "Concord Loom — управляемые системы циклов разработки",
-            "description": (
-                "Исследуйте, согласуйте, выполняйте, проверяйте и развивайте "
-                "ограниченные системы циклов с явными решениями человека."
-            ),
+            "title": "Документация Concord Loom",
+            "description": "Быстрый старт, теория и справочные материалы Concord Loom.",
             "label": "РУССКАЯ ДОКУМЕНТАЦИЯ",
             "intro": (
                 "Concord Loom показывает, как работа принимается, выполняется, "
@@ -395,7 +404,7 @@ def localized_index(content: dict, language: str) -> bytes:
             "alternate": "English version",
         },
     }[language]
-    canonical = f"{SITE_BASE_URL}/{language}/"
+    canonical = f"{SITE_BASE_URL}/docs/{language}/"
     alternate_language = "ru" if language == "en" else "en"
     document = f"""<!doctype html>
 <html lang="{language}" style="color-scheme: light" data-design-system="signal-canvas">
@@ -405,9 +414,8 @@ def localized_index(content: dict, language: str) -> bytes:
     <meta name="theme-color" content="#f3f0e8">
     <meta name="description" content="{html.escape(copy['description'], quote=True)}">
     <link rel="canonical" href="{canonical}">
-    <link rel="alternate" hreflang="en" href="{SITE_BASE_URL}/en/">
-    <link rel="alternate" hreflang="ru" href="{SITE_BASE_URL}/ru/">
-    <link rel="alternate" hreflang="x-default" href="{SITE_BASE_URL}/">
+    <link rel="alternate" hreflang="en" href="{SITE_BASE_URL}/docs/en/">
+    <link rel="alternate" hreflang="ru" href="{SITE_BASE_URL}/docs/ru/">
     <meta property="og:title" content="{html.escape(copy['title'], quote=True)}">
     <meta property="og:description" content="{html.escape(copy['description'], quote=True)}">
     <meta property="og:image" content="{SITE_BASE_URL}/assets/concordloom-social-preview.png">
@@ -415,21 +423,21 @@ def localized_index(content: dict, language: str) -> bytes:
     <meta property="og:type" content="website">
     <meta property="og:locale" content="{'en_US' if language == 'en' else 'ru_RU'}">
     <title>{html.escape(copy['title'])}</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
-    <link rel="stylesheet" href="../design-tokens.css">
-    <link rel="stylesheet" href="../design-system.css">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../design-tokens.css">
+    <link rel="stylesheet" href="../../design-system.css">
+    <link rel="stylesheet" href="../../styles.css">
   </head>
   <body data-design-system="signal-canvas">
     <a class="skip-link" href="#main">{'Skip to content' if language == 'en' else 'Перейти к содержанию'}</a>
     <header class="site-header">
-      <a class="brand" href="../?lang={language}" aria-label="Concord Loom">
-        <img src="../assets/concordloom-mark.png" width="48" height="48" alt="">
+      <a class="brand" href="../../{language}/" aria-label="Concord Loom">
+        <img src="../../assets/concordloom-mark.png" width="48" height="48" alt="">
         <span>CONCORD LOOM</span>
       </a>
       <nav class="view-tabs" aria-label="{'Language versions' if language == 'en' else 'Языковые версии'}">
         <a class="view-tab" href="../{alternate_language}/">{html.escape(copy['alternate'])}</a>
-        <a class="view-tab is-active" href="../?lang={language}">{html.escape(copy['interactive'])}</a>
+        <a class="view-tab is-active" href="../../{language}/">{html.escape(copy['interactive'])}</a>
       </nav>
     </header>
     <main id="main" class="view is-active">
@@ -453,6 +461,76 @@ def localized_index(content: dict, language: str) -> bytes:
     return document.encode("utf-8")
 
 
+def _static_language_copy(document: str, language: str) -> str:
+    """Select simple bilingual text and metadata for the first HTML paint."""
+
+    element_pattern = re.compile(
+        r'(<(?P<tag>[a-z][a-z0-9-]*)\b'
+        r'(?=[^>]*\bdata-en="(?P<en>[^"]*)")'
+        r'(?=[^>]*\bdata-ru="(?P<ru>[^"]*)")[^>]*>)'
+        r'(?P<body>[^<]*)(</(?P=tag)>)',
+        flags=re.IGNORECASE,
+    )
+
+    def replace_element(match: re.Match[str]) -> str:
+        return match.group(1) + match.group(language) + match.group(6)
+
+    document = element_pattern.sub(replace_element, document)
+    meta_pattern = re.compile(
+        r'<meta\b(?=[^>]*\bdata-en-content="(?P<en>[^"]*)")'
+        r'(?=[^>]*\bdata-ru-content="(?P<ru>[^"]*)")[^>]*>',
+        flags=re.IGNORECASE,
+    )
+
+    def replace_meta(match: re.Match[str]) -> str:
+        tag = match.group(0)
+        return re.sub(
+            r'\bcontent="[^"]*"',
+            f'content="{match.group(language)}"',
+            tag,
+            count=1,
+        )
+
+    return meta_pattern.sub(replace_meta, document)
+
+
+def localized_index(content: dict, language: str) -> bytes:
+    """Build a crawlable localized copy of the complete interactive site."""
+
+    if language not in {"en", "ru"}:
+        raise ValueError(f"unsupported site locale: {language}")
+    document = index_with_static_reading(content, language).decode("utf-8")
+    canonical = f"{SITE_BASE_URL}/{language}/"
+    document = document.replace('<html lang="en"', f'<html lang="{language}"', 1)
+    document = document.replace(
+        '          || (stored === "en" || stored === "ru" ? stored : null)\n'
+        '          || "en";',
+        f'          || "{language}";',
+        1,
+    )
+    document = document.replace(
+        f'<link rel="canonical" href="{SITE_BASE_URL}/">',
+        f'<link rel="canonical" href="{canonical}">',
+        1,
+    )
+    document = document.replace(
+        f'<meta property="og:url" content="{SITE_BASE_URL}/">',
+        f'<meta property="og:url" content="{canonical}">',
+        1,
+    )
+    for attribute in ("href", "src", "srcset"):
+        document = document.replace(f'{attribute}="assets/', f'{attribute}="../assets/')
+    document = document.replace('href="styles.css"', 'href="../styles.css"')
+    document = document.replace(
+        'href="design-tokens.css"', 'href="../design-tokens.css"'
+    )
+    document = document.replace(
+        'href="design-system.css"', 'href="../design-system.css"'
+    )
+    document = document.replace('src="app.js"', 'src="../app.js"')
+    return _static_language_copy(document, language).encode("utf-8")
+
+
 def robots_txt() -> bytes:
     return (
         "User-agent: *\n"
@@ -462,7 +540,13 @@ def robots_txt() -> bytes:
 
 
 def sitemap_xml() -> bytes:
-    urls = (f"{SITE_BASE_URL}/", f"{SITE_BASE_URL}/en/", f"{SITE_BASE_URL}/ru/")
+    urls = (
+        f"{SITE_BASE_URL}/",
+        f"{SITE_BASE_URL}/en/",
+        f"{SITE_BASE_URL}/ru/",
+        f"{SITE_BASE_URL}/docs/en/",
+        f"{SITE_BASE_URL}/docs/ru/",
+    )
     entries = "\n".join(f"  <url><loc>{url}</loc></url>" for url in urls)
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -589,6 +673,10 @@ def main() -> int:
         language: localized_index(content, language)
         for language in LOCALIZED_INDEXES
     }
+    expected_localized_doc_indexes = {
+        language: localized_documentation_index(content, language)
+        for language in LOCALIZED_DOC_INDEXES
+    }
     expected_robots = robots_txt()
     expected_sitemap = sitemap_xml()
     expected_tokens = design_tokens_css()
@@ -622,12 +710,21 @@ def main() -> int:
             stale.append(str(output.relative_to(ROOT)))
         if not check_bytes(content_output, expected_content):
             stale.append(str(content_output.relative_to(ROOT)))
+        for path in LOCALIZED_ATLAS_OUTPUTS.values():
+            if not check_bytes(path, expected):
+                stale.append(str(path.relative_to(ROOT)))
+        for path in LOCALIZED_CONTENT_OUTPUTS.values():
+            if not check_bytes(path, expected_content):
+                stale.append(str(path.relative_to(ROOT)))
         if not check_bytes(TOKEN_OUTPUT, expected_tokens):
             stale.append(str(TOKEN_OUTPUT.relative_to(ROOT)))
         if not check_bytes(INDEX, expected_index):
             stale.append(str(INDEX.relative_to(ROOT)))
         for language, path in LOCALIZED_INDEXES.items():
             if not check_bytes(path, expected_localized_indexes[language]):
+                stale.append(str(path.relative_to(ROOT)))
+        for language, path in LOCALIZED_DOC_INDEXES.items():
+            if not check_bytes(path, expected_localized_doc_indexes[language]):
                 stale.append(str(path.relative_to(ROOT)))
         if not check_bytes(ROBOTS, expected_robots):
             stale.append(str(ROBOTS.relative_to(ROOT)))
@@ -645,11 +742,20 @@ def main() -> int:
     save(output, projection, pretty=False)
     content_output.parent.mkdir(parents=True, exist_ok=True)
     content_output.write_bytes(expected_content)
+    for path in LOCALIZED_ATLAS_OUTPUTS.values():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(expected)
+    for path in LOCALIZED_CONTENT_OUTPUTS.values():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(expected_content)
     TOKEN_OUTPUT.write_bytes(expected_tokens)
     INDEX.write_bytes(expected_index)
     for language, path in LOCALIZED_INDEXES.items():
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(expected_localized_indexes[language])
+    for language, path in LOCALIZED_DOC_INDEXES.items():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(expected_localized_doc_indexes[language])
     ROBOTS.write_bytes(expected_robots)
     SITEMAP.write_bytes(expected_sitemap)
     for source, target in assets.items():
