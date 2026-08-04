@@ -28,7 +28,7 @@ test("language switch preserves the current route", async ({ page }) => {
   await expect(page.locator("[data-atlas-count]")).not.toHaveText("0");
   await page.locator(".language-switch").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "ru");
-  await expect(page).toHaveURL(/[?&]lang=ru.*#atlas/);
+  await expect(page).toHaveURL(/\/ru\/#atlas/);
   await expect(page.locator("[data-view-link=atlas]")).toHaveText("Атлас");
 });
 
@@ -40,7 +40,7 @@ test("language switch preserves the selected Atlas cycle", async ({ page }) => {
   );
   await page.locator(".language-switch").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "ru");
-  await expect(page).toHaveURL(/[?&]lang=ru.*#atlas\/system-evolution$/);
+  await expect(page).toHaveURL(/\/ru\/#atlas\/system-evolution$/);
   await expect(page.locator(".graph-node.is-current")).toHaveAttribute(
     "data-loop-id",
     "system-evolution",

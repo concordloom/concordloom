@@ -29,3 +29,29 @@ for (const locale of ["en", "ru"]) {
     );
   });
 }
+
+test("language switch uses localized canonical routes and preserves the current view", async ({ page }) => {
+  await page.goto("/en/#quickstart");
+  await waitForSite(page);
+
+  await page.locator(".language-switch").click();
+  await expect.poll(() => new URL(page.url()).pathname).toBe("/ru/");
+  await expect.poll(() => new URL(page.url()).hash).toBe("#quickstart");
+  await expect(page.locator("html")).toHaveAttribute("lang", "ru");
+  expect(new URL(page.url()).searchParams.has("lang")).toBe(false);
+
+  await page.locator(".language-switch").click();
+  await expect.poll(() => new URL(page.url()).pathname).toBe("/en/");
+  await expect.poll(() => new URL(page.url()).hash).toBe("#quickstart");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  expect(new URL(page.url()).searchParams.has("lang")).toBe(false);
+});
+
+test("legacy localized lang query redirects to the matching canonical route", async ({ page }) => {
+  await page.goto("/en/?lang=ru#quickstart");
+  await page.waitForURL("**/ru/#quickstart");
+  await waitForSite(page);
+
+  await expect(page.locator("html")).toHaveAttribute("lang", "ru");
+  expect(new URL(page.url()).searchParams.has("lang")).toBe(false);
+});

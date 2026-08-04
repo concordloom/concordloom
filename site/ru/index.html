@@ -12,9 +12,18 @@
         } catch {
           stored = null;
         }
-        const language =
-          (requested === "en" || requested === "ru" ? requested : null)
-          || "ru";
+        const routeLanguage = "ru";
+        if ((requested === "en" || requested === "ru") && requested !== routeLanguage) {
+          const target = new URL(location.href);
+          target.pathname = target.pathname.replace(
+            /\/(?:en|ru)\/?$/,
+            `/${requested}/`,
+          );
+          target.searchParams.delete("lang");
+          location.replace(`${target.pathname}${target.search}${target.hash}`);
+          return;
+        }
+        const language = routeLanguage;
         document.documentElement.lang = language;
         document.documentElement.dataset.initialLanguage = language;
         if (language === "ru") {
