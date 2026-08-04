@@ -1,5 +1,5 @@
 {
-  "baseline_set_sha256": "sha256:ea5defd5cc054ba4e588dba1a4d373b4d65f3ecbc1d326edba4b39b7fa7e2899",
+  "baseline_set_sha256": "sha256:d74f878710997240fdd6b7ee5cfb45d3669e2fde7d063c2c23a8b0c85b4934fe",
   "contract": {
     "id": "signal-canvas-v1",
     "path": "design/frontend/visual-contract.json",
@@ -36,10 +36,10 @@
       "viewport": "360x800"
     },
     {
-      "bytes": 33940,
+      "bytes": 35357,
       "language": "en",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:cb3d3b0ec3c800a43ba1d7f8b8a97cd72c5ed9822f88506c9cda263545fa1d0e",
+      "sha256": "sha256:febb27e050487df64a4cd345b75eb839f737fd683976e49120cee1a0630b013d",
       "viewport": "360x800"
     },
     {
@@ -92,10 +92,10 @@
       "viewport": "360x800"
     },
     {
-      "bytes": 32811,
+      "bytes": 34212,
       "language": "ru",
       "path": "design/frontend/baselines/visual-small-mobile/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:f3bbe3bb9c88ad1e18085f2be4b0e2bb3a487ac4516a7bf4212718a20a59513e",
+      "sha256": "sha256:62130424abb8660eef232518267546703a294c513d393a24d90f8be33e5bc2f7",
       "viewport": "360x800"
     },
     {
@@ -148,10 +148,10 @@
       "viewport": "390x844"
     },
     {
-      "bytes": 38445,
+      "bytes": 38600,
       "language": "en",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:23924bcec77a65319f1250ccef61884906198b613f1c4200fed5e388fdf0255a",
+      "sha256": "sha256:ce27b65ce49a5742bceb7cd9782b7b5ee4f02050ed17619107023fe056813590",
       "viewport": "390x844"
     },
     {
@@ -204,10 +204,10 @@
       "viewport": "390x844"
     },
     {
-      "bytes": 35655,
+      "bytes": 35382,
       "language": "ru",
       "path": "design/frontend/baselines/visual-mobile/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:3f1ef4f207db1df595ccbb1b6f3da8ee315fc80681c2240bd27a8c8711930821",
+      "sha256": "sha256:37001a871d7f36366edd8886f06ec7e385c96568f8ce295d76fc07401e19969b",
       "viewport": "390x844"
     },
     {
@@ -372,10 +372,10 @@
       "viewport": "768x1024"
     },
     {
-      "bytes": 62629,
+      "bytes": 62166,
       "language": "en",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:9c46c951abea386ba6a66f1b4344a7ac86af89eee1e5ba872fe3a4a2ee6a1234",
+      "sha256": "sha256:1a3e1cbe268a68e517a496bb563362d5d556817ae98ce3781f831c6f55d1c60e",
       "viewport": "768x1024"
     },
     {
@@ -428,10 +428,10 @@
       "viewport": "768x1024"
     },
     {
-      "bytes": 65122,
+      "bytes": 64156,
       "language": "ru",
       "path": "design/frontend/baselines/visual-tablet-portrait/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:371ed863f0a3d288d09424229c6a0b23510db2426ce1a56e430339aee9d6e6be",
+      "sha256": "sha256:be5dd757ec94b6713f96ac0f239be50e2a8d8d8934e8b060128a71ed13766752",
       "viewport": "768x1024"
     },
     {
@@ -484,10 +484,10 @@
       "viewport": "1024x768"
     },
     {
-      "bytes": 58737,
+      "bytes": 60014,
       "language": "en",
       "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:f3e7d85625aefb019dfb27489f3b3a28bb13dbbc0938f5c8753fe8d0df9297fa",
+      "sha256": "sha256:4e8241707a4e7fc4d32c43aec770b2fba0de72ca3bc34462e551cd3e534d608f",
       "viewport": "1024x768"
     },
     {
@@ -540,10 +540,10 @@
       "viewport": "1024x768"
     },
     {
-      "bytes": 61628,
+      "bytes": 62803,
       "language": "ru",
       "path": "design/frontend/baselines/visual-tablet-landscape/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:0366af5bf6d2ce73687df6e6d8dea5d5801cf3215de275b24f4524f51e0dae53",
+      "sha256": "sha256:2906b9b1584c8a99760b059abff73d86a10456cfcad0c7e110be72e227a91468",
       "viewport": "1024x768"
     },
     {
@@ -596,10 +596,10 @@
       "viewport": "1440x900"
     },
     {
-      "bytes": 72471,
+      "bytes": 69234,
       "language": "en",
       "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:7bfde8e1446200502a3738a304301da5dec3cc66ca6c80d9311a56011bc9a51f",
+      "sha256": "sha256:182689c4c987a0152f26c85037f1acecd5c716b21279e68518bd6e1a6d45aa09",
       "viewport": "1440x900"
     },
     {
@@ -652,10 +652,10 @@
       "viewport": "1440x900"
     },
     {
-      "bytes": 77021,
+      "bytes": 72293,
       "language": "ru",
       "path": "design/frontend/baselines/visual-desktop/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:2b415ba5a8d976529d3a6b970ecd7fd3b52bbb937376c251ca75410fc8b09c32",
+      "sha256": "sha256:36cd7a04eae2e23ebb81d8fdd54edea6aed5983e425d5f263653f78ad12b48b6",
       "viewport": "1440x900"
     },
     {
@@ -708,10 +708,10 @@
       "viewport": "1920x1080"
     },
     {
-      "bytes": 88176,
+      "bytes": 91501,
       "language": "en",
       "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/en-docs.png",
-      "sha256": "sha256:38bb34e977fbf27084434a2431339d8de13a1a8a0c4d570ac02db7ee1ff73a35",
+      "sha256": "sha256:a4147bea346a25e764c9bb4592c57fdd40020ba76c242e7f2b89ef9063d8e78e",
       "viewport": "1920x1080"
     },
     {
@@ -764,10 +764,10 @@
       "viewport": "1920x1080"
     },
     {
-      "bytes": 91533,
+      "bytes": 95293,
       "language": "ru",
       "path": "design/frontend/baselines/visual-wide/visual-evidence.spec.js/ru-docs.png",
-      "sha256": "sha256:f44aea6e28e74209bb019bd01e80f96acd25ace74da6a963cd4c01c06ba9e50b",
+      "sha256": "sha256:5269e037bf27816d9f692617e30233dde75e098d8c64e4e85775c7656709e94c",
       "viewport": "1920x1080"
     },
     {
