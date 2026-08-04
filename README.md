@@ -26,6 +26,19 @@
 > contributions are especially welcome. See [CONTRIBUTING.md](.github/CONTRIBUTING.md)
 > or start a [Discussion](https://github.com/concordloom/concordloom/discussions).
 
+## Help build it
+
+You can contribute before learning the internals:
+
+- spend 10 minutes reporting one confusing step or failed attempt;
+- spend 30–60 minutes testing a disposable or non-sensitive repository;
+- pick a bounded documentation, adapter, test, or usability issue.
+
+Start with [How to help](docs/HOW_TO_HELP.md) or the
+[repository trial guide](docs/REPOSITORY_TRIAL.md). If you work with AI coding
+agents, review the practical guide to
+[governing agents without giving them release authority](docs/AI_AGENT_GOVERNANCE.md).
+
 **Concord Loom is a domain-neutral framework for discovering, negotiating,
 binding, executing, verifying, visualizing, and evolving finite systems of
 loops.**
@@ -191,6 +204,9 @@ Every public guide is maintained in English and Russian.
 | [Product specification](docs/SPEC_V0.1.md) | [Спецификация](docs/ru/SPEC_V0.1.md) |
 | [Trust model](docs/TRUST_MODEL.md) | [Модель доверия](docs/ru/TRUST_MODEL.md) |
 | [Codex plugin](docs/CODEX_PLUGIN.md) | [Плагин Codex](docs/ru/CODEX_PLUGIN.md) |
+| [How to help](docs/HOW_TO_HELP.md) | [Как помочь](docs/ru/HOW_TO_HELP.md) |
+| [Repository trial](docs/REPOSITORY_TRIAL.md) | [Испытание репозитория](docs/ru/REPOSITORY_TRIAL.md) |
+| [AI agent control](docs/AI_AGENT_GOVERNANCE.md) | [Управление ИИ-агентами](docs/ru/AI_AGENT_GOVERNANCE.md) |
 | [Release verification](docs/RELEASE.md) | [Проверка релиза](docs/ru/RELEASE.md) |
 | [Cycles of Cycles](docs/ARTICLE.md) | [Циклы циклов](docs/ru/ARTICLE.md) |
 | [Atlas guide](docs/ATLAS.md) | [Руководство Atlas](docs/ru/ATLAS.md) |

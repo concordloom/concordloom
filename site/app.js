@@ -220,7 +220,7 @@ const documentGroups = [
   {
     en: "Start here",
     ru: "Начать",
-    ids: ["quickstart", "atlas", "codex-plugin"],
+    ids: ["quickstart", "atlas", "codex-plugin", "how-to-help", "repository-trial"],
   },
   {
     en: "Understand",
@@ -235,7 +235,7 @@ const documentGroups = [
   {
     en: "Govern",
     ru: "Управлять",
-    ids: ["trust-model", "decisions", "release", "frontend-cycle-proposal"],
+    ids: ["trust-model", "ai-agent-governance", "decisions", "release", "frontend-cycle-proposal"],
   },
   {
     en: "Research",
@@ -414,6 +414,9 @@ function applyLanguage(nextLanguage) {
   });
   document.querySelectorAll("[data-en-placeholder][data-ru-placeholder]").forEach((element) => {
     element.setAttribute("placeholder", element.dataset[`${language}Placeholder`]);
+  });
+  document.querySelectorAll("[data-en-href][data-ru-href]").forEach((element) => {
+    element.setAttribute("href", element.dataset[`${language}Href`]);
   });
   const switcher = document.querySelector(".language-switch");
   switcher.querySelector("[data-lang-label]").textContent = language === "en" ? "RU" : "EN";

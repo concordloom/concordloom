@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Language: English | Русский">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/ai-agent-governance/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/">
+    <meta property="og:title" content="Governing AI coding agents | Concord Loom">
+    <meta property="og:description" content="Language: English | Русский">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Governing AI coding agents | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/ai-agent-governance/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Governing AI coding agents</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>Language: <strong>English</strong> | <a href="https://concordloom.github.io/concordloom/docs/ru/ai-agent-governance/">Русский</a></p>
+<p>An instruction file can tell an AI coding agent how to work. It cannot prove which candidate the agent tested, stop credentials from granting broader access, or decide that a change may be released. Governing AI agents requires separate records for intent, execution, evidence, and authority.</p>
+<p>Concord Loom is an early-stage attempt to make those boundaries inspectable. It does not replace an operating-system sandbox, CI permissions, signed attestations, or human review.</p>
+<h2 id="section-01">Instructions are not authority</h2>
+<p>Files such as <code>AGENTS.md</code> are useful because they make repository rules visible to people and agents. They still depend on the surrounding platform. An agent with a broad token may be technically able to push even when its instructions say not to.</p>
+<p>Treat instructions as one input to a control system, not as the control system itself. The effective boundary also includes filesystem scope, network access, credentials, branch protection, required checks, and the person or service allowed to publish.</p>
+<h2 id="section-02">Keep six facts separate</h2>
+<p>Many agent workflows collapse different claims into one green status. Keep these states distinct:</p>
+<ol>
+<li><strong>Observed:</strong> repository bytes or history show something.</li>
+<li><strong>Proposed:</strong> an agent suggests an interpretation or change.</li>
+<li><strong>Accepted:</strong> a capable operator confirms intent.</li>
+<li><strong>Planned:</strong> a route and candidate are fixed before execution.</li>
+<li><strong>Actual:</strong> tools, models, files, and external effects used in the run.</li>
+<li><strong>Verified:</strong> evidence satisfies the declared contract for that candidate.</li>
+</ol>
+<p>Verification is not publication. A passing test says something about exact bytes under exact rules. It does not grant the right to merge, deploy, send a message, or activate new governance.</p>
+<h2 id="section-03">Bind evidence to the exact candidate</h2>
+<p>Store the candidate digest, policy digest, command, environment, and result together. Otherwise a green check can be reused for bytes it never tested. When a candidate changes, evidence for the previous candidate becomes stale.</p>
+<p>The same rule applies to review. A review of a description is not a review of the resulting commit. A generated Atlas is a projection of accepted and actual records; it is not an independent source of truth.</p>
+<h2 id="section-04">Bound retries and escalation</h2>
+<p>Agentic workflows often say “fix until green.” That hides an unbounded loop. Each feedback cycle needs a retry budget, terminal outcomes, and an escalation path. When the budget is exhausted, stop or ask for a decision instead of quietly widening scope.</p>
+<h2 id="section-05">Separate author, reviewer, and publisher</h2>
+<p>For consequential changes, the same effective principal should not author the candidate, certify its own work, and publish it. Platform controls should enforce the separation that repository policy describes.</p>
+<p>Concord Loom represents these responsibilities as explicit capabilities and run nodes. A node receives only the read, write, network, and external-effect scope it needs. Publication remains a separate authorized action.</p>
+<h2 id="section-06">A practical starting point</h2>
+<p>For one repository:</p>
+<ol>
+<li>document the repository rules;</li>
+<li>inspect the project without writing to it;</li>
+<li>let a person correct and accept the project map;</li>
+<li>preview the route for a task before execution;</li>
+<li>authorize narrowly scoped work against one candidate;</li>
+<li>run independent checks against the same candidate;</li>
+<li>publish only through a separate, protected decision.</li>
+</ol>
+<p>This is a target architecture, not a claim that every Concord Loom adapter already enforces every layer. The current public onboarding is centered on the Codex skill. Support for Claude and other agents needs adapters, trials, and review.</p>
+<h2 id="section-07">Help test the boundary</h2>
+<p>If you operate AI coding agents on real repositories, Concord Loom needs your counterexamples more than a success story. Follow the <a href="https://concordloom.github.io/concordloom/docs/en/repository-trial/">repository trial guide</a>, report where the boundary is unclear, or help build an adapter through <a href="https://concordloom.github.io/concordloom/docs/en/how-to-help/">the contribution paths</a>.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

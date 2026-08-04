@@ -1,0 +1,81 @@
+name: Repository trial report
+description: Share evidence from trying Concord Loom on a real or representative repository.
+title: "[Trial]: "
+labels: ["area: usability"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Failed and incomplete trials are useful. Remove secrets, private source code,
+        personal data, tokens, and proprietary logs before submitting.
+  - type: input
+    id: version
+    attributes:
+      label: Concord Loom version or commit
+      placeholder: v0.1.5 or a full commit SHA
+    validations:
+      required: true
+  - type: input
+    id: repository
+    attributes:
+      label: Repository profile
+      description: Describe the main language, approximate size, age, and whether you knew the repository beforehand. A public link is optional.
+      placeholder: Python, about 20k lines, 3 years old, unfamiliar to me
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include operating system, Python version, AI agent and version, installation method, and relevant tool versions.
+    validations:
+      required: true
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Trial outcome
+      options:
+        - Completed without repository writes
+        - Completed and deliberately tested the write path
+        - Stopped because instructions were unclear
+        - Stopped because the boundary felt unsafe
+        - Blocked by an error
+    validations:
+      required: true
+  - type: input
+    id: time
+    attributes:
+      label: Time to the first readable Atlas
+      placeholder: 18 minutes, or no Atlas produced
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happened?
+      description: Describe the prompts, questions, wrong assumptions, errors, and any unexpected file, network, or external action.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+      description: Explain the result or boundary you expected at the point where the experience diverged.
+    validations:
+      required: true
+  - type: textarea
+    id: improvement
+    attributes:
+      label: One change that would have helped most
+      description: Prefer the smallest concrete improvement over a broad redesign request.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Safety checks
+      options:
+        - label: I removed secrets, private source code, personal data, tokens, and proprietary logs.
+          required: true
+        - label: I understand that this report is evidence, not automatically accepted product intent.
+          required: true

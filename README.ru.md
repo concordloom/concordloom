@@ -27,6 +27,19 @@
 > в [руководстве для участников](.github/CONTRIBUTING.ru.md). Можно также открыть
 > [обсуждение](https://github.com/concordloom/concordloom/discussions).
 
+## Помогите развивать проект
+
+Чтобы внести вклад, не нужно сначала изучать внутреннее устройство:
+
+- за 10 минут можно сообщить об одном непонятном шаге или сбое;
+- за 30–60 минут — проверить одноразовый репозиторий или проект без закрытых данных;
+- ещё можно выбрать ограниченную задачу по документации, адаптерам, тестам или удобству.
+
+Начните со страницы [«Как помочь»](docs/ru/HOW_TO_HELP.md) или
+[сценария испытания репозитория](docs/ru/REPOSITORY_TRIAL.md). Если вы работаете
+с ИИ-агентами, прочитайте практическое руководство
+[об управлении агентами без передачи им права на релиз](docs/ru/AI_AGENT_GOVERNANCE.md).
+
 **Concord Loom помогает описать сложную работу как систему вложенных циклов.
 Для каждого цикла он фиксирует вход, результат, пределы, ответственных и
 условия завершения.**
@@ -191,6 +204,9 @@ concordloom --version
 | [Product specification](docs/SPEC_V0.1.md) | [Спецификация](docs/ru/SPEC_V0.1.md) |
 | [Trust model](docs/TRUST_MODEL.md) | [Модель доверия](docs/ru/TRUST_MODEL.md) |
 | [Codex plugin](docs/CODEX_PLUGIN.md) | [Плагин Codex](docs/ru/CODEX_PLUGIN.md) |
+| [How to help](docs/HOW_TO_HELP.md) | [Как помочь](docs/ru/HOW_TO_HELP.md) |
+| [Repository trial](docs/REPOSITORY_TRIAL.md) | [Испытание репозитория](docs/ru/REPOSITORY_TRIAL.md) |
+| [AI agent control](docs/AI_AGENT_GOVERNANCE.md) | [Управление ИИ-агентами](docs/ru/AI_AGENT_GOVERNANCE.md) |
 | [Release verification](docs/RELEASE.md) | [Проверка релиза](docs/ru/RELEASE.md) |
 | [Cycles of Cycles](docs/ARTICLE.md) | [Циклы циклов](docs/ru/ARTICLE.md) |
 | [Atlas guide](docs/ATLAS.md) | [Руководство по атласу](docs/ru/ATLAS.md) |

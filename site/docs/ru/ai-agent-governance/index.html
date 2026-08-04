@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="English version | Язык: Русский">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/ru/ai-agent-governance/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/ai-agent-governance/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/">
+    <meta property="og:title" content="Управление ИИ-агентами | Concord Loom">
+    <meta property="og:description" content="English version | Язык: Русский">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/ru/ai-agent-governance/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ru_RU">
+    <title>Управление ИИ-агентами | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
+    <header class="site-header">
+      <a class="brand" href="../../../ru/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Навигация по документу">
+        <a class="view-tab" href="../">Документация</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/">English version</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">СПРАВОЧНИК CONCORD LOOM</p>
+        <h1>Управление ИИ-агентами</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p><a href="https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/">English version</a> | Язык: <strong>Русский</strong></p>
+<p>Файл с инструкциями объясняет ИИ-агенту, как работать. Но он не доказывает, какую версию агент проверил, не сужает права токена и не решает, можно ли выпускать изменение. Для управления ИИ-агентами нужны отдельные записи о намерении, выполнении, доказательствах и полномочиях.</p>
+<p>Concord Loom — ранняя попытка сделать эти границы проверяемыми. Он не заменяет изоляцию на уровне операционной системы, права CI, подписанные аттестации и проверку человеком.</p>
+<h2 id="section-01">Инструкция не равна полномочию</h2>
+<p>Файлы вроде <code>AGENTS.md</code> полезны: правила репозитория видны людям и агентам. Но соблюдение всё равно зависит от платформы. Агент с широким токеном технически может отправить изменения, даже если инструкция это запрещает.</p>
+<p>Считайте инструкции одним из входов системы контроля, а не всей системой. Фактическую границу также задают доступ к файлам и сети, учётные данные, защита веток, обязательные проверки и право человека или сервиса на публикацию.</p>
+<h2 id="section-02">Разделяйте шесть видов сведений</h2>
+<p>Во многих агентных процессах разные утверждения превращаются в один зелёный статус. Не смешивайте:</p>
+<ol>
+<li><strong>Наблюдаемое:</strong> это видно в файлах или истории репозитория.</li>
+<li><strong>Предложенное:</strong> агент предлагает толкование или изменение.</li>
+<li><strong>Принятое:</strong> способный оператор подтверждает намерение.</li>
+<li><strong>Запланированное:</strong> маршрут и проверяемая версия закреплены до работы.</li>
+<li><strong>Фактическое:</strong> модели, инструменты, файлы и внешние действия запуска.</li>
+<li><strong>Проверенное:</strong> доказательства выполнили договор для этой версии.</li>
+</ol>
+<p>Проверка не равна публикации. Успешный тест говорит о конкретных файлах и правилах. Он не разрешает merge, развёртывание, отправку сообщения или включение новых правил.</p>
+<h2 id="section-03">Привязывайте доказательства к точной версии</h2>
+<p>Храните вместе хеш проверяемой версии, хеш правил, команду, окружение и результат. Иначе зелёную проверку можно ошибочно применить к файлам, которых она не видела. После изменения версии старое доказательство устаревает.</p>
+<p>То же относится к ревью. Проверка описания не равна проверке получившегося commit. Сгенерированный Атлас показывает принятые и фактические сведения, но не становится самостоятельным источником истины.</p>
+<h2 id="section-04">Ограничивайте повторы и эскалацию</h2>
+<p>Фраза «исправляй, пока всё не станет зелёным» скрывает бесконечный цикл. Для каждого повтора нужны предел попыток, конечные исходы и путь эскалации. Когда лимит исчерпан, остановитесь или запросите решение, а не расширяйте границы молча.</p>
+<h2 id="section-05">Разделяйте автора, проверяющего и публикующего</h2>
+<p>Для значимых изменений один фактический участник не должен одновременно писать результат, подтверждать собственную работу и публиковать её. Платформа должна поддерживать разделение, описанное правилами репозитория.</p>
+<p>Concord Loom представляет обязанности как явные полномочия и узлы запуска. Узел получает только нужные пути чтения и записи, доступ к сети и внешние действия. Публикация остаётся отдельным авторизованным действием.</p>
+<h2 id="section-06">С чего начать в одном репозитории</h2>
+<ol>
+<li>Запишите правила репозитория.</li>
+<li>Исследуйте проект без записи в него.</li>
+<li>Дайте человеку исправить и принять карту проекта.</li>
+<li>Покажите маршрут задачи до выполнения.</li>
+<li>Авторизуйте узкую работу с одной проверяемой версией.</li>
+<li>Проведите независимые проверки той же версии.</li>
+<li>Публикуйте только через отдельное защищённое решение.</li>
+</ol>
+<p>Это целевая архитектура, а не утверждение, что каждый адаптер Concord Loom уже обеспечивает все уровни. Публичный онбординг сейчас построен вокруг навыка для Codex. Для поддержки Claude и других агентов нужны адаптеры, испытания и ревью.</p>
+<h2 id="section-07">Помогите проверить границу</h2>
+<p>Если вы используете ИИ-агентов на реальных репозиториях, проекту важнее ваши контрпримеры, чем история успеха. Пройдите <a href="https://concordloom.github.io/concordloom/docs/ru/repository-trial/">испытание репозитория</a>, сообщите о непонятной границе или помогите с адаптером через <a href="https://concordloom.github.io/concordloom/docs/ru/how-to-help/">список способов участия</a>.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

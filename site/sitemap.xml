@@ -127,6 +127,42 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/codex-plugin/" />
   </url>
   <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/how-to-help/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/how-to-help/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/how-to-help/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/how-to-help/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/how-to-help/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/how-to-help/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/how-to-help/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/how-to-help/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/repository-trial/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/repository-trial/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/repository-trial/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/repository-trial/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/repository-trial/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/repository-trial/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/repository-trial/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/repository-trial/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/ai-agent-governance/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/ai-agent-governance/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/ai-agent-governance/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/ai-agent-governance/" />
+  </url>
+  <url>
     <loc>https://concordloom.github.io/concordloom/docs/en/decisions/</loc>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/decisions/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/decisions/" />

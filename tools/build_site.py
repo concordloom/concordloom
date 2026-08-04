@@ -37,6 +37,13 @@ PUBLIC_DOCS = [
     ("ARTICLE", "Theory paper", "Теоретическая статья"),
     ("ATLAS", "Atlas", "Атлас"),
     ("CODEX_PLUGIN", "Codex plugin", "Плагин Codex"),
+    ("HOW_TO_HELP", "How to help", "Как помочь"),
+    ("REPOSITORY_TRIAL", "Repository trial", "Испытание репозитория"),
+    (
+        "AI_AGENT_GOVERNANCE",
+        "Governing AI coding agents",
+        "Управление ИИ-агентами",
+    ),
     ("DECISIONS", "Decisions", "Решения"),
     ("RELEASE", "Release", "Релиз"),
     ("WRITING", "Writing for humans", "Как писать для людей"),
@@ -156,6 +163,18 @@ def inline_markup(value: str, source_path: Path | None = None) -> str:
                 relative = resolved.relative_to(ROOT)
             except ValueError:
                 return label
+            public_stems = {stem for stem, _, _ in PUBLIC_DOCS}
+            if relative.suffix == ".md" and relative.stem in public_stems:
+                if relative.parent == Path("docs"):
+                    language = "en"
+                elif relative.parent == Path("docs") / "ru":
+                    language = "ru"
+                else:
+                    language = ""
+                if language:
+                    slug = relative.stem.casefold().replace("_", "-")
+                    href = f"{SITE_BASE_URL}/docs/{language}/{slug}/"
+                    return f'<a href="{href}">{label}</a>'
             href = (
                 "https://github.com/concordloom/concordloom/blob/main/"
                 + html.escape(relative.as_posix(), quote=True)
@@ -327,13 +346,8 @@ def site_content() -> dict:
                 "id": stem.casefold().replace("_", "-"),
                 "enTitle": en_title,
                 "ruTitle": ru_title,
-                "enUrl": (
-                    f"https://github.com/concordloom/concordloom/blob/main/docs/{stem}.md"
-                ),
-                "ruUrl": (
-                    "https://github.com/concordloom/concordloom/blob/main/"
-                    f"docs/ru/{stem}.md"
-                ),
+                "enUrl": f"{SITE_BASE_URL}/docs/en/{stem.casefold().replace('_', '-')}/",
+                "ruUrl": f"{SITE_BASE_URL}/docs/ru/{stem.casefold().replace('_', '-')}/",
             }
         )
     documents.append(
@@ -636,7 +650,18 @@ def _static_language_copy(document: str, language: str) -> str:
             count=1,
         )
 
-    return meta_pattern.sub(replace_meta, document)
+    document = meta_pattern.sub(replace_meta, document)
+    localized_attribute_pattern = re.compile(
+        r'(?P<attribute>href|placeholder)="[^"]*"'
+        r'(?=[^>]*\bdata-en-(?P=attribute)="(?P<en>[^"]*)")'
+        r'(?=[^>]*\bdata-ru-(?P=attribute)="(?P<ru>[^"]*)")',
+        flags=re.IGNORECASE,
+    )
+
+    def replace_localized_attribute(match: re.Match[str]) -> str:
+        return f'{match.group("attribute")}="{match.group(language)}"'
+
+    return localized_attribute_pattern.sub(replace_localized_attribute, document)
 
 
 def localized_index(content: dict, language: str) -> bytes:
