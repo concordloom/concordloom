@@ -170,8 +170,11 @@ def main() -> int:
         errors.append("language preference or document language is not maintained")
     if '|| "en";' not in script or "navigator.languages" in script:
         errors.append("first visit must default to English without locale inference")
-    if 'url.searchParams.set("lang", language)' not in script:
-        errors.append("language switch does not persist the locale in the URL")
+    if (
+        'url.searchParams.delete("lang")' not in script
+        or "location.assign(localizedLanguageUrl(nextLanguage))" not in script
+    ):
+        errors.append("language switch does not use canonical locale routes")
     for marker in (
         'data-atlas-binding data-en="Loading…" data-ru="Загрузка…"',
         'data-atlas-root data-en="Loading…" data-ru="Загрузка…"',

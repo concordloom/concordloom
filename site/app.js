@@ -434,10 +434,15 @@ function applyLanguage(nextLanguage) {
   renderDataLoadState();
 }
 
-function persistLanguageInUrl() {
+function localizedLanguageUrl(nextLanguage) {
   const url = new URL(location.href);
-  url.searchParams.set("lang", language);
-  history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+  if (/\/(?:en|ru)\/?$/.test(url.pathname)) {
+    url.pathname = url.pathname.replace(/\/(?:en|ru)\/?$/, `/${nextLanguage}/`);
+  } else {
+    url.pathname = `${url.pathname.replace(/\/?$/, "/")}${nextLanguage}/`;
+  }
+  url.searchParams.delete("lang");
+  return `${url.pathname}${url.search}${url.hash}`;
 }
 
 function renderGrammar() {
@@ -1761,8 +1766,9 @@ function route() {
 }
 
 document.querySelector(".language-switch").addEventListener("click", () => {
-  applyLanguage(language === "en" ? "ru" : "en");
-  persistLanguageInUrl();
+  const nextLanguage = language === "en" ? "ru" : "en";
+  localStorage.setItem("concordloom-language", nextLanguage);
+  location.assign(localizedLanguageUrl(nextLanguage));
 });
 
 const menuSwitch = document.querySelector(".menu-switch");

@@ -503,9 +503,22 @@ def localized_index(content: dict, language: str) -> bytes:
     canonical = f"{SITE_BASE_URL}/{language}/"
     document = document.replace('<html lang="en"', f'<html lang="{language}"', 1)
     document = document.replace(
+        '        const language =\n'
+        '          (requested === "en" || requested === "ru" ? requested : null)\n'
         '          || (stored === "en" || stored === "ru" ? stored : null)\n'
         '          || "en";',
-        f'          || "{language}";',
+        f'''        const routeLanguage = "{language}";
+        if ((requested === "en" || requested === "ru") && requested !== routeLanguage) {{
+          const target = new URL(location.href);
+          target.pathname = target.pathname.replace(
+            /\\/(?:en|ru)\\/?$/,
+            `/${{requested}}/`,
+          );
+          target.searchParams.delete("lang");
+          location.replace(`${{target.pathname}}${{target.search}}${{target.hash}}`);
+          return;
+        }}
+        const language = routeLanguage;''',
         1,
     )
     document = document.replace(
