@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Concord Loom v0.1 releases bind source, package, independent reviews, and a durable bootstrap receipt.">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/release/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/release/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/release/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/release/">
+    <meta property="og:title" content="Release | Concord Loom">
+    <meta property="og:description" content="Concord Loom v0.1 releases bind source, package, independent reviews, and a durable bootstrap receipt.">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/release/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Release | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/release/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Release</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>Concord Loom v0.1 releases bind source, package, independent reviews, and a durable bootstrap receipt.</p>
+<p>The <code>v0.1.0</code> instructions below are historical verification for that immutable tag. Current development additionally carries the accepted, domain-neutral Concord Loom self-binding and a bilingual Pages candidate. Do not use current working-tree files to revise claims about the tagged release.</p>
+<h2 id="section-01">Verify source</h2>
+<pre tabindex="0"><code class="language-bash">git clone https://github.com/concordloom/concordloom.git
+cd concordloom
+git fetch --tags
+git checkout --detach v0.1.0
+git status --short
+./tools/check.sh</code></pre>
+<p>The checkout should be clean and the gate should end with <code>CHECK_OK</code>.</p>
+<h2 id="section-02">Verify release assets</h2>
+<p>Download the wheel, source archive, <code>SHA256SUMS</code>, and bootstrap receipt bundle from the <code>v0.1.0</code> GitHub release. Then run:</p>
+<pre tabindex="0"><code class="language-bash">sha256sum --check SHA256SUMS
+python3 -m venv /tmp/concordloom-release-check
+/tmp/concordloom-release-check/bin/python -m pip install \
+  --no-deps concordloom-0.1.0-py3-none-any.whl
+/tmp/concordloom-release-check/bin/concordloom --version
+/tmp/concordloom-release-check/bin/python -m pip check</code></pre>
+<p>The wheel is expected to have no runtime Python dependencies. Its inventory contains the portable package, seventeen public schemas, and the generic SDLC artifact chain.</p>
+<h2 id="section-03">Verify the bootstrap receipt</h2>
+<p>The release receipt bundle embeds:</p>
+<ul>
+<li>the completed bootstrap run card;</li>
+<li>the exact bootstrap cycle and compute policy;</li>
+<li>the pinned candidate commit and tree digest;</li>
+<li>factual node attempts;</li>
+<li>independent R, L, Q, and M evidence; and</li>
+<li>its own canonical SHA-256 digest.</li>
+</ul>
+<p>The runner exports it only from a complete run and revalidates the candidate, all nodes, review bindings, and author/reviewer separation. The release <code>SHA256SUMS</code> anchors the exported bytes next to the tagged candidate.</p>
+<p>A self-digest alone is not authentication. Verify the release/tag provenance appropriate to your environment, and add signed attestations when cryptographic identity is required.</p>
+<h2 id="section-04">Evidence levels</h2>
+<p>Do not collapse these claims:</p>
+<ul>
+<li>Unit and integration tests prove deterministic code paths.</li>
+<li>An installed-wheel smoke proves packaging and command availability.</li>
+<li>Browser inspection proves the rendered Atlas states and viewports examined.</li>
+<li>Independent quality review evaluates the exact pinned candidate.</li>
+<li>A public-clone smoke proves the published tag and assets are retrievable.</li>
+</ul>
+<p>None of these alone proves product value, complete test oracles, or cryptographic reviewer identity.</p>
+<h2 id="section-05">Verify the accepted self-binding</h2>
+<p>Validate the exact binding, registry, policy, predecessor link, and append-only catalog rather than relying on the label “current.” The accepted root is <code>steward-concordloom</code>; the active development model contains ten responsibility areas and 66 cycles. Observe, negotiate, bind, execute, verify, publish, and evolve are run phases, not the top-level containment graph.</p>
+<p>The binding was activated through a decision separate from the evolution proposal. The proposal retains <code>activation_allowed: false</code>, and the predecessor binding remains addressable in the catalog. This is the evidence for governed self-binding; a generated Atlas or website copy is not.</p>
+<h2 id="section-06">Verify the bilingual Pages candidate</h2>
+<p>From a checkout containing the current candidate:</p>
+<pre tabindex="0"><code class="language-bash">PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 tools/build_site.py --check
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 tools/check_site.py</code></pre>
+<p>The checks bind <code>site/data/atlas.json</code> to the active accepted binding, require substantial English/Russian copy, verify local assets and accessibility hooks, and require the social preview to be exactly 1280 × 640 pixels. The hero and social-preview files under <code>docs/assets/</code> are source communication assets; the copies under <code>site/assets/</code> must match the deterministic site build.</p>
+<p>The Pages workflow is scoped publication machinery. Review its trigger, artifact path, <code>contents: read</code>, <code>pages: write</code>, and <code>id-token: write</code> permissions, plus the separate <code>github-pages</code> deployment environment. A successful local check or workflow build proves neither that Pages was authorized nor that a public URL is live.</p>
+<p>Live verification requires the deployment record and URL for the exact candidate, followed by a fresh fetch that checks the bilingual switch, local assets, social metadata, and accepted Atlas digest. Until that evidence exists, describe the site as a Pages candidate, not as deployed.</p>
+<h2 id="section-07">Maintainer release sequence</h2>
+<p>For the immutable v0.1 release:</p>
+<ol>
+<li>Finish authoring and documentation.</li>
+<li>Generate and inspect the offline Atlas.</li>
+<li>Commit a clean candidate and pin it once.</li>
+<li>Run independent reference, visual, quality, and release reviews.</li>
+<li>Publish the exact commit and annotated <code>v0.1.0</code> tag.</li>
+<li>Smoke-test a fresh public clone and installed wheel.</li>
+<li>Record proposal-only evolution signals.</li>
+<li>Complete the bootstrap run and export its receipt bundle.</li>
+<li>Attach the bundle and final checksums to the GitHub release.</li>
+</ol>
+<p>For a successor and Pages publication:</p>
+<ol>
+<li>Pin the candidate under the active predecessor binding.</li>
+<li>Validate bilingual docs, site output, social assets, and Atlas provenance.</li>
+<li>Obtain independent verification of the exact candidate.</li>
+<li>Record a separate capable operator decision for any successor activation.</li>
+<li>Append the activated binding without replacing predecessor history.</li>
+<li>Let the scoped publisher deploy only the verified <code>site/</code> artifact.</li>
+<li>Capture the deployment receipt and smoke-test the live URL.</li>
+<li>Record later friction as signals; never auto-activate their proposal.</li>
+</ol>
+<p>If source bytes change after the candidate is pinned, start a new run.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

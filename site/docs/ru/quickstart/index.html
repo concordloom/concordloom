@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ru" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Чтобы начать работу, не нужно разбираться во внутренних форматах Concord Loom. Обычный путь состоит из четырёх шагов:">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/ru/quickstart/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/quickstart/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/quickstart/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/quickstart/">
+    <meta property="og:title" content="Быстрый старт | Concord Loom">
+    <meta property="og:description" content="Чтобы начать работу, не нужно разбираться во внутренних форматах Concord Loom. Обычный путь состоит из четырёх шагов:">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/ru/quickstart/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ru_RU">
+    <title>Быстрый старт | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
+    <header class="site-header">
+      <a class="brand" href="../../../ru/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Навигация по документу">
+        <a class="view-tab" href="../">Документация</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/en/quickstart/">English version</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">СПРАВОЧНИК CONCORD LOOM</p>
+        <h1>Быстрый старт</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>Чтобы начать работу, не нужно разбираться во внутренних форматах Concord Loom. Обычный путь состоит из четырёх шагов:</p>
+<ol>
+<li>установить один навык Codex;</li>
+<li>разрешить ему исследовать репозиторий без изменений;</li>
+<li>проверить наглядный Атлас и исправить ошибки;</li>
+<li>подключить репозиторий, когда карта станет верной.</li>
+</ol>
+<p>Схемы, проверки графов, служебные записи и правила доступа остаются внутри этого процесса.</p>
+<h2 id="section-01">Что получится</h2>
+<p>Первая сессия создаст черновой Атлас репозитория. В нём будут:</p>
+<ul>
+<li>найденные области работы;</li>
+<li>предполагаемые связи между циклами;</li>
+<li>основания для каждого вывода;</li>
+<li>части карты, в которых системе не хватает вашего решения.</li>
+</ul>
+<p>Черновик не считается принятой конфигурацией и не даёт себе никаких прав. Пока вы его не одобрите, репозиторий останется без изменений.</p>
+<h2 id="section-02">1. Установите навык Codex</h2>
+<p>Попросите Codex:</p>
+<pre tabindex="0"><code class="language-text">Use $skill-installer to install
+https://github.com/concordloom/concordloom/tree/v0.1.5/plugins/concordloom/skills/design-project-loops</code></pre>
+<p>После установки откройте новый диалог Codex в нужном репозитории. Новый диалог нужен, чтобы Codex загрузил установленный навык.</p>
+<h2 id="section-03">2. Попросите построить первый Атлас</h2>
+<p>Напишите:</p>
+<pre tabindex="0"><code class="language-text">Используй $design-project-loops: исследуй этот репозиторий и построй первый
+Атлас. Не меняй репозиторий, пока я не одобрю карту.</code></pre>
+<p>Сначала навык задаст два коротких вопроса:</p>
+<ol>
+<li>на каком языке вести разговор и создавать материалы;</li>
+<li>как к вам обращаться.</li>
+</ol>
+<p>Он не попросит придумывать роли, служебные идентификаторы, границы графа или пути для файлов.</p>
+<p>Затем навык проверит, доступна ли команда Concord Loom. Если команды нет, он покажет один безопасный способ установки и попросит разрешение перед изменением окружения или обращением к сети. Предпочтительная команда:</p>
+<pre tabindex="0"><code class="language-bash">pipx install \
+  &quot;concordloom @ git+https://github.com/concordloom/concordloom@v0.1.5&quot;</code></pre>
+<p>Не используйте <code>--break-system-packages</code>. Если <code>pipx</code> недоступен, навык может использовать <code>uv tool</code> или отдельное управляемое окружение.</p>
+<h2 id="section-04">3. Проверьте карту</h2>
+<p>Первое исследование работает только на чтение. Навык изучает отслеживаемые файлы, области репозитория, импорты, ограниченную историю Git и файлы, которые часто меняются вместе. Код самого проекта он не запускает.</p>
+<p>Черновой Атлас сохраняется вне репозитория. Откройте его и пройдите по предложенным циклам. Для каждого цикла должны быть понятны три вещи:</p>
+<ul>
+<li>Какая это часть проекта?</li>
+<li>Какой результат даёт эта работа?</li>
+<li>От какой другой работы она зависит?</li>
+</ul>
+<p>После просмотра ответьте на один вопрос: <strong>карта верно описывает проект?</strong></p>
+<p>Можно ответить обычными словами:</p>
+<pre tabindex="0"><code class="language-text">Да, всё верно.</code></pre>
+<p>или:</p>
+<pre tabindex="0"><code class="language-text">Нет. Заметки о выпуске относятся к выпуску, а не к документации.</code></pre>
+<p>Навык исправит черновик и снова покажет карту. Для обычной поправки не нужна особая роль или служебное название полномочий.</p>
+<h2 id="section-05">4. Подключите репозиторий</h2>
+<p>Когда карта станет верной, навык отдельно спросит, можно ли сохранить первую принятую конфигурацию внутри репозитория. Это будет первая запись в репозиторий, поэтому разрешение должно быть явным.</p>
+<p>После подключения:</p>
+<ul>
+<li>принятый Атлас станет общей картой проекта;</li>
+<li>следующую задачу можно будет направлять в нужный цикл, не загружая всю</li>
+</ul>
+<p>систему;</p>
+<ul>
+<li>Атлас можно будет заново собирать из принятой конфигурации;</li>
+<li>повторяющиеся проблемы смогут стать понятным предложением по улучшению;</li>
+<li>решение о включении новой версии всё равно останется за человеком.</li>
+</ul>
+<p>Одобрение первой карты и включение будущего улучшения — разные решения. Система может предложить новую версию правил, но не может сама её включить.</p>
+<h2 id="section-06">Повседневная работа</h2>
+<blockquote><strong>Статус функции:</strong> предпросмотр маршрута пока есть только в невыпущенной версии из <code>main</code>, но не в стабильном пакете v0.1.5, установленном выше. Используйте v0.1.5 для онбординга и создания Атласа. Проверяйте предпросмотр только после отдельного согласия на установку невыпущенной версии или дождитесь следующего релиза.</blockquote>
+<p>Опишите задачу и попросите Codex сначала показать маршрут:</p>
+<pre tabindex="0"><code class="language-text">Используй $design-project-loops для этой задачи. Сначала покажи маршрут и
+ничего не запускай без моего подтверждения.</code></pre>
+<p>Вы увидите короткую последовательность нужных циклов и понятное объяснение, зачем нужен каждый из них. На этом этапе ничего не запускается. Маршрут можно подтвердить или исправить обычными словами.</p>
+<p>Подтверждение создаст точный черновик. Для запуска всё равно потребуется отдельная авторизация. После неё навык запишет фактический ход работы и покажет расхождения с планом. Изменение только для текущей задачи останется внутри запуска. Изменение для будущих задач станет отдельным предложением эволюции и не включится само.</p>
+<h2 id="section-07">Ручной запуск через командную строку</h2>
+<p>Навык — основной интерфейс. Команды пригодятся для автоматизации и разработки самого Concord Loom.</p>
+<p>Исследование только для чтения:</p>
+<pre tabindex="0"><code class="language-bash">WORK_DIR=&quot;$(mktemp -d /tmp/concordloom-quickstart-XXXXXX)&quot;
+concordloom inspect . \
+  --output &quot;$WORK_DIR/observed-project-graph.json&quot;
+concordloom questions \
+  --graph &quot;$WORK_DIR/observed-project-graph.json&quot; \
+  --output &quot;$WORK_DIR/questions.json&quot;</code></pre>
+<p>Эти файлы содержат наблюдения и предположения, а не принятую карту проекта. Команда <code>concordloom --help</code> покажет справку о низкоуровневых операциях: предложении правил, сборке, запусках, Атласе и эволюции.</p>
+<h2 id="section-08">Что читать дальше</h2>
+<ul>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/ATLAS.md" rel="noreferrer">Руководство по Атласу</a> объясняет интерактивное и автономное</li>
+</ul>
+<p>представления.</p>
+<ul>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/CONCEPTS.md" rel="noreferrer">Основные понятия</a> объясняют два графа и состояния сведений.</li>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/TRUST_MODEL.md" rel="noreferrer">Модель доверия</a> объясняет, почему проверка и разрешение —</li>
+</ul>
+<p>разные вещи.</p>
+<ul>
+<li><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/ARCHITECTURE.md" rel="noreferrer">Архитектура</a> описывает ядро и адаптеры.</li>
+</ul>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

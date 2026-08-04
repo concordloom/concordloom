@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Language: English | Русский">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/design-system/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/design-system/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/design-system/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/design-system/">
+    <meta property="og:title" content="Design system | Concord Loom">
+    <meta property="og:description" content="Language: English | Русский">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/design-system/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Design system | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/design-system/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Design system</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>Language: <strong>English</strong> | <a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/DESIGN_SYSTEM.md" rel="noreferrer">Русский</a></p>
+<p>Status: <strong>normative</strong></p>
+<p>Version: <strong>4.0.1</strong></p>
+<p>Product truth: [<code>PRODUCT.md</code>](PRODUCT.md)</p>
+<p>Approved direction: [<code>Signal Canvas</code>](../design/frontend/signal-canvas/)</p>
+<p>Normative machine contract: [<code>design/frontend/visual-contract.json</code>](../design/frontend/visual-contract.json)</p>
+<p>Machine values: [<code>site/design-tokens.json</code>](../site/design-tokens.json)</p>
+<p>Component rules: [<code>site/design-system.css</code>](../site/design-system.css)</p>
+<p>Signal Canvas is the visual language for the whole public site, including Concept, Theory, Quickstart, Atlas, Docs, navigation, loading, empty, error, and mobile states. An Atlas-only reskin does not satisfy this contract.</p>
+<p>The direction is normative. The exact implementation remains a candidate until the browser matrix, visual baselines, and independent critic all pass for the same candidate digest.</p>
+<h2 id="section-01">Product principle</h2>
+<p>The public path stays simple:</p>
+<ol>
+<li>inspect a project;</li>
+<li>see its Atlas;</li>
+<li>correct or approve the map;</li>
+<li>keep the Atlas current as the project changes.</li>
+</ol>
+<p>The interface leads with recognizable project language. Protocol terms, digests, model routes, skills, and MCP resources remain available as optional details.</p>
+<h2 id="section-02">Visual thesis</h2>
+<p>Concord Loom is a map spread across a working table.</p>
+<p>Warm canvas separates the page from tactile paper modules. Black ink provides structure. Mint marks the primary route, cobalt explains, coral warns, and yellow holds pending attention. Nodes and connector lines show real project relationships. Hard offset shadows and measured rounded corners make the interface informal without making it childish.</p>
+<p>The system is serious without feeling corporate, and informal without looking like a game.</p>
+<h3 id="section-02-detail-01">Signal Canvas lock</h3>
+<p>Signal Canvas v1 establishes these non-negotiable characteristics:</p>
+<ul>
+<li>warm off-white canvas is the page field;</li>
+<li>paper modules use black ink boundaries and hard offset shadows;</li>
+<li>mint is the only primary action and selection color;</li>
+<li>cobalt carries information, coral carries errors or hard boundaries, and</li>
+</ul>
+<p>yellow carries pending attention;</p>
+<ul>
+<li>connectors describe real project relationships;</li>
+<li>text remains readable without glow, texture, gradients, or background art;</li>
+<li>rounded corners are measured and consistent, not applied as pills to every</li>
+</ul>
+<p>element;</p>
+<ul>
+<li>technical identifiers are secondary to plain-language names;</li>
+<li>the same module grammar appears on every public route.</li>
+</ul>
+<p>Do not introduce fantasy ornament, simulated stone or metal, neon halos, decorative gradients, glass effects, generic dark dashboards, random node glyphs, or background artwork behind the Atlas. Do not use disconnected visual styles for long-form pages.</p>
+<p>The concept files record provenance. This document defines intent; <code>design-tokens.json</code> defines reusable values; <code>design-system.css</code> defines reusable components. Page CSS may place components, but it may not invent a parallel visual system.</p>
+<h2 id="section-03">Authority order</h2>
+<ol>
+<li>[<code>PRODUCT.md</code>](PRODUCT.md) defines product truth and brand commitments.</li>
+<li>This document defines visual intent, component grammar, and acceptance.</li>
+<li><code>site/design-tokens.json</code> defines reusable visual values.</li>
+<li>generated <code>site/design-tokens.css</code> exposes those values to the browser;</li>
+<li><code>site/design-system.css</code> composes components from tokens;</li>
+<li>page markup and behavior consume components.</li>
+</ol>
+<p>Generated CSS must not be edited by hand. A lower layer cannot redefine the meaning of a higher layer.</p>
+<h2 id="section-04">Token architecture</h2>
+<p>Tokens have four layers:</p>
+<ol>
+<li><strong>Primitive</strong>: raw color, type, spacing, radius, line, shadow, and timing.</li>
+<li><strong>Semantic</strong>: purpose such as page, panel, text, border, connection, signal,</li>
+</ol>
+<p>focus, error, and success.</p>
+<ol>
+<li><strong>Component</strong>: module, port, rail, control, reader, Atlas node, and inspector</li>
+</ol>
+<p>roles.</p>
+<ol>
+<li><strong>Compatibility</strong>: temporary aliases for supported names during migration.</li>
+</ol>
+<p>Exact values belong in <code>site/design-tokens.json</code>. This document records their meaning and constraints.</p>
+<h3 id="section-04-detail-01">Required token coverage</h3>
+<div class="content-table-wrap"><table>
+<thead><tr><th>Domain</th><th>Required roles</th></tr></thead><tbody>
+<tr><td>Color</td><td>page, panel, raised panel, text, muted text, border, connection, signal, error</td></tr>
+<tr><td>Type</td><td>display, body, data, labels, reading measure and line height</td></tr>
+<tr><td>Space</td><td>page gutters, section rhythm, module padding, control gaps</td></tr>
+<tr><td>Shape</td><td>module, control, port, node and disclosure radii</td></tr>
+<tr><td>Depth</td><td>rest, hover, selected and overlay shadows</td></tr>
+<tr><td>Motion</td><td>control, overlay, graph enter, graph exit and reduced motion</td></tr>
+<tr><td>Size</td><td>header, control target, reading column, inspector and graph bounds</td></tr>
+</tbody></table></div>
+<p>Raw values outside primitive tokens are allowed only for local, data-derived geometry with no reusable meaning.</p>
+<h2 id="section-05">Color and depth</h2>
+<ul>
+<li>Warm canvas separates the page from paper modules.</li>
+<li>Black ink establishes hierarchy through borders and typography.</li>
+<li>Mint marks one current route, focus, or primary action.</li>
+<li>Cobalt explains, coral marks a real error or boundary, and yellow marks</li>
+</ul>
+<p>pending attention.</p>
+<ul>
+<li>Shadows are hard, short, and directional. They do not create glow.</li>
+</ul>
+<p>Selection, status, and focus never rely on color alone.</p>
+<h2 id="section-06">Typography</h2>
+<ul>
+<li>The display and body stacks use the locally bundled Manrope family.</li>
+<li>Monospace is reserved for identifiers, commands, measurements, and machine</li>
+</ul>
+<p>values.</p>
+<ul>
+<li>Display headings use confident weight, compact leading, and restrained</li>
+</ul>
+<p>negative tracking.</p>
+<ul>
+<li>Body copy starts at 16 CSS pixels and uses a calm reading rhythm.</li>
+<li>Long-form text stays within 65–75 characters per line.</li>
+<li>Labels may use compact uppercase text only when the same information appears</li>
+</ul>
+<p>in a readable name.</p>
+<ul>
+<li>English and Russian share hierarchy, not forced line breaks.</li>
+<li>Inspector titles wrap only between complete words. The gate checks every</li>
+</ul>
+<p>accepted cycle title at every accepted viewport.</p>
+<ul>
+<li>A Russian interface does not mix ordinary English prose into its controls or</li>
+</ul>
+<p>explanations.</p>
+<h2 id="section-07">Component language</h2>
+<p>The public surface uses this vocabulary:</p>
+<ul>
+<li><strong>paper module</strong>: a bounded responsibility, content group, or navigation</li>
+</ul>
+<p>region;</p>
+<ul>
+<li><strong>node</strong>: a cycle or step that can be selected;</li>
+<li><strong>connector</strong>: a real containment, dependency, or navigation relationship;</li>
+<li><strong>path</strong>: the current location through the Atlas;</li>
+<li><strong>control</strong>: a direct action with a named result;</li>
+<li><strong>reader</strong>: a calm long-form surface;</li>
+<li><strong>drawer</strong>: contextual details opened on demand;</li>
+<li><strong>signal</strong>: the single current selection or primary action.</li>
+</ul>
+<p>Every component defines rest, hover where available, focus, pressed, disabled when applicable, loading, empty, stale-data, error, and long-copy states. Controls have a minimum 44 by 44 CSS pixel target and a visible keyboard focus.</p>
+<h2 id="section-08">Page composition</h2>
+<h3 id="section-08-detail-01">Concept</h3>
+<p>The first viewport states what Concord Loom does and offers one route to the live Atlas plus one route to Quickstart. Supporting ideas appear as connected modules, not marketing cards.</p>
+<h3 id="section-08-detail-02">Theory</h3>
+<p>The article uses one quiet reader with a stable table of contents, underlined prose links, deep-linked headings, code overflow, responsive figures, and previous/next navigation. Decorative modules stay outside the reading column.</p>
+<h3 id="section-08-detail-03">Quickstart</h3>
+<p>Quickstart presents one main path: install, inspect, open Atlas, review, and continue. Each step names the expected result. Troubleshooting and advanced governance remain secondary.</p>
+<h3 id="section-08-detail-04">Atlas</h3>
+<p>The graph receives the largest available area. Path and revision controls stay compact. Details open in an overlay or drawer only when requested, so the graph does not lose permanent width to an inspector. One view shows one active level: the interface never duplicates the parent and child graphs merely to explain navigation. Cards in the same layout class share one geometry. At 844×390 the complete current level becomes a compact two-row constellation; no cycle is hidden beyond the viewport, and the detail overlay keeps its primary action above the fold.</p>
+<h3 id="section-08-detail-05">Docs</h3>
+<p>Documents are grouped by reader task. Search and filters show their active state, empty state, and result count without becoming a generic dashboard. On mobile, the first useful group appears above the fold.</p>
+<h2 id="section-09">Atlas grammar</h2>
+<p>Atlas projects accepted loop data. At every level:</p>
+<ul>
+<li>the current cycle is visually dominant;</li>
+<li>direct children and real connections remain readable;</li>
+<li>the path back to the root remains visible;</li>
+<li>clicking a child replaces the active graph while preserving navigation</li>
+</ul>
+<p>context;</p>
+<ul>
+<li>details identify what the cycle does, needs, and produces in plain language;</li>
+<li>models, skills, tools, and MCP resources stay in optional technical details;</li>
+<li>the version rail shows history as a line and opens the latest version by</li>
+</ul>
+<p>default;</p>
+<ul>
+<li>evolution remains reachable without being shown as permanently active.</li>
+</ul>
+<p>Forward and back transitions explain movement through containment. They must not imply infinite recursion. The graph must remain legible with animation disabled.</p>
+<h2 id="section-10">Motion</h2>
+<ul>
+<li>Frequent feedback finishes quickly and does not delay input.</li>
+<li>Graph traversal uses one consistent forward and reverse movement.</li>
+<li>Compact landscape keeps the whole graph still: changing levels replaces the</li>
+</ul>
+<p>graph without spatial travel, so edge nodes never leave the viewport.</p>
+<ul>
+<li>Overlays enter from their spatial source and return on close.</li>
+<li>Closing an overlay cancels any pending open or focus request. The overlay</li>
+</ul>
+<p>remains visible while it returns, then becomes hidden and inert.</p>
+<ul>
+<li>Layout movement uses transforms; visibility uses opacity.</li>
+<li>Interrupted animation settles safely at the current state.</li>
+<li><code>prefers-reduced-motion: reduce</code> removes spatial travel and preserves state.</li>
+</ul>
+<p>Motion must explain a state change. Ambient animation, parallax, and decorative pulses are not part of the core system.</p>
+<p>Without JavaScript, navigation exposes only destinations that remain visible and useful in the reading fallback. It must not link to the hidden interactive Atlas. The reading-mode status message remains fully visible after direct navigation.</p>
+<h2 id="section-11">Russian text</h2>
+<p>Russian human-facing copy follows [<code>docs/ru/TEXT_STYLE.md</code>](ru/TEXT_STYLE.md). The pinned <code>ru-text</code> skill guides editorial review. The repository linter catches only objective mistakes and known onboarding jargon; it does not replace a human or model-assisted edit.</p>
+<h2 id="section-12">Accessibility and localization</h2>
+<ul>
+<li>Navigation exposes the current page.</li>
+<li>Menus and drawers support keyboard open, close, focus containment, and focus</li>
+</ul>
+<p>restoration.</p>
+<ul>
+<li>Graph selection has a programmatic current state.</li>
+<li>Loading, empty, stale-data, and error states are visible and localized.</li>
+<li>A delayed or failed Russian content request never reveals English fallback</li>
+</ul>
+<p>prose.</p>
+<ul>
+<li>Dynamic labels, live regions, and accessible names use the current language.</li>
+<li>Human-facing Russian labels and contracts do not expose unexplained English</li>
+</ul>
+<p>implementation jargon. Digests and exact machine identifiers appear only in disclosed technical details.</p>
+<ul>
+<li>English is the first-visit default. An explicit saved language choice wins</li>
+</ul>
+<p>afterward.</p>
+<ul>
+<li>Language switching preserves the page and logical location.</li>
+<li>The site reflows at 200% zoom and at widths from 360 CSS pixels.</li>
+<li>No runtime request is required for fonts, icons, code, or other core assets.</li>
+</ul>
+<h2 id="section-13">Content gate</h2>
+<p>Before public copy ships, review it in context:</p>
+<ol>
+<li>Can a newcomer say what happens next?</li>
+<li>Does it use project language before framework language?</li>
+<li>Are optional implementation details secondary?</li>
+<li>Does every action name its result?</li>
+<li>Are English and Russian semantically equivalent?</li>
+<li>Does the Russian version pass the editorial contract?</li>
+</ol>
+<p>A negative answer blocks publication.</p>
+<h2 id="section-14">Verification</h2>
+<p>Browser evidence covers:</p>
+<ul>
+<li>360×800, 390×844, 844×390, 768×1024, 1024×768, 1440×900, and</li>
+</ul>
+<p>1920×1080;</p>
+<ul>
+<li>Chromium, Firefox, and WebKit where the repository harness supports them;</li>
+<li>English and Russian first paint, success, loading, empty, and error states;</li>
+<li>keyboard, visible focus, reduced motion, and 200% zoom;</li>
+<li>graph traversal, direct entry, reload, back/forward navigation, and language</li>
+</ul>
+<p>switching;</p>
+<ul>
+<li>overflow, clipped text, overlapping regions, unreachable controls, and</li>
+</ul>
+<p>untranslated accessible names.</p>
+<ul>
+<li>the first useful content above the fold on Concept, Theory, Quickstart, and</li>
+</ul>
+<p>Docs;</p>
+<ul>
+<li>consistent node geometry, a single active Atlas level, and a usable</li>
+</ul>
+<p>landscape detail action;</p>
+<ul>
+<li>the component workshop with the same language control, tokens, and long-copy</li>
+</ul>
+<p>states as the public site.</p>
+<p>Automated geometry checks do not approve visual quality by themselves. An independent critic compares fresh screenshots with this direction and rejects drift toward game decoration, corporate dashboard patterns, or a one-page-only reskin.</p>
+<h2 id="section-15">Cycle ownership</h2>
+<p>The accepted frontend development system assigns these exact responsibilities:</p>
+<div class="content-table-wrap"><table>
+<thead><tr><th>Cycle</th><th>Responsibility</th></tr></thead><tbody>
+<tr><td><code>design-site-experience</code></td><td>Coordinate the complete frontend experience without replacing the evidence or authority of its child cycles.</td></tr>
+<tr><td><code>define-frontend-concept</code></td><td>Pin the direction, content hierarchy, responsive behavior, and acceptance matrix.</td></tr>
+<tr><td><code>accept-frontend-concept</code></td><td>Record the operator decision for the exact concept and machine-contract bytes.</td></tr>
+<tr><td><code>maintain-component-workshop</code></td><td>Show production components in every required state and both languages.</td></tr>
+<tr><td><code>implement-frontend-surface</code></td><td>Build every public route from the accepted design-system sources.</td></tr>
+<tr><td><code>maintain-frontend-verification</code></td><td>Maintain deterministic browser, accessibility, breakpoint, and CI checks.</td></tr>
+<tr><td><code>verify-frontend-candidate</code></td><td>Verify the exact candidate across browsers, languages, input modes, and sizes.</td></tr>
+<tr><td><code>critique-frontend-experience</code></td><td>Independently compare fresh evidence with the approved Signal Canvas direction.</td></tr>
+</tbody></table></div>
+<p>This design-system revision changes no cycle topology or authority rule.</p>
+<p>Publication requires browser evidence and an independent visual verdict for the exact candidate.</p>
+<h2 id="section-16">Evolution</h2>
+<p>Design changes respond to repeated comprehension failures, visual defects, accessibility regressions, or a new surface the current grammar cannot express. A proposal names the observed problem, the smallest token or component change, migration impact, verification, and rollback. It cannot approve or activate itself.</p>
+<p>Versioning follows these rules:</p>
+<ul>
+<li>patch: clarification or implementation repair with no visual API change;</li>
+<li>minor: additive token, component, state, or documented pattern;</li>
+<li>major: removed or redefined token, component grammar, or accessibility</li>
+</ul>
+<p>contract.</p>
+<p>Every change updates both languages, generated token CSS, public projections, and verification evidence.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

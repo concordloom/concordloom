@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="This file records operator-approved outcomes. Implementation choices may refine them, but may not silently change them.">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/decisions/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/decisions/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/decisions/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/decisions/">
+    <meta property="og:title" content="Decisions | Concord Loom">
+    <meta property="og:description" content="This file records operator-approved outcomes. Implementation choices may refine them, but may not silently change them.">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/decisions/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Decisions | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/decisions/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Decisions</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>This file records operator-approved outcomes. Implementation choices may refine them, but may not silently change them.</p>
+<h2 id="section-01">D-001 — Product identity</h2>
+<p><strong>Status:</strong> accepted <strong>Date:</strong> 2026-07-24</p>
+<p>The framework is named <strong>Concord Loom</strong>. Its repository, Python distribution, CLI, and default plugin identifier use <code>concordloom</code>.</p>
+<p>The name joins two ideas: concord with the human operator, and a loom that weaves evidence, decisions, and nested cycles into one inspectable Atlas.</p>
+<h2 id="section-02">D-002 — Complete v0.1, not a concept demo</h2>
+<p><strong>Status:</strong> accepted <strong>Date:</strong> 2026-07-24</p>
+<p>v0.1 must cover the whole framework path:</p>
+<pre tabindex="0"><code class="language-text">repository evidence
+  → observed and inferred project graph
+  → high-information operator questions
+  → accepted decisions
+  → proposed loop design and operator acceptance
+  → compiled loop system and policies
+  → governed run cards
+  → generated Atlas
+  → bounded evolution proposal</code></pre>
+<p>The release also includes a Codex plugin/skill, tests, an example, and a public article. A static diagram without executable contracts does not satisfy v0.1.</p>
+<h2 id="section-03">D-003 — Nested loops are first-class</h2>
+<p><strong>Status:</strong> accepted <strong>Date:</strong> 2026-07-24</p>
+<p>An SDLC is a cycle of cycles. Requirements, design, implementation, testing, deployment, and operation are not atomic boxes; each may own a bounded feedback loop and invoke deeper loops.</p>
+<p>The implementation must distinguish:</p>
+<ul>
+<li>an acyclic, finite <strong>containment graph</strong> describing which loop refines a</li>
+</ul>
+<p>composite step; and</p>
+<ul>
+<li>a <strong>local control-flow graph</strong> whose feedback transitions have explicit</li>
+</ul>
+<p>budgets, evidence, authority, and terminal outcomes.</p>
+<p>“Recursive” describes how the contract pattern and Atlas navigation apply at multiple levels. A concrete containment graph cannot contain an ancestor cycle.</p>
+<h2 id="section-04">D-004 — Operator authority</h2>
+<p><strong>Status:</strong> accepted <strong>Date:</strong> 2026-07-24</p>
+<p>History and static analysis may propose architecture, ownership, and loop boundaries. Only an explicit operator decision can accept or reject inferred intent. The tool asks about outcomes and contested relationships, not about files, models, reviewers, or internal routing.</p>
+<p>The evolution loop may prepare a graph diff. It cannot activate its own proposal. The authority of version <code>vN</code> governs acceptance of <code>vN+1</code>.</p>
+<p>The same boundary applies to initial compilation: heuristics may propose a loop design, but only an actor with bound product-intent authority can accept it.</p>
+<h2 id="section-05">D-005 — Evidence and execution truth</h2>
+<p><strong>Status:</strong> accepted <strong>Date:</strong> 2026-07-24</p>
+<p>Observed, inferred, accepted, planned, actual, and verified information remain separate. Runtime claims bind to candidate content, policy content, the effective executor/model/skill/tool route, and structured evidence.</p>
+<p>Passing an inner loop is necessary but not sufficient to accept its parent. Authorship, independent review, release readiness, and publication authority remain separate capabilities.</p>
+<h2 id="section-06">D-006 — Portable core and adapter boundary</h2>
+<p><strong>Status:</strong> accepted <strong>Date:</strong> 2026-07-24</p>
+<p>The portable core is engine-agnostic, local-first, Python 3.11+, standard library only, and deterministic for identical repository bytes and Git history. Git is the built-in v0.1 history source. Rich semantic indexes and durable workflow engines are optional future adapters.</p>
+<p>The first release excludes hosted control planes, arbitrary remote code execution, multi-repository identity, automatic source mutation, and automatic activation of governance changes.</p>
+<h2 id="section-07">D-007 — Public release boundary</h2>
+<p><strong>Status:</strong> accepted <strong>Date:</strong> 2026-07-24</p>
+<p>The release is a new public GitHub repository under Apache-2.0, tagged <code>v0.1.0</code>. Publication occurs only after independent reference, visual, quality, and release reviews of a pinned candidate. The published release is then smoke-tested before the run is complete.</p>
+<h2 id="section-08">D-008 — Universal product boundary</h2>
+<p><strong>Status:</strong> accepted <strong>Date:</strong> 2026-07-27</p>
+<p>Concord Loom is a universal framework for finite systems of bounded loops. It is not an SDLC product with optional extensions. Software delivery is one example domain alongside any other domain that can state outcomes, evidence, authority, budgets, scope, feedback, and terminal states without requiring a particular engine, host, model provider, or repository layout.</p>
+<p>“Universal” does not mean an omniscient parser or a universal safety certificate. Domain adapters may observe or execute specialized systems, while the portable core continues to govern the artifact and authority chain.</p>
+<h2 id="section-09">D-009 — Concord Loom governs itself through an accepted development system</h2>
+<p><strong>Status:</strong> accepted <strong>Date:</strong> 2026-07-27</p>
+<p>The repository is one governed instance of the framework. The operator corrected the earlier delivery-shaped intent and later accepted the complete development system rooted at <code>steward-concordloom</code>. Its ten responsibility areas now contain 66 cycles. The accepted frontend successor added an explicit concept, workshop, implementation, browser-verification, and independent visual-critique path without changing the ten top-level responsibilities.</p>
+<p>Observe, negotiate, bind, execute, verify, publish, and evolve define the shared run grammar. They no longer stand in for the repository&#x27;s complete development graph. The append-only catalog preserves earlier configurations and decisions.</p>
+<h2 id="section-10">D-010 — Bilingual public documentation and visual identity</h2>
+<p><strong>Status:</strong> accepted <strong>Date:</strong> 2026-07-27</p>
+<p>The public explanation is available in English and Russian. Russian documents are maintained as explicit peers rather than machine-selected replacements; commands, identifiers, artifact states, and authority language retain the same meaning in both languages.</p>
+<p>The Pages presentation may use purpose-built hero and social-preview artwork. Those images are communication assets, not architectural evidence or sources of truth. The generated Atlas remains a projection of accepted binding data.</p>
+<h2 id="section-11">D-011 — Pages publication remains a governed external effect</h2>
+<p><strong>Status:</strong> accepted <strong>Date:</strong> 2026-07-27</p>
+<p>GitHub Pages is an optional publication adapter, not a required hosting platform. Its workflow builds and checks the bilingual static site, then a publisher with explicit scope may deploy the exact artifact.</p>
+<p>Build success, release readiness, deployment authority, and a verified live site remain distinct facts. Evolution may propose changes to publication scope, policy, or binding, but cannot accept or activate its own successor; the predecessor binding defines the capable operator and the catalog advances only through a separate activation decision.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

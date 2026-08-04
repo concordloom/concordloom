@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="The Atlas answers 3 questions:">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/atlas/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/atlas/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/atlas/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/atlas/">
+    <meta property="og:title" content="Atlas | Concord Loom">
+    <meta property="og:description" content="The Atlas answers 3 questions:">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/atlas/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Atlas | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/atlas/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Atlas</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>The Atlas answers 3 questions:</p>
+<ol>
+<li>Which cycle is responsible for this work?</li>
+<li>What must the cycle receive and return?</li>
+<li>Which facts come from an accepted plan, and which come from a recorded run?</li>
+</ol>
+<p>It is a read-only view. It cannot authorize work, execute a transition, publish an external change, or activate evolution.</p>
+<h2 id="section-01">Preview a task route</h2>
+<p>Describe a task in ordinary language. Concord Loom can propose the shortest accepted route that reaches the relevant cycles and includes the parent cycles needed to contain them.</p>
+<p>The preview is shown as <strong>Proposed</strong>, not <strong>Planned</strong>. It is bound to the exact Atlas rules, development model, and candidate files, but it grants no authority and performs no repository, network, or external action. The original request stays outside the durable artifact; only its fingerprint is recorded. The preview also shows the network access and external changes each step would be allowed to use only after a later confirmation and authorization.</p>
+<p>You can correct the selected cycles or confirm the preview. Confirmation creates a draft run from that exact route version. It does not change the accepted Atlas. If the binding, candidate, or development model changes, the old preview is stale and must be rebuilt.</p>
+<h2 id="section-02">Interactive project Atlas</h2>
+<p>The <a href="https://concordloom.github.io/concordloom/#atlas/steward-concordloom" rel="noreferrer">public Atlas</a> shows all 66 cycles used to develop Concord Loom. Start at the root and select a child to move one level deeper.</p>
+<p>The first screen shows plain-language information:</p>
+<ul>
+<li>the cycle&#x27;s purpose;</li>
+<li>the responsible role;</li>
+<li>its input and expected output;</li>
+<li>the planned model, agent instructions, tools, and MCP connections.</li>
+</ul>
+<p>Open <strong>Technical details</strong> only when you need stable IDs, artifact names, required claims, or the accepted source digest.</p>
+<p>The header keeps 2 version axes separate:</p>
+<pre tabindex="0"><code class="language-text">Product release: 0.1.5
+Development rules: revision 12</code></pre>
+<p>Revision 11 is the eleventh accepted version of Concord Loom&#x27;s own development rules. It is not a product release.</p>
+<h2 id="section-03">Complete development system</h2>
+<p>The root cycle contains 10 responsibility areas:</p>
+<pre tabindex="0"><code class="language-text">Steward Concord Loom
+├── Product direction
+├── Research and theory
+├── Protocol design
+├── Runtime and tooling
+├── Trust and assurance
+├── Bindings and adapters
+├── Knowledge and experience
+├── Release and distribution
+├── Adoption and feedback
+└── System evolution</code></pre>
+<p>Each area opens into concrete capability cycles. The complete outline remains available below the interactive view.</p>
+<h2 id="section-04">Evolution</h2>
+<p>The evolution circuit is always visible:</p>
+<pre tabindex="0"><code class="language-text">collect signals
+  → propose a successor
+  → independently review it
+  → activate it by a separate operator decision
+  → observe the migration</code></pre>
+<p>The proposal cannot activate itself. Activation uses authority from the currently active rules, not from the proposed successor.</p>
+<h2 id="section-05">Plan and fact</h2>
+<p>The Atlas distinguishes:</p>
+<div class="content-table-wrap"><table>
+<thead><tr><th>Layer</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>Proposed route</td><td>A non-authorizing route preview awaiting confirmation</td></tr>
+<tr><td>Accepted plan</td><td>The active cycle structure, roles, limits, and intended resources</td></tr>
+<tr><td>Recorded run</td><td>The principal, model, instructions, tools, network use, effects, and result actually recorded</td></tr>
+<tr><td>Verified result</td><td>Evidence attached to the exact candidate and checked against a contract</td></tr>
+<tr><td>Drift</td><td>A visible difference between plan and fact</td></tr>
+</tbody></table></div>
+<p>Missing run data stays missing. The Atlas does not invent an execution record from a plan.</p>
+<h2 id="section-06">Portable offline Atlas</h2>
+<p><code>concordloom atlas</code> generates one self-contained HTML file for any compatible binding:</p>
+<pre tabindex="0"><code class="language-bash">concordloom atlas \
+  --binding path/to/binding.json \
+  --registry path/to/cycle-registry.json \
+  --policy path/to/policy.json \
+  --run-card path/to/run-card.json \
+  --output path/to/atlas.html</code></pre>
+<p>The run card is optional. Without it, the file shows only the accepted plan.</p>
+<p>Use <code>--check</code> in CI to reject stale output:</p>
+<pre tabindex="0"><code class="language-bash">concordloom atlas \
+  --binding path/to/binding.json \
+  --registry path/to/cycle-registry.json \
+  --policy path/to/policy.json \
+  --output path/to/atlas.html \
+  --check</code></pre>
+<p>The generated file loads no remote scripts, fonts, APIs, or analytics.</p>
+<h2 id="section-07">Source of truth</h2>
+<p>The Atlas is generated from accepted JSON artifacts and recorded run receipts. Editing <code>docs/ATLAS.html</code> or <code>site/data/atlas.json</code> does not change the accepted system.</p>
+<p>After changing accepted inputs, rebuild and verify both views:</p>
+<pre tabindex="0"><code class="language-bash">PYTHONPATH=src python3 tools/build_site.py
+PYTHONPATH=src python3 tools/build_site.py --check
+./tools/check.sh</code></pre>
+<p>Treat the Atlas as an explanation and inspection surface, not as a security boundary.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

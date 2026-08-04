@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ru" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Concord Loom поставляется как плагин Codex с навыком design-project-loops. Плагин добавляет диалоговый слой поверх детерминированного CLI и контрактов…">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/ru/codex-plugin/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/codex-plugin/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/codex-plugin/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/codex-plugin/">
+    <meta property="og:title" content="Плагин Codex | Concord Loom">
+    <meta property="og:description" content="Concord Loom поставляется как плагин Codex с навыком design-project-loops. Плагин добавляет диалоговый слой поверх детерминированного CLI и контрактов…">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/ru/codex-plugin/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ru_RU">
+    <title>Плагин Codex | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Перейти к содержанию</a>
+    <header class="site-header">
+      <a class="brand" href="../../../ru/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Навигация по документу">
+        <a class="view-tab" href="../">Документация</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/en/codex-plugin/">English version</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">СПРАВОЧНИК CONCORD LOOM</p>
+        <h1>Плагин Codex</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>Concord Loom поставляется как плагин Codex с навыком <code>design-project-loops</code>. Плагин добавляет диалоговый слой поверх детерминированного CLI и контрактов артефактов. Он не ограничен разработкой ПО: с его помощью можно описать любую конечную систему вложенных циклов, если явно заданы результаты, требования проверки, полномочия, область действия, бюджеты и конечные исходы.</p>
+<p>Поставка программного обеспечения — один из примеров конфигурации, а не граница продукта. Репозиторий Concord Loom использует отдельно принятую систему разработки из 66 циклов с корнем <code>steward-concordloom</code>. Наблюдение, согласование, фиксация правил, исполнение, проверка, публикация и эволюция — этапы каждого управляемого запуска.</p>
+<h2 id="section-01">Рекомендуемый вариант: установить навык напрямую</h2>
+<p>Попросите Codex:</p>
+<pre tabindex="0"><code class="language-text">Use $skill-installer to install
+https://github.com/concordloom/concordloom/tree/v0.1.5/plugins/concordloom/skills/design-project-loops</code></pre>
+<p>После установки откройте новый диалог Codex. Навык будет доступен под именем <code>$design-project-loops</code>.</p>
+<p>Это самый простой вариант для Orca и других сред со встроенным <code>$skill-installer</code>. Он устанавливает только навык первичной настройки. Сейчас Concord Loom не требует приложения плагина или MCP-сервера.</p>
+<h2 id="section-02">Дополнительный вариант: установить плагин из GitHub Marketplace</h2>
+<p>Закрепите Marketplace на теге релиза, убедитесь, что Codex его видит, затем установите плагин:</p>
+<pre tabindex="0"><code class="language-bash">codex plugin marketplace add concordloom/concordloom --ref v0.1.5
+codex plugin marketplace list
+codex plugin add concordloom@concordloom</code></pre>
+<p>В списке должна появиться строка <code>concordloom</code>. Последняя команда должна сообщить: <code>Added plugin &#x27;concordloom&#x27; from marketplace &#x27;concordloom&#x27;</code>.</p>
+<p>Если команда <code>marketplace add</code> сообщила об успехе, но <code>concordloom</code> не появился в списке, удалите только незавершённую локальную копию Marketplace и добавьте её заново:</p>
+<pre tabindex="0"><code class="language-bash">codex plugin marketplace remove concordloom
+codex plugin marketplace add concordloom/concordloom --ref v0.1.5
+codex plugin marketplace list
+codex plugin add concordloom@concordloom</code></pre>
+<p>Если Marketplace снова исчез, среда заменяет <code>config.toml</code> Codex своей версией. Не повторяйте установку бесконечно и не редактируйте создаваемый файл вручную. Установите навык напрямую по инструкции выше.</p>
+<p>После успешной установки плагина откройте новый диалог Codex: тогда он загрузит установленный навык.</p>
+<p>Запись Marketplace указывает на пакет <code>plugins/concordloom</code> в репозитории. Если среда требует ручной проверки доверия, до установки проверьте <code>.agents/plugins/marketplace.json</code> и <code>plugins/concordloom/.codex-plugin/plugin.json</code>.</p>
+<p>При локальной разработке добавьте рабочее дерево как источник Marketplace и установите тот же идентификатор <code>concordloom@concordloom</code> согласно актуальной справке CLI плагинов Codex.</p>
+<h2 id="section-03">Использование</h2>
+<p>Предварительно устанавливать CLI Concord Loom не нужно. Откройте целевой репозиторий и попросите Codex:</p>
+<pre tabindex="0"><code class="language-text">Use $design-project-loops to onboard this repository safely. Analyze it
+read-only, build a draft Atlas, and ask me only whether the map is correct.</code></pre>
+<p>Навык:</p>
+<ol>
+<li>спрашивает язык, а затем имя для разговора и Атласа;</li>
+<li>выполняет ограниченную предварительную проверку;</li>
+<li>если CLI отсутствует, выбирает <code>pipx</code>, <code>uv tool</code> или отдельное виртуальное</li>
+</ol>
+<p>окружение и показывает точный план установки закреплённой версии;</p>
+<ol>
+<li>спрашивает разрешение перед изменением окружения и обращением к сети;</li>
+<li>снова выполняет проверку и исследует репозиторий, не запуская его код;</li>
+<li>до вопросов о проекте строит интерактивный черновой Атлас;</li>
+<li>спрашивает только, верна ли карта, и принимает обычные словесные поправки</li>
+</ol>
+<p>от любого участника;</p>
+<ol>
+<li>предлагает систему циклов и ждёт точного принятия;</li>
+<li>компилирует и проверяет принятые контракты;</li>
+<li>маршрутизирует управляемое исполнение через карточки запуска;</li>
+<li>поддерживает автономный атлас на выбранном языке;</li>
+<li>создаёт предложения эволюции на основе записанных данных, не активируя</li>
+</ol>
+<p>их.</p>
+<p>Навык не использует системный <code>pip</code>, не передаёт <code>--break-system-packages</code> и ничего не устанавливает без разрешения.</p>
+<p>Первичная настройка не показывает выбор ролей, ссылки на полномочия, временные пути, хеши, схемы и сырой вывод CLI. Это внутренние детали. Сначала человек видит Атлас. Это правило действует во всех разговорах с оператором: при установке, обследовании без изменений, принятии решений, проектировании циклов, активации, работе с Атласом, выполнении задач, ошибках, завершении и эволюции. Сырой JSON из CLI и внутренние идентификаторы остаются техническими деталями, а не разговором с пользователем.</p>
+<p>Та же последовательность применима вне программных репозиториев. Адаптеры могут предоставлять другие данные или исполнителей, но не заменяют принятие оператором, конечную вложенность, ограниченную обратную связь и проверку, привязанную к точной версии результата.</p>
+<h2 id="section-04">Новые репозитории</h2>
+<p>Репозиторий без конфигурации Concord Loom начинает с ограниченной начальной настройки только для чтения:</p>
+<ul>
+<li>полномочия в отношении продукта не выводятся автоматически;</li>
+<li>изменение проверяемой версии или исходников не разрешено;</li>
+<li>бюджеты исследования остаются явными;</li>
+<li>навык показывает черновой Атлас до вопросов о поправках;</li>
+<li>изменения заблокированы, пока оператор не установит первую принятую</li>
+</ul>
+<p>конфигурацию.</p>
+<p>Встроенная программа запуска сообщает точный план установки, если CLI <code>concordloom</code> недоступен. Она сначала выбирает <code>pipx</code>, затем <code>uv tool</code>, затем отдельное виртуальное окружение вне репозитория. Она не загружает пакет молча и не запускает предоставленную репозиторием замену.</p>
+<h2 id="section-05">Граница полномочий</h2>
+<p>Сам по себе навык не даёт полномочий исполнять проект. Управляющими остаются правила репозитория, принятые артефакты, действующая конфигурация и каждая карточка запуска. Оператор выбирает результаты и разрешает спорные намерения. Оркестратор выбирает файлы, тесты, инструменты, модели и ревьюеров внутри принятых границ.</p>
+<p>Вывод модели остаётся предложением, пока его не примут детерминированная проверка и необходимые полномочия.</p>
+<p>Действующая конфигурация управляет и публичными материалами Concord Loom. Двуязычный сайт Pages и изображение для карточки ссылки — проекции и коммуникационные материалы: они объясняют принятые артефакты, но не создают и не меняют полномочия. Процесс Pages — лишь механизм публикации. Успешная сборка не доказывает наличие живого развёртывания без отдельно разрешённой квитанции публикации и URL развёрнутого сайта.</p>
+<h2 id="section-06">Политика данных и сети</h2>
+<p>Основной инспектор работает локально и не исполняет код целевого проекта. Сессия Codex может использовать модельные сервисы или коннекторы в соответствии со средой пользователя. Разрешённые классы содержимого, провайдеры, сетевой доступ и вывод данных закрепляйте в политике; фактический маршрут записывайте в каждой попытке.</p>
+<h2 id="section-07">Языки</h2>
+<p>Английским документам соответствуют русские файлы в <code>docs/ru/</code>. У двух операторских справочников плагина есть соседние файлы <code>.ru.md</code>, а у примера поставки ПО — <code>examples/generic-sdlc/README.ru.md</code>. Перевод обязан сохранять имена команд, идентификаторы, дайджесты и границы полномочий. Он также должен различать сведения из источника, предположение, принятое решение, план, записанный факт и проверенный результат.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="An operator can turn bounded evidence into an accepted, executable, and inspectable system of loops without making any domain engine, workflow runtime…">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/spec-v0.1/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/spec-v0.1/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/spec-v0.1/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/spec-v0.1/">
+    <meta property="og:title" content="Specification | Concord Loom">
+    <meta property="og:description" content="An operator can turn bounded evidence into an accepted, executable, and inspectable system of loops without making any domain engine, workflow runtime…">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/spec-v0.1/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Specification | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/spec-v0.1/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Specification</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p><a href="https://github.com/concordloom/concordloom/blob/main/docs/ru/SPEC_V0.1.md" rel="noreferrer">Русская версия</a></p>
+<h2 id="section-01">Outcome</h2>
+<p>An operator can turn bounded evidence into an accepted, executable, and inspectable system of loops without making any domain engine, workflow runtime, model provider, hosting platform, or repository layout mandatory. Concord Loom preserves the chain from observation through decision, binding, execution, verification, publication, and evolution.</p>
+<p>The v0.1 distribution proves this model through a local Git observation adapter, a file-backed runner, an offline Atlas, a Codex skill, and a generic SDLC reference binding. Those components form the first portable vertical slice; the SDLC example is not the product definition.</p>
+<h2 id="section-02">Users</h2>
+<ul>
+<li>An operator who owns intended outcomes and accepts consequential changes.</li>
+<li>An orchestrator that chooses machinery within accepted policy.</li>
+<li>Scoped executors that produce candidates and factual evidence.</li>
+<li>Independent reviewers that evaluate pinned candidates.</li>
+<li>Publishers with explicit authority for external effects.</li>
+<li>Maintainers that propose successors from accumulated signals.</li>
+</ul>
+<h2 id="section-03">Required capabilities</h2>
+<h3 id="section-03-detail-01">1. Observation</h3>
+<p><code>concordloom inspect</code> reads a bounded source through the built-in Git adapter and emits deterministic JSON containing:</p>
+<ul>
+<li>source and revision identity;</li>
+<li>files, categories, and detected languages;</li>
+<li>commit-derived churn, renames, authors, and co-change;</li>
+<li>detected decision, build, test, CI, documentation, and agent surfaces;</li>
+<li>provenance references for every fact or hypothesis; and</li>
+<li>coverage, truncation, status, and confidence.</li>
+</ul>
+<p>The adapter treats source material as data. It does not execute target code, hooks, or historical revisions. No inference counts as accepted intent.</p>
+<p>The public artifact model permits future observation adapters, but v0.1 ships only the local Git implementation.</p>
+<h3 id="section-03-detail-02">2. Negotiation and accepted intent</h3>
+<p><code>concordloom questions</code> ranks unresolved hypotheses by expected graph impact. Every question exposes evidence and the graph delta for each answer.</p>
+<p><code>concordloom decide</code> records an explicit confirmation, rejection, or correction with actor and rationale. <code>concordloom accept</code> produces accepted intent only after all blocking questions have authorized decisions.</p>
+<h3 id="section-03-detail-03">3. Loop design and binding</h3>
+<p><code>concordloom propose</code> turns accepted intent into a reviewable loop-design delta. It exposes proposed loops, child invocations, gates, authority, scope, and budgets. An authorized actor must accept the exact proposal digest.</p>
+<p><code>concordloom compile</code> validates the accepted design and policy and produces:</p>
+<ul>
+<li>a finite loop registry;</li>
+<li>routing, authority, compute, and evolution policy;</li>
+<li>a content-addressed binding proposal;</li>
+<li>an initial evolution history; and</li>
+<li>Atlas input.</li>
+</ul>
+<p>Each loop defines typed inputs and outputs, local states and transitions, children, evidence predicates, capabilities, budgets, escalation, and terminal outcomes.</p>
+<p>The compiler rejects:</p>
+<ul>
+<li>missing child loops or cyclic containment;</li>
+<li>unreachable states, nonterminal dead ends, or missing terminal paths;</li>
+<li>cyclic local flow without a decreasing finite budget;</li>
+<li>budget exhaustion without terminal or escalation behavior;</li>
+<li>child scope, budget, or authority broader than its parent;</li>
+<li>child invocations without a deadline and failure path; and</li>
+<li>independent gates that permit author self-certification.</li>
+</ul>
+<p>Binding activation requires a separate authorized decision. Compilation cannot authorize its own output.</p>
+<h3 id="section-03-detail-04">4. Governed execution</h3>
+<p><code>concordloom run</code> creates, authorizes, guards, records, and completes run cards. A public card pins an accepted binding, candidate manifest, route, policy, and evidence contract.</p>
+<p>The default route contains only the root coordinator. <code>--target-loop</code> adds the selected responsibility and its ancestors. The complete reachable tree is used only when a caller explicitly selects <code>--portfolio</code>.</p>
+<p>Actual attempts record the effective principal, agent, model, reasoning, skill, subagents, tools, times, result, policy digest, and candidate digest. Structured evidence identifies its predicate, provenance, producer, checks, payload, candidate, policy, and attempt.</p>
+<p>The built-in repository candidate manifest covers tracked and explicitly included untracked paths, content, modes, symlink targets, submodule commits, revision, and inventory. The runner checks identity at evidence and completion boundaries.</p>
+<p>The active binding grants the runner a narrow control-plane capability to append lifecycle receipts. That grant does not grant candidate writes. <code>guard</code> enforces declared policy scope but is not an operating-system sandbox.</p>
+<p>Concord Loom v0.1 validates local state machines and containment while treating each planned node as one governed unit. It does not step every transition or schedule durable child workflows. Execution adapters perform work and return candidate-bound evidence.</p>
+<h3 id="section-03-detail-05">5. Independent verification</h3>
+<p>Parent acceptance evaluates the parent&#x27;s evidence contract. Child receipts do not compose automatically.</p>
+<p>When policy requires independence, the reviewer must differ from recorded candidate authors. A <code>PASSED</code> node means its declared evidence contract was met for its pinned candidate. It does not authorize publication or broaden any capability.</p>
+<h3 id="section-03-detail-06">6. Publication</h3>
+<p>Publication is an explicit external effect. It requires a verified candidate, a publisher capability, and scope that names the allowed mutation.</p>
+<p>A publish node records one of three outcomes: the authorized effect, a deliberate no-op, or escalation. Verification alone never implies permission to publish.</p>
+<h3 id="section-03-detail-07">7. Atlas</h3>
+<p><code>concordloom atlas</code> generates one deterministic, self-contained HTML projection from accepted artifacts and optional run data. It provides:</p>
+<ul>
+<li>one-level-at-a-time containment navigation;</li>
+<li>distinct rendering for containment and local feedback;</li>
+<li>planned, actual, verified, and drift layers;</li>
+<li>evidence, authority, budget, and terminal-outcome inspection; and</li>
+<li>keyboard, reduced-motion, focus, and narrow-viewport support.</li>
+</ul>
+<p>The Atlas is a projection, not an authority or trace database.</p>
+<h3 id="section-03-detail-08">8. Evolution</h3>
+<p><code>concordloom evolve</code> reduces repeated content-addressed signals into a proposed graph or policy delta. A proposal names the active base binding, contributing signals, preconditions, risk, and required decision authority.</p>
+<p>The reducer cannot modify the active catalog. The proposal cannot accept or activate itself. A successor requires a separate authorized decision under the active binding and a separate activation step.</p>
+<h3 id="section-03-detail-09">9. Codex distribution</h3>
+<p>The repository contains a Codex plugin with the <code>design-project-loops</code> skill. The skill:</p>
+<ul>
+<li>performs bounded read-only discovery;</li>
+<li>asks high-information questions;</li>
+<li>displays graph deltas before acceptance;</li>
+<li>compiles and validates contracts;</li>
+<li>records routes and evidence; and</li>
+<li>proposes, but never self-authorizes, evolution.</li>
+</ul>
+<p>Model-assisted output remains untrusted input to schemas, policy, and invariant checks.</p>
+<h2 id="section-04">Accepted Concord Loom development system</h2>
+<p>Concord Loom&#x27;s repository uses an operator-accepted development configuration rooted at <code>steward-concordloom</code>. It contains 66 cycles across ten responsibility areas, including product direction, theory, protocol, runtime, assurance, adapters, knowledge, release, adoption, and system evolution.</p>
+<p>Every run still separates observation from accepted intent, design acceptance from activation, candidate production from independent verification, verification from publication, and successor proposal from activation. The current configuration succeeded the earlier seven-loop example through explicit operator decisions. It governs Concord Loom itself; adopters may accept different topologies.</p>
+<h2 id="section-05">Reference bindings</h2>
+<p>The shipped generic SDLC binding models a software service with delivery, requirements, implementation, testing, release, and operations loops. Testing contains a runtime-scenario child. This binding demonstrates containment, bounded retry, escalation, and parent-owned acceptance without requiring a game engine or cloud service.</p>
+<p>It is one example binding. The framework&#x27;s schemas and invariants do not require SDLC phases or software-delivery vocabulary.</p>
+<h2 id="section-06">Verification</h2>
+<p>v0.1 is acceptable only when the applicable checks pass:</p>
+<ul>
+<li>unit and integration tests on Python 3.11+;</li>
+<li>deterministic repeated inspection and Atlas generation;</li>
+<li>validation of every public JSON artifact;</li>
+<li>adversarial tests for paths, Git output, containment, retry, authority,</li>
+</ul>
+<p>self-review, evidence mismatch, and self-authorizing evolution;</p>
+<ul>
+<li>Codex skill and plugin validation;</li>
+<li>installed-package CLI smoke in a clean environment;</li>
+<li>independent reference, visual, quality, and release reviews; and</li>
+<li>public-release retrieval and smoke tests.</li>
+</ul>
+<p>Canonical digests cover documented payload envelopes and exclude declared wall-clock display metadata.</p>
+<h2 id="section-07">Historical context and limits of the claim</h2>
+<p>The first release used a one-time, separate bootstrap protocol under <code>concord/</code>. Bootstrap receipts are trust-seed artifacts, not public v0.1 run cards. Public runs use <code>schemas/run-card.schema.json</code> and bind accepted registry, policy, binding, candidate, route, evidence, and authority.</p>
+<p>v0.1 does not claim to invent iteration, nested workflows, statecharts, provenance, graphs, or continuous improvement. It makes no measured productivity or universal-safety claim and ships no durable workflow runtime. Its testable contribution is the governed composition of bounded loops into a versioned, inspectable artifact chain.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

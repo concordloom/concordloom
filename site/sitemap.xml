@@ -1,8 +1,189 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://concordloom.github.io/concordloom/</loc></url>
-  <url><loc>https://concordloom.github.io/concordloom/en/</loc></url>
-  <url><loc>https://concordloom.github.io/concordloom/ru/</loc></url>
-  <url><loc>https://concordloom.github.io/concordloom/docs/en/</loc></url>
-  <url><loc>https://concordloom.github.io/concordloom/docs/ru/</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://concordloom.github.io/concordloom/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/en/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/ru/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/en/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/en/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/ru/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/en/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/ru/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/concepts/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/concepts/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/concepts/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/concepts/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/concepts/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/concepts/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/concepts/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/concepts/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/architecture/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/architecture/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/architecture/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/architecture/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/architecture/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/architecture/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/architecture/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/architecture/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/spec-v0.1/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/spec-v0.1/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/spec-v0.1/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/spec-v0.1/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/spec-v0.1/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/spec-v0.1/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/spec-v0.1/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/spec-v0.1/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/trust-model/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/trust-model/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/trust-model/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/trust-model/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/trust-model/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/trust-model/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/trust-model/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/trust-model/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/quickstart/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/quickstart/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/quickstart/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/quickstart/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/quickstart/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/quickstart/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/quickstart/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/quickstart/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/article/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/article/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/article/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/article/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/article/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/article/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/article/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/article/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/atlas/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/atlas/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/atlas/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/atlas/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/atlas/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/atlas/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/atlas/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/atlas/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/codex-plugin/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/codex-plugin/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/codex-plugin/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/codex-plugin/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/codex-plugin/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/codex-plugin/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/codex-plugin/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/codex-plugin/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/decisions/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/decisions/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/decisions/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/decisions/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/decisions/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/decisions/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/decisions/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/decisions/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/release/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/release/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/release/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/release/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/release/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/release/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/release/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/release/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/writing/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/writing/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/writing/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/writing/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/writing/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/writing/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/writing/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/writing/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/design-system/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/design-system/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/design-system/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/design-system/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/design-system/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/design-system/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/design-system/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/design-system/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/en/frontend-cycle-proposal/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/frontend-cycle-proposal/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/frontend-cycle-proposal/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/frontend-cycle-proposal/" />
+  </url>
+  <url>
+    <loc>https://concordloom.github.io/concordloom/docs/ru/frontend-cycle-proposal/</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/frontend-cycle-proposal/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/frontend-cycle-proposal/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/frontend-cycle-proposal/" />
+  </url>
 </urlset>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="Concord Loom ships a Codex plugin containing the design-project-loops skill. The plugin provides a conversational layer over the deterministic CLI and…">
+    <link rel="canonical" href="https://concordloom.github.io/concordloom/docs/en/codex-plugin/">
+    <link rel="alternate" hreflang="en" href="https://concordloom.github.io/concordloom/docs/en/codex-plugin/">
+    <link rel="alternate" hreflang="ru" href="https://concordloom.github.io/concordloom/docs/ru/codex-plugin/">
+    <link rel="alternate" hreflang="x-default" href="https://concordloom.github.io/concordloom/docs/en/codex-plugin/">
+    <meta property="og:title" content="Codex plugin | Concord Loom">
+    <meta property="og:description" content="Concord Loom ships a Codex plugin containing the design-project-loops skill. The plugin provides a conversational layer over the deterministic CLI and…">
+    <meta property="og:image" content="https://concordloom.github.io/concordloom/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="https://concordloom.github.io/concordloom/docs/en/codex-plugin/">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <title>Codex plugin | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="../../../en/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="Document navigation">
+        <a class="view-tab" href="../">Documentation</a>
+        <a class="view-tab" href="https://concordloom.github.io/concordloom/docs/ru/codex-plugin/">Русская версия</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">CONCORD LOOM REFERENCE</p>
+        <h1>Codex plugin</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          <p>Concord Loom ships a Codex plugin containing the <code>design-project-loops</code> skill. The plugin provides a conversational layer over the deterministic CLI and artifact contracts. It is not limited to software delivery: it can describe any finite system of nested loops whose outcomes, evidence, authority, scope, budgets, and terminal states can be made explicit.</p>
+<p>The generic SDLC is an example binding, not the product boundary. Concord Loom&#x27;s repository uses the separately accepted 66-cycle development configuration rooted at <code>steward-concordloom</code>. Observe, negotiate, bind, execute, verify, publish, and evolve are the phases of each governed run.</p>
+<h2 id="section-01">Recommended: install the skill directly</h2>
+<p>Ask Codex:</p>
+<pre tabindex="0"><code class="language-text">Use $skill-installer to install
+https://github.com/concordloom/concordloom/tree/v0.1.5/plugins/concordloom/skills/design-project-loops</code></pre>
+<p>Start a new Codex thread after installation. The skill will then be available as <code>$design-project-loops</code>.</p>
+<p>This is the simplest route in Orca and in other environments that provide the built-in <code>$skill-installer</code>. It installs only the onboarding skill; Concord Loom does not currently require a plugin app or MCP server.</p>
+<h2 id="section-02">Optional: install the full plugin from the GitHub marketplace</h2>
+<p>Pin the marketplace to the release tag, confirm that Codex can see it, then install the plugin:</p>
+<pre tabindex="0"><code class="language-bash">codex plugin marketplace add concordloom/concordloom --ref v0.1.5
+codex plugin marketplace list
+codex plugin add concordloom@concordloom</code></pre>
+<p>The list must contain <code>concordloom</code>. The final command should report <code>Added plugin &#x27;concordloom&#x27; from marketplace &#x27;concordloom&#x27;</code>.</p>
+<p>If <code>marketplace add</code> reports success but the list does not contain <code>concordloom</code>, remove only that incomplete local snapshot and add it again:</p>
+<pre tabindex="0"><code class="language-bash">codex plugin marketplace remove concordloom
+codex plugin marketplace add concordloom/concordloom --ref v0.1.5
+codex plugin marketplace list
+codex plugin add concordloom@concordloom</code></pre>
+<p>If the marketplace disappears again, your host is replacing Codex&#x27;s <code>config.toml</code>. Do not keep retrying or edit that generated file by hand. Use the direct skill installation above.</p>
+<p>After a successful plugin installation, start a new Codex thread so it loads the installed skill.</p>
+<p>The marketplace entry resolves the repository-local <code>plugins/concordloom</code> bundle. Inspect <code>.agents/plugins/marketplace.json</code> and <code>plugins/concordloom/.codex-plugin/plugin.json</code> before installing if your environment requires a manual trust review.</p>
+<p>For local plugin development, add the checkout as a marketplace source and install the same <code>concordloom@concordloom</code> identity according to the current Codex plugin CLI help.</p>
+<h2 id="section-03">Use</h2>
+<p>You do not need to install the Concord Loom CLI first. Open the target repository and ask Codex:</p>
+<pre tabindex="0"><code class="language-text">Use $design-project-loops to onboard this repository safely. Analyze it
+read-only, build a draft Atlas, and ask me only whether the map is correct.</code></pre>
+<p>The skill:</p>
+<ol>
+<li>asks for the language and then the name to show in the conversation and</li>
+</ol>
+<p>Atlas;</p>
+<ol>
+<li>runs bounded, read-only preflight;</li>
+<li>if the CLI is missing, selects <code>pipx</code>, <code>uv tool</code>, or an isolated virtual</li>
+</ol>
+<p>environment and presents the exact pinned installation plan;</p>
+<ol>
+<li>asks before changing the user environment or using the network;</li>
+<li>reruns preflight and inspects the repository without executing its code;</li>
+<li>builds an interactive draft Atlas before asking project questions;</li>
+<li>asks only whether the map is correct and accepts ordinary-language</li>
+</ol>
+<p>corrections from any participant;</p>
+<ol>
+<li>proposes a loop system and waits for exact acceptance;</li>
+<li>compiles and validates the accepted contracts;</li>
+<li>routes governed execution through run cards;</li>
+<li>maintains the offline Atlas in the selected language; and</li>
+<li>records evidence-backed evolution proposals without activating them.</li>
+</ol>
+<p>The skill never uses system <code>pip</code>, never passes <code>--break-system-packages</code>, and never installs silently.</p>
+<p>The onboarding conversation does not expose role assignment, authority references, temporary paths, digests, schemas, or raw CLI output. Those remain internal implementation details. The person sees the Atlas first. This rule covers every operator-facing scenario: installation, read-only inspection, decisions, loop design, activation, Atlas, governed work, failures, completion, and evolution. Raw CLI JSON and internal identifiers are supporting technical details, not the conversation.</p>
+<p>The same sequence applies outside software repositories. Adapters may provide different evidence or executors, but they do not replace operator acceptance, finite containment, bounded feedback, or candidate-bound verification.</p>
+<h2 id="section-04">Fresh repositories</h2>
+<p>A repository with no Concord Loom binding enters a bounded read-only bootstrap:</p>
+<ul>
+<li>no product authority is inferred;</li>
+<li>no candidate or source mutation is authorized;</li>
+<li>discovery budgets remain explicit;</li>
+<li>the skill shows the draft Atlas before asking for corrections; and</li>
+<li>mutation remains blocked until the operator establishes the first accepted</li>
+</ul>
+<p>binding.</p>
+<p>The bundled launcher reports an exact installation plan when the <code>concordloom</code> CLI is unavailable. It prefers <code>pipx</code>, then <code>uv tool</code>, then a dedicated virtual environment outside the repository. It does not silently download a package or execute a repository-provided replacement.</p>
+<h2 id="section-05">Authority boundary</h2>
+<p>The skill is not project execution authority by itself. Repository rules, accepted artifacts, the active binding, and each run card remain controlling. The operator chooses outcomes and disputed intent. The orchestrator chooses files, tests, tools, models, and reviewers within those accepted boundaries.</p>
+<p>Model output is a proposal until deterministic validation and required authority accept it.</p>
+<p>The active binding also governs Concord Loom&#x27;s public surfaces. The bilingual Pages site and its social-preview artwork are projections and communication assets: they may explain accepted artifacts, but cannot create or change authority. A Pages workflow is publication machinery, and a green build is not proof of a live deployment without the separately authorized publication receipt and deployed URL.</p>
+<h2 id="section-06">Data and network policy</h2>
+<p>The core inspector is local and does not execute target code. A Codex session may use model or connector services according to the user&#x27;s environment. Bind allowed content classes, providers, network access, and data egress in policy; record the effective route in each attempt.</p>
+<h2 id="section-07">Languages</h2>
+<p>English documents are canonical peers of the Russian files under <code>docs/ru/</code>. The plugin&#x27;s two operator references also have <code>.ru.md</code> siblings, and the generic SDLC example includes <code>README.ru.md</code>. Translation must preserve command names, identifiers, digests, epistemic states, and authority boundaries; it must not turn a proposal or planned publication into an accepted or verified fact.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

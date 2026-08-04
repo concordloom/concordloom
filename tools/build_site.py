@@ -59,6 +59,17 @@ LOCALIZED_DOC_INDEXES = {
     "en": SITE / "docs" / "en" / "index.html",
     "ru": SITE / "docs" / "ru" / "index.html",
 }
+LOCALIZED_DOC_PAGES = {
+    language: {
+        stem: SITE
+        / "docs"
+        / language
+        / stem.casefold().replace("_", "-")
+        / "index.html"
+        for stem, _, _ in PUBLIC_DOCS
+    }
+    for language in ("en", "ru")
+}
 LOCALIZED_ATLAS_OUTPUTS = {
     language: path.parent / "data" / "atlas.json"
     for language, path in LOCALIZED_INDEXES.items()
@@ -406,6 +417,13 @@ def localized_documentation_index(content: dict, language: str) -> bytes:
     }[language]
     canonical = f"{SITE_BASE_URL}/docs/{language}/"
     alternate_language = "ru" if language == "en" else "en"
+    document_links = "\n".join(
+        "          <li>"
+        f'<a href="{stem.casefold().replace("_", "-")}/">'
+        f"{html.escape(en_title if language == 'en' else ru_title)}"
+        "</a></li>"
+        for stem, en_title, ru_title in PUBLIC_DOCS
+    )
     document = f"""<!doctype html>
 <html lang="{language}" style="color-scheme: light" data-design-system="signal-canvas">
   <head>
@@ -416,6 +434,7 @@ def localized_documentation_index(content: dict, language: str) -> bytes:
     <link rel="canonical" href="{canonical}">
     <link rel="alternate" hreflang="en" href="{SITE_BASE_URL}/docs/en/">
     <link rel="alternate" hreflang="ru" href="{SITE_BASE_URL}/docs/ru/">
+    <link rel="alternate" hreflang="x-default" href="{SITE_BASE_URL}/docs/en/">
     <meta property="og:title" content="{html.escape(copy['title'], quote=True)}">
     <meta property="og:description" content="{html.escape(copy['description'], quote=True)}">
     <meta property="og:image" content="{SITE_BASE_URL}/assets/concordloom-social-preview.png">
@@ -448,10 +467,136 @@ def localized_documentation_index(content: dict, language: str) -> bytes:
       </section>
       <section class="reading-layout">
         <article class="reading-copy">
+          <h2>{'Reference pages' if language == 'en' else 'Справочные страницы'}</h2>
+          <ul>
+{document_links}
+          </ul>
           <h2>{html.escape(copy['quickstart'])}</h2>
           {content['quickstart'][language]['html']}
           <h2>{html.escape(copy['article'])}</h2>
           {content['article'][language]['html']}
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
+"""
+    return document.encode("utf-8")
+
+
+def markdown_summary(source: str, fallback: str) -> str:
+    """Return a deterministic, plain-text summary from the first useful paragraph."""
+
+    paragraph: list[str] = []
+    in_code = False
+    for raw_line in source.splitlines():
+        line = raw_line.strip()
+        if line.startswith("```"):
+            in_code = not in_code
+            continue
+        if in_code or line.startswith(("#", "- ", "* ", ">", "|")):
+            continue
+        if re.match(r"^\d+\.\s", line) or re.fullmatch(r"\[[^]]+\]\([^)]+\)", line):
+            continue
+        if not line:
+            if paragraph:
+                break
+            continue
+        paragraph.append(line)
+    value = " ".join(paragraph) or fallback
+    value = re.sub(r"\[([^]]+)\]\([^)]+\)", r"\1", value)
+    value = re.sub(r"[`*_]+", "", value)
+    value = re.sub(r"\s+", " ", value).strip()
+    if len(value) > 157:
+        value = value[:157].rsplit(" ", 1)[0].rstrip(".,;:") + "…"
+    return value
+
+
+def localized_document_page(
+    stem: str,
+    en_title: str,
+    ru_title: str,
+    language: str,
+) -> bytes:
+    """Build one crawlable, bilingual-paired public reference page."""
+
+    if language not in {"en", "ru"}:
+        raise ValueError(f"unsupported site locale: {language}")
+    slug = stem.casefold().replace("_", "-")
+    source_path = (
+        ROOT / "docs" / f"{stem}.md"
+        if language == "en"
+        else ROOT / "docs" / "ru" / f"{stem}.md"
+    )
+    source = source_path.read_text(encoding="utf-8")
+    fragment, _ = markdown_fragment(source, source_path=source_path)
+    fragment, heading_count = re.subn(
+        r"<h1\b[^>]*>.*?</h1>",
+        "",
+        fragment,
+        count=1,
+        flags=re.DOTALL,
+    )
+    if heading_count != 1:
+        raise ValueError(f"public document {source_path} must contain one title")
+    fragment = fragment.strip()
+    title = en_title if language == "en" else ru_title
+    description = markdown_summary(
+        source,
+        "Concord Loom reference documentation."
+        if language == "en"
+        else "Справочная документация Concord Loom.",
+    )
+    canonical = f"{SITE_BASE_URL}/docs/{language}/{slug}/"
+    alternate_language = "ru" if language == "en" else "en"
+    alternate = f"{SITE_BASE_URL}/docs/{alternate_language}/{slug}/"
+    index_label = "Documentation" if language == "en" else "Документация"
+    alternate_label = "Русская версия" if language == "en" else "English version"
+    skip_label = "Skip to content" if language == "en" else "Перейти к содержанию"
+    page_label = "CONCORD LOOM REFERENCE" if language == "en" else "СПРАВОЧНИК CONCORD LOOM"
+    document = f"""<!doctype html>
+<html lang="{language}" style="color-scheme: light" data-design-system="signal-canvas">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e8">
+    <meta name="description" content="{html.escape(description, quote=True)}">
+    <link rel="canonical" href="{canonical}">
+    <link rel="alternate" hreflang="en" href="{SITE_BASE_URL}/docs/en/{slug}/">
+    <link rel="alternate" hreflang="ru" href="{SITE_BASE_URL}/docs/ru/{slug}/">
+    <link rel="alternate" hreflang="x-default" href="{SITE_BASE_URL}/docs/en/{slug}/">
+    <meta property="og:title" content="{html.escape(title, quote=True)} | Concord Loom">
+    <meta property="og:description" content="{html.escape(description, quote=True)}">
+    <meta property="og:image" content="{SITE_BASE_URL}/assets/concordloom-social-preview.png">
+    <meta property="og:url" content="{canonical}">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="{'en_US' if language == 'en' else 'ru_RU'}">
+    <title>{html.escape(title)} | Concord Loom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32.png">
+    <link rel="stylesheet" href="../../../design-tokens.css">
+    <link rel="stylesheet" href="../../../design-system.css">
+    <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body data-design-system="signal-canvas">
+    <a class="skip-link" href="#main">{skip_label}</a>
+    <header class="site-header">
+      <a class="brand" href="../../../{language}/" aria-label="Concord Loom">
+        <img src="../../../assets/concordloom-mark.png" width="48" height="48" alt="">
+        <span>CONCORD LOOM</span>
+      </a>
+      <nav class="view-tabs" aria-label="{'Document navigation' if language == 'en' else 'Навигация по документу'}">
+        <a class="view-tab" href="../">{html.escape(index_label)}</a>
+        <a class="view-tab" href="{alternate}">{html.escape(alternate_label)}</a>
+      </nav>
+    </header>
+    <main id="main" class="view is-active">
+      <section class="content-hero">
+        <p class="kicker">{page_label}</p>
+        <h1>{html.escape(title)}</h1>
+      </section>
+      <section class="reading-layout">
+        <article class="reading-copy prose">
+          {fragment}
         </article>
       </section>
     </main>
@@ -553,18 +698,46 @@ def robots_txt() -> bytes:
 
 
 def sitemap_xml() -> bytes:
-    urls = (
-        f"{SITE_BASE_URL}/",
-        f"{SITE_BASE_URL}/en/",
-        f"{SITE_BASE_URL}/ru/",
-        f"{SITE_BASE_URL}/docs/en/",
-        f"{SITE_BASE_URL}/docs/ru/",
-    )
-    entries = "\n".join(f"  <url><loc>{url}</loc></url>" for url in urls)
+    groups = [
+        {
+            "x-default": f"{SITE_BASE_URL}/",
+            "en": f"{SITE_BASE_URL}/en/",
+            "ru": f"{SITE_BASE_URL}/ru/",
+        },
+        {
+            "x-default": f"{SITE_BASE_URL}/docs/en/",
+            "en": f"{SITE_BASE_URL}/docs/en/",
+            "ru": f"{SITE_BASE_URL}/docs/ru/",
+        },
+    ]
+    for stem, _, _ in PUBLIC_DOCS:
+        slug = stem.casefold().replace("_", "-")
+        groups.append(
+            {
+                "x-default": f"{SITE_BASE_URL}/docs/en/{slug}/",
+                "en": f"{SITE_BASE_URL}/docs/en/{slug}/",
+                "ru": f"{SITE_BASE_URL}/docs/ru/{slug}/",
+            }
+        )
+    entries: list[str] = []
+    for group in groups:
+        urls = tuple(dict.fromkeys(group.values()))
+        for canonical in urls:
+            alternates = "\n".join(
+                "    <xhtml:link rel=\"alternate\" "
+                f"hreflang=\"{alternate_language}\" href=\"{url}\" />"
+                for alternate_language, url in group.items()
+            )
+            entries.append(
+                f"  <url>\n    <loc>{canonical}</loc>\n"
+                f"{alternates}\n  </url>"
+            )
+    entries_text = "\n".join(entries)
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        f"{entries}\n"
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+        'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+        f"{entries_text}\n"
         "</urlset>\n"
     ).encode("utf-8")
 
@@ -690,6 +863,13 @@ def main() -> int:
         language: localized_documentation_index(content, language)
         for language in LOCALIZED_DOC_INDEXES
     }
+    expected_localized_doc_pages = {
+        language: {
+            stem: localized_document_page(stem, en_title, ru_title, language)
+            for stem, en_title, ru_title in PUBLIC_DOCS
+        }
+        for language in LOCALIZED_DOC_PAGES
+    }
     expected_robots = robots_txt()
     expected_sitemap = sitemap_xml()
     expected_tokens = design_tokens_css()
@@ -739,6 +919,10 @@ def main() -> int:
         for language, path in LOCALIZED_DOC_INDEXES.items():
             if not check_bytes(path, expected_localized_doc_indexes[language]):
                 stale.append(str(path.relative_to(ROOT)))
+        for language, pages in LOCALIZED_DOC_PAGES.items():
+            for stem, path in pages.items():
+                if not check_bytes(path, expected_localized_doc_pages[language][stem]):
+                    stale.append(str(path.relative_to(ROOT)))
         if not check_bytes(ROBOTS, expected_robots):
             stale.append(str(ROBOTS.relative_to(ROOT)))
         if not check_bytes(SITEMAP, expected_sitemap):
@@ -769,6 +953,10 @@ def main() -> int:
     for language, path in LOCALIZED_DOC_INDEXES.items():
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(expected_localized_doc_indexes[language])
+    for language, pages in LOCALIZED_DOC_PAGES.items():
+        for stem, path in pages.items():
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(expected_localized_doc_pages[language][stem])
     ROBOTS.write_bytes(expected_robots)
     SITEMAP.write_bytes(expected_sitemap)
     for source, target in assets.items():
