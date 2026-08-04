@@ -47,7 +47,7 @@ The header keeps 2 version axes separate:
 
 ```text
 Product release: 0.1.5
-Development rules: revision 11
+Development rules: revision 12
 ```
 
 Revision 11 is the eleventh accepted version of Concord Loom's own development
